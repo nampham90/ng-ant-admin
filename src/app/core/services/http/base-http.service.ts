@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -29,11 +30,12 @@ export class BaseHttpService {
   uri: string;
 
   protected constructor(public http: HttpClient, public message: NzMessageService) {
-    this.uri = environment.production ? localUrl : '/site/api';
+    this.uri = "http://localhost:3000/user/";//environment.production ? localUrl : '/site/api';
   }
 
   get<T>(path: string, param?: NzSafeAny, config?: MyHttpConfig): Observable<NzSafeAny> {
     config = config || { needSuccessInfo: false };
+    this.uri = "http://localhost:3000/user/";
     let reqPath = this.uri + path;
     if (config.otherUrl) {
       reqPath = path;
@@ -55,6 +57,7 @@ export class BaseHttpService {
 
   delete<T>(path: string, param?: NzSafeAny, config?: MyHttpConfig): Observable<NzSafeAny> {
     config = config || { needSuccessInfo: false };
+    
     let reqPath = this.uri + path;
     if (config.otherUrl) {
       reqPath = path;
@@ -76,11 +79,12 @@ export class BaseHttpService {
 
   post<T>(path: string, param?: NzSafeAny, config?: MyHttpConfig): Observable<NzSafeAny> {
     config = config || { needSuccessInfo: false };
+    this.uri = "http://1.117.181.242:8003/api";
     let reqPath = this.uri + path;
     if (config.otherUrl) {
       reqPath = path;
     }
-    return this.http.post<ActionResult<T>>(reqPath, param).pipe(
+    return this.http.post<ActionResult<T>>(reqPath, param).pipe(  //
       filter(item => {
         return this.handleFilter(item, !!config?.needSuccessInfo);
       }),

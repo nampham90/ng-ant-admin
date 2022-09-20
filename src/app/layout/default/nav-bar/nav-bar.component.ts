@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { DOCUMENT } from '@angular/common';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Input, Inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
@@ -102,13 +103,16 @@ export class NavBarComponent implements OnInit {
         map(route => {
           while (route.firstChild) {
             route = route.firstChild;
+            console.log({data:route});
           }
           return route;
         }),
         filter(route => {
+          console.log({outlet: route.outlet});
           return route.outlet === 'primary';
         }),
         mergeMap(route => {
+          console.log({datas:route.data});
           return route.data;
         }),
         takeUntil(this.destroy$)

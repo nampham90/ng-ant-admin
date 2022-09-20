@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Inject, Injectable } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
 
@@ -28,6 +29,6 @@ export class LoginService {
   public getMenuByUserId(userId: number): Observable<Menu[]> {
     // 延迟两秒发送，模拟从接口获取
     // return of(this.menus).pipe(delay(1));
-    return this.http.get(`/sysPermission/menu/${userId}`);
+    return this.http.get("menu");//`/sysPermission/menu/${userId}`
   }
 }
