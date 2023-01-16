@@ -14,13 +14,13 @@
     <nz-form-item>
         <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="mobile">Địa chỉ</nz-form-label>
         <nz-form-control [nzSm]="18" [nzXs]="24" [nzErrorTip]="combineTpl">
-          <input nz-input formControlName="diachi" maxlength="11" id="diachi" placeholder="Địa chỉ" />
+          <input nz-input formControlName="diachi" maxlength="255" id="diachi" placeholder="Địa chỉ" />
         </nz-form-control>
     </nz-form-item>
     <nz-form-item>
         <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="groupid">Group Id</nz-form-label>
         <nz-form-control [nzSm]="18" [nzXs]="24" [nzErrorTip]="combineTpl">
-          <input nz-input formControlName="groupid" maxlength="11" id="groupid" placeholder="Group id" />
+          <input nz-input formControlName="groupid" maxlength="20" id="groupid" placeholder="Group id" />
         </nz-form-control>
     </nz-form-item>
 </form>
