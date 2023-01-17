@@ -1,6 +1,6 @@
 <div class="login-form-wrap">
   <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
-    <nz-tabset [nzAnimated]="false">
+    <nz-tabset [nzAnimated]="false" (nzSelectedIndexChange)="changeTabs($event)">
       <nz-tab nzTitle="Login Account">
         <nz-form-item>
           <nz-form-control nzErrorTip="Email">
@@ -18,7 +18,7 @@
         </nz-form-item>
       </nz-tab>
 
-      <nz-tab nzTitle="Đăng nhập số điện thoại">
+      <nz-tab nzTitle="Đăng nhập Tài Xế">
         <nz-form-item>
           <nz-form-control nzErrorTip="Vui lòng nhập tên của bạn !">
             <nz-input-group [nzSize]="'large'" nzPrefixIcon="mobile">
@@ -26,13 +26,20 @@
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>
-        <nz-form-item nz-row nzJustify="space-between">
+        <!-- <nz-form-item nz-row nzJustify="space-between">
           <nz-form-control class="flex-1" style="max-width: 65%" nz-col [nzXs]="15" [nzSm]="16" nzErrorTip="Vui lòng nhập mã xác nhận !">
             <nz-input-group [nzSize]="'large'" nzPrefixIcon="mail">
               <input type="password" nz-input formControlName="password" placeholder="Mật khẩu mỡ khóa" />
             </nz-input-group>
           </nz-form-control>
           <button class="p-0" nz-button nz-col [nzXs]="8" [nzSm]="8" [nzSize]="'large'" nzType="default">Lấy mã</button>
+        </nz-form-item> -->
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Mật Khẩu">
+            <nz-input-group class="example-input" [nzSize]="'large'" nzPrefixIcon="lock">
+              <input autocomplete="on" [placeholder]="'Mật Khẩu'" type="password" nz-input formControlName="passwordtaixe" placeholder="Mật Khẩu" />
+            </nz-input-group>
+          </nz-form-control>
         </nz-form-item>
       </nz-tab>
     </nz-tabset>

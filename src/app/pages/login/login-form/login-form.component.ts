@@ -20,6 +20,9 @@ import { fnCheckForm } from '@utils/tools';
 export class LoginFormComponent implements OnInit {
   validateForm!: FormGroup;
 
+  loginaccount = true;
+  logintaixe = false;
+
   constructor(
     private fb: FormBuilder,
     private loginInOutService: LoginInOutService,
@@ -32,35 +35,39 @@ export class LoginFormComponent implements OnInit {
   ) {}
 
   submitForm(): void {
-    // 校验表单
+    // check form 
     if (!fnCheckForm(this.validateForm)) {
       return;
     }
-    // 设置全局loading
+    // show loading true
     this.spinService.setCurrentGlobalSpinStore(true);
-    // 获取表单的值
-    const param = this.validateForm.getRawValue();
-    // 调用登录接口
-    // todo 登录后台返回统一模式为,如果code不为0，会自动被拦截，如果需要修改，请在src/app/core/services/http/base-http.service.ts中进行修改
-    // {
-    //   code:number,
-    //   data:any,
-    //   msg：string
-    // }
+    // get giá trị trong form
+    let param = this.validateForm.getRawValue();
+    if(this.logintaixe == true) {
+      param["mode"] = 'mobile';
+    }
+
+    console.log(param);
+    
     this.dataService
       .login(param)
       .pipe(
-        // 无论如何设置全局loading为false
+        // show loading false
         finalize(() => {
           this.spinService.setCurrentGlobalSpinStore(false);
         })
       )
       .subscribe(userToken => {
-        // 这里后台登录成功以后，只会返回一套由jwt加密的token，下面需要对token进行解析
+        // Sau khi đăng nhập nền thành công tại đây, chỉ một bộ mã thông báo được mã hóa bởi jwt sẽ được trả lại và mã thông báo cần được phân tích cú pháp bên dưới
         this.loginInOutService
           .loginIn(userToken)
           .then(() => {
-            this.router.navigateByUrl('default/dashboard/analysis');
+            if(param['mode'] && param['mode'] == 'mobile') {
+              this.router.navigateByUrl('mobile')
+            } else {
+              this.router.navigateByUrl('default/dashboard/analysis');
+            }
+            
           })
           .finally(() => {
             this.spinService.setCurrentGlobalSpinStore(false);
@@ -72,8 +79,18 @@ export class LoginFormComponent implements OnInit {
     this.validateForm = this.fb.group({
       email: [null, [Validators.required]],
       password: [null, [Validators.required]],
-      sodienthoai: [null],
-      remember: [null]
+      sodienthoai: [null, [Validators.required]],
+      passwordtaixe: [null, [Validators.required]]
     });
+  }
+
+  changeTabs($event: any) {
+    if ($event == 1) {
+      this.logintaixe = true;
+      this.loginaccount = false;
+    } else {
+      this.logintaixe = false;
+      this.loginaccount = true;
+    }
   }
 }
