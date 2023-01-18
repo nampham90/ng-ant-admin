@@ -1,0 +1,52 @@
+<Card>
+    <CardHeader
+      [title]="'75B12312'"
+      [extra]="extra"
+      [thumb]="'./assets/imgs/iconxetai.jpg'"
+      [thumbStyle]="thumbStyle"
+    >
+      <ng-template #extra>
+        <span>Chuẩn bị bóc hàng</span>
+      </ng-template>
+    </CardHeader>
+    <CardBody>
+      <div>Thới gian:</div>
+      <div>Tiền ứng trước:</div>
+      <div>Điểm đi - điểm đến:</div>
+      <div>Tài Phụ:</div>
+    </CardBody>
+    <CardFooter [content]="''" [extra]="footerExtra">
+      <ng-template #footerExtra>
+        <div>
+            <button Button [type]="'primary'" [inline]="true" style="margin-right: 4px" [size]="'small'">Thêm Hàng</button>
+        </div>
+      </ng-template>
+    </CardFooter>
+</Card>
+<div class="chitietbochang">
+    <Accordion [defaultActiveKey]="'0'" [activeKey]="activeKey" (onChange)="onChange($event)">
+        <AccordionPanel
+          *ngFor="let item of accordions; let i = index"
+    
+          [header]="item.title"
+          [disabled]="item.inactive"
+          [ngClass]="['fixbackground']"
+        >
+          <List className="my-list">
+            <ListItem *ngFor="let content of item.child" [extra]="primary" wrap  [className]="'spe'">
+              <h4 [ngClass]="['hstyle']">{{ content }} - Regional manager</h4>
+              <p [ngClass]="['pstyle']">Can be collected, refund, discount management, view data and other operations</p>
+            </ListItem>
+          </List>
+        </AccordionPanel>
+      </Accordion>
+      <ng-template #hangdi>
+        <div>Hàng đi</div>
+      </ng-template>
+      <ng-template #hangve>
+        <div>Hàng Về</div>
+      </ng-template>
+      <ng-template #primary>
+        <button Button [type]="'primary'" [inline]="true" style="margin-right: 4px" [size]="'small'">Đã bóc</button>
+      </ng-template>
+</div>

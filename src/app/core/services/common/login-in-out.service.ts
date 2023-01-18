@@ -46,28 +46,34 @@ export class LoginInOutService {
       // 解析token ，然后获取用户信息
       const userInfo: UserInfo = this.userInfoService.parsToken(TokenPre + token);
       // todo  这里是手动添加静态页面标签页操作中，打开详情的按钮的权限，实际操作中可以删除下面2行
-      userInfo.authCode.push(ActionCode.TabsDetail);
-      userInfo.authCode.push(ActionCode.SearchTableDetail);
-      // 将用户信息缓存到全局service中
-      this.userInfoService.setUserInfo(userInfo);
-      // 通过用户id来获取这个用户所拥有的menu
-      this.getMenuByUserId(userInfo.userId)
-        .pipe(
-          finalize(() => {
+      if (userInfo.authCode.length == 3 && userInfo.authCode[0] == "1") {
+        this.userInfoService.setUserInfo(userInfo);
+        resolve();
+      } else {
+        userInfo.authCode.push(ActionCode.TabsDetail);
+        userInfo.authCode.push(ActionCode.SearchTableDetail);
+        // 将用户信息缓存到全局service中
+        this.userInfoService.setUserInfo(userInfo);
+        // 通过用户id来获取这个用户所拥有的menu
+        this.getMenuByUserId(userInfo.userId)
+          .pipe(
+            finalize(() => {
+              resolve();
+            })
+          )
+          .subscribe(menus => {
+            menus = menus.filter(item => {
+              item.selected = false;
+              item.open = false;
+              return item.menuType === 'C';
+            });
+            const temp = fnFlatDataHasParentToTree(menus);
+            // 存储menu
+            this.menuService.setMenuArrayStore(temp);
             resolve();
-          })
-        )
-        .subscribe(menus => {
-          menus = menus.filter(item => {
-            item.selected = false;
-            item.open = false;
-            return item.menuType === 'C';
           });
-          const temp = fnFlatDataHasParentToTree(menus);
-          // 存储menu
-          this.menuService.setMenuArrayStore(temp);
-          resolve();
-        });
+      }
+      
     });
   }
 
