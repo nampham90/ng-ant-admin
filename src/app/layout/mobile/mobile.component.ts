@@ -26,17 +26,17 @@ export class MobileComponent implements OnInit {
   data: Array<any> = [
     {
       value: '1',
-      label: 'Food',
+      label: 'Quản lý chuyến',
       link: 'mbtx00101'
     },
     {
       value: '2',
-      label: 'Supermarket',
+      label: 'Thông tin cá nhân',
       link: 'mbtx00201'
     },
     {
       value: '3',
-      label: 'Extra',
+      label: 'Đổi mật khẩu',
       link: 'mbtx00301',
       isLeaf: true
     },
