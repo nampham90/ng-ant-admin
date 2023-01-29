@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoginInOutService} from '@app/core/services/common/login-in-out.service'
-
+import { UserInfoService } from '@app/core/services/store/common-store/userInfo.service';
 @Component({
   selector: 'app-mobile',
   templateUrl: './mobile.component.html',
@@ -12,12 +12,17 @@ export class MobileComponent implements OnInit {
   constructor(
     private route: Router,
     private activateRoute: ActivatedRoute,
-    private dataService: LoginInOutService
+    private dataService: LoginInOutService,
+    private userInfoService: UserInfoService,
   ) { }
 
   ngOnInit(): void {
     this.initData = this.data;
+    this.userInfoService.getUserInfo().subscribe(user => {
+      this.username = user.username;
+   });
   }
+  username = '';
 
   initData: Array<any> = [];
   valueActive = [];

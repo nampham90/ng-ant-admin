@@ -1,7 +1,7 @@
 <div [ngClass]="[show ? 'single-menu-active' : '']">
     <div>
       <Navbar class="single-top-nav-bar" [leftContent]="'Menu'" (onLeftClick)="handleClick($event)">
-        Here is title
+        {{username}}
       </Navbar>
     </div>
     <Menu

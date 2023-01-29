@@ -1,19 +1,19 @@
-<Card>
+<ng-container *ngIf="chuyen">
+  <Card>
     <CardHeader
       [title]="'75B12312'"
       [extra]="extra"
       [thumb]="'./assets/imgs/iconxetai.jpg'"
       [thumbStyle]="thumbStyle"
     >
-      <ng-template #extra>
-        <span>Chuẩn bị bóc hàng</span>
+      <ng-template #extra >
+        <span *ngIf="chuyen">Khởi hành: {{chuyen['ngaydi']| date : "dd/MM/yyyy"}}</span>
       </ng-template>
     </CardHeader>
     <CardBody>
-      <div>Thới gian:</div>
-      <div>Tiền ứng trước:</div>
-      <div>Điểm đi - điểm đến:</div>
-      <div>Tài Phụ:</div>
+      <div><span *ngIf="chuyen">Tuyến đường: <strong>{{chuyen['changduong']}}</strong></span></div>
+      <div><span *ngIf="chuyen">Tiền ứng trước: <strong>{{chuyen['tienxe']*1000 | currency : "VND"}}</strong> </span></div>
+      <div><span *ngIf="chuyen">Tài Phụ: <strong>{{chuyen['idphu']['name']}}</strong></span></div>
     </CardBody>
     <CardFooter [content]="''" [extra]="footerExtra">
       <ng-template #footerExtra>
@@ -24,29 +24,74 @@
     </CardFooter>
 </Card>
 <div class="chitietbochang">
-    <Accordion [defaultActiveKey]="'0'" [activeKey]="activeKey" (onChange)="onChange($event)">
-        <AccordionPanel
-          *ngFor="let item of accordions; let i = index"
-    
-          [header]="item.title"
-          [disabled]="item.inactive"
-          [ngClass]="['fixbackground']"
-        >
-          <List className="my-list">
-            <ListItem *ngFor="let content of item.child" [extra]="primary" wrap  [className]="'spe'">
-              <h4 [ngClass]="['hstyle']">{{ content }} - Regional manager</h4>
-              <p [ngClass]="['pstyle']">Can be collected, refund, discount management, view data and other operations</p>
-            </ListItem>
-          </List>
-        </AccordionPanel>
-      </Accordion>
-      <ng-template #hangdi>
-        <div>Hàng đi</div>
-      </ng-template>
-      <ng-template #hangve>
-        <div>Hàng Về</div>
-      </ng-template>
-      <ng-template #primary>
-        <button Button [type]="'primary'" [inline]="true" style="margin-right: 4px" [size]="'small'">Đã bóc</button>
-      </ng-template>
+  <h3 class="title-comm"><span class="title-holder">Hàng đi</span></h3>
+  <List [className]="'my-list'">
+    <ListItem *ngFor="let lst of lsthangdi" wrap  [className]="'spe'">
+      <div>Người gửi: <span [ngClass]="['hstyle']">{{lst['iduser']['name']}}- ĐT: <a href="tel:{{lst['iduser']['dienthoai']}}"><u>{{lst["iduser"]["dienthoai"]}}</u></a></span> </div>
+      <div>
+        Thông tin: <span [ngClass]="['hstyle']">{{lst['noidungdonhang']}}</span>
+      </div>
+      <div>
+        Địa chỉ bốc hàng: <span [ngClass]="['hstyle']">{{lst['diadiembochang']}}</span>
+      </div>
+      <div>
+        Tiền Cước : <span [ngClass]="['hstyle']">{{lst['tiencuoc']*1000 | currency : "VND"}}</span>
+      </div>
+      <div>
+        Ghi chú : <span [ngClass]="['hstyle']">{{lst['ghichu']}}</span>
+      </div>
+      <div>
+        <!-- hihi <div class="am-demo-page">
+          <div class="am-demo-bd am-wingblank am-wingblank-lg">
+            <div>
+              <Steps [current]="lst['trangthai']">
+                <Step [title]="steps[0].title"></Step>
+                <Step [title]="steps[1].title"></Step>
+                <Step [title]="steps[2].title"></Step>
+              </Steps>
+            </div>
+            <div class="steps-action">
+              <button nz-button nzType="default" (click)="pre()" *ngIf="current > 0">
+                <span>Previous</span>
+              </button>
+              <button nz-button nzType="default" id="next" name="next" (click)="next(lst['trangthai'])" *ngIf="lst['trangthai'] < 2">
+                <span>Next</span>
+              </button>
+              <button nz-button nzType="primary" id="next" name="next" (click)="done(lst['trangthai'])" *ngIf="lst['trangthai'] === 2">
+                <span>Done</span>
+              </button>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </ListItem>
+  </List>
+  <h3 class="title-comm"><span class="title-holder">Hàng về</span></h3>
+  <List [className]="'my-list'">
+
+    <ListItem *ngFor="let lst of lsthangve" wrap  [className]="'spe'">
+      <div>Người gửi: <span [ngClass]="['hstyle']">{{lst['iduser']['name']}}- ĐT: <a href="tel:{{lst['iduser']['dienthoai']}}"><u>{{lst["iduser"]["dienthoai"]}}</u></a></span> </div>
+      <div>
+        Thông tin: <span [ngClass]="['hstyle']">{{lst['noidungdonhang']}}</span>
+      </div>
+      <div>
+        Địa chỉ bốc hàng: <span [ngClass]="['hstyle']">{{lst['diadiembochang']}}</span>
+      </div>
+      <div>
+        Tiền Cước : <span [ngClass]="['hstyle']">{{lst['tiencuoc']*1000 | currency : "VND"}}</span>
+      </div>
+      <div>
+        Ghi chú : <span [ngClass]="['hstyle']">{{lst['ghichu']}}</span>
+      </div>
+    </ListItem>
+
+  </List>
+  <h3 class="title-comm"><span class="title-holder">An toàn là trên hết</span></h3>
+
 </div>
+</ng-container>
+
+<ng-container *ngIf="!chuyen">
+  <h3 class="title-comm"><span class="title-holder">Không có chuyên hàng nào !</span></h3>
+</ng-container>
+
