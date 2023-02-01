@@ -27,11 +27,9 @@ export interface ActionResult<T> {
   providedIn: 'root'
 })
 export class BaseHttpService {
-<<<<<<< HEAD
+
   uri = "http://117.2.198.251:3001/";
-=======
-  uri = "http://117.2.198.251:3000/";
->>>>>>> vantai
+
 
   protected constructor(public http: HttpClient, public message: NzMessageService) {
     this.uri = environment.production ? localUrl : '/site/api/';
