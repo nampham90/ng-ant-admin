@@ -28,7 +28,7 @@ export interface ActionResult<T> {
 })
 export class BaseHttpService {
 
-  uri = "http://117.2.198.251:3000/";
+  uri = "http://117.2.198.251:3001/";
 
 
   protected constructor(public http: HttpClient, public message: NzMessageService) {
