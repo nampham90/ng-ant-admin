@@ -59,7 +59,7 @@ export class SubwindowchiphiComponent implements OnInit {
     return this.fb.group({
       tenchiphi: [element.tenchiphi, [Validators.required]],
       sotien: [element.sotien, [Validators.required]],
-      ghichu: [''],
+      ghichu: [element.ghichu],
     });
   }
 
