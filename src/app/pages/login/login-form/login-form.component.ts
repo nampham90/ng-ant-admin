@@ -43,7 +43,7 @@ export class LoginFormComponent implements OnInit {
     this.spinService.setCurrentGlobalSpinStore(true);
     // get giá trị trong form
     let param = this.validateForm.getRawValue();
-    if(this.logintaixe == true) {
+    if(param['remember'] != null && param['remember'] == true) {
       param["mode"] = 'mobile';
     }
 
@@ -79,18 +79,8 @@ export class LoginFormComponent implements OnInit {
     this.validateForm = this.fb.group({
       email: [null, [Validators.required]],
       password: [null, [Validators.required]],
-      sodienthoai: [null, [Validators.required]],
-      passwordtaixe: [null, [Validators.required]]
+      remember: [null],
     });
   }
 
-  changeTabs($event: any) {
-    if ($event == 1) {
-      this.logintaixe = true;
-      this.loginaccount = false;
-    } else {
-      this.logintaixe = false;
-      this.loginaccount = true;
-    }
-  }
 }

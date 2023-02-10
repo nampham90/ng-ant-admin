@@ -21,9 +21,10 @@
       <ActivityIndicator [size]="'large'"></ActivityIndicator>
     </div>
     <div *ngIf="show" class="menu-mask2" (click)="onMaskClick()"></div>
-    <div>
-        <h2>Nam Pham</h2>
+    <div style="padding: 15px 0">
+      <WingBlank [size]="'sm'">
         <router-outlet></router-outlet>
+      </WingBlank>
+        
     </div>
 </div>
-

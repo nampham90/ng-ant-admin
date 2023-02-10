@@ -71,5 +71,4 @@ export class MobileComponent implements OnInit {
   onMaskClick() {
     this.show = false;
   }
-
 }
