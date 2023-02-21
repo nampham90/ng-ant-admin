@@ -27,7 +27,7 @@ export interface ActionResult<T> {
   providedIn: 'root'
 })
 export class BaseHttpService {
-  uri = "http://116.103.210.19:3002/";
+  uri = "http://117.2.219.153:3002/";
 
 
   protected constructor(public http: HttpClient, public message: NzMessageService) {
