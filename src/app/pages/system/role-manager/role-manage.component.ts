@@ -159,7 +159,6 @@ export class RoleManageComponent implements OnInit {
       }
     });
   }
-  // 修改一页几条
 
   changePageSize(e: number): void {
     this.tableConfig.pageSize = e;
