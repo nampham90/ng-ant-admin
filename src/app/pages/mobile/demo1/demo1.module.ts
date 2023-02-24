@@ -14,7 +14,6 @@ import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
     NgZorroAntdMobileModule,
     CommonModule,
     Demo1RoutingModule,
-    
   ]
 })
 export class Demo1Module { }
