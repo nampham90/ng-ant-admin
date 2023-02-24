@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule) },
   { path: 'default', loadChildren: () => import('./layout/default/default.module').then(m => m.DefaultModule) },
   { path: 'mobile', loadChildren: () => import('./pages/mobile/mobile.module').then(m => m.MobileModule)},
+
   { path: '', redirectTo: '/login/login-form', pathMatch: 'full' },
   { path: '**', redirectTo: '/login/login-form' }
 ];

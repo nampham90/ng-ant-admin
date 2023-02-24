@@ -1,6 +1,9 @@
 /* eslint-disable prettier/prettier */
+
 export const ip = '116.103.210.19';//45.76.180.157
+
 export const port = '3000';
+
 export const localUrl = `http://${ip}:${port}/api/`;
 
 export const environment = {

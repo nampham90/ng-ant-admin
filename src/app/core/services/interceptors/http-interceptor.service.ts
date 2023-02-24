@@ -55,6 +55,7 @@ export class HttpInterceptorService implements HttpInterceptor {
     if (status >= 400 && status < 500) {
       errMsg = `Máy khách bị lỗi, có thể dữ liệu gửi sai, mã trạng thái ${status}`;
       this.message.info(`Máy khách bị lỗi, có thể dữ liệu gửi sai, mã trạng thái ${status}`);
+      
     }
     if (status >= 500) {
       errMsg = `Đã xảy ra lỗi máy chủ với mã trạng thái ${status}`;
