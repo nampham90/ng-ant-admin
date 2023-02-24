@@ -1,3 +1,4 @@
+import { Nguonxe } from '../core/model/nguonxe.model';
 
 /*配置权限码*/
 export const ActionCode = {
@@ -68,5 +69,10 @@ export const ActionCode = {
   CtcnThantoanmotphan: 'default:khachhang:spkh00201:thanhtoanmotphan',
   CtcnThanhtoan: 'default:khachhang:spkh00201:thanhtoan',
   CtcnDuyetThanhtoan: 'default:khachhang:spkh00201:duyetthanhtoan',
+
+  // nguon xe
+  Nguonxeadd: 'default:system:quanlynguonxe:add',
+  Nguonxedel: 'default:system::quanlynguonxe:del',
+  Nguonxeupdate: 'default:system:quanlynguonxe:update'
 
 };
