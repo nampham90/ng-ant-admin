@@ -109,4 +109,24 @@
             </div>
         </form>
     </nz-card>
+    <app-card-table-wrap [tableTitle]="'Chi tiết đơn hàng'" (reload)="reloadTable()" [btnTpl]="tableBtns">
+        <app-ant-table
+        (selectedChange)="selectedChecked($event)"
+        [checkedCashArrayFromComment]="checkedCashArray"
+        (changePageSize)="changePageSize($event)"
+        (changePageNum)="getDataList($event)"
+        [tableConfig]="tableConfig"
+        [tableData]="dataList"
+      ></app-ant-table>
+    </app-card-table-wrap>
+    <ng-template #tableBtns>
+        <button *appAuth="ActionCode.ChuyenngoaiAdd" (click)="add()" nz-button nzType="primary" class="m-r-8">
+          <i nz-icon nzType="plus"></i>
+          Thêm mới
+        </button>
+        <button *appAuth="ActionCode.DataScDelAll" (click)="allDel()" nz-button nzType="default">
+          <i nz-icon nzType="delete"></i>
+          Xóa tất cả
+        </button>
+    </ng-template>
 </div>

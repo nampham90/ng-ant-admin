@@ -12,6 +12,8 @@ import { OptionsInterface } from '@app/core/services/types';
 import { MyTableConfig } from '@app/shared/components/ant-table/ant-table.component';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { Chitietchuyenngoai } from '@app/core/model/chitietchuyenngoai.model';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -88,6 +90,41 @@ export class Spch00251Component extends BaseComponent implements OnInit {
 
   override ngOnInit(): void {
      this.initTable();
+  }
+
+  reloadTable(): void {
+    this.message.info('Đã được làm mới');
+    this.getDataList();
+  }
+
+  getDataList(e?: NzTableQueryParams) {
+     this.tableLoading(true);
+  }
+
+  selectedChecked(e: Chitietchuyenngoai[]): void {
+    this.checkedCashArray = [...e];
+  }
+
+  changePageSize(e: number): void {
+    this.tableConfig.pageSize = e;
+  }
+
+  tableChangeDectction(): void {
+    this.dataList = [...this.dataList];
+    this.cdf.detectChanges();
+  }
+
+  tableLoading(isLoading: boolean): void {
+    this.tableConfig.loading = isLoading;
+    this.tableChangeDectction();
+  }
+
+  add() {
+
+  }
+
+  allDel() {
+
   }
 
   private initTable(): void {
