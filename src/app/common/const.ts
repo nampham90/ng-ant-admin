@@ -149,6 +149,22 @@ export const NguonxeAnt100UpdateStatus = 'nguonxe/nguonxeAnt100UpdateStatus';
 export const NguonxeAnt100Delete = 'nguonxe/nguonxeAnt100Delete';
 export const NguonxeAnt100DeleteAll = 'nguonxe/nguonxeAnt100DeleteAll';
 
+// chuyến ngoài
+export const chuyenngoaiAnt100GetAll = 'chuyenngoai/chuyenngoaiAnt100Get';
+export const chuyenngoaiAnt100GetId = 'chuyenngoai/chuyenngoaiAnt100Get';
+export const chuyenngoaiAnt100Create = 'chuyenngoai/chuyenngoaiAnt100Create';
+export const chuyenngoaiAnt100Update = 'chuyenngoai/chuyenngoaiAnt100Update';
+export const chuyenngoaiAnt100UpdateStatus = 'chuyenngoai/chuyenngoaiAnt100UpdateStatus';
+export const chuyenngoaiAnt100Delete = 'chuyenngoai/chuyenngoaiAnt100Delete';
+
+// chi tiết chuyên ngoài
+export const ChitietchuyenngoaiAnt100GetId = 'chitietchuyenngoai/chitietchuyenngoaiAnt100Get';
+export const ChitietchuyenngoaiAnt100Create = 'chitietchuyenngoai/chitietchuyenngoaiAnt100Create';
+export const ChitietchuyenngoaiAnt100Update = 'chitietchuyenngoai/chitietchuyenngoaiAnt100Update';
+export const ChitietchuyenngoaiAnt100Delete = 'chitietchuyenngoai/chitietchuyenngoaiAnt100Delete';
+
+
+
 
 
 

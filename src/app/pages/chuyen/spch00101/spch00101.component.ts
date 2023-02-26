@@ -59,9 +59,11 @@ export class Spch00101Component extends BaseComponent implements OnInit {
   DisplayScreenID: UrlDisplayId = UrlDisplayId.spch00101;
 
   fnInit() {
-     this.cdf.markForCheck();
+    this.ngaybatdau = this.getDate();
+    this.cdf.markForCheck();
   }
   destroy() {}
+
 
   searchParam: Partial<SearchParam> = {};
   dateFormat = Const.dateFormat;
@@ -89,8 +91,6 @@ export class Spch00101Component extends BaseComponent implements OnInit {
   btnDelete = false;
   btnConfirmbochang = false; // hoàn thành bóc hàng
   btnConfirmtrahang = false; // hoàn thành trả hàng
-
-
 
   @ViewChild('Tlbiensoxe', { static: true }) Tlbiensoxe!: TemplateRef<NzSafeAny>;
   @ViewChild('Tltentai', { static: true }) Tltentai!: TemplateRef<NzSafeAny>;
@@ -142,6 +142,7 @@ export class Spch00101Component extends BaseComponent implements OnInit {
   handleEndOpenSoplnChange(open: boolean): void {}
 
   override ngOnInit(): void {
+    this.ngaybatdau = this.getDate();
     this.initTable();
     this.deptTreeService.initDate();   
     this.availableOptions = [...MapPipe.transformMapToArray(MapSet.available, MapKeyType.Boolean)];
@@ -167,7 +168,6 @@ export class Spch00101Component extends BaseComponent implements OnInit {
       })
     )
     .subscribe(data => {
-      console.log(data);
       const { list, total, pageNum } = data;
       this.dataList = [...list];
       for (let element of this.dataList) {
@@ -320,6 +320,7 @@ export class Spch00101Component extends BaseComponent implements OnInit {
      this.tainm = "";
      this.phunm = "";
      this.trangthaimode = "";
+     this.getDataList();
   }
 
   fnFocusOutBiensoxe() {

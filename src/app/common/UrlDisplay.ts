@@ -9,6 +9,7 @@ export enum UrlDisplayId {
     spxe00101 = 'xe/spxe00101',
     //chuyen
     spch00101 = 'chuyen/spch00101', // quản lý chuyến
+    spch00251 = 'chuyen/spch00251',
     spch00201 = 'chuyen/spch00201', // kế hoạch bọc hàng
 
     // khach hang
