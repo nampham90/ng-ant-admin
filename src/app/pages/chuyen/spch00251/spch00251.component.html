@@ -109,7 +109,7 @@
             </div>
         </form>
     </nz-card>
-    <app-card-table-wrap [tableTitle]="'Chi tiết đơn hàng'" (reload)="reloadTable()" [btnTpl]="tableBtns">
+    <app-card-table-wrap [tableTitle]="'Chi tiết đơn hàng'" (reload)="reloadTable()" [btnTpl]="tableBtns" [btnConfirm]="tableConfirm">
         <app-ant-table
         (selectedChange)="selectedChecked($event)"
         [checkedCashArrayFromComment]="checkedCashArray"
@@ -118,6 +118,20 @@
         [tableConfig]="tableConfig"
         [tableData]="dataList"
       ></app-ant-table>
+      <ng-template #operationTpl let-id="id" let-stt="stt">
+        <span *appAuth="ActionCode.ChuyenngoaiEdit" class="operate-text">
+          <button nz-button nzType="primary" nzGhost (click)="edit(stt)">Cập nhật</button>
+        </span>
+        <span *appAuth="ActionCode.ChuyenngoaiDel" class="operate-text">
+          <button nz-button nzType="primary" nzGhost (click)="del(stt)">Xóa</button>
+        </span>
+      </ng-template>
+      <ng-template #tiencuocTpl let-tiencuoc="tiencuoc">
+        <span>{{tiencuoc*1000 | currency : "VND" : ''}}</span>
+      </ng-template>
+      <ng-template #tiencuocxengoaiTpl let-tiencuocxengoai="tiencuocxengoai">
+        <span>{{tiencuocxengoai*1000 | currency : "VND" : ''}}</span>
+      </ng-template>
     </app-card-table-wrap>
     <ng-template #tableBtns>
         <button *appAuth="ActionCode.ChuyenngoaiAdd" (click)="add()" nz-button nzType="primary" class="m-r-8">
@@ -128,5 +142,15 @@
           <i nz-icon nzType="delete"></i>
           Xóa tất cả
         </button>
+    </ng-template>
+    <ng-template #tableConfirm>
+        <ng-container *ngIf="showConfirm">
+            <span *appAuth="ActionCode.ConfirmChuyenngoai" class="operate-text">
+                <button [disabled]="!btnConfirm" (click)="fnBtnConfirm()" nz-button nzType="primary" class="m-r-8">
+                    <i nz-icon nzType="caret-right"></i>
+                    Tạo chuyến ngoài
+                </button>
+            </span>
+        </ng-container>
     </ng-template>
 </div>

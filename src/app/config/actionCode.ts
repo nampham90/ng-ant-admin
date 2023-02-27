@@ -77,7 +77,8 @@ export const ActionCode = {
 
   // chuyến ngoài
   ChuyenngoaiAdd: 'default:chuyen:spch00251:add',
-  ChuyenngoaiEdit: 'default:chuyen:spch00251:edit',
+  ChuyenngoaiEdit: 'default:chuyen:spch00251:update',
   ChuyenngoaiDel: 'default:chuyen:spch00251:del',
+  ConfirmChuyenngoai: 'default:chuyen:spch00251:confirm',
 
 };

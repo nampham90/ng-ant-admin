@@ -1,0 +1,94 @@
+<form nz-form [formGroup]="addEditForm">
+    <ng-container *ngIf="editForm">
+        <nz-form-item>
+            <!-- Số thứ tự -->
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="stt">Số thứ tự</nz-form-label>
+            <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập ...">
+              <input nz-input formControlName="stt" name="stt" placeholder="" id="stt" [readOnly]="true"/>
+            </nz-form-control>
+        </nz-form-item>
+    </ng-container>
+
+    <nz-form-item>
+        <!-- Thông tin đơn hàng -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="thongtindonhang">Thông tin đơn hàng</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập ...">
+          <input nz-input formControlName="thongtindonhang" name="thongtindonhang" placeholder="Vui lòng nhập ..." id="thongtindonhang"/>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <!-- Địa điểm bóc hàng -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="diadiembochang">Địa điểm bóc hàng</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập ...">
+          <input nz-input formControlName="diadiembochang" name="diadiembochang" placeholder="Vui lòng nhập ..." id="diadiembochang"/>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <!-- Tiền cước -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="tiencuoc">Tiền cước</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập ...">
+            <app-input-currency [Amount]="tiencuocMode" (changeAmount)="changeTiencuoc($event)"></app-input-currency>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <!-- Tiền cước xe ngoài( tiền cước trả cho xe ngoài) -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="tiencuocxengoai">Tiền cước xe ngoài</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập ...">
+            <app-input-currency [Amount]="tiencuocxengoaiMode" (changeAmount)="changeTiencuocxengoai($event)"></app-input-currency>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <!-- hình thức thanh toán với xe ngoài -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="htttxengoai">HTTT Xe ngoài</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+            <nz-radio-group formControlName="htttxengoai">
+                <label nz-radio nzValue="1">Trực tiếp</label>
+                <label nz-radio nzValue="2">Ghi nợ</label>
+            </nz-radio-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <!-- hình thức thanh toán với xe ngoài -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="htttkhachhang">HTTT Khách hàng</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+            <nz-radio-group formControlName="htttkhachhang">
+                <label nz-radio nzValue="1">Trực tiếp</label>
+                <label nz-radio nzValue="2">Ghi nợ</label>
+                <label nz-radio nzValue="3">Khi nhận hàng</label>
+            </nz-radio-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <!-- Tên người nhận hàng -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="tennguoinhan">Tên người nhận</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập ...">
+          <input nz-input formControlName="tennguoinhan" name="tennguoinhan" placeholder="Vui lòng nhập ..." id="tennguoinhan"/>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <!-- Số điện thoại  -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="sdtnguoinhan">SDT người nhận</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập ...">
+          <input nz-input formControlName="sdtnguoinhan" name="sdtnguoinhan" placeholder="Vui lòng nhập ..." id="sdtnguoinhan"/>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <!-- Địa chỉ người nhận -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="diachinguoinhan">Địa chỉ người nhận</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập ...">
+          <input nz-input formControlName="diachinguoinhan" name="diachinguoinhan" placeholder="Vui lòng nhập ..." id="diachinguoinhan"/>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <!-- ghi chú thông tin chi tiết đơn hàng -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="ghichu">Ghi chú</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+            <textarea
+                nz-input
+                formControlName="ghichu"
+                placeholder="Mốt số ghi chú về chi tiết đơn hàng."
+                [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+            ></textarea>
+        </nz-form-control>
+    </nz-form-item>
+</form>

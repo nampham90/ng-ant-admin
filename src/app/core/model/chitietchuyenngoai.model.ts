@@ -1,5 +1,6 @@
 export interface Chitietchuyenngoai {
-    id: string,
+    id?: string,
+    stt: Number,
     idchuyenngoai: Object, // mã chyến hàng
     thongtindonhang: string,
     diadiembochang: string,  // 
@@ -18,5 +19,5 @@ export interface Chitietchuyenngoai {
     status03?: Number, 
     status04?: Number,
     status05?: Number,
-    ghichu: string
+    ghichu?: string
 }

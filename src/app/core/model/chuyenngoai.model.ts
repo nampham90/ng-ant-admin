@@ -1,5 +1,5 @@
 export interface Chuyenngoai {
-    id: string,
+    id?: string,
     ngaynhap: Date,
     ngayvanchuyen: Date,  // ngày vận chuyển
     ngaydukiengiaohang: Date,// ngày dự kiến giao hàng

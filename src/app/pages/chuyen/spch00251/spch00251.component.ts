@@ -14,7 +14,8 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { Chitietchuyenngoai } from '@app/core/model/chitietchuyenngoai.model';
-
+import { SubwindowCtchuyenngoaiService } from '@app/widget/modal/subwindowctchuyenngoai/subwindow-ctchuyenngoai.service'
+import { ModalBtnStatus } from '@app/widget/base-modal';
 interface SearchParam {
   ngaybatdau: string | null;
   ngayketthuc: string | null;
@@ -46,6 +47,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     protected override cdf :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
     public message: NzMessageService,
+    private subwinCtChuyenngoaiService: SubwindowCtchuyenngoaiService
   ) { 
     super(webService,router,cdf,datePipe);
   }
@@ -65,7 +67,8 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   };
 
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
-
+  @ViewChild('tiencuocTpl', { static: true }) tiencuocTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('tiencuocxengoaiTpl', { static: true }) tiencuocxengoaiTpl!: TemplateRef<NzSafeAny>;
   // mode
   idchuyenngoai: any;
 
@@ -84,12 +87,23 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   sodienthoai = "";
   ghichu = "";
 
+  listdetail: Chitietchuyenngoai[] = [];
+  ctchuyenngoai!: Chitietchuyenngoai;
+
   // disbale
   disabledidchuyenngoai = true;
   disabledsdtnguonxe = true;
 
+  showConfirm = false;
+  btnConfirm = true;
+
   override ngOnInit(): void {
      this.initTable();
+     this.showBtnConfirm();
+  }
+
+  fnBtnConfirm() {
+
   }
 
   reloadTable(): void {
@@ -98,7 +112,14 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   }
 
   getDataList(e?: NzTableQueryParams) {
-     this.tableLoading(true);
+    this.tableLoading(true);
+    if (this.listdetail.length > 0) {
+      this.dataList = [...this.listdetail];
+      this.tableLoading(false);
+      this.checkedCashArray = [...this.checkedCashArray];
+    } else {
+      this.tableLoading(false);
+    }
   }
 
   selectedChecked(e: Chitietchuyenngoai[]): void {
@@ -120,11 +141,84 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   }
 
   add() {
+    this.subwinCtChuyenngoaiService.show({ nzTitle:'Thêm mới' }).subscribe(
+      res => {
+        if (!res || res.status === ModalBtnStatus.Cancel){
+          return;
+        }
+        this.tableLoading(true);
+        this.mergeDetail(res.modalValue);
+        this.addListDetail();
+        this.getDataList();
+        this.showBtnConfirm();
+      },
+      error => this.tableLoading(false)
+    )
+  }
 
+  edit(stt: any) {
+    for (let element of this.dataList) {
+      if(element["stt"] === stt) {
+        this.subwinCtChuyenngoaiService.show({ nzTitle: 'Cập nhật' }, element).subscribe(({ modalValue, status }) => {
+          if (status === ModalBtnStatus.Cancel) {
+            return;
+          }
+          this.tableLoading(true);
+          modalValue.stt = stt;
+          this.mergeUpdateList(modalValue);
+          this.dataList = [...this.listdetail];
+          this.cdf.markForCheck();
+          this.tableLoading(false);
+          //this.getDataList();
+        },error => this.tableLoading(false))
+      }
+    }
+  }
+
+  del(stt:any) {
+
+  }
+
+  showBtnConfirm() {
+    if(this.dataList.length > 0) {
+      this.showConfirm = true;
+    } else {
+      this.showConfirm = false;
+    }
   }
 
   allDel() {
 
+  }
+
+  addListDetail() {
+    if(this.ctchuyenngoai){
+       this.listdetail = this.listdetail.concat(this.ctchuyenngoai);
+    }
+  }
+
+  mergeDetail(ctdetail: any) {
+    let stt = this.listdetail.length + 1;
+    this.ctchuyenngoai = ctdetail;
+    this.ctchuyenngoai.stt = stt;
+    return this.ctchuyenngoai;
+  }
+
+  mergeUpdateList(ctdetail: any) {
+    for(let element of this.listdetail) {
+      if(element.stt == ctdetail.stt) {
+        element['thongtindonhang'] = ctdetail['thongtindonhang'];
+        element['diadiembochang'] = ctdetail['diadiembochang'];
+        element['ghichu'] = ctdetail['ghichu'];
+        element['htttkhachhang'] = ctdetail['htttkhachhang'];
+        element['htttxengoai'] = ctdetail['htttxengoai'];
+        element['sdtnguoinhan'] = ctdetail['sdtnguoinhan'];
+        element['tennguoinhan'] = ctdetail['tennguoinhan'];
+        element['diachinguoinhan'] = ctdetail['diachinguoinhan'];
+        element['tiencuoc'] = ctdetail['tiencuoc'];
+        element['tiencuocxengoai'] = ctdetail['tiencuocxengoai'];
+      }
+    }
   }
 
   private initTable(): void {
@@ -134,7 +228,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         {
           title: 'STT',
           field: 'stt',
-          width: 50,
+          width: 80,
         },
         {
           title: 'Thông tin đơn hàng',
@@ -150,12 +244,13 @@ export class Spch00251Component extends BaseComponent implements OnInit {
           title: 'Tiền cước',
           width: 120,
           field: 'tiencuoc',
+          tdTemplate: this.tiencuocTpl
         },
         {
-          title: 'Tiền thuê xe',
-          width: 150,
+          title: 'Tiền thuê xe ngoài',
+          width: 250,
           field: 'tiencuocxengoai',
-  
+          tdTemplate: this.tiencuocxengoaiTpl
         },
         {
           title: 'HTTT xe ngoài',
@@ -181,8 +276,13 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         },
         {
           title: 'Đia chỉ người nhận',
-          width: 150,
+          width: 230,
           field: 'diachinguoinhan'
+        },
+        {
+          title: 'Ghi chú',
+          width: 350,
+          field: 'ghichu'
         },
         {
           title: 'Hành động',
