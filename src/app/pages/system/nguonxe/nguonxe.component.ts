@@ -16,6 +16,7 @@ import { NguonxeModalService } from '@app/widget/biz-widget/system/nguonxe-modal
 import { SearchCommonVO } from '@app/core/services/types';
 import { finalize } from 'rxjs';
 import { ModalBtnStatus } from '@app/widget/base-modal';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 interface SearchParam {
   datacd: string;
@@ -58,7 +59,8 @@ export class NguonxeComponent extends BaseComponent implements OnInit {
     protected override  datePipe : DatePipe,
     public message: NzMessageService,
     private dataService : NguonxeService,
-    private modalService: NguonxeModalService
+    private modalService: NguonxeModalService,
+    private modalSrv: NzModalService
   ) {
     super(webService,router,cdf,datePipe);
     this.pageHeaderInfo = {
@@ -131,7 +133,7 @@ export class NguonxeComponent extends BaseComponent implements OnInit {
      )
   }
 
-  addEditData(param: Nguonxe, methodName: 'postCreate' | 'postCreate'): void {
+  addEditData(param: Nguonxe, methodName: 'postCreate' | 'postUpdate'): void {
     this.dataService[methodName](param)
       .pipe(
         finalize(() => {
@@ -139,8 +141,41 @@ export class NguonxeComponent extends BaseComponent implements OnInit {
         })
       )
       .subscribe(() => {
+        this.message.info('Cập nhật thành công');
         this.getDataList();
       });
+  }
+
+  edit(id: any) {
+    this.dataService.postDetail({id:id}).subscribe(res => {
+       this.modalService.show({nzTitle: 'Cập Nhật'}, res).subscribe(({modalValue, status}) => {
+          if(status === ModalBtnStatus.Cancel) {
+             return;
+          }
+          modalValue.id = id;
+          this.tableLoading(true);
+          this.addEditData(modalValue,'postUpdate');
+       })    
+    })
+  }
+
+  del(id: any) {
+    this.modalSrv.confirm({
+      nzTitle: 'Bạn có chắc chắn muốn xóa không ?',
+      nzContent: 'Không thể khôi phục sau khi xóa',
+      nzOnOk: () => {
+        this.tableLoading(true);
+        this.dataService.postDelete({id:id}).subscribe(
+          () => {
+            if (this.dataList.length === 1) {
+              this.tableConfig.pageIndex--;
+            }
+            this.getDataList();
+          },
+          error => this.tableLoading(false)
+        )
+      }
+    });
   }
 
   override ngOnInit(): void {

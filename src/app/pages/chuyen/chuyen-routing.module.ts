@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { path: 'spch00101', loadChildren: () => import('./spch00101/spch00101.module').then(m => m.Spch00101Module)},
   { path: 'spch00201', loadChildren: () => import('./spch00201/spch00201.module').then(m => m.Spch00201Module)},
+  { path: 'spch00251', loadChildren: () => import('./spch00251/spch00251.module').then(m => m.Spch00251Module)},
   { path: '', redirectTo: 'spch00101', pathMatch: 'full' }
 ];
 

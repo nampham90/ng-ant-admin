@@ -4,8 +4,10 @@ import { CommonModule } from '@angular/common';
 import { ChuyenRoutingModule } from './chuyen-routing.module';
 
 
+
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [
     CommonModule,
     ChuyenRoutingModule

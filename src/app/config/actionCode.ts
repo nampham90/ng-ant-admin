@@ -72,7 +72,12 @@ export const ActionCode = {
 
   // nguon xe
   Nguonxeadd: 'default:system:quanlynguonxe:add',
-  Nguonxedel: 'default:system::quanlynguonxe:del',
-  Nguonxeupdate: 'default:system:quanlynguonxe:update'
+  Nguonxedel: 'default:system:quanlynguonxe:del',
+  Nguonxeupdate: 'default:system:quanlynguonxe:update',
+
+  // chuyến ngoài
+  ChuyenngoaiAdd: 'default:chuyen:spch00251:add',
+  ChuyenngoaiEdit: 'default:chuyen:spch00251:edit',
+  ChuyenngoaiDel: 'default:chuyen:spch00251:del',
 
 };
