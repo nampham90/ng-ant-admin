@@ -116,7 +116,6 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     if (this.listdetail.length > 0) {
       this.dataList = [...this.listdetail];
       this.tableLoading(false);
-      this.checkedCashArray = [...this.checkedCashArray];
     } else {
       this.tableLoading(false);
     }
@@ -157,22 +156,21 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   }
 
   edit(stt: any) {
+    let res : any;
     for (let element of this.dataList) {
       if(element["stt"] === stt) {
-        this.subwinCtChuyenngoaiService.show({ nzTitle: 'Cập nhật' }, element).subscribe(({ modalValue, status }) => {
-          if (status === ModalBtnStatus.Cancel) {
-            return;
-          }
-          this.tableLoading(true);
-          modalValue.stt = stt;
-          this.mergeUpdateList(modalValue);
-          this.dataList = [...this.listdetail];
-          this.cdf.markForCheck();
-          this.tableLoading(false);
-          //this.getDataList();
-        },error => this.tableLoading(false))
+        res = element;
       }
     }
+    this.subwinCtChuyenngoaiService.show({ nzTitle: 'Cập nhật' }, res).subscribe(({ modalValue, status }) => {
+      if (status === ModalBtnStatus.Cancel) {
+        return;
+      }
+      this.tableLoading(true);
+      modalValue.stt = stt;
+      this.mergeUpdateList(modalValue);
+      this.getDataList();
+    })
   }
 
   del(stt:any) {
@@ -207,16 +205,16 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   mergeUpdateList(ctdetail: any) {
     for(let element of this.listdetail) {
       if(element.stt == ctdetail.stt) {
-        element['thongtindonhang'] = ctdetail['thongtindonhang'];
-        element['diadiembochang'] = ctdetail['diadiembochang'];
-        element['ghichu'] = ctdetail['ghichu'];
-        element['htttkhachhang'] = ctdetail['htttkhachhang'];
-        element['htttxengoai'] = ctdetail['htttxengoai'];
-        element['sdtnguoinhan'] = ctdetail['sdtnguoinhan'];
-        element['tennguoinhan'] = ctdetail['tennguoinhan'];
-        element['diachinguoinhan'] = ctdetail['diachinguoinhan'];
-        element['tiencuoc'] = ctdetail['tiencuoc'];
-        element['tiencuocxengoai'] = ctdetail['tiencuocxengoai'];
+        element.thongtindonhang = ctdetail['thongtindonhang'];
+        element.diadiembochang = ctdetail['diadiembochang'];
+        element.ghichu = ctdetail['ghichu'];
+        element.htttkhachhang = ctdetail['htttkhachhang'];
+        element.htttxengoai = ctdetail['htttxengoai'];
+        element.sdtnguoinhan = ctdetail['sdtnguoinhan'];
+        element.tennguoinhan = ctdetail['tennguoinhan'];
+        element.diachinguoinhan = ctdetail['diachinguoinhan'];
+        element.tiencuoc = ctdetail['tiencuoc'];
+        element.tiencuocxengoai = ctdetail['tiencuocxengoai'];
       }
     }
   }
