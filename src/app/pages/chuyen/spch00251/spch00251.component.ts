@@ -249,6 +249,14 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     }
   }
 
+  hasError() {
+    if(this.biensoxe == "" || this.biensoxe == null || this.biensoxe == undefined) {
+       return true;
+    } else {
+       return false;
+    }
+  }
+
 
   private initTable(): void {
     this.tableConfig = {
