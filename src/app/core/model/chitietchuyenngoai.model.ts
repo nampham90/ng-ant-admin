@@ -1,23 +1,23 @@
 export interface Chitietchuyenngoai {
     id?: string,
-    stt: Number,
+    stt: number,
     idchuyenngoai: Object, // mã chyến hàng
     thongtindonhang: string,
     diadiembochang: string,  // 
-    tiencuoc:Number,
-    tiencuocxengoai: Number,
+    tiencuoc:number,
+    tiencuocxengoai: number,
 
-    htttxengoai: Number,
-    htttkhachhang: Number,
+    htttxengoai: number,
+    htttkhachhang: number,
 
     tennguoinhan: string,
     sdtnguoinhan: string,
     diachinguoinhan: string,
 
-    status01?: Number, // 
-    status02?: Number, 
-    status03?: Number, 
-    status04?: Number,
-    status05?: Number,
+    status01?: number, // 
+    status02?: number, 
+    status03?: number, 
+    status04?: number,
+    status05?: number,
     ghichu?: string
 }

@@ -3,11 +3,11 @@
 import { Component,OnDestroy, OnInit, Injector, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { IObjectString } from 'src/app/common/IObject';
 import { WebserviceService,ObjectDataSC ,Product} from 'src/app/core/services/common/webservice.service';
-import { $timeout } from 'src/app/common/Time';
 import * as Const from 'src/app/common/const';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { UrlDisplayId } from '@app/common/UrlDisplay';
+
 
 @Component({
     selector: 'app-base',
@@ -19,6 +19,8 @@ export abstract class BaseComponent implements OnInit, OnDestroy {
     formItemNm: IObjectString = {};
     list:any = [];
     title = 'nam pham';
+
+    constHttt = Const.Hinhthucthanhtoan;
     constructor(
         protected webService: WebserviceService,
         protected router:Router,
@@ -54,6 +56,17 @@ export abstract class BaseComponent implements OnInit, OnDestroy {
         }
         let date = this.datePipe.transform(d, 'yyyy/MM/dd') + "";
         return date;
+    }
+
+    mergeHttt(httt: any) {
+        let strHttt = httt + "";
+        let htttnm  = "";
+        for(let element of this.constHttt) {
+           if(element.value === strHttt) {
+             htttnm = element.lable;
+           }
+        }
+        return htttnm;
     }
 
     abstract fnInit(): any;

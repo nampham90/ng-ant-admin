@@ -104,6 +104,9 @@
       <ng-template #tiencuocTpl let-tiencuoc="tiencuoc">
           <span>{{tiencuoc*1000 | currency : "VND" : ''}}</span>
       </ng-template>
+      <ng-template #htttTpl let-hinhthucthanhtoan="hinhthucthanhtoan">
+        <span>{{mergeHttt(hinhthucthanhtoan)}}</span>
+      </ng-template>
     </app-card-table-wrap>
     <ng-template #tableConfirm>
         <ng-container *ngIf="showConfirm">

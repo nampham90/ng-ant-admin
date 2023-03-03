@@ -7,9 +7,9 @@ export interface Nguonxe {
     diachi:string;
     thongtinthanhtoan1:string;
     thongtinthanhtoan2:string;
-    stutas01?: Number | null,
-    stutas02?: Number | null,
-    stutas03?: Number | null,
-    stutas04?: Number | null,
-    stutas05?: Number | null
+    stutas01?: number | null,
+    stutas02?: number | null,
+    stutas03?: number | null,
+    stutas04?: number | null,
+    stutas05?: number | null
 }

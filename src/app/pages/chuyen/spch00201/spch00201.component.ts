@@ -98,6 +98,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
 
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('tiencuocTpl', { static: true }) tiencuocTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('htttTpl', { static: true }) htttTpl!: TemplateRef<NzSafeAny>;
 
 
   constructor(
@@ -342,7 +343,6 @@ export class Spch00201Component extends BaseComponent implements OnInit {
 
 
   edit(id: any) {
-    console.log(id);
     this.phhService.getDetail(id).subscribe(res => {
       let req = {
         "idchuyen": res.idchuyen,
@@ -520,7 +520,8 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         {
           title: 'Hình thức thanh toán',
           width: 250,
-          field: 'hinhthucthanhtoan'
+          field: 'hinhthucthanhtoan',
+          tdTemplate: this.htttTpl
         },
         {
           title: 'Lộ trình',

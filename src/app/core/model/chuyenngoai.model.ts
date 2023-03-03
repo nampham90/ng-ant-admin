@@ -9,10 +9,10 @@ export interface Chuyenngoai {
     tentaixe: string, // tài xế
     sodienthoai: string,// điện thoại tài xế
     listdetail: [],
-    status01?: Number, // 0. chuyến đang hoat động. 1. chuyến đã kết thúc
-    status02?: Number, 
-    status03?: Number, 
-    status04?: Number,
-    status05?: Number,
+    status01?: number, // 0. chuyến đang hoat động. 1. chuyến đã kết thúc
+    status02?: number, 
+    status03?: number, 
+    status04?: number,
+    status05?: number,
     ghichu: string
 }

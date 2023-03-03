@@ -5,9 +5,9 @@ export const  idKhachhang = "632ebaf77e9ad9aeef4e3d27";
 export const  tinhthanhApi = "https://provinces.open-api.vn/api/?depth=2";
 
 export const  Hinhthucthanhtoan = [
-    {"1": "Thanh toán trực tiếp"},
-    {"2": "Ghi nợ"},
-    {"3": "Thanh toán khi nhận hàng"},
+    { "value": "1", "lable": "Trực tiếp"},
+    { "value": "2", "lable": "Ghi nợ"},
+    { "value": "3", "lable": "Khi nhận hàng"}
 ];
 
 export const Lotrinh = [

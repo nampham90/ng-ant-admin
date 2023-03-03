@@ -132,6 +132,30 @@
       <ng-template #tiencuocxengoaiTpl let-tiencuocxengoai="tiencuocxengoai">
         <span>{{tiencuocxengoai*1000 | currency : "VND" : ''}}</span>
       </ng-template>
+      <ng-template #thongtindonhangTpl let-thongtindonhang="thongtindonhang">
+        <span>{{thongtindonhang}}</span>
+      </ng-template>
+      <ng-template #diadiembochangTpl let-diadiembochang="diadiembochang">
+        <span>{{diadiembochang}}</span>
+      </ng-template>
+      <ng-template #ghichuTpl let-ghichu="ghichu">
+        <span>{{ghichu}}</span>
+      </ng-template>
+      <ng-template #htttkhachhangTpl let-htttkhachhang="htttkhachhang">
+        <span>{{mergeHttt(htttkhachhang)}}</span>
+      </ng-template>
+      <ng-template #htttxengoaiTpl let-htttxengoai="htttxengoai">
+        <span>{{mergeHttt(htttxengoai)}}</span>
+      </ng-template>
+      <ng-template #sdtnguoinhanTpl let-sdtnguoinhan="sdtnguoinhan">
+        <span>{{sdtnguoinhan}}</span>
+      </ng-template>
+      <ng-template #tennguoinhanTpl let-tennguoinhan="tennguoinhan">
+        <span>{{tennguoinhan}}</span>
+      </ng-template>
+      <ng-template #diachinguoinhanTpl let-diachinguoinhan="diachinguoinhan">
+        <span>{{diachinguoinhan}}</span>
+      </ng-template>
     </app-card-table-wrap>
     <ng-template #tableBtns>
         <button *appAuth="ActionCode.ChuyenngoaiAdd" (click)="add()" nz-button nzType="primary" class="m-r-8">

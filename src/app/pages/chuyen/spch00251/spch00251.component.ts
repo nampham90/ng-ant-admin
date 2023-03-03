@@ -16,6 +16,7 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { Chitietchuyenngoai } from '@app/core/model/chitietchuyenngoai.model';
 import { SubwindowCtchuyenngoaiService } from '@app/widget/modal/subwindowctchuyenngoai/subwindow-ctchuyenngoai.service'
 import { ModalBtnStatus } from '@app/widget/base-modal';
+import { NzModalService } from 'ng-zorro-antd/modal';
 interface SearchParam {
   ngaybatdau: string | null;
   ngayketthuc: string | null;
@@ -47,7 +48,8 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     protected override cdf :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
     public message: NzMessageService,
-    private subwinCtChuyenngoaiService: SubwindowCtchuyenngoaiService
+    private subwinCtChuyenngoaiService: SubwindowCtchuyenngoaiService,
+    private modalSrv: NzModalService,
   ) { 
     super(webService,router,cdf,datePipe);
   }
@@ -69,6 +71,14 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('tiencuocTpl', { static: true }) tiencuocTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('tiencuocxengoaiTpl', { static: true }) tiencuocxengoaiTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('thongtindonhangTpl', { static: true }) thongtindonhangTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('diadiembochangTpl', { static: true }) diadiembochangTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('ghichuTpl', { static: true }) ghichuTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('htttkhachhangTpl', { static: true }) htttkhachhangTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('htttxengoaiTpl', { static: true }) htttxengoaiTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('sdtnguoinhanTpl', { static: true }) sdtnguoinhanTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('tennguoinhanTpl', { static: true }) tennguoinhanTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('diachinguoinhanTpl', { static: true }) diachinguoinhanTpl!: TemplateRef<NzSafeAny>;
   // mode
   idchuyenngoai: any;
 
@@ -96,6 +106,8 @@ export class Spch00251Component extends BaseComponent implements OnInit {
 
   showConfirm = false;
   btnConfirm = true;
+
+
 
   override ngOnInit(): void {
      this.initTable();
@@ -174,7 +186,16 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   }
 
   del(stt:any) {
-
+    this.modalSrv.confirm({
+      nzTitle: 'Bạn có chắc chắn muốn xóa nó không?',
+      nzContent: 'Không thể phục hồi sau khi xóa',
+      nzOnOk: () => {
+        this.tableLoading(true);
+        this.listdetail = this.listdetail.filter(item => item['stt'] !== stt);
+        this.dataList = [...this.listdetail];
+        this.tableLoading(false);
+      }
+    });
   }
 
   showBtnConfirm() {
@@ -196,7 +217,16 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   }
 
   mergeDetail(ctdetail: any) {
-    let stt = this.listdetail.length + 1;
+    let stt: number = 0;
+    let n = this.listdetail.length;
+    if (n == 0) {
+       stt = 1;
+    } else {
+      let sttthn = this.listdetail[n-1].stt;
+      if(sttthn && sttthn > 0) {
+        stt = sttthn + 1;
+      }
+    }
     this.ctchuyenngoai = ctdetail;
     this.ctchuyenngoai.stt = stt;
     return this.ctchuyenngoai;
@@ -219,6 +249,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     }
   }
 
+
   private initTable(): void {
     this.tableConfig = {
       showCheckbox: false,
@@ -232,11 +263,13 @@ export class Spch00251Component extends BaseComponent implements OnInit {
           title: 'Thông tin đơn hàng',
           field: 'thongtindonhang',
           width: 280,
+          tdTemplate: this.thongtindonhangTpl
         },
         {
           title: 'Địa điểm bốc hàng',
           width: 280,
-          field: 'diadiembochang'
+          field: 'diadiembochang',
+          tdTemplate: this.diadiembochangTpl
         },
         {
           title: 'Tiền cước',
@@ -254,33 +287,38 @@ export class Spch00251Component extends BaseComponent implements OnInit {
           title: 'HTTT xe ngoài',
           width: 200,
           field: 'htttxengoai',
+          tdTemplate: this.htttxengoaiTpl
 
         },
         {
           title: 'HTTT khách hàng',
           width: 200,
           field: 'htttkhachhang',
- 
+          tdTemplate: this.htttkhachhangTpl
         },
         {
           title: 'Tên người nhận',
           width: 150,
-          field: 'tennguoinhan'
+          field: 'tennguoinhan',
+          tdTemplate: this.tennguoinhanTpl
         },
         {
           title: 'SDT người nhận',
           width: 150,
-          field: 'sdtnguoinhan'
+          field: 'sdtnguoinhan',
+          tdTemplate: this.sdtnguoinhanTpl
         },
         {
           title: 'Đia chỉ người nhận',
           width: 230,
-          field: 'diachinguoinhan'
+          field: 'diachinguoinhan',
+          tdTemplate: this.diachinguoinhanTpl
         },
         {
           title: 'Ghi chú',
           width: 350,
-          field: 'ghichu'
+          field: 'ghichu',
+          tdTemplate: this.ghichuTpl
         },
         {
           title: 'Hành động',
