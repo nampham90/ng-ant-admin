@@ -17,6 +17,10 @@ import { Chitietchuyenngoai } from '@app/core/model/chitietchuyenngoai.model';
 import { SubwindowCtchuyenngoaiService } from '@app/widget/modal/subwindowctchuyenngoai/subwindow-ctchuyenngoai.service'
 import { ModalBtnStatus } from '@app/widget/base-modal';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NguonxeService } from '@app/core/services/http/nguonxe/nguonxe.service';
+import { ChuyenngoaiService } from '@app/core/services/http/chuyenngoai/chuyenngoai.service';
+import { ChuyenngoaidtoService } from '@app/core/services/http/chuyenngoai/chuyenngoaidto.service';
 interface SearchParam {
   ngaybatdau: string | null;
   ngayketthuc: string | null;
@@ -32,6 +36,8 @@ interface SearchParam {
   styleUrls: ['./spch00251.component.less']
 })
 export class Spch00251Component extends BaseComponent implements OnInit {
+
+  headerForm!: FormGroup;
   override fnInit() {
     
   }
@@ -50,6 +56,10 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     public message: NzMessageService,
     private subwinCtChuyenngoaiService: SubwindowCtchuyenngoaiService,
     private modalSrv: NzModalService,
+    private nguonxeService: NguonxeService,
+    private dataService: ChuyenngoaiService,
+    private chuyenngoaiDto: ChuyenngoaidtoService,
+    private fb: FormBuilder
   ) { 
     super(webService,router,cdf,datePipe);
   }
@@ -111,12 +121,71 @@ export class Spch00251Component extends BaseComponent implements OnInit {
 
   override ngOnInit(): void {
      this.initTable();
+     this.headerForm = this.createForm();
      this.showBtnConfirm();
+     this.fnGetAllNguonXe();
+  }
+
+  fnGetAllNguonXe() {
+    let req = {
+      pageSize: 0,
+      pageNum: 0
+    }
+    this.nguonxeService.postAll(req).pipe().subscribe(res => {
+        this.listnguonxe = res;
+    })
   }
 
   fnBtnConfirm() {
-
+     console.log(this.headerForm.value);
+     let req = {
+        "spch00251Header": this.headerForm.value,
+        "spch00251Listdetail": this.dataList
+     }
+     this.dataService.postCreate(req)
+     .pipe()
+     .subscribe(res => {
+        console.log(res);
+        this.tableLoading(true);
+        this.listdetail = res.reslistdetail
+        this.headerForm.patchValue(res.resspch00251Header);
+        this.getDataList();
+        this.chuyenngoaiDto.initFlg = false;
+        this.chuyenngoaiDto.listdetail = res.reslistdetail;
+        this.showConfirm = false;
+     })
+     
   }
+
+  createForm() {
+    return this.fb.group({
+      id : [""],
+      nguonxe: [null, [Validators.required]],
+      sdtnguonxe: ["", [Validators.required]],
+      ngaynhap: [null, [Validators.required]],
+      ngayvanchuyen: [null, [Validators.required]],
+      ngaydukiengiaohang: [null],
+      biensoxe: [null, [Validators.required]],
+      tentaixe: [null, [Validators.required]],
+      sodienthoai: [null, [Validators.required]],
+      ghichu: [""]
+    })
+  }
+
+  submitForm() {
+     console.log("submit", this.headerForm.value);
+  }
+
+
+  fnChangeNguonXe($event: any) {
+    let req = {
+       id : $event
+    }
+    this.nguonxeService.postDetail(req).pipe().subscribe(res => {
+       this.headerForm.patchValue({sdtnguonxe: res.sodienthoai});
+    })
+  }
+
 
   reloadTable(): void {
     this.message.info('Đã được làm mới');
@@ -248,15 +317,6 @@ export class Spch00251Component extends BaseComponent implements OnInit {
       }
     }
   }
-
-  hasError() {
-    if(this.biensoxe == "" || this.biensoxe == null || this.biensoxe == undefined) {
-       return true;
-    } else {
-       return false;
-    }
-  }
-
 
   private initTable(): void {
     this.tableConfig = {

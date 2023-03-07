@@ -1,22 +1,22 @@
 <app-page-header [pageHeaderInfo]="pageHeaderInfo"></app-page-header>
 <div class="normal-table-wrap">
     <nz-card nzHoverable [nzBodyStyle]="{ 'padding-bottom': 0 }" class="m-b-10">
-        <form nz-form>
+        <form nz-form [formGroup]="headerForm"  (ngSubmit)="submitForm()">
             <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
                 <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
                     <nz-form-item>
                         <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" nzRequired>Mã chuyến ngoài</nz-form-label>
                         <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24">
-                            <input nz-input name="idchuyenngoai" [(ngModel)]="idchuyenngoai" placeholder="Mã chuyến ngoài" [disabled]="disabledidchuyenngoai"/>
+                            <input nz-input name="id" formControlName="id" placeholder="Mã chuyến ngoài" [disabled]="true" readonly />
                         </nz-form-control>
                     </nz-form-item>
                 </div>
                 <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
                     <nz-form-item>
                         <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" nzRequired>Nguồn xe</nz-form-label>
-                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24">
-                            <nz-select name="nguonxe" nzShowSearch nzAllowClear nzPlaceHolder="Select" [(ngModel)]="nguonxe">
-                                <nz-option *ngFor="let lst of listnguonxe" nzLabel="{{lst['lable']}}" nzValue="{{lst['value']}}"></nz-option>
+                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24"  [nzErrorTip]="combineTpl">
+                            <nz-select name="nguonxe" nzShowSearch nzAllowClear nzPlaceHolder="Select" formControlName="nguonxe" (ngModelChange)="fnChangeNguonXe($event)">
+                                <nz-option *ngFor="let lst of listnguonxe" nzLabel="{{lst['datacd']}} - {{lst['datanm']}}" nzValue="{{lst['id']}}"></nz-option>
                             </nz-select>
                         </nz-form-control>
                     </nz-form-item>
@@ -24,8 +24,8 @@
                 <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
                     <nz-form-item>
                         <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" nzRequired>SDT nguồn xe</nz-form-label>
-                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24" >
-                            <input nz-input name="sdtnguonxe" [(ngModel)]="sdtnguonxe" placeholder="" [disabled]="disabledsdtnguonxe"/>
+                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                            <input nz-input name="sdtnguonxe" id="sdtnguonxe" formControlName="sdtnguonxe" placeholder="" [disabled]="true" readonly/>
                         </nz-form-control>
                     </nz-form-item>
                 </div>
@@ -34,11 +34,11 @@
                 <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
                     <nz-form-item>
                         <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" nzRequired>Ngày nhập</nz-form-label>
-                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24"  [nzErrorTip]="combineTpl">
                             <nz-date-picker
                                 name="ngaynhap"
                                 [nzFormat]="dateFormat" 
-                                [(ngModel)]="ngaynhap" 
+                                formControlName="ngaynhap"
                                 [nzPlaceHolder]="dateFormat">
                             </nz-date-picker>
                         </nz-form-control>
@@ -47,11 +47,11 @@
                 <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
                     <nz-form-item>
                         <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" nzRequired>Ngày vận chuyển</nz-form-label>
-                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24"  [nzErrorTip]="combineTpl">
                             <nz-date-picker
                                 name="ngayvanchuyen"
                                 [nzFormat]="dateFormat" 
-                                [(ngModel)]="ngayvanchuyen" 
+                                formControlName="ngayvanchuyen"
                                 [nzPlaceHolder]="dateFormat">
                             </nz-date-picker>
                         </nz-form-control>
@@ -60,11 +60,11 @@
                 <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
                     <nz-form-item>
                         <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" nzRequired>Ngày dự kiến GH</nz-form-label>
-                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24"  [nzErrorTip]="combineTpl">
                             <nz-date-picker
                                 name="ngaydukiengiaohang"
                                 [nzFormat]="dateFormat" 
-                                [(ngModel)]="ngaydukiengiaohang" 
+                                formControlName="ngaydukiengiaohang"
                                 [nzPlaceHolder]="dateFormat">
                             </nz-date-picker>
                         </nz-form-control>
@@ -75,27 +75,24 @@
                 <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
                     <nz-form-item>
                         <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" nzRequired>Biển số xe</nz-form-label>
-                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="userErrorTpl">
-                            <input nz-input name="biensoxe" [(ngModel)]="biensoxe" placeholder="Biển số xe" />
+                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24"  [nzErrorTip]="combineTpl">
+                            <input nz-input name="biensoxe" formControlName="biensoxe" placeholder="Biển số xe" />
                         </nz-form-control>
-                        <ng-template #userErrorTpl>
-                            <ng-container *ngIf="!hasError()">Phần bắt buộc !</ng-container>
-                        </ng-template>
                     </nz-form-item>
                 </div>
                 <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
                     <nz-form-item>
                         <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" nzRequired>Tên tài xế</nz-form-label>
-                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24">
-                            <input nz-input name="tentaixe" [(ngModel)]="tentaixe" placeholder="Tên tài xê" />
+                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24"  [nzErrorTip]="combineTpl">
+                            <input nz-input name="tentaixe" formControlName="tentaixe" placeholder="Tên tài xê" />
                         </nz-form-control>
                     </nz-form-item>
                 </div>
                 <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
                     <nz-form-item>
                         <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" nzRequired>Số điện thoại</nz-form-label>
-                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24">
-                            <input nz-input name="sodienthoai" [(ngModel)]="sodienthoai" placeholder="Số điện thoại tài xế" />
+                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24"  [nzErrorTip]="combineTpl">
+                            <input nz-input name="sodienthoai" formControlName="sodienthoai" placeholder="Số điện thoại tài xế" />
                         </nz-form-control>
                     </nz-form-item>
                 </div>
@@ -104,13 +101,17 @@
                 <div nz-col [nzXXl]="24" [nzXl]="24" [nzLg]="24" [nzMd]="24" [nzSm]="24" [nzXs]="24">
                     <nz-form-item>
                         <nz-form-label [nzXXl]="3" [nzXl]="3" [nzLg]="3" [nzMd]="6" [nzSm]="24" [nzXs]="24" [nzFor]="">Ghi chú</nz-form-label>
-                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24">
-                            <textarea nz-input name="ghichu" [(ngModel)]="ghichu" placeholder="Ghi chú"  [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24"  [nzErrorTip]="combineTpl">
+                            <textarea nz-input name="ghichu" formControlName="ghichu"  placeholder="Ghi chú"  [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
                         </nz-form-control>
                     </nz-form-item>
                 </div>
             </div>
         </form>
+        <ng-template #combineTpl let-control>
+            <ng-container *ngIf="control.hasError('message')">{{ control.errors.message }}</ng-container>
+            <ng-container *ngIf="control.hasError('required')">Phần bắt buộc</ng-container>
+          </ng-template>
     </nz-card>
     <app-card-table-wrap [tableTitle]="'Chi tiết đơn hàng'" (reload)="reloadTable()" [btnTpl]="tableBtns" [btnConfirm]="tableConfirm">
         <app-ant-table
@@ -173,7 +174,7 @@
     <ng-template #tableConfirm>
         <ng-container *ngIf="showConfirm">
             <span *appAuth="ActionCode.ConfirmChuyenngoai" class="operate-text">
-                <button [disabled]="!btnConfirm" (click)="fnBtnConfirm()" nz-button nzType="primary" class="m-r-8">
+                <button [disabled]="!btnConfirm" (click)="fnBtnConfirm()" [disabled]="!headerForm.valid" nz-button nzType="primary" class="m-r-8">
                     <i nz-icon nzType="caret-right"></i>
                     Tạo chuyến ngoài
                 </button>
