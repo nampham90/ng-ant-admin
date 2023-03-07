@@ -145,9 +145,13 @@ export class Spch00251Component extends BaseComponent implements OnInit {
      this.dataService.postCreate(req)
      .pipe()
      .subscribe(res => {
-        console.log(res);
         this.tableLoading(true);
         this.listdetail = res.reslistdetail
+        let stt = 1;
+        for(let element of this.listdetail) {
+          element.stt = stt;
+          stt++;
+        }
         this.headerForm.patchValue(res.resspch00251Header);
         this.getDataList();
         this.chuyenngoaiDto.initFlg = false;

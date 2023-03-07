@@ -7,8 +7,8 @@ export interface Chitietchuyenngoai {
     tiencuoc:number,
     tiencuocxengoai: number,
 
-    htttxengoai: number,
-    htttkhachhang: number,
+    htttxengoai: string,
+    htttkhachhang: string,
 
     tennguoinhan: string,
     sdtnguoinhan: string,
