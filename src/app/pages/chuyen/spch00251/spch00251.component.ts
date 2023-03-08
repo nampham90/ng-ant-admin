@@ -137,28 +137,36 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   }
 
   fnBtnConfirm() {
-     console.log(this.headerForm.value);
-     let req = {
+    let req = {}
+    if(this.chuyenngoaiDto.initFlg === false) {
+      req = {
+          "spch00251Header": this.headerForm.value,
+          "spch00251Listdetail": this.dataList,
+          "mode": "update" // them mới và updade củ
+      }
+    } else {
+      req = {
         "spch00251Header": this.headerForm.value,
-        "spch00251Listdetail": this.dataList
-     }
-     this.dataService.postCreate(req)
-     .pipe()
-     .subscribe(res => {
-        this.tableLoading(true);
-        this.listdetail = res.reslistdetail
-        let stt = 1;
-        for(let element of this.listdetail) {
-          element.stt = stt;
-          stt++;
-        }
-        this.headerForm.patchValue(res.resspch00251Header);
-        this.getDataList();
-        this.chuyenngoaiDto.initFlg = false;
-        this.chuyenngoaiDto.listdetail = res.reslistdetail;
-        this.showConfirm = false;
-     })
-     
+        "spch00251Listdetail": this.dataList,
+        "mode": "create" // them mới hoàn toàn
+      }
+    }
+    this.dataService.postCreate(req)
+    .pipe()
+    .subscribe(res => {
+      this.tableLoading(true);
+      this.listdetail = res.reslistdetail
+      let stt = 1;
+      for(let element of this.listdetail) {
+        element.stt = stt;
+        stt++;
+      }
+      this.headerForm.patchValue(res.resspch00251Header);
+      this.getDataList();
+      this.chuyenngoaiDto.initFlg = false;
+      this.chuyenngoaiDto.listdetail = res.reslistdetail;
+      this.message.success("Đơn hàng đã được đăng ký thành công !");
+    })
   }
 
   createForm() {

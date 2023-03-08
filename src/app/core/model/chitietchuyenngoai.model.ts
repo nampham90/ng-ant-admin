@@ -2,6 +2,7 @@ export interface Chitietchuyenngoai {
     id?: string,
     stt: number,
     idchuyenngoai: Object, // mã chyến hàng
+    nguonxe: string,
     thongtindonhang: string,
     diadiembochang: string,  // 
     tiencuoc:number,
