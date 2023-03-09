@@ -93,5 +93,4 @@ export class SubwindowproductComponent implements OnInit {
         this.cdf.markForCheck();
       });
   }
-
 }

@@ -21,6 +21,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NguonxeService } from '@app/core/services/http/nguonxe/nguonxe.service';
 import { ChuyenngoaiService } from '@app/core/services/http/chuyenngoai/chuyenngoai.service';
 import { ChuyenngoaidtoService } from '@app/core/services/http/chuyenngoai/chuyenngoaidto.service';
+
 interface SearchParam {
   ngaybatdau: string | null;
   ngayketthuc: string | null;
@@ -43,7 +44,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   }
 
   override destroy() {
-    
+     this.chuyenngoaiDto.clear();
   }
 
   override DisplayScreenID: UrlDisplayId = UrlDisplayId.spch00251;
@@ -138,35 +139,54 @@ export class Spch00251Component extends BaseComponent implements OnInit {
 
   fnBtnConfirm() {
     let req = {}
+    let title = "";
+    let content = "";
+    let mode = "";
     if(this.chuyenngoaiDto.initFlg === false) {
+      mode = "update";
+      title = "Bạn chắc chắn muốn cập nhật !";
+      content = "Dữ liệu sẽ được cập nhật sau khi nhấn OK";
       req = {
           "spch00251Header": this.headerForm.value,
           "spch00251Listdetail": this.dataList,
           "mode": "update" // them mới và updade củ
       }
     } else {
+      mode = "create";
+      title = "Bạn chắc chắn dữ liệu bạn tạo đã đúng chưa !";
+      content = "Nhấn ok để hoàn thành công việc !";
       req = {
         "spch00251Header": this.headerForm.value,
         "spch00251Listdetail": this.dataList,
         "mode": "create" // them mới hoàn toàn
       }
     }
-    this.dataService.postCreate(req)
-    .pipe()
-    .subscribe(res => {
-      this.tableLoading(true);
-      this.listdetail = res.reslistdetail
-      let stt = 1;
-      for(let element of this.listdetail) {
-        element.stt = stt;
-        stt++;
+    this.modalSrv.confirm({
+      nzTitle: title,
+      nzContent: content,
+      nzOnOk: () => {
+        this.dataService.postCreate(req)
+        .pipe()
+        .subscribe(res => {
+          this.tableLoading(true);
+          this.listdetail = res.reslistdetail
+          let stt = 1;
+          for(let element of this.listdetail) {
+            element.stt = stt;
+            stt++;
+          }
+          this.headerForm.patchValue(res.resspch00251Header);
+          this.getDataList();
+          this.chuyenngoaiDto.initFlg = false;
+          this.chuyenngoaiDto.listdetail = res.reslistdetail;
+          if(mode == "create") {
+            this.message.success("Đăng ký thành công !");
+          } else {
+            this.message.success("Cập nhật thành công !");
+          }
+        })
       }
-      this.headerForm.patchValue(res.resspch00251Header);
-      this.getDataList();
-      this.chuyenngoaiDto.initFlg = false;
-      this.chuyenngoaiDto.listdetail = res.reslistdetail;
-      this.message.success("Đơn hàng đã được đăng ký thành công !");
-    })
+    });
   }
 
   createForm() {
@@ -174,7 +194,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
       id : [""],
       nguonxe: [null, [Validators.required]],
       sdtnguonxe: ["", [Validators.required]],
-      ngaynhap: [null, [Validators.required]],
+      ngaynhap: [this.getDate(), [Validators.required]],
       ngayvanchuyen: [null, [Validators.required]],
       ngaydukiengiaohang: [null],
       biensoxe: [null, [Validators.required]],
@@ -319,6 +339,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         element.thongtindonhang = ctdetail['thongtindonhang'];
         element.diadiembochang = ctdetail['diadiembochang'];
         element.ghichu = ctdetail['ghichu'];
+        element.idkhachhang = ctdetail['idkhachhang']
         element.htttkhachhang = ctdetail['htttkhachhang'];
         element.htttxengoai = ctdetail['htttxengoai'];
         element.sdtnguoinhan = ctdetail['sdtnguoinhan'];

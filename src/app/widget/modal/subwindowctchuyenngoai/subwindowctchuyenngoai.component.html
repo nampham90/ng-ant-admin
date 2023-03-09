@@ -48,6 +48,21 @@
         </nz-form-control>
     </nz-form-item>
     <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="idkhachhang">Id Khách hàng</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng chọn">
+            <nz-select
+            name="idkhachhang"
+            id="idkhachhang"
+            formControlName="idkhachhang"
+            nzAllowClear
+            nzShowSearch
+            nzPlaceHolder="Select"
+          >
+            <nz-option *ngFor="let option of listKh" [nzValue]="option['id']" [nzLabel]="option['name']"></nz-option>
+          </nz-select>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
         <!-- hình thức thanh toán với xe ngoài -->
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="htttkhachhang">HTTT Khách hàng</nz-form-label>
         <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">

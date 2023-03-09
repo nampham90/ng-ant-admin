@@ -9,6 +9,7 @@ export interface Chitietchuyenngoai {
     tiencuocxengoai: number,
 
     htttxengoai: string,
+    idkhachhang: string,
     htttkhachhang: string,
 
     tennguoinhan: string,

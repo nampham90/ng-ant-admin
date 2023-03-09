@@ -51,6 +51,7 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('noidungdonhangTpl', { static: true }) noidungdonhangTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('sotienTpl', { static: true }) sotienTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('trangthaiTpl', { static: true }) trangthaiTpl!: TemplateRef<NzSafeAny>;
 
   fnInit() {
     this.cdf.markForCheck();
@@ -221,15 +222,24 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
   }
 
   // thanh toán một đơn hàng
-  thanhtoan(pnh: any) {
+  thanhtoan(pnh: any, status01: any) {
     this.modalSrv.confirm({
       nzTitle: 'Bạn có chắc chắn muốn thanh toán đơn hàng này?',
       nzContent: 'Nhấn OK để hoàn thành',
       nzOnOk: () => {
-        let req = {
-          "iduser": this.khdtoService.id,
-          "idphieunhaphang": pnh['_id']
+        let req = {};
+        if(pnh) {
+          req = {
+            "iduser": this.khdtoService.id,
+            "idphieunhaphang": pnh['_id']
+          }
+        } else {
+          req = {
+            "iduser": this.khdtoService.id,
+            "status01": status01
+          }
         }
+
         this.tableConfig.loading = true;
         this.dataService.thanhtoan(req).pipe(
             finalize(() => {
@@ -296,7 +306,11 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
     let listIdPN: NzSafeAny[] = [];
     for(let element of this.dataList) {
       if(element['_checked'] == true) {
-        listIdPN.push(element['idphieunhaphang']['_id']);
+        if(element['idphieunhaphang']) {
+          listIdPN.push(element['idphieunhaphang']['_id']);
+        } else {
+          listIdPN.push(element['status01']);
+        }
       }
     }
     if (listIdPN.length == 0) {
@@ -374,6 +388,7 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
           title: 'Trang Thái',
           width: 180,
           field: 'trangthai',
+          tdTemplate: this.trangthaiTpl
         },
         {
           title: 'Số tiền',

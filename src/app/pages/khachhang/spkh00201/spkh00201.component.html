@@ -110,18 +110,29 @@
           [tableConfig]="tableConfig"
           [tableData]="dataList"
         ></app-ant-table>
-        <ng-template #operationTpl let-id="id" let-idphieunhaphang="idphieunhaphang" let-showBtn="showBtn">
+        <ng-template #operationTpl let-id="id" let-idphieunhaphang="idphieunhaphang" let-status01="status01" let-showBtn="showBtn">
             <span *appAuth="ActionCode.CtcnThanhtoan" class="operate-text">
-                <button *ngIf="!showBtn['btnthanhtoan']" nz-button nzType="primary" nzGhost (click)="thanhtoan(idphieunhaphang)" [disabled]="showBtn['disabledBtnthanhtoan']">Thanh toán</button>
+                <button *ngIf="!showBtn['btnthanhtoan']" nz-button nzType="primary" nzGhost (click)="thanhtoan(idphieunhaphang,status01)" [disabled]="showBtn['disabledBtnthanhtoan']">Thanh toán</button>
             </span>
             <span *appAuth="ActionCode.CtcnDuyetThanhtoan" class="operate-text">
                 <button *ngIf="!showBtn['btnduyet']" nz-button nzType="primary" nzGhost (click)="duyetthanhtoan(id)">Duyệt</button>
             </span>
         </ng-template>
-        <ng-template #noidungdonhangTpl let-idphieunhaphang="idphieunhaphang">
-            <ng-container *ngIf="idphieunhaphang">
+        <ng-template #trangthaiTpl let-chukyno="chukyno">
+            <ng-container *ngIf="chukyno == 0 else BlockTemplate">
+                <nz-alert nzType="warning" nzMessage="Chưa Thanh Toán" nzShowIcon></nz-alert>
+            </ng-container>
+            <ng-template #BlockTemplate>
+                <nz-alert nzType="success" nzMessage="Đã thanh toán" nzShowIcon></nz-alert>
+            </ng-template>
+        </ng-template>
+        <ng-template #noidungdonhangTpl let-idphieunhaphang="idphieunhaphang" let-status01="status01">
+            <ng-container *ngIf="idphieunhaphang else Block">
                 <span>{{idphieunhaphang['noidungdonhang']}}</span>
             </ng-container>
+            <ng-template #Block>
+                <span>{{status01}}</span>
+            </ng-template>
         </ng-template>
         <ng-template #sotienTpl let-sotien="sotien">
             <span>{{sotien*1000 | currency : "VND"}}</span>

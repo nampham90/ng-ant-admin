@@ -31,6 +31,8 @@ export const lstchiphi = [
    {"idchuyen": "", "tenchiphi": "Sữa chữa", "sotien": 0, "ghichu": ""},
    {"idchuyen": "", "tenchiphi": "Cầu đường", "sotien": 0, "ghichu": ""},
    {"idchuyen": "", "tenchiphi": "Công an", "sotien": 0, "ghichu": ""},
+   {"idchuyen": "", "tenchiphi": "Lương Tài", "sotien": 0, "ghichu": ""},
+   {"idchuyen": "", "tenchiphi": "Lương Phụ", "sotien": 0, "ghichu": ""},
    {"idchuyen": "", "tenchiphi": "Chi phí khác", "sotien": 0, "ghichu": ""}
 ]
 
