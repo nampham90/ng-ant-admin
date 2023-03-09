@@ -152,8 +152,8 @@ export const NguonxeAnt100Delete = 'nguonxe/nguonxeAnt100Delete';
 export const NguonxeAnt100DeleteAll = 'nguonxe/nguonxeAnt100DeleteAll';
 
 // chuyến ngoài
-export const chuyenngoaiAnt100GetAll = 'chuyenngoai/chuyenngoaiAnt100Get';
-export const chuyenngoaiAnt100GetId = 'chuyenngoai/chuyenngoaiAnt100Get';
+export const chuyenngoaiAnt100GetAll = 'chuyenngoai/chuyenngoaiAnt100getAll';
+export const chuyenngoaiAnt100GetId = 'chuyenngoai/chuyenngoaiAnt100getDetail';
 export const chuyenngoaiAnt100Create = 'chuyenngoai/chuyenngoaiAnt100Create';
 export const chuyenngoaiAnt100Update = 'chuyenngoai/chuyenngoaiAnt100Update';
 export const chuyenngoaiAnt100UpdateStatus = 'chuyenngoai/chuyenngoaiAnt100UpdateStatus';
