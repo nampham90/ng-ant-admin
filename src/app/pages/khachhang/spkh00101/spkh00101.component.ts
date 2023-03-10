@@ -217,7 +217,7 @@ export class Spkh00101Component extends BaseComponent implements OnInit {
         this.dtoKhService.id = id;
         this.dtoKhService.sotienno = res.sotienno;
         this.dtoKhService.name = name
-        this.ultilityService.refresh(Const.rootbase + UrlDisplayId.spkh00201)
+        this.transfer(Const.rootbase + UrlDisplayId.spkh00201)
       })
   }
 
