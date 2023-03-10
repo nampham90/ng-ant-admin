@@ -25,6 +25,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { ChuyendtoService } from '@app/core/services/http/chuyen/chuyendto.service';
 import { UrlDisplayId } from '@app/common/UrlDisplay';
 import { SubwindowChiphiService } from '@app/widget/modal/subwindowchiphi/subwindow-chiphi.service';
+import { TabService } from '@app/core/services/common/tab.service';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -111,9 +112,10 @@ export class Spch00101Component extends BaseComponent implements OnInit {
     private modalSrv: NzModalService,
     public deptTreeService: DeptTreeService,
     private dataService: ChuyenService,
-    private chuyenDtoService : ChuyendtoService
+    private chuyenDtoService : ChuyendtoService,
+    protected override tabService: TabService
   ) {
-    super(webService,router,cdf,datePipe);
+    super(webService,router,cdf,datePipe,tabService);
   }
 
   ngaybatdau: string | null = null;
@@ -446,7 +448,10 @@ export class Spch00101Component extends BaseComponent implements OnInit {
     this.chuyenDtoService.ngayve = this.formatDate(ngayve);
     this.chuyenDtoService.tienxe = tienxe;
     this.chuyenDtoService.trangthai = trangthai;
-    this.dataService.refresh(Const.rootbase + UrlDisplayId.spch00201);
+    this.transfer(Const.rootbase + UrlDisplayId.spch00201);
+
+    //this.dataService.refresh(Const.rootbase + UrlDisplayId.spch00201);
+
   }
 
   addEditData(param: Chuyen, methodName: 'updateChuyen' | 'createChuyen'): void {

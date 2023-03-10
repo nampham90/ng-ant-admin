@@ -21,6 +21,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NguonxeService } from '@app/core/services/http/nguonxe/nguonxe.service';
 import { ChuyenngoaiService } from '@app/core/services/http/chuyenngoai/chuyenngoai.service';
 import { ChuyenngoaidtoService } from '@app/core/services/http/chuyenngoai/chuyenngoaidto.service';
+import { TabService } from '@app/core/services/common/tab.service';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -54,6 +55,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     protected override router: Router,
     protected override cdf :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
+    protected override tabService: TabService,
     public message: NzMessageService,
     private subwinCtChuyenngoaiService: SubwindowCtchuyenngoaiService,
     private modalSrv: NzModalService,
@@ -62,7 +64,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     private chuyenngoaiDto: ChuyenngoaidtoService,
     private fb: FormBuilder
   ) { 
-    super(webService,router,cdf,datePipe);
+    super(webService,router,cdf,datePipe,tabService);
   }
 
   searchParam: Partial<SearchParam> = {};

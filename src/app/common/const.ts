@@ -37,6 +37,7 @@ export const lstchiphi = [
 ]
 
 export const rootbase = '/default/';
+export const mobilebase = '/mobile/';
 
 //common
 export const CommonAnt100Listtaichinh = "common/commonAnt100Listloinhanthang";

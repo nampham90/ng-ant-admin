@@ -17,6 +17,7 @@ import { SearchCommonVO } from '@app/core/services/types';
 import { finalize } from 'rxjs';
 import { ModalBtnStatus } from '@app/widget/base-modal';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { TabService } from '@app/core/services/common/tab.service';
 
 interface SearchParam {
   datacd: string;
@@ -60,9 +61,10 @@ export class NguonxeComponent extends BaseComponent implements OnInit {
     public message: NzMessageService,
     private dataService : NguonxeService,
     private modalService: NguonxeModalService,
-    private modalSrv: NzModalService
+    private modalSrv: NzModalService,
+    protected override tabService: TabService
   ) {
-    super(webService,router,cdf,datePipe);
+    super(webService,router,cdf,datePipe,tabService);
     this.pageHeaderInfo = {
       title: "",
       breadcrumb: ['Home','Quản lý Hệ thống',  'Quản lý nguồn xe'],

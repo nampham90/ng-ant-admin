@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Template
 import { Router } from '@angular/router';
 import { UrlDisplayId } from '@app/common/UrlDisplay';
 import { ActionCode } from '@app/config/actionCode';
+import { TabService } from '@app/core/services/common/tab.service';
 import { WebserviceService } from '@app/core/services/common/webservice.service';
 import { KhachhangDtoService } from '@app/core/services/http/khachhang/khachhang-dto.service';
 import { KhachhangService } from '@app/core/services/http/khachhang/khachhang.service';
@@ -75,9 +76,10 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
     private modalSrv: NzModalService,
     private khdtoService: KhachhangDtoService,
     private dataService: NhatkykhService,
-    private khachhangService : KhachhangService
+    private khachhangService : KhachhangService,
+    protected override tabService : TabService
   ) {
-    super(webService,router,cdf,datePipe);
+    super(webService,router,cdf,datePipe,tabService);
   }
 
   btnshowmodalkh = false;

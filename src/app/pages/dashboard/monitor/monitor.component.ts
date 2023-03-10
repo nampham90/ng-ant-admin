@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UrlDisplayId } from '@app/common/UrlDisplay';
+import { TabService } from '@app/core/services/common/tab.service';
 import { WebserviceService } from '@app/core/services/common/webservice.service';
 import { PageHeaderType } from '@app/shared/components/page-header/page-header.component';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -27,8 +28,9 @@ export class MonitorComponent extends BaseComponent{
     protected override router: Router,
     protected override cdf :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
+    protected override tabService: TabService,
   ){
-    super(webService,router,cdf,datePipe);
+    super(webService,router,cdf,datePipe,tabService);
   }
 
   @ViewChild('pageHeaderContent', { static: false }) pageHeaderContent!: TemplateRef<NzSafeAny>;

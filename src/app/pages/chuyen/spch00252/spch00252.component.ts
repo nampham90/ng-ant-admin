@@ -18,6 +18,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
 import { NguonxeService } from '@app/core/services/http/nguonxe/nguonxe.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { TabService } from '@app/core/services/common/tab.service';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -56,6 +57,8 @@ export class Spch00252Component extends BaseComponent implements OnInit {
   };
 
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('nguonxeTpl', { static: true }) nguonxeTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('machuyenngoaiTpl', { static: true }) machuyenngoaiTpl!: TemplateRef<NzSafeAny>;
 
   ngaybatdau: string | null = null;
   ngayketthuc: string | null = null;
@@ -82,7 +85,9 @@ export class Spch00252Component extends BaseComponent implements OnInit {
   }
   handleEndOpenSoplnChange(open: boolean): void {}
 
-  listnguonxe: any = []
+  listnguonxe: any = [];
+  showUpdate = false;
+  showDelete = false;
 
   constructor(
     protected override webService: WebserviceService,
@@ -93,8 +98,9 @@ export class Spch00252Component extends BaseComponent implements OnInit {
     private modalSrv: NzModalService,
     private nguonxeService: NguonxeService,
     public message: NzMessageService,
+    protected override tabService: TabService
   ) { 
-    super(webService,router,cdf,datePipe);
+    super(webService,router,cdf,datePipe,tabService);
   }
 
   override ngOnInit(): void {
@@ -157,23 +163,27 @@ export class Spch00252Component extends BaseComponent implements OnInit {
     this.getDataList();
  }
 
- add() {
+  add() {
 
- }
-
- allDel() {
-
- }
-
- fnGetAllNguonXe() {
-  let req = {
-    pageSize: 0,
-    pageNum: 0
   }
-  this.nguonxeService.postAll(req).pipe().subscribe(res => {
-      this.listnguonxe = res;
-  })
-}
+
+  allDel() {
+
+  }
+
+  transferSpch00251(id: string, mode: string) {
+    this.transfer(Const.rootbase + UrlDisplayId.spch00251);
+  }
+
+  fnGetAllNguonXe() {
+    let req = {
+      pageSize: 0,
+      pageNum: 0
+    }
+    this.nguonxeService.postAll(req).pipe().subscribe(res => {
+        this.listnguonxe = res;
+    })
+  }
 
   private initTable(): void {
     this.tableConfig = {
@@ -183,6 +193,13 @@ export class Spch00252Component extends BaseComponent implements OnInit {
           title: 'Mã chuyến ngoài',
           field: 'id',
           width: 250,
+          tdTemplate: this.machuyenngoaiTpl
+        },
+        {
+          title: 'Nguồn xe',
+          width: 300,
+          field: 'nguonxe',
+          tdTemplate: this.nguonxeTpl
         },
         {
           title: 'Ngày vận chuyển',
@@ -191,9 +208,9 @@ export class Spch00252Component extends BaseComponent implements OnInit {
           pipe: "date: dd/MM/YYYY HH:mm"
         },
         {
-          title: 'Nguồn xe',
-          width: 300,
-          field: 'nguonxe',
+          title: 'Biển số xe',
+          width: 150,
+          field: 'biensoxe',
         },
         {
           title: 'Số điện thoại',

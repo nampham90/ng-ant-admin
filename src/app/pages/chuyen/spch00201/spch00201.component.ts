@@ -115,10 +115,10 @@ export class Spch00201Component extends BaseComponent implements OnInit {
     private phhService: PhieunhaphangService,
     private cpcService: ChiphichuyenService,
     private modalChiphiService: SubwindowChiphiService,
-    public tabService: TabService,
+    protected override tabService: TabService,
 
   ) {
-    super(webService,router,cdf,datePipe);
+    super(webService,router,cdf,datePipe,tabService);
   }
 
   override ngOnInit(): void {

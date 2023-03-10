@@ -16,6 +16,7 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { inNextTick } from 'ng-zorro-antd/core/util';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import * as Const from '@app/common/const'
+import { TabService } from '@app/core/services/common/tab.service';
 
 interface DataItem {
   name: string;
@@ -130,6 +131,7 @@ export class AnalysisComponent extends BaseComponent implements OnInit, AfterVie
     protected override router: Router,
     protected  cdr :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
+    protected override tabService: TabService,
     private ngZone: NgZone,
     public message: NzMessageService,
     private xeService: XeService,
@@ -137,7 +139,7 @@ export class AnalysisComponent extends BaseComponent implements OnInit, AfterVie
     private currencyPipe: CurrencyPipe,
     @Inject(DOCUMENT) private document: any
     ) {
-      super(webService,router,cdr,datePipe);
+      super(webService,router,cdr,datePipe,tabService);
     }
 
   override ngOnInit(): void {

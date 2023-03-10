@@ -16,6 +16,7 @@ import { OptionsInterface, SearchCommonVO } from '@app/core/services/types';
 import { MapKeyType, MapPipe, MapSet } from '@app/shared/pipes/map.pipe';
 import { DatePipe } from '@angular/common';
 import { UrlDisplayId } from '@app/common/UrlDisplay';
+import { TabService } from '@app/core/services/common/tab.service';
 
 interface SearchParam {
   biensoxe: string;
@@ -45,8 +46,9 @@ export class XeComponent extends BaseComponent implements OnInit {
     protected override  datePipe : DatePipe,
     private modalService: XeModalService,
     private dataService: XeService,
+    protected override tabService : TabService
   ){
-    super(webService,router,cdf,datePipe);
+    super(webService,router,cdf,datePipe,tabService);
     this.pageHeaderInfo = {
       title: this.formItemNm[1],
       breadcrumb: ['Home','Quản lý hệ thống',  'Quản lý xe'],

@@ -76,13 +76,24 @@
         [tableConfig]="tableConfig"
         [tableData]="dataList"
       ></app-ant-table>
+      <ng-template #nguonxeTpl let-nguonxe="nguonxe">
+          <span>{{nguonxe['datacd']}}-{{nguonxe['datanm']}}</span>
+      </ng-template>
+      <ng-template #operationTpl let-id="id">
+        <span *appAuth="ActionCode.TimkiemchuyenngoaiUpdate" class="operate-text">
+            <button nz-button nzType="primary" nzGhost (click)="transferSpch00251(id, 'update')" [disabled]="showUpdate">Cập nhật</button>
+        </span>
+      </ng-template>
+      <ng-template #machuyenngoaiTpl let-id="id">
+        <a nz-button (click)="transferSpch00251(id,'link')" nzType="link" nzBlock>{{id}}</a>
+      </ng-template>
     </app-card-table-wrap>
     <ng-template #tableBtns>
-        <button  (click)="add()" nz-button nzType="primary" class="m-r-8">
+        <button *appAuth="ActionCode.TimkiemchuyenngoaiAdd" (click)="add()" nz-button nzType="primary" class="m-r-8">
           <i nz-icon nzType="plus"></i>
           Thêm mới
         </button>
-        <button (click)="allDel()" nz-button nzType="default">
+        <button *appAuth="ActionCode.TimkiemchuyenngoaiDelete" (click)="allDel()" [disabled]="showDelete" nz-button nzType="default">
           <i nz-icon nzType="delete"></i>
           Xóa
         </button>

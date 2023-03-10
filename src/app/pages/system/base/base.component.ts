@@ -7,6 +7,7 @@ import * as Const from 'src/app/common/const';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { UrlDisplayId } from '@app/common/UrlDisplay';
+import { TabService } from '@app/core/services/common/tab.service';
 
 
 @Component({
@@ -25,7 +26,8 @@ export abstract class BaseComponent implements OnInit, OnDestroy {
         protected webService: WebserviceService,
         protected router:Router,
         protected  cdf :  ChangeDetectorRef,
-        protected datePipe: DatePipe
+        protected datePipe: DatePipe,
+        protected tabService: TabService
     ) { }
     ngOnDestroy(): void {
         this.destroy();
@@ -56,6 +58,16 @@ export abstract class BaseComponent implements OnInit, OnDestroy {
         }
         let date = this.datePipe.transform(d, 'yyyy/MM/dd') + "";
         return date;
+    }
+
+    transfer(path: string) {
+        let index =  this.tabService.findIndex(path);
+        if(index == -1) {
+          this.router.navigate([path]);
+        } else {
+          this.tabService.delTab(this.tabService.getTabArray()[index],index);
+          this.router.navigate([path]);
+        }
     }
 
     mergeHttt(httt: any) {

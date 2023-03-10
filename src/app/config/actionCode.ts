@@ -81,4 +81,9 @@ export const ActionCode = {
   ChuyenngoaiDel: 'default:chuyen:spch00251:del',
   ConfirmChuyenngoai: 'default:chuyen:spch00251:confirm',
 
+  // tim kiem chuyen ngoai
+  TimkiemchuyenngoaiAdd : 'default:chuyen:spch00252:add',
+  TimkiemchuyenngoaiDelete : 'default:chuyen:spch00252:delete',
+  TimkiemchuyenngoaiUpdate : 'default:chuyen:spch00252:update',
+
 };
