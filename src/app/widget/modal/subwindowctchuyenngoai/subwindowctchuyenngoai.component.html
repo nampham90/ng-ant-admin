@@ -95,6 +95,16 @@
         </nz-form-control>
     </nz-form-item>
     <nz-form-item>
+        <!-- Có thu hồi biên lại của đơn hàng hay không -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="status02">Thu hồi biên lai</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+            <nz-radio-group formControlName="status02">
+                <label nz-radio nzValue="1">Có</label>
+                <label nz-radio nzValue="0">Không</label>
+            </nz-radio-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
         <!-- ghi chú thông tin chi tiết đơn hàng -->
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="ghichu">Ghi chú</nz-form-label>
         <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">

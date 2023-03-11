@@ -45,7 +45,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   }
 
   override destroy() {
-     this.chuyenngoaiDto.clear();
+    // this.chuyenngoaiDto.clear();
   }
 
   override DisplayScreenID: UrlDisplayId = UrlDisplayId.spch00251;
@@ -120,14 +120,18 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   showConfirm = false;
   btnConfirm = true;
 
-
-
+  btnNew = true;
+  btnDelete = true;
+  btnDeleteAll = true;
+  btnUpdate = true;
+  showreturnBack = false;
+  
   override ngOnInit(): void {
     this.initTable();
     this.headerForm = this.createForm();
     this.showBtnConfirm();
     this.fnGetAllNguonXe();
-
+    // trường hợp click vào link. chỉ được xem chi tiết
     if(this.chuyenngoaiDto.mode == "link" && this.chuyenngoaiDto.initFlg == false) {
         this.tableLoading(true);
         this.dataService.postDetail({id:this.chuyenngoaiDto.id}).pipe()
@@ -140,15 +144,32 @@ export class Spch00251Component extends BaseComponent implements OnInit {
             }
             this.getDataList();
             this.headerForm.patchValue(data);
+            this.showreturnBack = true;
         });
         this.chuyenngoaiDto.mode = "";
         this.chuyenngoaiDto.initFlg = true;
     }
-
+    // trường hơp click vào cập nhật. cho phép cập nhật chuyến 
     if(this.chuyenngoaiDto.mode == "update" && this.chuyenngoaiDto.initFlg == false) {
-      
+       this.tableLoading(true);
+       this.dataService.postDetail({id:this.chuyenngoaiDto.id}).pipe()
+        .subscribe(data => {
+            this.listdetail = [...data['listdetail']];
+            let stt = 1;
+            for(let element of this.listdetail) {
+              element.stt = stt;
+              stt++;
+            }
+            this.getDataList();
+            this.headerForm.patchValue(data);
+            this.showBtnConfirm();
+            this.btnDelete = false;
+            this.btnDeleteAll = false;
+            this.btnNew = false;
+            this.btnUpdate = false;
+            this.showreturnBack = true;
+        });
     }
-
 
   }
 
@@ -167,7 +188,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     let title = "";
     let content = "";
     let mode = "";
-    if(this.chuyenngoaiDto.initFlg === false) {
+    if(this.chuyenngoaiDto.initFlg === false && this.chuyenngoaiDto.mode == "update") {
       mode = "update";
       title = "Bạn chắc chắn muốn cập nhật !";
       content = "Dữ liệu sẽ được cập nhật sau khi nhấn OK";
@@ -203,6 +224,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
           this.headerForm.patchValue(res.resspch00251Header);
           this.getDataList();
           this.chuyenngoaiDto.initFlg = false;
+          this.chuyenngoaiDto.mode = "update";
           this.chuyenngoaiDto.listdetail = res.reslistdetail;
           if(mode == "create") {
             this.message.success("Đăng ký thành công !");
@@ -371,6 +393,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         element.tennguoinhan = ctdetail['tennguoinhan'];
         element.diachinguoinhan = ctdetail['diachinguoinhan'];
         element.tiencuoc = ctdetail['tiencuoc'];
+        element.status02 = ctdetail['status02'];
         element.tiencuocxengoai = ctdetail['tiencuocxengoai'];
       }
     }

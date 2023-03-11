@@ -71,6 +71,7 @@ export class SubwindowctchuyenngoaiComponent implements OnInit {
       tennguoinhan:[null,[Validators.required]],
       sdtnguoinhan:[null, [Validators.required,this.validatorsService.mobileValidator()]],
       diachinguoinhan: [null,[Validators.required]],
+      status02: ["1",[Validators.required]],
       ghichu: [null]
     });
   }

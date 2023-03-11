@@ -1,4 +1,10 @@
-<app-page-header [pageHeaderInfo]="pageHeaderInfo"></app-page-header>
+<app-page-header [backTpl]="backTpl" [backUrl]="'/default/chuyen/spch00252'" [pageHeaderInfo]="pageHeaderInfo"></app-page-header>
+
+<ng-template #backTpl>
+    <ng-container *ngIf="showreturnBack">
+        <span nz-icon nzType="arrow-left" nzTheme="outline">Quay lại</span> 
+    </ng-container>
+</ng-template>
 <div class="normal-table-wrap">
     <nz-card nzHoverable [nzBodyStyle]="{ 'padding-bottom': 0 }" class="m-b-10">
         <form nz-form [formGroup]="headerForm"  (ngSubmit)="submitForm()">
@@ -124,10 +130,10 @@
       ></app-ant-table>
       <ng-template #operationTpl let-id="id" let-stt="stt">
         <span *appAuth="ActionCode.ChuyenngoaiEdit" class="operate-text">
-          <button nz-button nzType="primary" nzGhost (click)="edit(stt)">Cập nhật</button>
+          <button nz-button nzType="primary" nzGhost (click)="edit(stt)" [disabled]="btnUpdate">Cập nhật</button>
         </span>
         <span *appAuth="ActionCode.ChuyenngoaiDel" class="operate-text">
-          <button nz-button nzType="primary" nzGhost (click)="del(stt)">Xóa</button>
+          <button nz-button nzType="primary" nzGhost (click)="del(stt)" [disabled]="btnDelete">Xóa</button>
         </span>
       </ng-template>
       <ng-template #tiencuocTpl let-tiencuoc="tiencuoc">
@@ -162,11 +168,11 @@
       </ng-template>
     </app-card-table-wrap>
     <ng-template #tableBtns>
-        <button *appAuth="ActionCode.ChuyenngoaiAdd" (click)="add()" nz-button nzType="primary" class="m-r-8">
+        <button *appAuth="ActionCode.ChuyenngoaiAdd" (click)="add()" nz-button nzType="primary" class="m-r-8" [disabled]="btnNew">
           <i nz-icon nzType="plus"></i>
           Thêm mới
         </button>
-        <button *appAuth="ActionCode.DataScDelAll" (click)="allDel()" nz-button nzType="default">
+        <button *appAuth="ActionCode.DataScDelAll" (click)="allDel()" nz-button nzType="default" [disabled]="btnDeleteAll">
           <i nz-icon nzType="delete"></i>
           Xóa tất cả
         </button>
@@ -176,7 +182,7 @@
             <span *appAuth="ActionCode.ConfirmChuyenngoai" class="operate-text">
                 <button [disabled]="!btnConfirm" (click)="fnBtnConfirm()" [disabled]="!headerForm.valid" nz-button nzType="primary" class="m-r-8">
                     <i nz-icon nzType="caret-right"></i>
-                    Tạo chuyến ngoài
+                    Confirm
                 </button>
             </span>
         </ng-container>
