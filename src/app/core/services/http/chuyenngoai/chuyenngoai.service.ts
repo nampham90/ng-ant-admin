@@ -15,6 +15,10 @@ export class ChuyenngoaiService {
     return this.http.post(Const.chuyenngoaiAnt100Create, params,{ needSuccessInfo: false});
   }
 
+  postDetail(params: any) : Observable<any> {
+    return this.http.post(Const.chuyenngoaiAnt100GetId, params,{ needSuccessInfo: false});
+  }
+
   postallChuyenngoai(params: any) : Observable<any> {
     return this.http.post(Const.chuyenngoaiAnt100GetAll, params,{ needSuccessInfo: false});
   }

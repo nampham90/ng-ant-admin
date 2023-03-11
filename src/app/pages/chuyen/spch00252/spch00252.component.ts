@@ -19,6 +19,7 @@ import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
 import { NguonxeService } from '@app/core/services/http/nguonxe/nguonxe.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { TabService } from '@app/core/services/common/tab.service';
+import { ChuyenngoaidtoService } from '@app/core/services/http/chuyenngoai/chuyenngoaidto.service';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -98,7 +99,8 @@ export class Spch00252Component extends BaseComponent implements OnInit {
     private modalSrv: NzModalService,
     private nguonxeService: NguonxeService,
     public message: NzMessageService,
-    protected override tabService: TabService
+    protected override tabService: TabService,
+    private ChuyenngoaiDto:ChuyenngoaidtoService
   ) { 
     super(webService,router,cdf,datePipe,tabService);
   }
@@ -172,6 +174,9 @@ export class Spch00252Component extends BaseComponent implements OnInit {
   }
 
   transferSpch00251(id: string, mode: string) {
+    this.ChuyenngoaiDto.mode = mode;
+    this.ChuyenngoaiDto.id = id;
+    this.ChuyenngoaiDto.initFlg = false;
     this.transfer(Const.rootbase + UrlDisplayId.spch00251);
   }
 

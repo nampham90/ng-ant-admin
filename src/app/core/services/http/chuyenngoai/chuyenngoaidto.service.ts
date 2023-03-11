@@ -21,6 +21,7 @@ export class ChuyenngoaidtoService {
   status04 = 0;
   status05 = 0;
   ghichu = "";
+  mode = "";
 
   constructor() { }
 
@@ -41,5 +42,6 @@ export class ChuyenngoaidtoService {
     this.status04 = 0;
     this.status05 = 0;
     this.ghichu = "";
+    this.mode = "";
   }
 }

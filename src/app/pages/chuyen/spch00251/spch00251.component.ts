@@ -123,10 +123,33 @@ export class Spch00251Component extends BaseComponent implements OnInit {
 
 
   override ngOnInit(): void {
-     this.initTable();
-     this.headerForm = this.createForm();
-     this.showBtnConfirm();
-     this.fnGetAllNguonXe();
+    this.initTable();
+    this.headerForm = this.createForm();
+    this.showBtnConfirm();
+    this.fnGetAllNguonXe();
+
+    if(this.chuyenngoaiDto.mode == "link" && this.chuyenngoaiDto.initFlg == false) {
+        this.tableLoading(true);
+        this.dataService.postDetail({id:this.chuyenngoaiDto.id}).pipe()
+        .subscribe(data => {
+            this.listdetail = [...data['listdetail']];
+            let stt = 1;
+            for(let element of this.listdetail) {
+              element.stt = stt;
+              stt++;
+            }
+            this.getDataList();
+            this.headerForm.patchValue(data);
+        });
+        this.chuyenngoaiDto.mode = "";
+        this.chuyenngoaiDto.initFlg = true;
+    }
+
+    if(this.chuyenngoaiDto.mode == "update" && this.chuyenngoaiDto.initFlg == false) {
+      
+    }
+
+
   }
 
   fnGetAllNguonXe() {
