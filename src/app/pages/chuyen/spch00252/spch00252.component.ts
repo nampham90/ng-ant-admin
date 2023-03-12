@@ -165,8 +165,10 @@ export class Spch00252Component extends BaseComponent implements OnInit {
     this.getDataList();
  }
 
+  // thêm mơi chuyến ngoài
   add() {
-
+    this.ChuyenngoaiDto.clear();
+    this.transfer(Const.rootbase + UrlDisplayId.spch00251);
   }
 
   allDel() {
