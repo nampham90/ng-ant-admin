@@ -6,6 +6,8 @@ const routes: Routes = [
   { path: 'spch00201', loadChildren: () => import('./spch00201/spch00201.module').then(m => m.Spch00201Module)},
   { path: 'spch00251', loadChildren: () => import('./spch00251/spch00251.module').then(m => m.Spch00251Module)},
   { path: 'spch00252', loadChildren: () => import('./spch00252/spch00252.module').then(m => m.Spch00252Module)},
+  { path: 'spch00253', loadChildren: () => import('./spch00253/spch00253.module').then(m => m.Spch00253Module)},
+  { path: 'spch00254', loadChildren: () => import('./spch00254/spch00254.module').then(m => m.Spch00254Module)},
   { path: '', redirectTo: 'spch00101', pathMatch: 'full' }
 ];
 

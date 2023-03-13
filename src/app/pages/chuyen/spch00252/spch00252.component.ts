@@ -26,6 +26,7 @@ interface SearchParam {
   ngayketthuc: string | null;
   nguonxe : string;
   biensoxe: string;
+  _id: string;
 }
 
 @Component({

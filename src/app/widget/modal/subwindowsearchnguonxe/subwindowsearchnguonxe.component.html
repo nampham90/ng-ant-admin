@@ -1,0 +1,28 @@
+<div class="normal-table-wrap">
+    <nz-card nzHoverable [nzBodyStyle]="{ 'padding-bottom': 0 }" class="m-b-10">
+        <form nz-form>
+            <nz-form-item>
+                <nz-form-label [nzSm]="4" [nzXs]="24" [nzFor]="">Tên nguồn xe</nz-form-label>
+                <nz-form-control [nzSm]="18" [nzXs]="24">
+                    <input nz-input name="datacd" [(ngModel)]="searchParam.datacd" placeholder="Vui lòng nhập nguồn xe" />
+                </nz-form-control>
+            </nz-form-item>
+            <div nz-col [nzSpan]="24" class="search-area">
+                <button nz-button [nzType]="'primary'" (click)="getDataList()">
+                    <i nz-icon nzType="search"></i>
+                    Tìm kiếm
+                </button>
+                <button nz-button class="m-l-15" (click)="resetForm()">
+                    <i nz-icon nzType="close-circle" nzTheme="outline"></i>
+                    Cài lại
+                </button>
+            </div>
+        </form>
+    </nz-card>
+    <app-card-table-wrap [tableTitle]="'Danh Sách nguồn xe'" (reload)="reloadTable()">
+        <app-ant-table [tableConfig]="tableConfig" (changePageSize)="changePageSize($event)" (changePageNum)="getDataList($event)" [tableData]="dataList"></app-ant-table>
+        <ng-template #operationTpl let-id="id" let-datacd="datacd">
+            <a nz-button nzType="link"  (click)="getItem(id,datacd)">{{datacd}}</a>
+        </ng-template>
+    </app-card-table-wrap>
+</div>

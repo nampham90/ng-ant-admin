@@ -172,7 +172,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
             this.headerForm.patchValue(data.resHeader);
             this.showBtnConfirm();
             this.btnDelete = false;
-            this.btnDeleteAll = false;
+            this.btnDeleteAll = true;
             this.btnNew = false;
             this.btnUpdate = false;
             this.showreturnBack = true;
@@ -338,6 +338,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
       modalValue.stt = stt;
       this.mergeUpdateList(modalValue);
       this.getDataList();
+      this.message.info("Click Confirm để hoàn thành cập nhật ");
     })
   }
 

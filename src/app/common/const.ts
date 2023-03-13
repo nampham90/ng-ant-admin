@@ -161,6 +161,8 @@ export const chuyenngoaiAnt100UpdateStatus = 'chuyenngoai/chuyenngoaiAnt100Updat
 export const chuyenngoaiAnt100Delete = 'chuyenngoai/chuyenngoaiAnt100Delete';
 
 // chi tiết chuyên ngoài
+export const ChitietchuyenngoaiAnt100GetAll = 'chitietchuyenngoai/chitietchuyenngoaiAnt100GetAll';
+export const ChitietchuyenngoaiAnt100PostlistId = 'chitietchuyenngoai/chitietchuyenngoaiAnt100PostlistId';
 export const ChitietchuyenngoaiAnt100GetId = 'chitietchuyenngoai/chitietchuyenngoaiAnt100Get';
 export const ChitietchuyenngoaiAnt100Create = 'chitietchuyenngoai/chitietchuyenngoaiAnt100Create';
 export const ChitietchuyenngoaiAnt100Update = 'chitietchuyenngoai/chitietchuyenngoaiAnt100Update';
