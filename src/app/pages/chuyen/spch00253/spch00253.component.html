@@ -52,7 +52,7 @@
                         <nz-form-label  [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24">Nguồn xe</nz-form-label>
                         <nz-form-control  [nzXXl]="10" [nzXl]="10" [nzLg]="10" [nzMd]="10" [nzSm]="20" [nzXs]="24">
                             <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButtonTaixe">
-                                <input name="idtai" type="text" nz-input [(ngModel)]="searchParam.nguonxe" placeholder="" (blur)="fnFocusOutKhachhang()"/>
+                                <input name="idtai" type="text" nz-input [(ngModel)]="searchParam.nguonxe" placeholder="" (blur)="fnFocusOutNguonxe()"/>
                             </nz-input-group>
                             <ng-template #suffixIconButtonTaixe>
                                 <button nz-button class="bg-icon" (click)="searchNguonXeClick()" [nzType]="'primary'"><span nz-icon nzType="search"></span></button>

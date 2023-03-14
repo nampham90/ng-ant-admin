@@ -89,4 +89,8 @@ export const ActionCode = {
   // thu hồi biên lai
   Thohoibienlai: 'default:chuyen:spch00253:thuhoibienlai',
 
+  // công nợ chuyến ngaoif
+  Thanhtoan: 'default:chuyen:spch00254:thanhtoan',
+  Xuatpdf: 'default:chuyen:spch00254:xuatpdf',
+
 };

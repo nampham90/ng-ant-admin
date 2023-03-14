@@ -168,6 +168,10 @@ export const ChitietchuyenngoaiAnt100Create = 'chitietchuyenngoai/chitietchuyenn
 export const ChitietchuyenngoaiAnt100Update = 'chitietchuyenngoai/chitietchuyenngoaiAnt100Update';
 export const ChitietchuyenngoaiAnt100Delete = 'chitietchuyenngoai/chitietchuyenngoaiAnt100Delete';
 
+// công nợ xe ngoai
+export const CongnoxengoaiAnt100GetAll = 'congnoxengoai/congnoxengoaiAnt100GetAll';
+export const CongnoxengoaiAnt100Get = 'congnoxengoai/congnoxengoaiAnt100Get';
+export const CongnoxengoaiAnt100UpdateStatus01 = 'congnoxengoai/congnoxengoaiAnt100UpdateStatus01';
 
 
 
