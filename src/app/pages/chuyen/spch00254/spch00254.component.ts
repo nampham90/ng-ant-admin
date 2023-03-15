@@ -20,7 +20,8 @@ import { CongnoxengoaiService } from '@app/core/services/http/congnoxengoai/cong
 import { finalize } from 'rxjs';
 import { ModalBtnStatus } from '@app/widget/base-modal';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-
+import  jsPDF  from 'jspdf';
+import  autoTable from 'jspdf-autotable'
 interface SearchParam {
   ngaybatdau: string | null;
   ngayketthuc: string | null;
@@ -258,6 +259,34 @@ export class Spch00254Component extends BaseComponent implements OnInit {
 
   // xuất file pdf gửi cho nguồn xe
   exportPDF() {
+      let header= [['Id','Name', 'Email', 'Profile']];
+      let data = [
+        [1,"Cẩm Khả","nam@gmail.com",'Dev'],
+        [2,"Nam pham","nam@gmail.com",'Dev'],
+        [3,"Nam pham","nam@gmail.com",'Dev'],
+        [4,"Nam pham","nam@gmail.com",'Dev'],
+        [5,"Nam pham","nam@gmail.com",'Dev'],
+        [6,"Nam pham","nam@gmail.com",'Dev'],
+        [7,"Nam pham","nam@gmail.com",'Dev']
+      ];
+      const pdf = new jsPDF();
+      pdf.addFileToVFS("WorkSans-normal.ttf", Const.font);
+      pdf.addFont("WorkSans-normal.ttf", "WorkSans", "normal");
+     // pdf.addFont("/src/assets/fonts/Arimo-Bold.ttf", "Arimo", "bold");
+      pdf.setFont("WorkSans");
+      pdf.setFontSize(12);
+      pdf.text("Cẩm khả PDF",11,8);
+      autoTable(pdf,{
+        head: header,
+        body: data,
+        theme: 'plain',
+        didDrawCell: (data: {column:{index:any;};})=>{
+          console.log(data.column.index);
+        },
+        styles: {font: "WorkSans"}
+      });
+      pdf.output('dataurlnewwindow');
+     // pdf.save();
 
   }
 }
