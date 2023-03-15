@@ -20,6 +20,7 @@ import { CongnoxengoaiService } from '@app/core/services/http/congnoxengoai/cong
 import { finalize } from 'rxjs';
 import { ModalBtnStatus } from '@app/widget/base-modal';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 interface SearchParam {
   ngaybatdau: string | null;
   ngayketthuc: string | null;
@@ -92,6 +93,10 @@ export class Spch00254Component extends BaseComponent implements OnInit {
 
   nguonxenm = "";
   stocknx = "";
+
+  // tong cuoc
+  tongcuoc = 0;
+  donvivanchuyen = "";
 
   @ViewChild('nguonxeTpl', { static: true }) nguonxeTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
@@ -246,5 +251,13 @@ export class Spch00254Component extends BaseComponent implements OnInit {
       pageIndex: 1
     };
   }
+  // data exprot pdf
+  generateData() {
 
+  }
+
+  // xuất file pdf gửi cho nguồn xe
+  exportPDF() {
+
+  }
 }
