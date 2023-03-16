@@ -193,6 +193,10 @@ export class Spch00252Component extends BaseComponent implements OnInit {
     })
   }
 
+  copy(idchuyenngoai: any) {
+    return `${idchuyenngoai}`;
+  }
+
   private initTable(): void {
     this.tableConfig = {
       showCheckbox: true,

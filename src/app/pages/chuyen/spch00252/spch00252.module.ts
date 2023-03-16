@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Spch00252RoutingModule } from './spch00252-routing.module';
 import { Spch00252Component } from './spch00252.component';
 import { SharedModule } from '@app/shared/shared.module';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { SharedModule } from '@app/shared/shared.module';
   ],
   imports: [
     SharedModule,
-    Spch00252RoutingModule
+    Spch00252RoutingModule,
+    ClipboardModule
   ]
 })
 export class Spch00252Module { }
