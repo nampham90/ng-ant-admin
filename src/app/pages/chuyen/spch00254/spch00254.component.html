@@ -66,9 +66,9 @@
                         <!-- status01 -->
                         <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24">Trạng thái</nz-form-label>
                         <nz-form-control [nzXXl]="15" [nzXl]="15" [nzLg]="15" [nzMd]="15" [nzSm]="24" [nzXs]="24">
-                            <nz-radio-group id="status02" name="status02" [(ngModel)]="searchParam.status01">
+                            <nz-radio-group id="status01" name="status01" [(ngModel)]="searchParam.status01">
                                 <label nz-radio nzValue="0"> Chưa thanh toán </label>
-                                <label nz-radio nzValue="1"> Đã thanh toán</label>
+                                <label nz-radio nzValue="2"> Đã thanh toán</label>
                             </nz-radio-group>
                         </nz-form-control>
                     </nz-form-item>
@@ -110,13 +110,14 @@
       </ng-template>
     </app-card-table-wrap>
     <ng-template #tableBtns>
-        <button *appAuth="ActionCode.Thanhtoan" (click)="thanhtoan()" nz-button nzType="primary">
-          <i nz-icon nzType="check-circle"></i>
-          Thanh Toan
-        </button>
-        <button *appAuth="ActionCode.Xuatpdf" (click)="exportPDF()" nz-button nzType="default">
+        <button *appAuth="ActionCode.Xuatpdf" (click)="exportPDF('0')" nz-button nzType="default">
             <i nz-icon nzType="download"></i>
             Xuất PDF
-          </button>
+        </button>
+        <button *appAuth="ActionCode.Thanhtoan" (click)="exportPDF('1')" nz-button nzType="primary">
+          <i nz-icon nzType="check-circle"></i>
+          Xuất PDF và Thanh Toan
+        </button>
+
     </ng-template>
 </div>

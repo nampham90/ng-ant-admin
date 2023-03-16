@@ -36,6 +36,14 @@ export const lstchiphi = [
    {"idchuyen": "", "tenchiphi": "Chi phí khác", "sotien": 0, "ghichu": ""}
 ]
 
+export const headerLayout = [
+    {"field": "", "value": ""},
+    {"field": "", "value": ""},
+    {"field": "", "value": ""},
+    {"field": "", "value": ""},
+    {"field": "", "value": ""}
+ ]
+
 export const rootbase = '/default/';
 export const mobilebase = '/mobile/';
 
@@ -172,6 +180,10 @@ export const ChitietchuyenngoaiAnt100Delete = 'chitietchuyenngoai/chitietchuyenn
 export const CongnoxengoaiAnt100GetAll = 'congnoxengoai/congnoxengoaiAnt100GetAll';
 export const CongnoxengoaiAnt100Get = 'congnoxengoai/congnoxengoaiAnt100Get';
 export const CongnoxengoaiAnt100UpdateStatus01 = 'congnoxengoai/congnoxengoaiAnt100UpdateStatus01';
+
+// đơn hang export xe ngoai
+export const DonhangexportxengoaiAnt100Create = 'donhangexportxengoai/donhangexportxengoaiAnt100Create';
+export const DonhangexportxengoaiAnt100FindAll = 'donhangexportxengoai/donhangexportxengoaiAnt100FindAll';
 
 
 
