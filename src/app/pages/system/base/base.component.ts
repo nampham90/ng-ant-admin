@@ -5,7 +5,7 @@ import { IObjectString } from 'src/app/common/IObject';
 import { WebserviceService,ObjectDataSC ,Product} from 'src/app/core/services/common/webservice.service';
 import * as Const from 'src/app/common/const';
 import { Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe,formatCurrency } from '@angular/common';
 import { UrlDisplayId } from '@app/common/UrlDisplay';
 import { TabService } from '@app/core/services/common/tab.service';
 
@@ -58,6 +58,16 @@ export abstract class BaseComponent implements OnInit, OnDestroy {
         }
         let date = this.datePipe.transform(d, 'yyyy/MM/dd') + "";
         return date;
+    }
+
+    displayVND(sotien: number) {
+        const amount = sotien*1000;
+        const currencyCode = 'đ';
+        const display = 'symbol-narrow';
+        const digitsInfo = '1.0-0';
+        const locale = 'vi-VN';
+        const result = formatCurrency(amount, locale, currencyCode, display, digitsInfo);
+        return result;
     }
 
     transfer(path: string) {
