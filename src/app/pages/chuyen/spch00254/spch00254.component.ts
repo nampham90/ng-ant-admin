@@ -158,7 +158,7 @@ export class Spch00254Component extends BaseComponent implements OnInit {
       const { list, total, pageNum } = data;
       this.dataList = [...list];
       if(this.dataList.length == 0) {
-        this.modalSrv.info({ nzContent: 'Không Có dữ liệu'});
+        this.message.info('Không Có dữ liệu');
       }
       this.tableConfig.total = total!;
       this.tableConfig.pageIndex = pageNum!;
@@ -294,6 +294,7 @@ export class Spch00254Component extends BaseComponent implements OnInit {
     let data = this.generateData();
     if(data.length == 0) {
       this.modalSrv.info({nzTitle: "Vui lòng chọn đơn hàng !"});
+      this.resetData();
       return;
     }
 
@@ -301,10 +302,10 @@ export class Spch00254Component extends BaseComponent implements OnInit {
     let contentcanhbao = "";
     if(system == "0") {
       canhbao = "Bạn chắc chắn muốn xuất file PDF";
-      contentcanhbao = "Sau khi xuất file đơn hàng của bạn sẽ chuyển vào trạng thái chờ Thanh Thoán.\n Và không thế cập nhật !"
+      contentcanhbao = "Sau khi xuất file đơn hàng của bạn sẽ chuyển vào trạng thái chờ Thanh Toán.\n Và không thế cập nhật !"
     } else {
       canhbao = "Bạn chắc chắn muốn Thánh toán và Xuất file PDF";
-      contentcanhbao = "Sau khi Thanh Toán đơn hàng của bạn sẽ chuyển vào trạng thái đã Thanh Thoán.\n Và không thể cập nhật !"
+      contentcanhbao = "Sau khi Thanh Toán đơn hàng của bạn sẽ chuyển vào trạng thái đã Thanh Toán.\n Và không thể cập nhật !"
     }
     this.modalSrv.confirm({
       nzTitle: canhbao,
@@ -324,12 +325,18 @@ export class Spch00254Component extends BaseComponent implements OnInit {
         this.pdfService.exportPDF(header,headerlayout,data,title,this.getDate());
         // insert vao bang donhangexport với thông tin gồm. header, và data status01 = 1. chờ thanh toán
         this.createDataExport(this.searchParam.nguonxe!,this.getDate(),title,data,headerlayout,header,system);
-        this.donvivanchuyen = "";
-        this.tongcuoc = 0;
-        this.lstIddonhang = [];
+        this.resetData();
+        this.getDataList();
       }
     });
     
+  }
+
+  // resData
+  resetData() {
+    this.donvivanchuyen = "";
+    this.tongcuoc = 0;
+    this.lstIddonhang = [];
   }
 
   // insert data export
@@ -347,7 +354,9 @@ export class Spch00254Component extends BaseComponent implements OnInit {
     this.donhangexpService.postCreate(req).pipe()
     .subscribe(res => {
       if(res) {
-        this.modalSrv.success({nzTitle: "Thực hiện Thành công !"})
+        this.modalSrv.success({nzTitle: "Thực hiện Thành công !",nzOnOk: ()=>{
+          this.getDataList();
+        }})
       } else {
         this.modalSrv.error({nzTitle: "Error System !"})
       }
