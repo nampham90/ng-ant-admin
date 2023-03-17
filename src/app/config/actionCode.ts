@@ -93,4 +93,8 @@ export const ActionCode = {
   Thanhtoan: 'default:chuyen:spch00254:thanhtoan',
   Xuatpdf: 'default:chuyen:spch00254:xuatpdf',
 
+  // thanh toan chuyen ngoai
+  Thanhtoanchuyenngoai : 'default:chuyen:spch00255:thanhtoan',
+  Xuatpdfchuyenngoai : 'default:chuyen:spch00255:xuatpdf',
+
 };

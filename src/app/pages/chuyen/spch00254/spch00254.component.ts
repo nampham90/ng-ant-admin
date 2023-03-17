@@ -106,6 +106,8 @@ export class Spch00254Component extends BaseComponent implements OnInit {
   // cờ check đã thức hiện tiem kiêm
   searchkbn = false;
 
+  btnDisble = false;
+
   @ViewChild('nguonxeTpl', { static: true }) nguonxeTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('donhangTpl', { static: true }) donhangTpl!: TemplateRef<NzSafeAny>;
@@ -164,7 +166,7 @@ export class Spch00254Component extends BaseComponent implements OnInit {
       this.tableConfig.pageIndex = pageNum!;
       this.tableLoading(false);
       this.checkedCashArray = [...this.checkedCashArray];
-      this.searchParam.status01 = "0";
+      this.searchParam.status01 = this.searchParam.status01 + "";
     })
   }
 
@@ -198,6 +200,14 @@ export class Spch00254Component extends BaseComponent implements OnInit {
     this.searchParam.status01 = 0
     this.nguonxenm = "";
     this.getDataList();
+  }
+
+  changeStatus($event: any) {
+    if($event == 2) {
+      this.btnDisble = true;
+    } else {
+      this.btnDisble = false;
+    }
   }
 
   private initTable(): void {
@@ -259,11 +269,11 @@ export class Spch00254Component extends BaseComponent implements OnInit {
   // data exprot pdf
   generateData() {
     let data : any[] = [];
-    let stt = 1;
+  
     for(let element of this.dataList) {
       if(element['_checked'] === true) {
         let item = [
-          stt,
+          element['iddonhang']['_id'],
           element['iddonhang']['thongtindonhang'],
           this.formatDate(element['ngaynhap']),
           element['tentaixe'],
@@ -271,7 +281,6 @@ export class Spch00254Component extends BaseComponent implements OnInit {
         ]
         data.push(item);
         this.lstIddonhang.push(element['id']);
-        stt++;
         this.tongcuoc = this.tongcuoc + element['sotienno'];
         this.donvivanchuyen = element['nguonxe']['datacd']+ "-" + element['nguonxe']['datanm'];
       }
@@ -313,7 +322,7 @@ export class Spch00254Component extends BaseComponent implements OnInit {
       nzOnOk: ()=> {
 
         let title = "Danh Sách Công Nợ"
-        let header= [['STT','Thông Tin Đơn Hàng', 'Ngày Phat Hành', 'Tên tài xế', "Tiền cước"]];
+        let header= [['MaDH','Thông Tin Đơn Hàng', 'Ngày Phat Hành', 'Tên tài xế', "Tiền cước"]];
         const tc = this.displayVND(this.tongcuoc);
         let headerlayout = Const.headerLayout;
         headerlayout[0]['field'] = 'Đơn vi vận chuyển:';

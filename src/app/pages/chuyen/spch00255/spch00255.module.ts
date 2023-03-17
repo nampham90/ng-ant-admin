@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Spch00255RoutingModule } from './spch00255-routing.module';
 import { Spch00255Component } from './spch00255.component';
 import { SharedModule } from '@app/shared/shared.module';
+import { SubwindowsearchnguonxeModule } from '@app/widget/modal/subwindowsearchnguonxe/subwindowsearchnguonxe.module';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { SharedModule } from '@app/shared/shared.module';
   ],
   imports: [
     SharedModule,
-    Spch00255RoutingModule
+    Spch00255RoutingModule,
+    SubwindowsearchnguonxeModule,
   ]
 })
 export class Spch00255Module { }
