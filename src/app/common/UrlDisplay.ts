@@ -14,6 +14,7 @@ export enum UrlDisplayId {
     spch00252 = 'chuyen/spch00252', // tìm kiếm chuyến ngoài
     spch00253 = 'chuyen/spch00253', // thu hồi biên lai
     spch00254 = 'chuyen/spch00254', // Công nợ xe ngoài
+    spch00255 = 'chuyen/spch00255', // Thanh toán xe ngoài
 
     // khach hang
     spkh00101 = 'khachhang/spkh00101', //quản lý công nợ
