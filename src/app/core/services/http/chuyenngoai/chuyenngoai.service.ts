@@ -19,8 +19,17 @@ export class ChuyenngoaiService {
     return this.http.post(Const.chuyenngoaiAnt100GetId, params,{ needSuccessInfo: false});
   }
 
+  postExportDetail(params: any) : Observable<any> {
+    return this.http.post(Const.chuyenngoaiAnt100ExportDetail, params,{ needSuccessInfo: false});
+  }
+
   postallChuyenngoai(params: any) : Observable<any> {
     return this.http.post(Const.chuyenngoaiAnt100GetAll, params,{ needSuccessInfo: false});
   }
+
+  postUpdateStatus02(params: any) : Observable<any> {
+    return this.http.post(Const.chuyenngoaiAnt100UpdateStatus02, params,{ needSuccessInfo: false});
+  }
+
 
 }

@@ -46,5 +46,13 @@ export class CommonService {
   listtoptongcuoctungxe(params: any) : Observable<any> {
     return this.http.post(Const.CommonAnt100Listtoptongcuoctungxe, params, { needSuccessInfo: false});
   }
-  
+
+  // get ODS
+  getODS(): Observable<any> {
+    return this.http.post(Const.CommonAnt100GetODS, { needSuccessInfo: false});
+  }
+  /// get ODT
+  getODT(): Observable<any> {
+    return this.http.post(Const.CommonAnt100GetODT, { needSuccessInfo: false});
+  }
 }

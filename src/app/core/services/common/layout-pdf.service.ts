@@ -10,7 +10,7 @@ export class LayoutPdfService {
 
   constructor() { }
 
-  exportPDF(header: any,dataheader:any,data: any,title: string, ngay: string) {
+  exportPDF(header: any,dataheader:any,data: any,title: string, ngay: string, footer1?: string, footer2?:string) {
     const pdf = new jsPDF('p', 'pt', 'a4');
     pdf.addFileToVFS("WorkSans-normal.ttf", Const.font);
     pdf.addFont("WorkSans-normal.ttf", "WorkSans", "normal");
@@ -24,6 +24,13 @@ export class LayoutPdfService {
     for(let element of dataheader) {
       pdf.text(element.field + " " + element.value,50,y);
       y = y + 20;
+    }
+    pdf.setFontSize(10);
+    if(footer1) {
+      pdf.text(footer1,100,700);
+    }
+    if(footer2) {
+      pdf.text(footer2,400,700);
     }
     autoTable(pdf,{
       head: header,

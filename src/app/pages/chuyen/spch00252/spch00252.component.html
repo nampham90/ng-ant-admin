@@ -74,6 +74,14 @@
                         </nz-form-control>
                     </nz-form-item>
                 </div>
+                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" >Số ODS</nz-form-label>
+                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzErrorTip]="''">
+                            <input nz-input name="soods" id="soods" [(ngModel)]="searchParam.soods" placeholder=""/>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
             </div>
         </form>
     </nz-card>
@@ -89,9 +97,17 @@
       <ng-template #nguonxeTpl let-nguonxe="nguonxe">
           <span>{{nguonxe['datacd']}}-{{nguonxe['datanm']}}</span>
       </ng-template>
-      <ng-template #operationTpl let-id="id">
+      <ng-template #operationTpl let-id="id" let-status02="status02">
         <span *appAuth="ActionCode.TimkiemchuyenngoaiUpdate" class="operate-text">
-            <button nz-button nzType="primary" nzGhost (click)="transferSpch00251(id, 'update')" [disabled]="showUpdate">Cập nhật</button>
+            <ng-container *ngIf="status02 == 1 else SUpdate">
+                <button nz-button nzType="primary" nzGhost (click)="transferSpch00251(id, 'update')" [disabled]="true">Cập nhật</button>
+            </ng-container>
+            <ng-template #SUpdate>
+                <button nz-button nzType="primary" nzGhost (click)="transferSpch00251(id, 'update')" [disabled]="false">Cập nhật</button>
+            </ng-template>
+        </span>
+        <span *appAuth="ActionCode.TimkiemchuyenngoaiExportPdf" class="operate-text">
+            <button nz-button nzType="primary" nzGhost (click)="exportPDF(id)">Xuất PDF</button>
         </span>
       </ng-template>
       <ng-template #machuyenngoaiTpl let-id="id">

@@ -331,7 +331,7 @@ export class Spch00254Component extends BaseComponent implements OnInit {
         headerlayout[1]['value'] = tc;
         headerlayout[2]['field'] = 'Tổng số đơn hàng cần thanh toán:';
         headerlayout[2]['value'] = data.length + '';
-        this.pdfService.exportPDF(header,headerlayout,data,title,this.getDate());
+        this.pdfService.exportPDF(header,headerlayout,data,title,this.getDate(),"BVC ký xác nhận","BTT ký xác nhận");
         // insert vao bang donhangexport với thông tin gồm. header, và data status01 = 1. chờ thanh toán
         this.createDataExport(this.searchParam.nguonxe!,this.getDate(),title,data,headerlayout,header,system);
         this.resetData();

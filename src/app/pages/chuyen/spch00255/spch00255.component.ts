@@ -133,7 +133,7 @@ export class Spch00255Component extends BaseComponent implements OnInit {
       this.tableConfig.pageIndex = pageNum!;
       this.tableLoading(false);
       this.checkedCashArray = [...this.checkedCashArray];
-      this.searchParam.status02 = "0";
+      this.searchParam.status02 = this.searchParam.status02 + "";
     }) 
   }
 
@@ -190,12 +190,34 @@ export class Spch00255Component extends BaseComponent implements OnInit {
     }
   }
 
-  exportPDF() {
-
+  exportPDF(id: string) {
+    this.dataService.postDetail({id:id}).pipe()
+    .subscribe(data => {
+      if(data) {
+        this.pdfService.exportPDF(data['header'],data['lstheader'],data['lstdata'],data['title'],this.getDate(),"BVC ký xác nhận","BTT ký xác nhận");
+      } else {
+         this.modalSrv.error({nzTitle: "Lỗi hệ thống ! vui long liên hệ bộ phận kỷ thuật"});
+      }
+      
+    })
   }
 
-  thanhtoan() {
-
+  thanhtoan(id: string) {
+    this.modalSrv.confirm({
+      nzTitle: "Bạn chắc chắn muốn thánh toán đơn này không ?",
+      nzContent: "Nhấn OK để tiếp tục !",
+      nzOnOk: () => {
+        this.dataService.postUpdateStatus({id:id}).pipe()
+        .subscribe(data => {
+           if(data == 1) {
+              this.getDataList();
+              this.message.success("Thanh toán thành công");
+           } else {
+              this.message.error("Lỗi hệ thống. Vui lòng liên hệ kỷ thuật");
+           }
+        })
+      }
+    })
   }
   private initTable(): void {
     this.tableConfig = {

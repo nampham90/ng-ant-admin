@@ -2,6 +2,9 @@ export const  dateFormat= 'yyyy/MM/dd';
 export const  idTaixe = "636cf775974c56587047691e";
 export const  idKhachhang = "632ebaf77e9ad9aeef4e3d27";
 
+// đợn vi sở hưu
+export const doanhnghiep = "HLXV"
+
 export const  tinhthanhApi = "https://provinces.open-api.vn/api/?depth=2";
 
 export const  Hinhthucthanhtoan = [
@@ -55,6 +58,8 @@ export const CommonAnt100Tongnoall = "common/commonAnt100Tongnoall";
 export const CommonAnt100Listtopdoanhthu = "common/commonAnt100Listtopdoanhthu";
 export const CommonAnt100Listtopchiphi = "common/commonAnt100Listtopchiphi";
 export const CommonAnt100Listtoptongcuoctungxe = "common/commonAnt100Listtongcuoctungxe";
+export const CommonAnt100GetODS = "common/commonAnt100GetODS";
+export const CommonAnt100GetODT = "common/commonAnt100GetODT";
 
 //role
 export const Ant100SearchAllRole = "role/ant100SearchAllRole";
@@ -163,9 +168,11 @@ export const NguonxeAnt100DeleteAll = 'nguonxe/nguonxeAnt100DeleteAll';
 // chuyến ngoài
 export const chuyenngoaiAnt100GetAll = 'chuyenngoai/chuyenngoaiAnt100getAll';
 export const chuyenngoaiAnt100GetId = 'chuyenngoai/chuyenngoaiAnt100getDetail';
+export const chuyenngoaiAnt100ExportDetail = 'chuyenngoai/chuyenngoaiAnt100ExportDetail';
 export const chuyenngoaiAnt100Create = 'chuyenngoai/chuyenngoaiAnt100Create';
 export const chuyenngoaiAnt100Update = 'chuyenngoai/chuyenngoaiAnt100Update';
 export const chuyenngoaiAnt100UpdateStatus = 'chuyenngoai/chuyenngoaiAnt100UpdateStatus';
+export const chuyenngoaiAnt100UpdateStatus02 = 'chuyenngoai/chuyenngoaiAnt100UpdateStatus02';
 export const chuyenngoaiAnt100Delete = 'chuyenngoai/chuyenngoaiAnt100Delete';
 
 // chi tiết chuyên ngoài
@@ -184,6 +191,8 @@ export const CongnoxengoaiAnt100UpdateStatus01 = 'congnoxengoai/congnoxengoaiAnt
 // đơn hang export xe ngoai
 export const DonhangexportxengoaiAnt100Create = 'donhangexportxengoai/donhangexportxengoaiAnt100Create';
 export const DonhangexportxengoaiAnt100FindAll = 'donhangexportxengoai/donhangexportxengoaiAnt100FindAll';
+export const DonhangexportxengoaiAnt100Detail ='donhangexportxengoai/donhangexportxengoaiAnt100Detail';
+export const DonhangexportxengoaiAnt100UpdateStatus ='donhangexportxengoai/donhangexportxengoaiAnt100UpdateStatus';
 
 
 

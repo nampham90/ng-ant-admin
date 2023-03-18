@@ -18,4 +18,12 @@ export class DonhangexportxengoaiService {
   postAll(params:any) : Observable<any> {
     return this.http.post(Const.DonhangexportxengoaiAnt100FindAll, params,{ needSuccessInfo: false});
   }
+
+  postDetail(params: any) : Observable<any> {
+    return this.http.post(Const.DonhangexportxengoaiAnt100Detail, params,{ needSuccessInfo: false});
+  }
+  postUpdateStatus(params: any) : Observable<any> {
+    return this.http.post(Const.DonhangexportxengoaiAnt100UpdateStatus, params,{ needSuccessInfo: false});
+  }
+
 }

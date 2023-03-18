@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe,formatDate } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UrlDisplayId } from '@app/common/UrlDisplay';
@@ -20,6 +20,8 @@ import { NguonxeService } from '@app/core/services/http/nguonxe/nguonxe.service'
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { TabService } from '@app/core/services/common/tab.service';
 import { ChuyenngoaidtoService } from '@app/core/services/http/chuyenngoai/chuyenngoaidto.service';
+import { CommonService } from '../../../core/services/http/common/common.service';
+import { LayoutPdfService } from '@app/core/services/common/layout-pdf.service';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -27,6 +29,7 @@ interface SearchParam {
   nguonxe : string;
   biensoxe: string;
   _id: string;
+  soods: string;
 }
 
 @Component({
@@ -101,7 +104,9 @@ export class Spch00252Component extends BaseComponent implements OnInit {
     private nguonxeService: NguonxeService,
     public message: NzMessageService,
     protected override tabService: TabService,
-    private ChuyenngoaiDto:ChuyenngoaidtoService
+    private ChuyenngoaiDto:ChuyenngoaidtoService,
+    private commonService: CommonService,
+    private pdfService: LayoutPdfService,
   ) { 
     super(webService,router,cdf,datePipe,tabService);
   }
@@ -195,6 +200,70 @@ export class Spch00252Component extends BaseComponent implements OnInit {
 
   copy(idchuyenngoai: any) {
     return `${idchuyenngoai}`;
+  }
+
+  exportPDF(id: string) {
+    this.modalSrv.confirm({
+      nzTitle: "Bạn có chắc chắn muốn xuất phiếu không ?",
+      nzContent: "Không thể cập nhật sau khi xuất. Nhấn OK để thực hiện xuất pdf",
+      nzOnOk: ()=> {
+        this.dataService.postExportDetail({id:id}).pipe()
+        .subscribe(data => {
+          let ods = data['ods'];
+          let title = "Hóa Đơn Vận Chuyển - " + Const.doanhnghiep;
+          let header = [['Thông tin đơn hàng','Địa điểm bóc hàng','Tên người nhận','SDT người nhận','Địa chỉ người nhận','Ghi chú']];
+          let dataHeader = this.fnreturnHeaderPDF(data['resHeader'],ods);
+          let lstdata = this.fngenerateData(data['listdetail']);
+          this.pdfService.exportPDF(header,dataHeader,lstdata,title,this.getDate(),"Tài xế ký nhận","Khách hàng ký nhận");
+          // update status02 = 1;
+          this.fnUpdateStatus02(id);
+          this.getDataList();
+        })
+      }
+    })
+  }
+
+  fnreturnHeaderPDF(dataheader: any,ods:any) {
+    let ngayvanchuyen : Date =  dataheader['ngayvanchuyen'];
+    const format = 'dd/MM/yyyy';
+    const locale = 'vi-VN';
+    const timezone = 'UTC+7';
+    const formattedDate = formatDate(ngayvanchuyen, format, locale, timezone);
+    let layoutHeader = Const.headerLayout;
+    layoutHeader[0]['field'] = 'số ODS:';
+    layoutHeader[0]['value'] = ods;
+    layoutHeader[1]['field'] = 'Tài xế:';
+    layoutHeader[1]['value'] = dataheader['tentaixe'];
+    layoutHeader[2]['field'] = 'Biến số xe:';
+    layoutHeader[2]['value'] =  dataheader['biensoxe'];
+    layoutHeader[3]['field'] = 'Ngày vận chuyển:';
+    layoutHeader[3]['value'] = formattedDate;
+    return layoutHeader;
+  }
+
+  fngenerateData(lstdata:any) {
+    let data : any[] = [];
+    for(let element of lstdata) {
+      let item = [
+        element['thongtindonhang'],
+        element['diadiembochang'],
+        element['tennguoinhan'],
+        element['sdtnguoinhan'],
+        element['diachinguoinhan'],
+        element['ghichu']
+      ]
+      data.push(item);
+    }
+    return data;
+  }
+
+  fnUpdateStatus02(id: any){
+    this.dataService.postUpdateStatus02({id:id}).pipe()
+    .subscribe(res => {
+      if(res != null) {
+         this.message.success("cập nhật thành công !");
+      }
+    })
   }
 
   private initTable(): void {

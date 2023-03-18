@@ -85,7 +85,7 @@ export const ActionCode = {
   TimkiemchuyenngoaiAdd : 'default:chuyen:spch00252:add',
   TimkiemchuyenngoaiDelete : 'default:chuyen:spch00252:delete',
   TimkiemchuyenngoaiUpdate : 'default:chuyen:spch00252:update',
-
+  TimkiemchuyenngoaiExportPdf : 'default:chuyen:spch00252:exportpdf',
   // thu hồi biên lai
   Thohoibienlai: 'default:chuyen:spch00253:thuhoibienlai',
 
