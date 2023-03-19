@@ -30,6 +30,7 @@ import { finalize } from 'rxjs';
 import { fnReload } from '@utils/tools';
 import { ChiphichuyenService } from '@app/core/services/http/chiphichuyen/chiphichuyen.service';
 import { SubwindowChiphiService } from '@app/widget/modal/subwindowchiphi/subwindow-chiphi.service';
+import { LayoutPdfService } from '@app/core/services/common/layout-pdf.service';
 export interface Product {
   id?:string,
   stt?: number;
@@ -116,6 +117,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
     private cpcService: ChiphichuyenService,
     private modalChiphiService: SubwindowChiphiService,
     protected override tabService: TabService,
+    private pdfService: LayoutPdfService,
 
   ) {
     super(webService,router,cdf,datePipe,tabService);
@@ -161,9 +163,9 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         this.btnConfirmtrahang = false;
         this.btnConfirmchiphi = true;
         this.btnConfirmend = false;
-        this.btnNew = true;
-        this.btnUpdate = true;
-        this.btnDelete = true;
+        this.btnNew = false;
+        this.btnUpdate = false;
+        this.btnDelete = false;
       }; break; 
       case 4 : {
         this.btnConfirm = false;
@@ -171,9 +173,9 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         this.btnConfirmtrahang = false;
         this.btnConfirmchiphi = true;
         this.btnConfirmend = true;
-        this.btnNew = true;
-        this.btnUpdate = true;
-        this.btnDelete = true;
+        this.btnNew = false;
+        this.btnUpdate = false;
+        this.btnDelete = false;
       }; break;
       case 5 : {
         this.btnConfirm = false;
@@ -231,7 +233,6 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         this.listchiphi = res;
         if (this.listchiphi.length > 0) {
           // show modal update chi phí
-          console.log(this.listchiphi);
           this.modalChiphiService.show({ nzTitle: 'Cập nhật danh sách chi phí' }, {listcp:this.listchiphi}).subscribe(({ modalValue, status }) => {
             if (status === ModalBtnStatus.Cancel) {
               return;
@@ -246,6 +247,9 @@ export class Spch00201Component extends BaseComponent implements OnInit {
                   this.message.info("Cập nhật thành công !");
                   this.ChuyenDto.trangthai=4;
                   this.fnshowConfirm(4);
+                  // export file pdf
+
+
                 } else {
                   this.message.info("Cập nhật 1 phần !");
                 }
@@ -262,18 +266,38 @@ export class Spch00201Component extends BaseComponent implements OnInit {
               trangthai: 4,
               lstchiphi: modalValue.items
             }
-            console.log(req1);
             this.dataService.updateTrangthai(req1).pipe().subscribe(res => {
               if (res == 1) {
                  this.message.success(" Thực hiện thành công !");
                  this.ChuyenDto.trangthai=4;
                  this.fnshowConfirm(4);
+                 // export file pdf
               } else {
                  this.message.success(" Không thành công !");
               }
             })
           });
         }
+    })
+  }
+
+  fnExportDataPDF(id: string) {
+    this.phhService.ExportDataPDFChuyen(id).pipe()
+    .subscribe(res => {
+      let title = "Chứng từ hoàn thành chuyến - " +Const.doanhnghiep;
+      let layoutheader = Const.headerLayout;
+      layoutheader[0]['field'] = "Số ODT:";
+      layoutheader[0]['value'] = res.odt;
+      layoutheader[1]['field'] = "Biển số xe: ";
+      layoutheader[1]['value'] = res['chuyen']['biensoxe'];
+      layoutheader[2]['field'] = "Tài chính: ";
+      layoutheader[2]['value'] = res['chuyen']['idtai']['name'];
+      layoutheader[3]['field'] = "Tài phụ";
+      layoutheader[3]['value'] = res['chuyen']['idphu']['name'];;
+      layoutheader[4]['field'] = "Tổng cước";
+      layoutheader[4]['value'] = "1000";
+      layoutheader[5]['field'] = "Ngày khởi hành";
+      layoutheader[5]['value'] = this.getDate();
     })
   }
 
@@ -297,7 +321,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
                this.message.success(" Thực hiện thành công !");
                this.ChuyenDto.trangthai = trangthai;
                this.fnshowConfirm(this.ChuyenDto.trangthai);
-               fnReload(this.router, Const.rootbase + 'chuyen/spch00101');
+              // fnReload(this.router, Const.rootbase + 'chuyen/spch00101');
             } else {
                this.message.success(" Không thành công !");
             }

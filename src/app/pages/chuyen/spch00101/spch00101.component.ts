@@ -177,7 +177,7 @@ export class Spch00101Component extends BaseComponent implements OnInit {
           element['showBtn'] = showbtn;
       }
       if(this.dataList.length == 0) {
-        this.modalSrv.info({ nzContent: 'Không Có dữ liệu',});
+        this.message.info('Không Có dữ liệu');
       }
       this.tableConfig.total = total!;
       this.tableConfig.pageIndex = pageNum!;

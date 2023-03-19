@@ -128,6 +128,7 @@ export const PhieunhaphangAnt100Get = 'phieunhaphang/phieunhaphangAnt100get';
 export const PhieunhaphangAnt100Update = 'phieunhaphang/phieunhaphangAnt100update';
 export const PhieunhaphangAnt100Create = 'phieunhaphang/phieunhaphangAnt100create';
 export const PhieunhaphangAnt100Delete = 'phieunhaphang/phieunhaphangAnt100delete';
+export const PhieunhaphangAnt100ExportData = 'phieunhaphang/phieunhaphangAnt100ExportDataPDFChuyen';
 export const PhieunhaphangAnt100DeleteAll = 'phieunhaphang/phieunhaphangAnt100deleteAll';
 
 // chi phi chuyen 
