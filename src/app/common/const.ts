@@ -47,6 +47,14 @@ export const headerLayout = [
     {"field": "", "value": ""}
  ]
 
+export const headerLayout2 = [
+    {"field": "", "value": ""},
+    {"field": "", "value": ""},
+    {"field": "", "value": ""},
+    {"field": "", "value": ""},
+    {"field": "", "value": ""}
+]
+
 export const rootbase = '/default/';
 export const mobilebase = '/mobile/';
 

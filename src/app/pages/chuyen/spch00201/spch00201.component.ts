@@ -43,6 +43,9 @@ export interface Product {
   lotrinh?: any;
   ghichu?:string;
   trangthai?: number;
+  tennguoinhan?:string;
+  sdtnguoinhan?:string;
+  diachinguoinhan?:string;
 } 
 
 interface SearchParam {
@@ -248,8 +251,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
                   this.ChuyenDto.trangthai=4;
                   this.fnshowConfirm(4);
                   // export file pdf
-
-
+                  this.fnExportDataPDF(this.ChuyenDto.id);
                 } else {
                   this.message.info("Cập nhật 1 phần !");
                 }
@@ -272,6 +274,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
                  this.ChuyenDto.trangthai=4;
                  this.fnshowConfirm(4);
                  // export file pdf
+                 this.fnExportDataPDF(this.ChuyenDto.id);
               } else {
                  this.message.success(" Không thành công !");
               }
@@ -282,23 +285,104 @@ export class Spch00201Component extends BaseComponent implements OnInit {
   }
 
   fnExportDataPDF(id: string) {
-    this.phhService.ExportDataPDFChuyen(id).pipe()
+    this.phhService.ExportDataPDFChuyen(id)
     .subscribe(res => {
-      let title = "Chứng từ hoàn thành chuyến - " +Const.doanhnghiep;
-      let layoutheader = Const.headerLayout;
-      layoutheader[0]['field'] = "Số ODT:";
-      layoutheader[0]['value'] = res.odt;
-      layoutheader[1]['field'] = "Biển số xe: ";
-      layoutheader[1]['value'] = res['chuyen']['biensoxe'];
-      layoutheader[2]['field'] = "Tài chính: ";
-      layoutheader[2]['value'] = res['chuyen']['idtai']['name'];
-      layoutheader[3]['field'] = "Tài phụ";
-      layoutheader[3]['value'] = res['chuyen']['idphu']['name'];;
-      layoutheader[4]['field'] = "Tổng cước";
-      layoutheader[4]['value'] = "1000";
-      layoutheader[5]['field'] = "Ngày khởi hành";
-      layoutheader[5]['value'] = this.getDate();
+      if(res) {
+        // tinh tong cuoc
+        let tc = this.fnTinhTongCuoc(res.lstproduct);
+        // tong tien khach hàng nơ
+        let tckn = this.fnTinhTongTienKHNo(res.lstproduct);
+        // tinh tong chi phi
+        let tcp = this.fnTinhtongchiphi(res.lstchiphi);
+
+        let tiennop = tc - (tckn + tcp);
+
+        let title = "Chứng từ hoàn thành chuyến - " + Const.doanhnghiep;
+        let header = [['Khách hàng','Thông tin đơn hang','tiền cước','HTTT']];
+        let data = this.fnGetDataExport(res.lstproduct);
+        let layoutheader = Const.headerLayout;
+        layoutheader[0]['field'] = "Số ODT:";
+        layoutheader[0]['value'] = res.odt;
+        layoutheader[1]['field'] = "Biển số xe: ";
+        layoutheader[1]['value'] = res['chuyen']['biensoxe']['biensoxe'];
+        layoutheader[2]['field'] = "Tài chính: ";
+        layoutheader[2]['value'] = res['chuyen']['idtai']['name'];
+        layoutheader[3]['field'] = "Tài phụ:";
+        layoutheader[3]['value'] = res['chuyen']['idphu']['name'];;
+        layoutheader[4]['field'] = "Tổng cước:";
+        layoutheader[4]['value'] = this.displayVND(tc);
+
+        let layoutheader2 = Const.headerLayout2;
+        layoutheader2[0]['field'] = "Ngày khởi hành:";
+        layoutheader2[0]['value'] = this.formatDate(res['chuyen']['ngaydi']);
+        layoutheader2[1]['field'] = "Tổng chi phi:";
+        layoutheader2[1]['value'] = this.displayVND(tcp);
+        layoutheader2[2]['field'] = "Khách Hàng Nợ:";
+        layoutheader2[2]['value'] = this.displayVND(tckn);
+        layoutheader2[3]['field'] = "";
+        layoutheader2[3]['value'] = "";
+        layoutheader2[4]['field'] = "Số Tiền Nộp:";
+        layoutheader2[4]['value'] = this.displayVND(tiennop);
+  
+        // chi phi
+        let headerchiphi = [['Tên chi phí', 'Số tiền chi','Ghi chú']];
+        let datachiphi = this.fnGetDataExportChiPhi(res.lstchiphi);
+        this.pdfService.exportPDFChuyen(header,layoutheader,layoutheader2,data,headerchiphi,datachiphi,title,this.getDate(),"","Quản lý ký duyệt");  
+      }
     })
+  }
+
+  fnGetDataExport(lstdata:any) {
+    let data: any[] = [];
+    for(let element of lstdata){
+      let item = [
+        element['iduser']['name'],
+        element['noidungdonhang'],
+        this.displayVND(element['tiencuoc']),
+        element['hinhthucthanhtoan']
+      ];
+      data.push(item);
+    }
+    return data;
+  }
+
+  fnTinhTongCuoc(lstdata:any)  {
+    let tongcuoc = 0;
+    for(let element of lstdata) {
+      tongcuoc = tongcuoc + element['tiencuoc'];
+    }
+    return tongcuoc;
+  }
+
+  fnTinhTongTienKHNo(lstdata:any) {
+    let tongcuockhno = 0 ;
+    for(let element of lstdata) {
+      if(element['hinhthucthanhtoan'] == 2){
+        tongcuockhno = tongcuockhno + element['tiencuoc'];
+      }   
+    }
+    return tongcuockhno;
+  }
+
+  fnGetDataExportChiPhi(lstchiphi: any) {
+    let data: any[] = [];
+    for(let element of lstchiphi) {
+      let item = [
+        element['tenchiphi'],
+        this.displayVND(element['sotien']),
+        element['ghichu'],
+      ];
+      data.push(item);
+    }
+    return data;
+  }
+
+  fnTinhtongchiphi(lstchiphi: any) {
+    let tongcp = 0;
+    for(let element of lstchiphi) {
+      tongcp = tongcp + element['sotien'];
+    }
+    return tongcp;
   }
 
   // update trang thai chuyen hang
@@ -380,10 +464,11 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         "hinhthucthanhtoan": res.hinhthucthanhtoan + "",
         "ghichu": null,
         "trangthai": res.trangthai,
-        "id": res.id
+        "id": res.id,
+        "tennguoinhan": res.tennguoinhan,
+        "sdtnguoinhan":res.sdtnguoinhan,
+        "diachinguoinhan": res.diachinguoinhan
       }
-      console.log(req);
-
       this.modashowProduct.show({ nzTitle: 'Cập nhật' }, req).subscribe(({ modalValue, status }) => {
         if (status === ModalBtnStatus.Cancel) {
           return;
@@ -478,6 +563,9 @@ export class Spch00201Component extends BaseComponent implements OnInit {
           itemProduc.tiencuoc = item['tiencuoc'];
           itemProduc.trangthai = item['trangthai'];
           itemProduc.ghichu = item['ghichu'];
+          itemProduc.tennguoinhan = item['tennguoinhan'];
+          itemProduc.sdtnguoinhan = item['sdtnguoinhan'];
+          itemProduc.diachinguoinhan = item['diachinguoinhan'];
           i++;
           listP.push(itemProduc);
       }
@@ -548,9 +636,19 @@ export class Spch00201Component extends BaseComponent implements OnInit {
           tdTemplate: this.htttTpl
         },
         {
-          title: 'Lộ trình',
+          title: 'Tên người nhận',
+          width: 250,
+          field: 'tennguoinhan'
+        },
+        {
+          title: 'SDT người nhận',
           width: 150,
-          field: 'lotrinh'
+          field: 'sdtnguoinhan'
+        },
+        {
+          title: 'Địa chỉ người nhận',
+          width: 350,
+          field: 'diachinguoinhan'
         },
         {
           title: 'Ghi chú',

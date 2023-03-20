@@ -62,6 +62,24 @@
         </nz-form-control>
     </nz-form-item>
     <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="tennguoinhan">Tên người Nhận</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập tên người nhận">
+          <input nz-input formControlName="tennguoinhan" name="tennguoinhan" placeholder="" id="tennguoinhan"/>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="sdtnguoinhan">SDT người Nhận</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập tên người nhận">
+          <input nz-input formControlName="sdtnguoinhan" name="sdtnguoinhan" placeholder="" id="sdtnguoinhan"/>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="diachinguoinhan">Địa chỉ người Nhận</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập tên người nhận">
+          <input nz-input formControlName="diachinguoinhan" name="diachinguoinhan" placeholder="" id="diachinguoinhan"/>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="ghichu">Ghi chú</nz-form-label>
         <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
             <textarea

@@ -61,6 +61,9 @@ export class SubwindowproductComponent implements OnInit {
       diadiembochang:[null,[Validators.required]],
       hinhthucthanhtoan:["1",[Validators.required]],
       lotrinh: ["0",[Validators.required]],
+      tennguoinhan: [null,[Validators.required]],
+      sdtnguoinhan: [null,[Validators.required]],
+      diachinguoinhan: [null,[Validators.required]],
       ghichu: [null],
     });
   }

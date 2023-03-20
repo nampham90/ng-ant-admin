@@ -10,7 +10,7 @@ export class LayoutPdfService {
 
   constructor() { }
 
-  exportPDFChuyen(header: any,dataheader:any,data: any, headerp2:any, datapage2:any,title: string, ngay: string, footer1?: string, footer2?:string) {
+  exportPDFChuyen(header: any,dataheader:any, dataheader2:any,data: any, headerp2:any, datapage2:any,title: string, ngay: string, footer1?: string, footer2?:string) {
     const pdf = new jsPDF('p', 'pt', 'a4');
     pdf.addFileToVFS("WorkSans-normal.ttf", Const.font);
     pdf.addFont("WorkSans-normal.ttf", "WorkSans", "normal");
@@ -18,11 +18,16 @@ export class LayoutPdfService {
     pdf.setFontSize(9);
     pdf.text(ngay,30,30);
     pdf.setFontSize(20);
-    pdf.text(title,200,40);
-    pdf.setFontSize(12);
-    let y = 60;
+    pdf.text(title,150,40);
+    pdf.setFontSize(11);
+    let y = 80;
     for(let element of dataheader) {
       pdf.text(element.field + " " + element.value,50,y);
+      y = y + 20;
+    }
+    y = 80
+    for(let element of dataheader2) {
+      pdf.text(element.field + " " + element.value,300,y);
       y = y + 20;
     }
     autoTable(pdf,{
@@ -33,7 +38,7 @@ export class LayoutPdfService {
         console.log(data.column.index);
       },
       styles: {font: "WorkSans"},
-      startY: 150,
+      startY: 200,
     });
     pdf.addPage();
     pdf.setFontSize(12);
