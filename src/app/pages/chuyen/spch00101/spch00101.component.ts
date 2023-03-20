@@ -34,6 +34,7 @@ interface SearchParam {
   idtai : string;
   idphu : string;
   trangthai: any;
+  soodt: string;
 }
 
 class showBtn {
@@ -93,6 +94,7 @@ export class Spch00101Component extends BaseComponent implements OnInit {
   btnConfirmbochang = false; // hoàn thành bóc hàng
   btnConfirmtrahang = false; // hoàn thành trả hàng
 
+  @ViewChild('soodtTpl', { static: true }) soodtTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('Tlbiensoxe', { static: true }) Tlbiensoxe!: TemplateRef<NzSafeAny>;
   @ViewChild('Tltentai', { static: true }) Tltentai!: TemplateRef<NzSafeAny>;
   @ViewChild('Tltenphu', { static: true }) Tltenphu!: TemplateRef<NzSafeAny>;
@@ -438,6 +440,10 @@ export class Spch00101Component extends BaseComponent implements OnInit {
   }
   allDel() {}
 
+  copy(soodt: any) {
+    return `${soodt}`;
+  }
+
   getItem(id:any,changduong: any,idtai: any,idphu: any,biensoxe: any,tienxe:any,ngaydi:any,ngayve:any,trangthai:any) {
     this.chuyenDtoService.id = id;
     this.chuyenDtoService.biensoxe = biensoxe;
@@ -461,9 +467,9 @@ export class Spch00101Component extends BaseComponent implements OnInit {
           this.tableLoading(false);
         })
       )
-      .subscribe(() => {
+      .subscribe(res => {
+        this.searchParam.soodt = res['soodt'];
         this.getDataList();
-
       });
   }
 
@@ -492,10 +498,20 @@ export class Spch00101Component extends BaseComponent implements OnInit {
     this.tableConfig.pageSize = e;
   }
 
+  copyText() {
+    
+  }
+
   private initTable(): void {
     this.tableConfig = {
       showCheckbox: false,
       headers: [
+        {
+          title: 'Số ODT',
+          width: 250,
+          field: 'soodt',
+          tdTemplate: this.soodtTpl
+        },
         {
           title: 'Ngày khởi hành',
           field: 'ngaydi',

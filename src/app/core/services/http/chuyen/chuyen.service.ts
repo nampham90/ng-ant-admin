@@ -26,11 +26,11 @@ export class ChuyenService {
     return this.http.get(`${Const.ChuyenAnt100Get}/${id}/`);
   }
 
-  createChuyen(params: Chuyen): Observable<void>{
+  createChuyen(params: Chuyen): Observable<any>{
     return this.http.post(Const.ChuyenAnt100Create, params,{ needSuccessInfo: false});
   }
 
-  updateChuyen(params: Chuyen): Observable<void>{
+  updateChuyen(params: Chuyen): Observable<any>{
     return this.http.put(Const.ChuyenAnt100Update, params);
   }
   updateTrangthai(params: any): Observable<Number>{

@@ -8,6 +8,7 @@ import { NzHighlightModule } from 'ng-zorro-antd/core/highlight';
 import { SubwindowtaixeModule } from '../../../widget/modal/subwindowtaixe/subwindowtaixe.module';
 import { SubwindowchuyenModule } from '@app/widget/modal/subwindowchuyen/subwindowchuyen.module';
 import { SubwindowchiphiModule } from '@app/widget/modal/subwindowchiphi/subwindowchiphi.module';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { SubwindowchiphiModule } from '@app/widget/modal/subwindowchiphi/subwind
     SubwindowtaixeModule,
     SubwindowchuyenModule,
     SubwindowchiphiModule,
-    NzHighlightModule
+    NzHighlightModule,
+    ClipboardModule
   ],
   
 })

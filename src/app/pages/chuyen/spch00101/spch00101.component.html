@@ -105,6 +105,16 @@
                     </nz-form-item>
                 </div>
             </div>
+            <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" >Số ODT</nz-form-label>
+                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzErrorTip]="''">
+                            <input nz-input name="soodt" id="soodt" [(ngModel)]="searchParam.soodt" placeholder=""/>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
         </form>
     </nz-card>
     <app-card-table-wrap [tableTitle]="'Kết quả tìm kiếm'" (reload)="reloadTable()" [btnTpl]="tableBtns">
@@ -116,6 +126,7 @@
           [tableConfig]="tableConfig"
           [tableData]="dataList"
         ></app-ant-table>
+
         <ng-template #operationTpl let-id="id" let-showBtn="showBtn" let-tongcuoc="tongcuoc" let-tongchiphi="tongchiphi">
           <span *appAuth="ActionCode.ChuyenEdit" class="operate-text">
             <button *ngIf="showBtn['btnUpdate']" nz-button nzType="primary" nzGhost (click)="edit(id)">Cập nhật</button>
@@ -130,7 +141,7 @@
             <button *ngIf="showBtn['btnConfirmtrahang']" nz-button nzType="primary" nzGhost (click)="confirmtrahang(id)">Hoàn thành trả hàng</button>
           </span>
           <span *appAuth="ActionCode.ChuyenConfirmchiphi" class="operate-text">
-            <button *ngIf="showBtn['btnConfirmchiphi']" nz-button nzType="primary" nzGhost (click)="confirmchiphi(id)">Tính chi phí</button>
+            <button *ngIf="showBtn['btnConfirmchiphi']" nz-button nzType="primary" nzGhost (click)="confirmchiphi(id)">Tính chi phí & Xuất PDF</button>
           </span>
           <span *appAuth="ActionCode.ChuyenConfirmend" class="operate-text">
             <button *ngIf="showBtn['btnConfirmend']" nz-button nzType="primary" nzGhost (click)="confirmend(id)">Kết thúc chuyến hàng</button>
@@ -152,6 +163,12 @@
         </ng-template>
         <ng-template #tienduatruocTpl let-tienxe="tienxe">
             <span>{{tienxe*1000 | currency : "VND" : ""}}</span>
+        </ng-template>
+        <ng-template #soodtTpl let-soodt="soodt" let-biensoxe="biensoxe" let-id="id" let-changduong="changduong" let-idtai="idtai['name']" let-idphu="idphu['name']" let-tienxe="tienxe" let-ngaydi="ngaydi" let-ngayve="ngayve" let-trangthai="trangthai">
+            <div class="copy-container">
+                <a nz-button nzType="link" class="copy-link" (click)="getItem(id,changduong,idtai,idphu,biensoxe['biensoxe'],tienxe,ngaydi,ngayve,trangthai)"> {{soodt}}</a>
+                <button nz-button [cdkCopyToClipboard]="copy(soodt)" nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
+            </div>
         </ng-template>
     </app-card-table-wrap>
 
