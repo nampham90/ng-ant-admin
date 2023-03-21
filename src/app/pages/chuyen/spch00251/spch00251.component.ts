@@ -192,56 +192,61 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   }
 
   fnBtnConfirm() {
-    let req = {}
-    let title = "";
-    let content = "";
-    let mode = "";
-    if(this.chuyenngoaiDto.initFlg === false && this.chuyenngoaiDto.mode == "update") {
-      mode = "update";
-      title = "Bạn chắc chắn muốn cập nhật !";
-      content = "Dữ liệu sẽ được cập nhật sau khi nhấn OK";
-      req = {
+    if(this.headerForm.value.id && this.chuyenngoaiDto.id == "" && this.headerForm.value.id.length == 24) {
+       this.chuyenngoaiDto.clear();
+       this.headerForm.reset();
+    } else {
+      let req = {}
+      let title = "";
+      let content = "";
+      let mode = "";
+      if(this.chuyenngoaiDto.initFlg === false && this.chuyenngoaiDto.mode == "update") {
+        mode = "update";
+        title = "Bạn chắc chắn muốn cập nhật !";
+        content = "Dữ liệu sẽ được cập nhật sau khi nhấn OK";
+        req = {
+            "spch00251Header": this.headerForm.value,
+            "spch00251Listdetail": this.dataList,
+            "mode": "update" // them mới và updade củ
+        }
+      } else {
+        mode = "create";
+        title = "Bạn chắc chắn dữ liệu bạn tạo đã đúng chưa !";
+        content = "Nhấn ok để hoàn thành công việc !";
+        req = {
           "spch00251Header": this.headerForm.value,
           "spch00251Listdetail": this.dataList,
-          "mode": "update" // them mới và updade củ
+          "mode": "create" // them mới hoàn toàn
+        }
       }
-    } else {
-      mode = "create";
-      title = "Bạn chắc chắn dữ liệu bạn tạo đã đúng chưa !";
-      content = "Nhấn ok để hoàn thành công việc !";
-      req = {
-        "spch00251Header": this.headerForm.value,
-        "spch00251Listdetail": this.dataList,
-        "mode": "create" // them mới hoàn toàn
-      }
+      this.modalSrv.confirm({
+        nzTitle: title,
+        nzContent: content,
+        nzOnOk: () => {
+          this.dataService.postCreate(req)
+          .pipe()
+          .subscribe(res => {
+              this.tableLoading(true);
+              this.listdetail = res.reslistdetail
+              let stt = 1;
+              for(let element of this.listdetail) {
+                element.stt = stt;
+                stt++;
+              }
+              this.headerForm.patchValue(res.resspch00251Header);
+              this.getDataList();
+              this.chuyenngoaiDto.initFlg = false;
+              this.chuyenngoaiDto.mode = "update";
+              this.chuyenngoaiDto.listdetail = res.reslistdetail;
+              if(mode == "create") {
+                this.message.success("Đăng ký thành công !");
+              } else {
+                this.message.success("Cập nhật thành công !");
+              }
+          })
+        }
+      });
     }
-    this.modalSrv.confirm({
-      nzTitle: title,
-      nzContent: content,
-      nzOnOk: () => {
-        this.dataService.postCreate(req)
-        .pipe()
-        .subscribe(res => {
-          this.tableLoading(true);
-          this.listdetail = res.reslistdetail
-          let stt = 1;
-          for(let element of this.listdetail) {
-            element.stt = stt;
-            stt++;
-          }
-          this.headerForm.patchValue(res.resspch00251Header);
-          this.getDataList();
-          this.chuyenngoaiDto.initFlg = false;
-          this.chuyenngoaiDto.mode = "update";
-          this.chuyenngoaiDto.listdetail = res.reslistdetail;
-          if(mode == "create") {
-            this.message.success("Đăng ký thành công !");
-          } else {
-            this.message.success("Cập nhật thành công !");
-          }
-        })
-      }
-    });
   }
 
   createForm() {

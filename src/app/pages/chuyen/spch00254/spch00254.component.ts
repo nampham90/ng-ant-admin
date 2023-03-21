@@ -29,6 +29,12 @@ interface SearchParam {
   nguonxe : string;
   status01: number | string;
 }
+
+interface FormatExport {
+  listId : any[];
+  donvivanchuyen: string;
+  tongcuoc: number;
+}
 @Component({
   selector: 'app-spch00254',
   templateUrl: './spch00254.component.html',
@@ -97,11 +103,6 @@ export class Spch00254Component extends BaseComponent implements OnInit {
 
   nguonxenm = "";
   stocknx = "";
-
-  // tong cuoc
-  tongcuoc = 0;
-  donvivanchuyen = "";
-  lstIddonhang: any[] = [];
 
   // cờ check đã thức hiện tiem kiêm
   searchkbn = false;
@@ -280,9 +281,6 @@ export class Spch00254Component extends BaseComponent implements OnInit {
           this.displayVND(element['sotienno'])
         ]
         data.push(item);
-        this.lstIddonhang.push(element['id']);
-        this.tongcuoc = this.tongcuoc + element['sotienno'];
-        this.donvivanchuyen = element['nguonxe']['datacd']+ "-" + element['nguonxe']['datanm'];
       }
     }
     return data;
@@ -303,7 +301,6 @@ export class Spch00254Component extends BaseComponent implements OnInit {
     let data = this.generateData();
     if(data.length == 0) {
       this.modalSrv.info({nzTitle: "Vui lòng chọn đơn hàng !"});
-      this.resetData();
       return;
     }
 
@@ -320,36 +317,47 @@ export class Spch00254Component extends BaseComponent implements OnInit {
       nzTitle: canhbao,
       nzContent: contentcanhbao,
       nzOnOk: ()=> {
-
+        //tinh tong cuoc
+        //lấy list id
+        //get đơn vi vận chuyển
+        let formatExp = this.fnFormat();
         let title = "Danh Sách Công Nợ"
         let header= [['MaDH','Thông Tin Đơn Hàng', 'Ngày Phat Hành', 'Tên tài xế', "Tiền cước"]];
-        const tc = this.displayVND(this.tongcuoc);
         let headerlayout = Const.headerLayout;
         headerlayout[0]['field'] = 'Đơn vi vận chuyển:';
-        headerlayout[0]['value'] = this.donvivanchuyen;
+        headerlayout[0]['value'] = formatExp.donvivanchuyen;
         headerlayout[1]['field'] = 'Tổng tiền thanh toán:';
-        headerlayout[1]['value'] = tc;
+        headerlayout[1]['value'] =  this.displayVND(formatExp.tongcuoc);
         headerlayout[2]['field'] = 'Tổng số đơn hàng cần thanh toán:';
         headerlayout[2]['value'] = data.length + '';
         this.pdfService.exportPDF(header,headerlayout,data,title,this.getDate(),"BVC ký xác nhận","BTT ký xác nhận");
         // insert vao bang donhangexport với thông tin gồm. header, và data status01 = 1. chờ thanh toán
-        this.createDataExport(this.searchParam.nguonxe!,this.getDate(),title,data,headerlayout,header,system);
-        this.resetData();
+        this.createDataExport(this.searchParam.nguonxe!,this.getDate(),title,data,headerlayout,header,system,formatExp.listId);
         this.getDataList();
       }
     });
     
   }
 
-  // resData
-  resetData() {
-    this.donvivanchuyen = "";
-    this.tongcuoc = 0;
-    this.lstIddonhang = [];
+  // fn tinh tong cuoc
+  fnFormat() {
+    let res: FormatExport = {
+      listId : [],
+      tongcuoc : 0,
+      donvivanchuyen: ""
+    };
+    for(let element of this.dataList) {
+      if(element['_checked'] === true) {
+         res.listId.push(element['id']);
+         res.tongcuoc = res.tongcuoc + element['sotienno'];
+         res.donvivanchuyen =  element['nguonxe']['datacd']+ "-" + element['nguonxe']['datanm'];
+      }
+    }
+    return res;
   }
 
   // insert data export
-  createDataExport(nguonxe: string, ngay: any, title: string, data: any, headerlayout: any, header: any,system: string) {
+  createDataExport(nguonxe: string, ngay: any, title: string, data: any, headerlayout: any, header: any,system: string,lstid: any) {
     let req = {
        syskbn: system,
        nguonxe: nguonxe,
@@ -358,7 +366,7 @@ export class Spch00254Component extends BaseComponent implements OnInit {
        lstdata: data,
        lstheader: headerlayout,
        header: header,
-       lstId: this.lstIddonhang
+       lstId: lstid
     }
     this.donhangexpService.postCreate(req).pipe()
     .subscribe(res => {

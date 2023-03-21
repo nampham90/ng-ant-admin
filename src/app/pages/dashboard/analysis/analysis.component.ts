@@ -48,11 +48,14 @@ export class AnalysisComponent extends BaseComponent implements OnInit, AfterVie
   itemObjloinhuan!: OjbChart;
 
   loinhuanMode = 0;
+  loinhuanchuyenngoaiMode = 0;
   chiphiMode = 0;
   doanhthuMode = 0;
 
   tongchuyenhangMode = 0;
   tongnoallMode = 0;
+
+  tongnoxengoai = 0;
 
   //list top 10 khách hàng có doanh thu cao
   listtopkh = [];
@@ -148,6 +151,7 @@ export class AnalysisComponent extends BaseComponent implements OnInit, AfterVie
     this.getThongketaichinhnam();
     this.getTongchuyenhangtrongnam();
     this.getTongnoall();
+    this.fnGettongnoxengoai();
     this.getListtopdoanhthu();
     this.getListtopchiphi();
     this.getListtongcuoctungxe();
@@ -464,6 +468,15 @@ export class AnalysisComponent extends BaseComponent implements OnInit, AfterVie
     .pipe()
     .subscribe(res => {
        this.tongnoallMode = res
+    })
+  }
+
+  fnGettongnoxengoai() {
+    this.commonService.Tinhtongnoxengoai()
+    .pipe()
+    .subscribe(res=> {
+      this.tongnoxengoai = res['tongno'];
+      this.loinhuanchuyenngoaiMode = res['loinhuan'];
     })
   }
 

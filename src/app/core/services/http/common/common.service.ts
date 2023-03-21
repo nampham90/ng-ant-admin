@@ -46,7 +46,10 @@ export class CommonService {
   listtoptongcuoctungxe(params: any) : Observable<any> {
     return this.http.post(Const.CommonAnt100Listtoptongcuoctungxe, params, { needSuccessInfo: false});
   }
-
+  // Tính tổng nợ xe ngoài
+  Tinhtongnoxengoai() : Observable<any> {
+    return this.http.post(Const.CommonAnt100Tongnoxengoai, { needSuccessInfo: false});
+  }
   // get ODS
   getODS(): Observable<any> {
     return this.http.post(Const.CommonAnt100GetODS, { needSuccessInfo: false});

@@ -68,6 +68,7 @@ export const CommonAnt100Listtopchiphi = "common/commonAnt100Listtopchiphi";
 export const CommonAnt100Listtoptongcuoctungxe = "common/commonAnt100Listtongcuoctungxe";
 export const CommonAnt100GetODS = "common/commonAnt100GetODS";
 export const CommonAnt100GetODT = "common/commonAnt100GetODT";
+export const CommonAnt100Tongnoxengoai = 'common/commonAnt100Tongnoxengoai';
 
 //role
 export const Ant100SearchAllRole = "role/ant100SearchAllRole";

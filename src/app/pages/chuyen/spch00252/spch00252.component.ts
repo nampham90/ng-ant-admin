@@ -218,6 +218,7 @@ export class Spch00252Component extends BaseComponent implements OnInit {
           // update status02 = 1;
           this.fnUpdateStatus02(id);
           this.getDataList();
+          this.ChuyenngoaiDto.clear();
         })
       }
     })

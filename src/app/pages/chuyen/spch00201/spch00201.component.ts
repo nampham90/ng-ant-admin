@@ -128,12 +128,17 @@ export class Spch00201Component extends BaseComponent implements OnInit {
 
   override ngOnInit(): void {
     this.initTable();
-    this.getTongcuoc();
+
     this.fnshowConfirm(this.ChuyenDto.trangthai)
     if(this.ChuyenDto.id != "" && this.ChuyenDto.id.length == 24) {
       this.showchuyen = false;
       this.showConfirm = true;
+
+    } else {
+      this.ChuyenDto.clear();
+      this.getDataList();
     }
+    this.getTongcuoc();
     this.availableOptions = [...MapPipe.transformMapToArray(MapSet.available, MapKeyType.Boolean)];
   }
 
@@ -518,32 +523,36 @@ export class Spch00201Component extends BaseComponent implements OnInit {
     this.tableConfig.loading = true;
     if(this.ChuyenDto.id != '') {
       this.searchParam.idchuyen = this.ChuyenDto.id;
-    }
-    const params: SearchCommonVO<any> = {
-      pageSize: this.tableConfig.pageSize!,
-      pageNum: e?.pageIndex || this.tableConfig.pageIndex!,
-      filters: this.searchParam
-    };
-    this.phhService.getlists(params)
-    .pipe(
-      finalize(() => {
+      const params: SearchCommonVO<any> = {
+        pageSize: this.tableConfig.pageSize!,
+        pageNum: e?.pageIndex || this.tableConfig.pageIndex!,
+        filters: this.searchParam
+      };
+      this.phhService.getlists(params)
+      .pipe(
+        finalize(() => {
+          this.tableLoading(false);
+        })
+      )
+      .subscribe(data => {
+        const { list, total, pageNum } = data;
+        let listProduct = this.listToProduct(list);
+        this.dataList = [...listProduct];
+        this.getTongcuoc();
+        // if(this.dataList.length == 0) {
+        //   this.modalSrv.info({ nzContent: 'Không Có dữ liệu',});
+        // }
+        this.tableConfig.total = total!;
+        this.tableConfig.pageIndex = pageNum!;
         this.tableLoading(false);
-      })
-    )
-    .subscribe(data => {
-      console.log(data);
-      const { list, total, pageNum } = data;
-      let listProduct = this.listToProduct(list);
-      this.dataList = [...listProduct];
-      this.getTongcuoc();
-      // if(this.dataList.length == 0) {
-      //   this.modalSrv.info({ nzContent: 'Không Có dữ liệu',});
-      // }
-      this.tableConfig.total = total!;
-      this.tableConfig.pageIndex = pageNum!;
+        this.checkedCashArray = [...this.checkedCashArray];
+      });
+    } else {
+      this.ChuyenDto.clear();
+      this.dataList = [];
       this.tableLoading(false);
-      this.checkedCashArray = [...this.checkedCashArray];
-    });
+    }
+   
   }
 
   listToProduct(list: any): Product[] {

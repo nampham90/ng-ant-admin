@@ -28,6 +28,7 @@ interface SearchParam {
   idkhachhang : string;
   nguonxe : string;
   status02: any;
+  soods: string;
 }
 
 @Component({
@@ -264,9 +265,9 @@ export class Spch00253Component extends BaseComponent implements OnInit {
       showCheckbox: true,
       headers: [
         {
-          title: 'Mã chuyến ngoài',
-          field: 'idchuyenngoai',
-          width: 250,
+          title: 'Số ODS',
+          field: 'soods',
+          width: 300,
           tdTemplate: this.operationTpl
         },
         {
