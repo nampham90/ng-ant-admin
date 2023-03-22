@@ -25,6 +25,7 @@
       <ng-template #footerExtra>
         <div>
             <button Button [type]="'primary'" [inline]="true" style="margin-right: 4px" [size]="'small'" (click)="add()">Thêm Hàng</button>
+            <button Button [type]="'primary'" [inline]="true" style="margin-right: 4px" [size]="'small'" (click)="chiphi()">Chi phí</button>
         </div>
       </ng-template>
     </CardFooter>
@@ -53,33 +54,16 @@
         Ghi chú : <span [ngClass]="['hstyle']">{{lst['ghichu']}}</span>
       </div>
       <div [ngClass]="['myDiv']">
-        <a Button [type]="'primary'" [size]="'small'" [inline]="true">
-          Đã giao hàng
-        </a>
-      </div>
-      <div>
-        <!-- hihi <div class="am-demo-page">
-          <div class="am-demo-bd am-wingblank am-wingblank-lg">
-            <div>
-              <Steps [current]="lst['trangthai']">
-                <Step [title]="steps[0].title"></Step>
-                <Step [title]="steps[1].title"></Step>
-                <Step [title]="steps[2].title"></Step>
-              </Steps>
-            </div>
-            <div class="steps-action">
-              <button nz-button nzType="default" (click)="pre()" *ngIf="current > 0">
-                <span>Previous</span>
-              </button>
-              <button nz-button nzType="default" id="next" name="next" (click)="next(lst['trangthai'])" *ngIf="lst['trangthai'] < 2">
-                <span>Next</span>
-              </button>
-              <button nz-button nzType="primary" id="next" name="next" (click)="done(lst['trangthai'])" *ngIf="lst['trangthai'] === 2">
-                <span>Done</span>
-              </button>
-            </div>
-          </div>
-        </div> -->
+        <ng-container *ngIf="lst['status01']==0 else BtnDis">
+          <a Button [type]="'primary'" [size]="'small'" [inline]="true" (click)="updateStatus01(lst['id'])">
+            Đã giao hàng
+          </a>
+        </ng-container>
+        <ng-template #BtnDis>
+          <a Button [type]="'primary'" [size]="'small'" [inline]="true" (click)="updateStatus01(lst['id'])" [disabled]="true">
+            Đã giao hàng
+          </a>
+        </ng-template>
       </div>
     </ListItem>
   </List>
@@ -107,9 +91,17 @@
         Ghi chú : <span [ngClass]="['hstyle']">{{lst['ghichu']}}</span>
       </div>
       <div [ngClass]="['myDiv']">
-        <a Button [type]="'primary'" [size]="'small'" [inline]="true">
-          Đã giao hàng
-        </a>
+        <ng-container *ngIf="lst['status01']==0 else BtnDis">
+          <a Button [type]="'primary'" [size]="'small'" [inline]="true" (click)="updateStatus01(lst['id'])">
+            Đã giao hàng
+          </a>
+        </ng-container>
+        <ng-template #BtnDis>
+          <a Button [type]="'primary'" [size]="'small'" [inline]="true" (click)="updateStatus01(lst['id'])" [disabled]="true">
+            Đã giao hàng
+          </a>
+        </ng-template>
+
       </div>
     </ListItem>
 

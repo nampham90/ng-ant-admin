@@ -17,6 +17,7 @@ import { PhieunhaphangService } from '@app/core/services/http/phieunhaphang/phie
 import { ChuyendtoService } from '@app/core/services/http/chuyen/chuyendto.service';
 import { ModalBtnStatus } from '@app/widget/base-modal';
 import { finalize } from 'rxjs';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 export interface Product {
   id?:string,
@@ -53,6 +54,8 @@ export class Mbtx00101Component extends BaseComponent implements OnInit {
 
   lsthangdi: any[] = [];
   lsthangve: any[] = [];
+
+  listchiphi: any[] = [];
   chuyen: NzSafeAny;
   thumbStyle = {
     width: '32px',
@@ -80,6 +83,7 @@ export class Mbtx00101Component extends BaseComponent implements OnInit {
     private phhService: PhieunhaphangService,
     private cpcService: ChiphichuyenService,
     public ChuyenDto: ChuyendtoService,
+    public message: NzMessageService,
   ) {
     super(webService,router,cdf,datePipe,tabService);
    }
@@ -155,18 +159,65 @@ export class Mbtx00101Component extends BaseComponent implements OnInit {
     }); 
   }
 
-  pre(): void {
-    this.current -= 1;
+  chiphi() {
+    let req = {
+      id: this.ChuyenDto.id
+    }
+    this.cpcService.getlists(req).pipe().subscribe(res => {
+      this.listchiphi = res;
+      if (this.listchiphi.length > 0) {
+        // show modal update chi phí
+        this.modalChiphiService.show({ nzTitle: 'Cập nhật danh sách chi phí' }, {listcp:this.listchiphi}).subscribe(({ modalValue, status }) => {
+          if (status === ModalBtnStatus.Cancel) {
+            return;
+          }
+          let req1 = {
+            id: req.id,
+            lstchiphi: modalValue.items
+          }
+          this.dataService.UpdateChiphiProcess(req1).pipe().subscribe(res => {
+              if(res == req1.lstchiphi.length) {
+                this.message.info("Cập nhật thành công !");
+              } else {
+                this.message.info("Cập nhật 1 phần !");
+              }
+          })
+        });
+      } else {
+        // show modal tính chi phí
+        this.modalChiphiService.show({ nzTitle: 'Danh sách chi phí' }, {idchuyen:req.id}).subscribe(({ modalValue, status }) => {
+          if (status === ModalBtnStatus.Cancel) {
+            return;
+          }
+          let req1 = {
+            id: req.id,
+            lstchiphi: modalValue.items
+          }
+          this.dataService.InsertChiphiProcess(req1).pipe().subscribe(res => {
+            if (res == 1) {
+               this.message.success(" Thực hiện thành công !");
+            } else {
+               this.message.success(" Không thành công !");
+            }
+          })
+        });
+      }
+    })
   }
 
-  next(n: any): void {
-    n += 1;
+  updateStatus01(id: string) {
+    this.modalSrv.confirm({
+      nzTitle: "Bạn chắc chắn đã giao hàng cho khách ?",
+      nzContent: "Nhấn Ok để tiếp tục",
+      nzOnOk: () => {
+        this.dataService.updateStatus01({id: id}).pipe()
+        .subscribe(res => {
+          this.requestInit();
+        })
+      }
+    })
   }
 
-  done(n: any): void {
-    n += 1;
-    console.log('done');
-  }
 
   copy(soodt: any) {
     return `${soodt}`;

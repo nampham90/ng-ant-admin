@@ -164,7 +164,10 @@ export const NhatkykhAnt100PostThanhtoan = 'nhatkykh/nhatkykhAnt100postThanhtoan
 // taixe
 export const TaixeAnt100Init = 'taixe/taixeAnt100Init';
 export const TaixeAnt100Updatestatusorder = 'taixe/taixeAnt100Updatestatusorder';
+export const TaixeAnt100Updatestatus01 = 'taixe/taixeAnt100Updatestatus01';
 
+export const TaixeAnt100Insertchiphi = 'taixe/taixeAnt100Insertchiphi';
+export const TaixeAnt100Updatechiphi = 'taixe/taixeAnt100Updatechiphi';
 // nguon xe
 
 export const NguonxeAnt100GetAll = 'nguonxe/nguonxeAnt100getAll';
