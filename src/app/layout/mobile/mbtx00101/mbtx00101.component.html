@@ -1,13 +1,19 @@
 <ng-container *ngIf="chuyen">
   <Card>
     <CardHeader
-      [title]="'75B12312'"
+      [title]="chuyen['biensoxe']['biensoxe']"
       [extra]="extra"
       [thumb]="'./assets/imgs/iconxetai.jpg'"
       [thumbStyle]="thumbStyle"
     >
       <ng-template #extra >
-        <span *ngIf="chuyen">Khởi hành: {{chuyen['ngaydi']| date : "dd/MM/yyyy"}}</span>
+        <span *ngIf="chuyen">{{chuyen['ngaydi'] | date:"dd/MM/yyyy"}}</span>
+        <ng-container *ngIf="chuyen">
+          <div class="copy-container">
+            <a nz-button nzType="link" class="copy-link"> {{chuyen['soodt']}}</a>
+            <button nz-button [cdkCopyToClipboard]="copy(chuyen['soodt'])" nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
+          </div>
+        </ng-container>
       </ng-template>
     </CardHeader>
     <CardBody>
@@ -18,7 +24,7 @@
     <CardFooter [content]="''" [extra]="footerExtra">
       <ng-template #footerExtra>
         <div>
-            <button Button [type]="'primary'" [inline]="true" style="margin-right: 4px" [size]="'small'">Thêm Hàng</button>
+            <button Button [type]="'primary'" [inline]="true" style="margin-right: 4px" [size]="'small'" (click)="add()">Thêm Hàng</button>
         </div>
       </ng-template>
     </CardFooter>
@@ -35,10 +41,21 @@
         Địa chỉ bốc hàng: <span [ngClass]="['hstyle']">{{lst['diadiembochang']}}</span>
       </div>
       <div>
-        Tiền Cước : <span [ngClass]="['hstyle']">{{lst['tiencuoc']*1000 | currency : "VND"}}</span>
+        Tiền Cước : <span [ngClass]="['hstyle']">{{lst['tiencuoc']*1000 | currency : "VND"}} - HTTT: {{mergeHttt(lst['hinhthucthanhtoan'])}}</span>
+      </div>
+      <div>
+        Người Nhận: <span [ngClass]="['hstyle']">{{lst['tennguoinhan']}} - ĐT: <a href="tel:{{lst['sdtnguoinhan']}}"><u>{{lst['sdtnguoinhan']}}</u></a></span>
+      </div>
+      <div>
+        Địa chỉ người nhận: <span [ngClass]="['hstyle']">{{lst['diachinguoinhan']}}</span>
       </div>
       <div>
         Ghi chú : <span [ngClass]="['hstyle']">{{lst['ghichu']}}</span>
+      </div>
+      <div [ngClass]="['myDiv']">
+        <a Button [type]="'primary'" [size]="'small'" [inline]="true">
+          Đã giao hàng
+        </a>
       </div>
       <div>
         <!-- hihi <div class="am-demo-page">
@@ -78,10 +95,21 @@
         Địa chỉ bốc hàng: <span [ngClass]="['hstyle']">{{lst['diadiembochang']}}</span>
       </div>
       <div>
-        Tiền Cước : <span [ngClass]="['hstyle']">{{lst['tiencuoc']*1000 | currency : "VND"}}</span>
+        Tiền Cước : <span [ngClass]="['hstyle']">{{lst['tiencuoc']*1000 | currency : "VND"}} - HTTT: {{mergeHttt(lst['hinhthucthanhtoan'])}}</span>
+      </div>
+      <div>
+        Người Nhận: <span [ngClass]="['hstyle']">{{lst['tennguoinhan']}} - ĐT: <a href="tel:{{lst['sdtnguoinhan']}}"><u>{{lst['sdtnguoinhan']}}</u></a></span>
+      </div>
+      <div>
+        Địa chỉ người nhận: <span [ngClass]="['hstyle']">{{lst['diachinguoinhan']}}</span>
       </div>
       <div>
         Ghi chú : <span [ngClass]="['hstyle']">{{lst['ghichu']}}</span>
+      </div>
+      <div [ngClass]="['myDiv']">
+        <a Button [type]="'primary'" [size]="'small'" [inline]="true">
+          Đã giao hàng
+        </a>
       </div>
     </ListItem>
 

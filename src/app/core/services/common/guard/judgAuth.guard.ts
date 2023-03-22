@@ -58,12 +58,10 @@ export class JudgAuthGuard implements CanActivateChild {
 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
     this.userInfoService.getUserInfo().subscribe(res => (this.authCodeArray = res.authCode));
-    console.log(this.authCodeArray);
     // 如果有authCode，则表示是页面上点击按钮跳转到新的路由，而不是菜单中的路由
     while (route.firstChild) {
       route = route.firstChild;
     }
-    console.log(route.data['authCode']);
     if (!!route.data['authCode']) {
       return this.getResult(route.data['authCode'], this.authCodeArray);
     }

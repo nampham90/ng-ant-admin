@@ -19,6 +19,11 @@ export enum UrlDisplayId {
     // khach hang
     spkh00101 = 'khachhang/spkh00101', //quản lý công nợ
     spkh00201 = 'khachhang/spkh00201', // chi tiêt công nợ
+
+    // mobi
+    mbtx00101= 'mobile/mbtx00101',
+    mbtx00201= 'mobile/mbtx00201',
+    mbtx00301= 'mobile/mbtx00301',
     
 
     

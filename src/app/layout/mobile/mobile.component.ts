@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoginInOutService} from '@app/core/services/common/login-in-out.service'
 import { UserInfoService } from '@app/core/services/store/common-store/userInfo.service';
+
 @Component({
   selector: 'app-mobile',
   templateUrl: './mobile.component.html',
@@ -14,6 +15,7 @@ export class MobileComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private dataService: LoginInOutService,
     private userInfoService: UserInfoService,
+
   ) { }
 
   ngOnInit(): void {
