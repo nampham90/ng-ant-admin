@@ -4,8 +4,8 @@
       <a>{{ breadcrumb }}</a>
     </nz-breadcrumb-item>
   </nz-breadcrumb>
-  <nz-page-header-extra>
-    <ng-container *nzStringTemplateOutlet="pageHeaderInfo.extra">{{ pageHeaderInfo.extra }}</ng-container>
+  <nz-page-header-extra *ngIf="extraTpl">
+    <ng-container *ngTemplateOutlet="extraTpl"></ng-container>
   </nz-page-header-extra>
   <nz-page-header-content *ngIf="pageHeaderInfo.desc">
     <ng-container *nzStringTemplateOutlet="pageHeaderInfo.desc">{{ pageHeaderInfo.desc }}</ng-container>

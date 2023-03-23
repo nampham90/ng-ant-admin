@@ -9,6 +9,7 @@ import { SubwindowtaixeModule } from '../../../widget/modal/subwindowtaixe/subwi
 import { SubwindowchuyenModule } from '@app/widget/modal/subwindowchuyen/subwindowchuyen.module';
 import { SubwindowchiphiModule } from '@app/widget/modal/subwindowchiphi/subwindowchiphi.module';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import {NgxYoutubePlayerModule} from 'ngx-youtube-player'
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     SubwindowchuyenModule,
     SubwindowchiphiModule,
     NzHighlightModule,
-    ClipboardModule
+    ClipboardModule,
+    NgxYoutubePlayerModule
   ],
   
 })

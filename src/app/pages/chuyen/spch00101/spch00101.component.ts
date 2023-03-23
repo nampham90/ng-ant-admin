@@ -21,11 +21,13 @@ import { finalize } from 'rxjs';
 import { Chuyen } from '@app/core/model/chuyen.model';
 import { SubwindowChuyenService } from '@app/widget/modal/subwindowchuyen/subwindow-chuyen.service';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalService ,NzModalRef} from 'ng-zorro-antd/modal';
 import { ChuyendtoService } from '@app/core/services/http/chuyen/chuyendto.service';
 import { UrlDisplayId } from '@app/common/UrlDisplay';
 import { SubwindowChiphiService } from '@app/widget/modal/subwindowchiphi/subwindow-chiphi.service';
 import { TabService } from '@app/core/services/common/tab.service';
+import { YoutubePlayerService } from 'ngx-youtube-player';
+import { IPlayerSize } from 'ngx-youtube-player/lib/models';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -77,7 +79,7 @@ export class Spch00101Component extends BaseComponent implements OnInit {
   pageHeaderInfo: Partial<PageHeaderType> = {
     title: 'Quản lý chuyến',
     breadcrumb: ["Home","Chuyến","Quản lý chuyến"],
-    desc: ''
+    desc: '',
   };
   // mode
   tainm = "";
@@ -100,6 +102,8 @@ export class Spch00101Component extends BaseComponent implements OnInit {
   @ViewChild('Tltenphu', { static: true }) Tltenphu!: TemplateRef<NzSafeAny>;
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('tienduatruocTpl', { static: true }) tienduatruocTpl!: TemplateRef<NzSafeAny>;
+
+
   
   constructor(
     protected override webService: WebserviceService,
@@ -115,7 +119,8 @@ export class Spch00101Component extends BaseComponent implements OnInit {
     public deptTreeService: DeptTreeService,
     private dataService: ChuyenService,
     private chuyenDtoService : ChuyendtoService,
-    protected override tabService: TabService
+    protected override tabService: TabService,
+    private youtubePlayerService: YoutubePlayerService
   ) {
     super(webService,router,cdf,datePipe,tabService);
   }
@@ -566,6 +571,10 @@ export class Spch00101Component extends BaseComponent implements OnInit {
       pageSize: 10,
       pageIndex: 1
     };
+  }
+
+  showVideo() {
+    
   }
 
 }

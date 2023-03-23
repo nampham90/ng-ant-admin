@@ -22,6 +22,7 @@ export class PageHeaderComponent implements OnInit {
   @Input() backTpl!: TemplateRef<NzSafeAny> | null;
   @Input() pageHeaderInfo: Partial<PageHeaderType> = {};
   @Input() backUrl = '';
+  @Input() extraTpl: TemplateRef<NzSafeAny> | undefined;
   themesOptions$ = this.themesService.getThemesMode();
 
   constructor(private themesService: ThemeService, private router: Router) {}
@@ -30,5 +31,7 @@ export class PageHeaderComponent implements OnInit {
     this.router.navigateByUrl(this.backUrl);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.pageHeaderInfo)
+  }
 }

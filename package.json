@@ -60,6 +60,7 @@
     "ngx-echarts": "^14.0.0",
     "ngx-monaco-editor": "^12.0.0",
     "ngx-quicklink": "^0.3.0",
+    "ngx-youtube-player": "^12.0.2",
     "rxjs": "~7.5.0",
     "screenfull": "^6.0.2",
     "tslib": "^2.3.0",
