@@ -26,8 +26,7 @@ import { ChuyendtoService } from '@app/core/services/http/chuyen/chuyendto.servi
 import { UrlDisplayId } from '@app/common/UrlDisplay';
 import { SubwindowChiphiService } from '@app/widget/modal/subwindowchiphi/subwindow-chiphi.service';
 import { TabService } from '@app/core/services/common/tab.service';
-import { YoutubePlayerService } from 'ngx-youtube-player';
-import { IPlayerSize } from 'ngx-youtube-player/lib/models';
+import {VideoyoutubeService} from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service'
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -116,11 +115,11 @@ export class Spch00101Component extends BaseComponent implements OnInit {
     private modalChuyenService: SubwindowChuyenService,
     private modalChiphiService: SubwindowChiphiService,
     private modalSrv: NzModalService,
+    private modalVideoyoutube: VideoyoutubeService,
     public deptTreeService: DeptTreeService,
     private dataService: ChuyenService,
     private chuyenDtoService : ChuyendtoService,
     protected override tabService: TabService,
-    private youtubePlayerService: YoutubePlayerService
   ) {
     super(webService,router,cdf,datePipe,tabService);
   }
@@ -574,7 +573,13 @@ export class Spch00101Component extends BaseComponent implements OnInit {
   }
 
   showVideo() {
-    
+    this.modalVideoyoutube.show({nzTitle: "Hướng dẫn sử dụng"},{showcomfirm:false,idvideo:"QIZ9aZD6vs0"}).subscribe(
+      res => {
+        if (!res || res.status === ModalBtnStatus.Cancel) {
+          return;
+        }
+      }
+    )
   }
 
 }
