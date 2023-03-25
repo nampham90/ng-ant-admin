@@ -20,13 +20,16 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { finalize } from 'rxjs';
 import * as Const from "src/app/common/const";
-
+import { LayoutPdfService } from '@app/core/services/common/layout-pdf.service';
+import { CtchuyenngoaiService } from '@app/core/services/http/chuyenngoai/ctchuyenngoai.service';
+import { CommonService } from '@app/core/services/http/common/common.service';
 interface SearchParam {
   iduser?: string;
   ngaybatdau: string | null;
   ngayketthuc: string | null;
   trangthai : any; // 0 la no , 1  là trả
   ghichu: string;
+  status05: string;
 }
 
 class showbtnTable {
@@ -77,7 +80,10 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
     private khdtoService: KhachhangDtoService,
     private dataService: NhatkykhService,
     private khachhangService : KhachhangService,
-    protected override tabService : TabService
+    protected override tabService : TabService,
+    private pdfService: LayoutPdfService,
+    private ctChuyenngoaiService: CtchuyenngoaiService,
+    private commonService: CommonService
   ) {
     super(webService,router,cdf,datePipe,tabService);
   }
@@ -85,10 +91,14 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
   btnshowmodalkh = false;
   btntattoan = false;
   btnthanhtoanmotphan = false;
+  btnxuatpdf = false;
   btnsearch = false;
   idkhachhang = "";
   tenkhachhang = "";
+  sdtkhachhang = "";
+  diachikhachhang = "";
   sotienno = 0;
+  soodc = "";
   changeSotienno($event: any) {this.sotienno = $event; }
   ngaybatdau : any;
   ngayketthuc : any;
@@ -116,6 +126,7 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
   }
   handleEndOpenSoplnChange(open: boolean): void {}
 
+  showConfirm = true;
   override ngOnInit(): void {
     // check khach hàng dto service 
     // if kbnflg = true => show id khach khách , tên khach hang, tong nợ, danh sach chi tiên nợ.
@@ -129,6 +140,8 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
        this.btnshowmodalkh = false;
        this.idkhachhang = "";
        this.tenkhachhang = "";
+       this.sdtkhachhang = "";
+       this.diachikhachhang = "";
        this.sotienno = 0;
        this.status = '0'
        this.btntattoan = true;
@@ -139,6 +152,8 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
       this.idkhachhang = this.khdtoService.id;
       this.tenkhachhang = this.khdtoService.name;
       this.sotienno = this.khdtoService.sotienno;
+      this.sdtkhachhang = this.khdtoService.dienthoai;
+      this.diachikhachhang = this.khdtoService.diachi;
       this.status = '0';
       this.btntattoan = false;
       this.btnthanhtoanmotphan = false;
@@ -161,6 +176,7 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
       this.searchParam.iduser = this.idkhachhang;
       this.searchParam.trangthai =_.toNumber(this.status);
       this.searchParam.ghichu = this.phanloai;
+      this.searchParam.status05 = this.soodc;
       const params: SearchCommonVO<any> = {
         pageSize: this.tableConfig.pageSize!,
         pageNum: e?.pageIndex || this.tableConfig.pageIndex!,
@@ -173,7 +189,6 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
         })
       )
       .subscribe(data => {
-        console.log(data);
         const { list, total, pageNum } = data;
         this.dataList = [...list];
         for (let element of this.dataList) {
@@ -188,6 +203,7 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
         this.tableLoading(false);
         this.checkedCashArray = [...this.checkedCashArray];
         this.showbtn();
+        
       })
     }
   }
@@ -200,6 +216,11 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
     } else {
       this.btntattoan = true;
       this.btnthanhtoanmotphan = true;
+    }
+    if(this.soodc.length >0 && this.dataList.length >0) {
+      this.btnxuatpdf = true;
+    } else {
+      this.btnxuatpdf = false;
     }
   }
 
@@ -308,7 +329,7 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
     let listIdPN: NzSafeAny[] = [];
     for(let element of this.dataList) {
       if(element['_checked'] == true) {
-        if(element['idphieunhaphang']) {
+        if(element['idphieunhaphang']['idchuyen']) {
           listIdPN.push(element['idphieunhaphang']['_id']);
         } else {
           listIdPN.push(element['status01']);
@@ -427,6 +448,84 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
       pageSize: 10,
       pageIndex: 1
     };
+  }
+
+    // data exprot pdf
+  generateData() {
+    let data : any[] = [];
+    for(let element of this.dataList) {
+      let nddh = "";
+      if(element['status01'] == '') {
+         nddh = element['idphieunhaphang']['noidungdonhang']
+         
+      } else {
+         nddh = element['idphieunhaphang']['thongtindonhang']
+      }
+      let item = [
+        this.formatDate(element['ngay']),
+        nddh,
+        this.displayVND(element['sotien']) 
+       ]
+       data.push(item);
+    }
+    return data;
+  }
+
+  //xuất file pdf gửi cho khach hang
+  xuatpdf() {
+    if(this.khdtoService.kbnflg && this.dataList.length > 0) {
+      // get odc 
+      this.commonService.getODC().pipe()
+      .subscribe(res => {
+        let title = "Công nợ " + this.tenkhachhang;
+        let header= [['Ngày Vận Chuyển','Thông Tin Đơn Hàng', "Tiền cước"]];
+        let headerlayout = Const.headerLayout;
+        headerlayout[0]['field'] = 'Kính gửi:';
+        headerlayout[0]['value'] = this.tenkhachhang;
+        headerlayout[1]['field'] = 'Số điện thoại:';
+        headerlayout[1]['value'] = this.sdtkhachhang;
+        headerlayout[2]['field'] = 'Địa chỉ:';
+        headerlayout[2]['value'] = this.diachikhachhang;
+        headerlayout[3]['field'] = 'Tổng tiền thanh toán:';
+        headerlayout[3]['value'] =  this.displayVND(this.fnTongCuoc());
+        headerlayout[4]['field'] = 'Số ODC:';
+        headerlayout[4]['value'] =  this.displayOD(res);
+        this.pdfService.exportPDF(header,headerlayout,this.generateData(),title,this.getDate(),"Bên thanh toán","Bên Vận Chuyển");
+        // update so odc cho các don hàng đã exprot
+        let lstId = [];
+        for(let element of this.dataList) {
+           lstId.push(element['id']);
+        }
+        let req = {
+          lstId : lstId,
+          soodc : res
+        }
+        this.dataService.UpdateStauts05(req).pipe()
+        .subscribe(res=> {
+          if(res == 1) {
+            this.modalSrv.info({nzTitle: "Cập nhật thành công !"});
+            this.getDataList();
+          }
+        })
+      })
+     
+    } else {
+      this.modalSrv.info({nzTitle: "Vùi chọn môt khách hàng để xuất cộng nợ"});
+    }
+
+  }
+
+  fnTongCuoc() {
+    let tongcuoc = 0;
+    for(let element of this.dataList) {
+        tongcuoc = tongcuoc + element['sotien'];
+    }
+    return tongcuoc;
+  }
+
+  fnGetIddonhang(str: string) {
+    let strid = str.substring(0, 24);
+    return strid;
   }
 
 }

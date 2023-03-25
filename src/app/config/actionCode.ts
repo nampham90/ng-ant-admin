@@ -69,6 +69,7 @@ export const ActionCode = {
   CtcnThantoanmotphan: 'default:khachhang:spkh00201:thanhtoanmotphan',
   CtcnThanhtoan: 'default:khachhang:spkh00201:thanhtoan',
   CtcnDuyetThanhtoan: 'default:khachhang:spkh00201:duyetthanhtoan',
+  CtcnXuatPDF: 'default:khachhang:spkh00201:xuatpdf',
 
   // nguon xe
   Nguonxeadd: 'default:system:quanlynguonxe:add',

@@ -20,5 +20,9 @@ export class CtchuyenngoaiService {
   postUpdateListId(params: any) : Observable<any> {
     return this.http.post(Const.ChitietchuyenngoaiAnt100PostlistId, params,{ needSuccessInfo: false});
   }
+
+  postDetail(params: any) : Observable<any> {
+    return this.http.post(Const.ChitietchuyenngoaiAnt100GetId, params,{ needSuccessInfo: false});
+  }
   
 }

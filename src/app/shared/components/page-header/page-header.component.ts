@@ -32,6 +32,6 @@ export class PageHeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.pageHeaderInfo)
+    
   }
 }

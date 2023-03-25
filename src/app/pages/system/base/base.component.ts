@@ -70,6 +70,12 @@ export abstract class BaseComponent implements OnInit, OnDestroy {
         return result;
     }
 
+    displayOD(od:string) {
+        const lastod = od.slice(-5);
+        const remaiod = od.substring(0, od.length - 5);
+        return lastod + '-' + remaiod
+    }
+
     transfer(path: string) {
         let index =  this.tabService.findIndex(path);
         if(index == -1) {

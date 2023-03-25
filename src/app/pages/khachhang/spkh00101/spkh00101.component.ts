@@ -209,14 +209,16 @@ export class Spkh00101Component extends BaseComponent implements OnInit {
     });
   }
 
-  getItem(id: string, sotienno: number,name: string) {
+  getItem(id: string, sotienno: number,name: string,diachi:string, dienthoai:string) {
       this.dataService.getDetail(id)
       .pipe()
       .subscribe(res => {
         this.dtoKhService.kbnflg = true;
         this.dtoKhService.id = id;
         this.dtoKhService.sotienno = res.sotienno;
-        this.dtoKhService.name = name
+        this.dtoKhService.name = name;
+        this.dtoKhService.diachi = diachi;
+        this.dtoKhService.dienthoai = dienthoai;
         this.transfer(Const.rootbase + UrlDisplayId.spkh00201)
       })
   }

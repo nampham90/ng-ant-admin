@@ -36,8 +36,8 @@
                 <button *ngIf="sotienno > 0" nz-button nzType="primary" nzGhost (click)="tattoan(id,sotienno)">Tất toán</button>
             </span>
         </ng-template>
-        <ng-template #linkidTpl let-id="id" let-sotienno="sotienno" let-name="name">
-            <a nz-button nzType="link"  (click)="getItem(id,sotienno,name)"><span>{{id}}</span></a>
+        <ng-template #linkidTpl let-id="id" let-sotienno="sotienno" let-name="name" let-diachi="diachi" let-dienthoai="dienthoai">
+            <a nz-button nzType="link"  (click)="getItem(id,sotienno,name,diachi,dienthoai)"><span>{{id}}</span></a>
         </ng-template>
         <ng-template #sotienno let-sotienno="sotienno">
             <span>{{sotienno*1000 | currency : "VND" : ""}}</span>

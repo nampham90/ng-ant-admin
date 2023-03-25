@@ -27,6 +27,14 @@ export interface ActionResult<T> {
   providedIn: 'root'
 })
 export class BaseHttpService {
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+    })
+  };
  // uri = "http://117.2.219.153:3000/";
   uri = "http://localhost:3000/";
 
@@ -83,7 +91,7 @@ export class BaseHttpService {
     if (config.otherUrl) {
       reqPath = path;
     }
-    return this.http.post<ActionResult<T>>(reqPath, param).pipe(  //
+    return this.http.post<ActionResult<T>>(reqPath, param, this.httpOptions).pipe(  //
       filter(item => {
         return this.handleFilter(item, !!config?.needSuccessInfo);
       }),

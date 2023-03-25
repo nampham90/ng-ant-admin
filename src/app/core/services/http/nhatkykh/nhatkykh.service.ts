@@ -29,4 +29,8 @@ export class NhatkykhService {
   thanhtoan(params:any): Observable<any> {
     return this.http.post(Const.NhatkykhAnt100PostThanhtoan, params, {needSuccessInfo: false});
   }
+  
+  UpdateStauts05(params:any): Observable<any> {
+    return this.http.post(Const.NhatkykhAnt100UpdateStatus05, params, {needSuccessInfo: false});
+  }
 }

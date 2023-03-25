@@ -321,7 +321,7 @@ export class Spch00254Component extends BaseComponent implements OnInit {
         //lấy list id
         //get đơn vi vận chuyển
         let formatExp = this.fnFormat();
-        let title = "Danh Sách Công Nợ"
+        let title = "Danh Sách Công Nợ";
         let header= [['MaDH','Thông Tin Đơn Hàng', 'Ngày Phat Hành', 'Tên tài xế', "Tiền cước"]];
         let headerlayout = Const.headerLayout;
         headerlayout[0]['field'] = 'Đơn vi vận chuyển:';

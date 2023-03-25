@@ -68,6 +68,8 @@ export const CommonAnt100Listtopchiphi = "common/commonAnt100Listtopchiphi";
 export const CommonAnt100Listtoptongcuoctungxe = "common/commonAnt100Listtongcuoctungxe";
 export const CommonAnt100GetODS = "common/commonAnt100GetODS";
 export const CommonAnt100GetODT = "common/commonAnt100GetODT";
+export const CommonAnt100GetODC = "common/commonAnt100getODC";
+
 export const CommonAnt100Tongnoxengoai = 'common/commonAnt100Tongnoxengoai';
 
 //role
@@ -160,6 +162,7 @@ export const NhatkykhAnt100GetAll = 'nhatkykh/nhatkykhAnt100getAll';
 export const NhatkykhAnt100PostTattoan = 'nhatkykh/nhatkykhAnt100postTattoan';
 export const NhatkykhAnt100PostThanhtoanmotphan = 'nhatkykh/nhatkykhAnt100postThanhtoanmotphan';
 export const NhatkykhAnt100PostThanhtoan = 'nhatkykh/nhatkykhAnt100postThanhtoan';
+export const NhatkykhAnt100UpdateStatus05 = 'nhatkykh/nhatkykhAnt100updateStatus05';
 
 // taixe
 export const TaixeAnt100Init = 'taixe/taixeAnt100Init';
