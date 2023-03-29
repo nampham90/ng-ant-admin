@@ -18,6 +18,7 @@ import { ChuyendtoService } from '@app/core/services/http/chuyen/chuyendto.servi
 import { ModalBtnStatus } from '@app/widget/base-modal';
 import { finalize } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
 
 export interface Product {
   id?:string,
@@ -75,6 +76,7 @@ export class Mbtx00101Component extends BaseComponent implements OnInit {
     protected override cdf :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
     protected override tabService: TabService,
+    protected override modalVideoyoutube: VideoyoutubeService,
     private dataService : TaixeService,
     private modashowProduct: SubwindowProductService,
     private modalChiphiService: SubwindowChiphiService,
@@ -85,7 +87,7 @@ export class Mbtx00101Component extends BaseComponent implements OnInit {
     public ChuyenDto: ChuyendtoService,
     public message: NzMessageService,
   ) {
-    super(webService,router,cdf,datePipe,tabService);
+    super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
    }
 
   override ngOnInit(): void {

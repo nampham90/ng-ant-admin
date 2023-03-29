@@ -22,6 +22,8 @@ import { TabService } from '@app/core/services/common/tab.service';
 import { ChuyenngoaidtoService } from '@app/core/services/http/chuyenngoai/chuyenngoaidto.service';
 import { CommonService } from '../../../core/services/http/common/common.service';
 import { LayoutPdfService } from '@app/core/services/common/layout-pdf.service';
+import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
+import { ModalBtnStatus } from '@app/widget/base-modal';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -99,6 +101,7 @@ export class Spch00252Component extends BaseComponent implements OnInit {
     protected override router: Router,
     protected override cdf :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
+    protected override modalVideoyoutube: VideoyoutubeService,
     private dataService: ChuyenngoaiService,
     private modalSrv: NzModalService,
     private nguonxeService: NguonxeService,
@@ -107,8 +110,9 @@ export class Spch00252Component extends BaseComponent implements OnInit {
     private ChuyenngoaiDto:ChuyenngoaidtoService,
     private commonService: CommonService,
     private pdfService: LayoutPdfService,
+    
   ) { 
-    super(webService,router,cdf,datePipe,tabService);
+    super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }
 
   override ngOnInit(): void {
@@ -325,5 +329,5 @@ export class Spch00252Component extends BaseComponent implements OnInit {
       pageIndex: 1
     };
   }
-
+  
 }

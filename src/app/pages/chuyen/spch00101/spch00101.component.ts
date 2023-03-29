@@ -109,19 +109,20 @@ export class Spch00101Component extends BaseComponent implements OnInit {
     protected override router: Router,
     protected override cdf :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
+    protected override modalVideoyoutube: VideoyoutubeService,
     public message: NzMessageService,
     private modalService: SubwindowXeService,
     private modalTaixeService: SubwindowTaixeService,
     private modalChuyenService: SubwindowChuyenService,
     private modalChiphiService: SubwindowChiphiService,
     private modalSrv: NzModalService,
-    private modalVideoyoutube: VideoyoutubeService,
+   
     public deptTreeService: DeptTreeService,
     private dataService: ChuyenService,
     private chuyenDtoService : ChuyendtoService,
     protected override tabService: TabService,
   ) {
-    super(webService,router,cdf,datePipe,tabService);
+    super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }
 
   ngaybatdau: string | null = null;
@@ -570,16 +571,6 @@ export class Spch00101Component extends BaseComponent implements OnInit {
       pageSize: 10,
       pageIndex: 1
     };
-  }
-
-  showVideo() {
-    this.modalVideoyoutube.show({nzTitle: "Hướng dẫn sử dụng"},{showcomfirm:false,idvideo:"QIZ9aZD6vs0"}).subscribe(
-      res => {
-        if (!res || res.status === ModalBtnStatus.Cancel) {
-          return;
-        }
-      }
-    )
   }
 
 }

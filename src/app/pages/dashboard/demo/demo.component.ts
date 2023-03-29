@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { DatePipe } from '@angular/common';
 import { UrlDisplayId } from '@app/common/UrlDisplay';
 import { TabService } from '@app/core/services/common/tab.service';
+import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
 
 @Component({
   selector: 'app-demo',
@@ -25,9 +26,10 @@ export class DemoComponent extends BaseComponent {
     protected override cdf :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
     protected override tabService: TabService,
+    protected override modalVideoyoutube: VideoyoutubeService,
     private store: Store
   ){
-    super(webService,router,cdf,datePipe,tabService);
+    super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }
 
   changeAmount($event: any) {this.amountMode = $event; }

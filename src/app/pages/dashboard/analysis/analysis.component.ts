@@ -17,6 +17,7 @@ import { inNextTick } from 'ng-zorro-antd/core/util';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import * as Const from '@app/common/const'
 import { TabService } from '@app/core/services/common/tab.service';
+import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
 
 interface DataItem {
   name: string;
@@ -135,6 +136,7 @@ export class AnalysisComponent extends BaseComponent implements OnInit, AfterVie
     protected  cdr :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
     protected override tabService: TabService,
+    protected override modalVideoyoutube: VideoyoutubeService,
     private ngZone: NgZone,
     public message: NzMessageService,
     private xeService: XeService,
@@ -142,7 +144,7 @@ export class AnalysisComponent extends BaseComponent implements OnInit, AfterVie
     private currencyPipe: CurrencyPipe,
     @Inject(DOCUMENT) private document: any
     ) {
-      super(webService,router,cdr,datePipe,tabService);
+      super(webService,router,cdr,datePipe,tabService,modalVideoyoutube);
     }
 
   override ngOnInit(): void {

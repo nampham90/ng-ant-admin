@@ -22,6 +22,7 @@ import { SubwindowsearchnguonxeService } from '@app/widget/modal/subwindowsearch
 import { ModalBtnStatus } from '@app/widget/base-modal';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Clipboard } from "@angular/cdk/clipboard"
+import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
 interface SearchParam {
   ngaybatdau: string | null;
   ngayketthuc: string | null;
@@ -102,13 +103,15 @@ export class Spch00253Component extends BaseComponent implements OnInit {
     protected override cdf :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
     protected override tabService: TabService,
+    protected override modalVideoyoutube: VideoyoutubeService,
     public message: NzMessageService,
     private dataService: CtchuyenngoaiService,
     private modalSrv: NzModalService,
     private modalKhachHangService: SubwindowsearchkhachhangService,
-    private modalNguonXeService: SubwindowsearchnguonxeService
+    private modalNguonXeService: SubwindowsearchnguonxeService,
+    
   ) { 
-    super(webService,router,cdf,datePipe,tabService);
+    super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }
 
   override ngOnInit(): void {
@@ -331,4 +334,5 @@ export class Spch00253Component extends BaseComponent implements OnInit {
       pageIndex: 1
     };
   }
+
 }

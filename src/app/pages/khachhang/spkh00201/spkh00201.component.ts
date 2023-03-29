@@ -23,6 +23,7 @@ import * as Const from "src/app/common/const";
 import { LayoutPdfService } from '@app/core/services/common/layout-pdf.service';
 import { CtchuyenngoaiService } from '@app/core/services/http/chuyenngoai/ctchuyenngoai.service';
 import { CommonService } from '@app/core/services/http/common/common.service';
+import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
 interface SearchParam {
   iduser?: string;
   ngaybatdau: string | null;
@@ -75,6 +76,7 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
     protected override router: Router,
     protected override cdf :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
+    protected override modalVideoyoutube: VideoyoutubeService,
     public message: NzMessageService,
     private modalSrv: NzModalService,
     private khdtoService: KhachhangDtoService,
@@ -83,9 +85,10 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
     protected override tabService : TabService,
     private pdfService: LayoutPdfService,
     private ctChuyenngoaiService: CtchuyenngoaiService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    
   ) {
-    super(webService,router,cdf,datePipe,tabService);
+    super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }
 
   btnshowmodalkh = false;

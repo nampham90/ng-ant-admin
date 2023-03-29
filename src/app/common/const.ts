@@ -72,6 +72,12 @@ export const CommonAnt100GetODC = "common/commonAnt100getODC";
 
 export const CommonAnt100Tongnoxengoai = 'common/commonAnt100Tongnoxengoai';
 
+// tmt101. master
+export const Tmt101Ant100Create = 'tmt101/tmt101Ant100Create';
+export const Tmt101Ant100Searchparam = 'tmt101/tmt101Ant100Searchparam';
+export const Tmt101Ant100FindAll = 'tmt101/tmt101Ant100FindAll';
+
+
 //role
 export const Ant100SearchAllRole = "role/ant100SearchAllRole";
 export const Ant100GetSearchAllRole = "role/ant100GetSearchAllRole";

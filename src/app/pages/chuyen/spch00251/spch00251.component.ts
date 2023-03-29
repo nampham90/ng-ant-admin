@@ -22,6 +22,7 @@ import { NguonxeService } from '@app/core/services/http/nguonxe/nguonxe.service'
 import { ChuyenngoaiService } from '@app/core/services/http/chuyenngoai/chuyenngoai.service';
 import { ChuyenngoaidtoService } from '@app/core/services/http/chuyenngoai/chuyenngoaidto.service';
 import { TabService } from '@app/core/services/common/tab.service';
+import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -56,15 +57,17 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     protected override cdf :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
     protected override tabService: TabService,
+    protected override modalVideoyoutube: VideoyoutubeService,
     public message: NzMessageService,
     private subwinCtChuyenngoaiService: SubwindowCtchuyenngoaiService,
     private modalSrv: NzModalService,
     private nguonxeService: NguonxeService,
     private dataService: ChuyenngoaiService,
     private chuyenngoaiDto: ChuyenngoaidtoService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    
   ) { 
-    super(webService,router,cdf,datePipe,tabService);
+    super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }
 
   searchParam: Partial<SearchParam> = {};

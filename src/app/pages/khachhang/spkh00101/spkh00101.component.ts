@@ -24,6 +24,7 @@ import { KhachhangDtoService } from '@app/core/services/http/khachhang/khachhang
 import { Ultility } from '@core/services/common/Ultility.service'
 import { NhatkykhService } from '@app/core/services/http/nhatkykh/nhatkykh.service';
 import { TabService } from '@app/core/services/common/tab.service';
+import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
 interface SearchParam {
   phongban_id: string;
   name: string;
@@ -68,6 +69,7 @@ export class Spkh00101Component extends BaseComponent implements OnInit {
     protected override router: Router,
     protected override cdf :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
+    protected override modalVideoyoutube: VideoyoutubeService,
     public message: NzMessageService,
     private dataService: KhachhangService,
     private modalService: SubwindowKhachhangService,
@@ -75,9 +77,10 @@ export class Spkh00101Component extends BaseComponent implements OnInit {
     private dtoKhService: KhachhangDtoService,
     private ultilityService: Ultility,
     private nhatkykhService: NhatkykhService,
-    protected override tabService: TabService
+    protected override tabService: TabService,
+    
   ) {
-    super(webService,router,cdf,datePipe,tabService);
+    super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }
 
   getDataList(e?: NzTableQueryParams) {
@@ -94,7 +97,6 @@ export class Spkh00101Component extends BaseComponent implements OnInit {
       })
     )
     .subscribe(data => {
-      console.log(data);
       const { list, total, pageNum } = data;
       this.dataList = [...list];
       this.tableConfig.total = total!;

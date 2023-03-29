@@ -7,6 +7,7 @@ import { SharedModule } from '@app/shared/shared.module';
 import { SubwindowsearchkhachhangModule } from '@app/widget/modal/subwindowsearchkhachhang/subwindowsearchkhachhang.module';
 import { SubwindowsearchnguonxeModule } from '@app/widget/modal/subwindowsearchnguonxe/subwindowsearchnguonxe.module';
 import { ClipboardModule } from '@angular/cdk/clipboard'
+import { SubwindowvideoyoutubeModule } from '@app/widget/modal/subwindowvideoyoutube/subwindowvideoyoutube.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard'
     Spch00253RoutingModule,
     SubwindowsearchkhachhangModule,
     SubwindowsearchnguonxeModule,
-    ClipboardModule
+    ClipboardModule,
+    SubwindowvideoyoutubeModule
   ]
 })
 export class Spch00253Module { }

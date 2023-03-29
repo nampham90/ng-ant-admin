@@ -36,6 +36,11 @@ export const ActionCode = {
   DataScDel: 'default:system:datasc:del',
   DataScDelAll: 'default:system:datasc:del',
 
+  /* quản lý video hướng dẫn*/
+  HuongdanAdd: 'default:system:huongdan:add', 
+  HuongdanallDel: 'default:system:huongdan:allDel', 
+  HuongdanUpdate: 'default:system:huongdan:update', 
+
   /* ActionCode ql Xe*/
   XeAdd: 'default:system:quanlyxe:add',
   XeEdit: 'default:system:quanlyxe:update',
@@ -97,5 +102,7 @@ export const ActionCode = {
   // thanh toan chuyen ngoai
   Thanhtoanchuyenngoai : 'default:chuyen:spch00255:thanhtoan',
   Xuatpdfchuyenngoai : 'default:chuyen:spch00255:xuatpdf',
+
+  // 
 
 };

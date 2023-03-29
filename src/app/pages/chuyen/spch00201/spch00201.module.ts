@@ -5,6 +5,7 @@ import { Spch00201RoutingModule } from './spch00201-routing.module';
 import { SharedModule } from '@app/shared/shared.module';
 import { SubwindowproductModule } from '@app/widget/modal/subwindowproduct/subwindowproduct.module';
 import { SubwindowchiphiModule } from '@app/widget/modal/subwindowchiphi/subwindowchiphi.module';
+import { SubwindowvideoyoutubeModule } from '@app/widget/modal/subwindowvideoyoutube/subwindowvideoyoutube.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { SubwindowchiphiModule } from '@app/widget/modal/subwindowchiphi/subwind
     SharedModule,
     NzHighlightModule,
     SubwindowproductModule,
-    SubwindowchiphiModule
+    SubwindowchiphiModule,
+    SubwindowvideoyoutubeModule
   ]
 
 })

@@ -1,4 +1,9 @@
-<app-page-header [pageHeaderInfo]="pageHeaderInfo"></app-page-header>
+<app-page-header [pageHeaderInfo]="pageHeaderInfo" [extraTpl]="huongdanTpl"></app-page-header>
+<ng-template #huongdanTpl>
+    <button nz-button nzType="primary" [nzSize]="'large'" nzShape="round" (click)="showVideo()">
+        <span nz-icon nzType="star" nzTheme="outline"></span>Hướng dẫn
+    </button>
+</ng-template>
 <div class="normal-table-wrap">
     <nz-card nzHoverable [nzBodyStyle]="{ 'padding-bottom': 0 }" class="m-b-10">
         <form nz-form>

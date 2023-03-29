@@ -18,6 +18,7 @@ import { finalize } from 'rxjs';
 import { ModalBtnStatus } from '@app/widget/base-modal';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { TabService } from '@app/core/services/common/tab.service';
+import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
 
 interface SearchParam {
   datacd: string;
@@ -58,13 +59,14 @@ export class NguonxeComponent extends BaseComponent implements OnInit {
     protected override  router: Router,
     protected override  cdf : ChangeDetectorRef,
     protected override  datePipe : DatePipe,
+    protected override modalVideoyoutube: VideoyoutubeService,
     public message: NzMessageService,
     private dataService : NguonxeService,
     private modalService: NguonxeModalService,
     private modalSrv: NzModalService,
     protected override tabService: TabService
   ) {
-    super(webService,router,cdf,datePipe,tabService);
+    super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
     this.pageHeaderInfo = {
       title: "",
       breadcrumb: ['Home','Quản lý Hệ thống',  'Quản lý nguồn xe'],

@@ -23,6 +23,7 @@ import { ModalBtnStatus } from '@app/widget/base-modal';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { LayoutPdfService } from '@app/core/services/common/layout-pdf.service';
 import { DonhangexportxengoaiService } from '@app/core/services/http/donhangexportxengoai/donhangexportxengoai.service';
+import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
 interface SearchParam {
   ngaybatdau: string | null;
   ngayketthuc: string | null;
@@ -59,14 +60,16 @@ export class Spch00254Component extends BaseComponent implements OnInit {
     protected override cdf :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
     protected override tabService: TabService,
+    protected override modalVideoyoutube: VideoyoutubeService,
     private dataService : CongnoxengoaiService,
     public message: NzMessageService,
     private modalSrv: NzModalService,
     private modalNguonXeService: SubwindowsearchnguonxeService,
     private pdfService: LayoutPdfService,
-    private donhangexpService: DonhangexportxengoaiService
+    private donhangexpService: DonhangexportxengoaiService,
+    
   ) {
-    super(webService,router,cdf,datePipe,tabService);
+    super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
    }
 
   searchParam: Partial<SearchParam> = {};

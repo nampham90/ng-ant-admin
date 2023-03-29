@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { DatePipe,formatCurrency } from '@angular/common';
 import { UrlDisplayId } from '@app/common/UrlDisplay';
 import { TabService } from '@app/core/services/common/tab.service';
+import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
+import { ModalBtnStatus } from '@app/widget/base-modal';
 
 
 @Component({
@@ -27,7 +29,8 @@ export abstract class BaseComponent implements OnInit, OnDestroy {
         protected router:Router,
         protected  cdf :  ChangeDetectorRef,
         protected datePipe: DatePipe,
-        protected tabService: TabService
+        protected tabService: TabService,
+        protected modalVideoyoutube: VideoyoutubeService,
     ) { }
     ngOnDestroy(): void {
         this.destroy();
@@ -95,6 +98,16 @@ export abstract class BaseComponent implements OnInit, OnDestroy {
            }
         }
         return htttnm;
+    }
+
+    showVideo() {
+        this.modalVideoyoutube.show({nzTitle: "Hướng dẫn sử dụng"},{showcomfirm:false,idvideo:"QIZ9aZD6vs0"}).subscribe(
+            res => {
+            if (!res || res.status === ModalBtnStatus.Cancel) {
+                return;
+            }
+            }
+        )
     }
 
     abstract fnInit(): any;

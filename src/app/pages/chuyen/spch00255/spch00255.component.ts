@@ -21,6 +21,7 @@ import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
 import  _ from 'lodash';
 import { ModalBtnStatus } from '@app/widget/base-modal';
 import { finalize } from 'rxjs';
+import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
 interface SearchParam {
   ngaybatdau: string | null;
   ngayketthuc: string | null;
@@ -47,13 +48,15 @@ export class Spch00255Component extends BaseComponent implements OnInit {
     protected override cdf :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
     protected override tabService: TabService,
+    protected override modalVideoyoutube: VideoyoutubeService,
     private dataService : DonhangexportxengoaiService,
     public message: NzMessageService,
     private modalSrv: NzModalService,
     private pdfService: LayoutPdfService,
     private modalNguonXeService: SubwindowsearchnguonxeService,
+    
   ) {
-    super(webService,router,cdf,datePipe,tabService);
+    super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }
 
   searchParam: Partial<SearchParam> = {};

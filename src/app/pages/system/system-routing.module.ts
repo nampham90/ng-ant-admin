@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: 'datasc', loadChildren: () => import('./datasc/datasc.module').then(m => m.DatascModule)},
   { path: 'quanlyxe', loadChildren: () => import('./xe/xe.module').then(m => m.XeModule)},
   { path: 'quanlynguonxe', loadChildren: () => import('./nguonxe/nguonxe.module').then(m => m.NguonxeModule)},
+  { path: 'huongdan', loadChildren: () => import('./huongdan/huongdan.module').then(m => m.HuongdanModule)},
   { path: '', redirectTo: 'dept', pathMatch: 'full' }
 ];
 

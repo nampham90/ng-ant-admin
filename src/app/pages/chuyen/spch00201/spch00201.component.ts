@@ -31,6 +31,8 @@ import { fnReload } from '@utils/tools';
 import { ChiphichuyenService } from '@app/core/services/http/chiphichuyen/chiphichuyen.service';
 import { SubwindowChiphiService } from '@app/widget/modal/subwindowchiphi/subwindow-chiphi.service';
 import { LayoutPdfService } from '@app/core/services/common/layout-pdf.service';
+import {VideoyoutubeService} from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service'
+
 export interface Product {
   id?:string,
   stt?: number;
@@ -110,6 +112,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
     protected override router: Router,
     protected override cdf :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
+    protected override modalVideoyoutube: VideoyoutubeService,
     public message: NzMessageService,
 
     private modashowProduct: SubwindowProductService,
@@ -121,9 +124,10 @@ export class Spch00201Component extends BaseComponent implements OnInit {
     private modalChiphiService: SubwindowChiphiService,
     protected override tabService: TabService,
     private pdfService: LayoutPdfService,
+    
 
   ) {
-    super(webService,router,cdf,datePipe,tabService);
+    super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }
 
   override ngOnInit(): void {

@@ -1,5 +1,9 @@
-<app-page-header [backTpl]="backTpl" [backUrl]="'/default/chuyen/spch00252'" [pageHeaderInfo]="pageHeaderInfo"></app-page-header>
-
+<app-page-header [backTpl]="backTpl" [backUrl]="'/default/chuyen/spch00252'" [extraTpl]="huongdanTpl" [pageHeaderInfo]="pageHeaderInfo"></app-page-header>
+<ng-template #huongdanTpl>
+    <button nz-button nzType="primary" [nzSize]="'large'" nzShape="round" (click)="showVideo()">
+        <span nz-icon nzType="star" nzTheme="outline"></span>Hướng dẫn
+    </button>
+</ng-template>
 <ng-template #backTpl>
     <ng-container *ngIf="showreturnBack">
         <span nz-icon nzType="arrow-left" nzTheme="outline">Quay lại</span> 
