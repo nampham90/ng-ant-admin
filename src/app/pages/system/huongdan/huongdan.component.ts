@@ -83,7 +83,16 @@ export class HuongdanComponent extends BaseComponent implements OnInit {
   
   allDel() {}
   edit(id: any) {
-
+    this.webService.PostCallWs(Const.Tmt101Ant100GetDetail,{id:id},(response)=> {
+      this.modalHuongdan.show({nzTitle: this.formItemNm[10]},response).subscribe(({ modalValue, status })=>{
+        if (status === ModalBtnStatus.Cancel) {
+          return;
+        }
+        modalValue.id = id;
+        this.tableLoading(true);
+        this.addEditData(modalValue, 'Update');
+      })
+    })
   }
 
   addEditData(param: any, methodName: 'Update' | 'Create'): void {

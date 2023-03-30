@@ -76,6 +76,7 @@ export const CommonAnt100Tongnoxengoai = 'common/commonAnt100Tongnoxengoai';
 export const Tmt101Ant100Create = 'tmt101/tmt101Ant100Create';
 export const Tmt101Ant100Update = 'tmt101/tmt101Ant100Update';
 export const Tmt101Ant100Detail = 'tmt101/tmt101Ant100Detail';
+export const Tmt101Ant100GetDetail = 'tmt101/tmt101Ant100GetDetail';
 export const Tmt101Ant100Searchparam = 'tmt101/tmt101Ant100Searchparam';
 export const Tmt101Ant100FindAll = 'tmt101/tmt101Ant100FindAll';
 

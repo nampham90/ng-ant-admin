@@ -110,9 +110,9 @@ export abstract class BaseComponent implements OnInit, OnDestroy {
             if(idyoutube) {
                 this.modalVideoyoutube.show({nzTitle: "Hướng dẫn sử dụng"},{showcomfirm:false,idvideo:idyoutube}).subscribe(
                     res => {
-                    if (!res || res.status === ModalBtnStatus.Cancel) {
-                        return;
-                    }
+                        if (!res || res.status === ModalBtnStatus.Cancel) {
+                            return;
+                        }
                     }
                 )
             }

@@ -415,6 +415,8 @@ export class Spch00201Component extends BaseComponent implements OnInit {
                this.ChuyenDto.trangthai = trangthai;
                this.fnshowConfirm(this.ChuyenDto.trangthai);
               // fnReload(this.router, Const.rootbase + 'chuyen/spch00101');
+            }else if(res == 0){
+               this.modalSrv.info({nzTitle: "Tài xế chưa hoàn thành trả hàng !"})
             } else {
                this.message.success(" Không thành công !");
             }

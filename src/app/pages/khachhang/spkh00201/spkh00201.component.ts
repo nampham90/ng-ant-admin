@@ -321,7 +321,6 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
       this.khachhangService.getDetail(this.khdtoService.id)
       .pipe()
       .subscribe(res => {
-        console.log(res);
         this.sotienno = res.sotienno;
         this.khdtoService.sotienno = res.sotienno;
       })
@@ -330,6 +329,8 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
   // thanh toán các đơn hàng được chọn
   thanhtoanmotphan() {
     let listIdPN: NzSafeAny[] = [];
+    let checksoodc = false;
+    let soodc = "";
     for(let element of this.dataList) {
       if(element['_checked'] == true) {
         if(element['idphieunhaphang']['idchuyen']) {
@@ -338,9 +339,14 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
           listIdPN.push(element['status01']);
         }
       }
+      if(element['status05'] == ""){
+        checksoodc = true;
+      } else {
+        soodc = element['status05'];
+      }
     }
-    if (listIdPN.length == 0) {
-      this.message.info(" Vùi lòng chọn ít nhất một đơn hàng để thanh toán");
+    if (checksoodc === true) {
+      this.modalSrv.info({nzTitle:"Vui lòng xuât file pdf để tao Số ODC. mới bắt đầu thanh toán"});
       return;
     } else {
       this.modalSrv.confirm({
@@ -349,7 +355,8 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
         nzOnOk: () => {
           let req = {
             "iduser": this.khdtoService.id,
-            "listidpn": listIdPN
+            "listidpn": listIdPN,
+            "soodc": soodc
           }
           this.tableLoading(true);
           this.dataService.thanhtoanmotphan(req).pipe(
@@ -457,26 +464,28 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
   generateData() {
     let data : any[] = [];
     for(let element of this.dataList) {
-      let nddh = "";
-      if(element['status01'] == '') {
-         nddh = element['idphieunhaphang']['noidungdonhang']
-         
-      } else {
-         nddh = element['idphieunhaphang']['thongtindonhang']
+      if(element['_checked'] == true) {
+        let nddh = "";
+        if(element['status01'] == '') {
+           nddh = element['idphieunhaphang']['noidungdonhang']
+           
+        } else {
+           nddh = element['idphieunhaphang']['thongtindonhang']
+        }
+        let item = [
+          this.formatDate(element['ngay']),
+          nddh,
+          this.displayVND(element['sotien']) 
+        ]
+        data.push(item);
       }
-      let item = [
-        this.formatDate(element['ngay']),
-        nddh,
-        this.displayVND(element['sotien']) 
-       ]
-       data.push(item);
     }
     return data;
   }
 
   //xuất file pdf gửi cho khach hang
   xuatpdf() {
-    if(this.khdtoService.kbnflg && this.dataList.length > 0) {
+    if(this.khdtoService.kbnflg && this.generateData().length > 0) {
       // get odc 
       this.commonService.getODC().pipe()
       .subscribe(res => {
@@ -501,8 +510,11 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
         }
         let req = {
           lstId : lstId,
-          soodc : res
+          soodc : res,
+          idkhachhang:this.idkhachhang,
+          tongcuoc: this.fnTongCuoc()
         }
+        // update soodc vào trong trường status05
         this.dataService.UpdateStauts05(req).pipe()
         .subscribe(res=> {
           if(res == 1) {
@@ -513,7 +525,7 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
       })
      
     } else {
-      this.modalSrv.info({nzTitle: "Vùi chọn môt khách hàng để xuất cộng nợ"});
+      this.modalSrv.info({nzTitle: "Vùi chọn ít nhất một đơn hàng để xuất cộng nợ"});
     }
 
   }
