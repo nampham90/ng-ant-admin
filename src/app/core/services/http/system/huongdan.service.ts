@@ -15,6 +15,9 @@ export class HuongdanService {
   Create(params: any): Observable<any> {
     return this.http.post(Const.Tmt101Ant100Create, params,{ needSuccessInfo: false});
   }
+  Update(params: any): Observable<any> {
+    return this.http.post(Const.Tmt101Ant100Create, params,{ needSuccessInfo: false});
+  }
 
   PostAll(params: any): Observable<any> {
     return this.http.post(Const.Tmt101Ant100FindAll, params,{ needSuccessInfo: false});

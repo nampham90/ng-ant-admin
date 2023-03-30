@@ -100,14 +100,23 @@ export abstract class BaseComponent implements OnInit, OnDestroy {
         return htttnm;
     }
 
+    // trả về idyoutube
     showVideo() {
-        this.modalVideoyoutube.show({nzTitle: "Hướng dẫn sử dụng"},{showcomfirm:false,idvideo:"QIZ9aZD6vs0"}).subscribe(
-            res => {
-            if (!res || res.status === ModalBtnStatus.Cancel) {
-                return;
+        const myString = this.router.url;
+        const myArray = myString.split("/");
+        const result = myArray[myArray.length - 2] + "/" + myArray[myArray.length - 1];
+        this.webService.PostCallWs(Const.Tmt101Ant100Detail,{urldisplayid:result}, (response)=> {
+            let idyoutube = response;
+            if(idyoutube) {
+                this.modalVideoyoutube.show({nzTitle: "Hướng dẫn sử dụng"},{showcomfirm:false,idvideo:idyoutube}).subscribe(
+                    res => {
+                    if (!res || res.status === ModalBtnStatus.Cancel) {
+                        return;
+                    }
+                    }
+                )
             }
-            }
-        )
+        })
     }
 
     abstract fnInit(): any;

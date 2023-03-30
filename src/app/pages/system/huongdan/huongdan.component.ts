@@ -16,6 +16,8 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { HuongdanService } from '@app/core/services/http/system/huongdan.service';
 import { SearchCommonVO } from '@app/core/services/types';
 import { finalize } from 'rxjs';
+import { HuongdanModalService } from '@app/widget/biz-widget/system/huongdan-modal/huongdan.service';
+import { ModalBtnStatus } from '@app/widget/base-modal';
 interface SearchParam {
   urldisplayid: string;
 }
@@ -60,15 +62,40 @@ export class HuongdanComponent extends BaseComponent implements OnInit {
     protected override modalVideoyoutube: VideoyoutubeService,
     protected override tabService : TabService,
     public message: NzMessageService,
-    private dataService: HuongdanService
+    private dataService: HuongdanService,
+    private modalHuongdan:HuongdanModalService
   ) {
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }
 
-  add() {}
+  add() {
+     this.modalHuongdan.show({ nzTitle:'Thêm mới' }).subscribe( //  this.formItemNm[15]
+      res => {
+        if (!res || res.status === ModalBtnStatus.Cancel) {
+          return;
+        }
+        this.tableLoading(true);
+        this.addEditData(res.modalValue, 'Create');
+      },
+      error => this.tableLoading(false)
+    );
+  }
+  
   allDel() {}
   edit(id: any) {
 
+  }
+
+  addEditData(param: any, methodName: 'Update' | 'Create'): void {
+    this.dataService[methodName](param)
+      .pipe(
+        finalize(() => {
+          this.tableLoading(false);
+        })
+      )
+      .subscribe(res => {
+        this.getDataList();
+      });
   }
 
   getDataList(e?: NzTableQueryParams) {
