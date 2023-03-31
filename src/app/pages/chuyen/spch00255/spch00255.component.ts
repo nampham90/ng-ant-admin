@@ -27,6 +27,7 @@ interface SearchParam {
   ngayketthuc: string | null;
   nguonxe : string;
   status02: number | string; // tráng thái thánh toán của đơn hàng
+  sohdttxn: string;
 }
 @Component({
   selector: 'app-spch00255',
@@ -197,6 +198,7 @@ export class Spch00255Component extends BaseComponent implements OnInit {
     this.dataService.postDetail({id:id}).pipe()
     .subscribe(data => {
       if(data) {
+        this.pdfService.clearHeader();
         this.pdfService.exportPDF(data['header'],data['lstheader'],data['lstdata'],data['title'],this.getDate(),"BVC ký xác nhận","BTT ký xác nhận");
       } else {
          this.modalSrv.error({nzTitle: "Lỗi hệ thống ! vui long liên hệ bộ phận kỷ thuật"});
@@ -231,6 +233,11 @@ export class Spch00255Component extends BaseComponent implements OnInit {
           field: 'ngayxuat',
           width: 200,
           pipe: "date: dd/MM/YYYY HH:mm"
+        },
+        {
+          title: 'Số HDTTXN',
+          width: 300,
+          field: 'sohdttxn',
         },
         {
           title: 'Nguồn xe',

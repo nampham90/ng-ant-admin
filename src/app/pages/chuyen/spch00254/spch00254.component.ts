@@ -24,6 +24,7 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { LayoutPdfService } from '@app/core/services/common/layout-pdf.service';
 import { DonhangexportxengoaiService } from '@app/core/services/http/donhangexportxengoai/donhangexportxengoai.service';
 import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
+import { CommonService } from '@app/core/services/http/common/common.service';
 interface SearchParam {
   ngaybatdau: string | null;
   ngayketthuc: string | null;
@@ -67,7 +68,7 @@ export class Spch00254Component extends BaseComponent implements OnInit {
     private modalNguonXeService: SubwindowsearchnguonxeService,
     private pdfService: LayoutPdfService,
     private donhangexpService: DonhangexportxengoaiService,
-    
+    private commonService: CommonService
   ) {
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
    }
@@ -207,7 +208,7 @@ export class Spch00254Component extends BaseComponent implements OnInit {
   }
 
   changeStatus($event: any) {
-    if($event == 2) {
+    if($event == 2 || $event == 1) {
       this.btnDisble = true;
     } else {
       this.btnDisble = false;
@@ -223,6 +224,11 @@ export class Spch00254Component extends BaseComponent implements OnInit {
           field: 'iddonhang',
           width: 250,
           tdTemplate: this.donhangTpl
+        },
+        {
+          title: 'Số HDTTXN',
+          field: 'sohdttxn',
+          width: 300
         },
         {
           title: 'Nguồn Xe',
@@ -323,20 +329,31 @@ export class Spch00254Component extends BaseComponent implements OnInit {
         //tinh tong cuoc
         //lấy list id
         //get đơn vi vận chuyển
-        let formatExp = this.fnFormat();
-        let title = "Danh Sách Công Nợ";
-        let header= [['MaDH','Thông Tin Đơn Hàng', 'Ngày Phat Hành', 'Tên tài xế', "Tiền cước"]];
-        let headerlayout = Const.headerLayout;
-        headerlayout[0]['field'] = 'Đơn vi vận chuyển:';
-        headerlayout[0]['value'] = formatExp.donvivanchuyen;
-        headerlayout[1]['field'] = 'Tổng tiền thanh toán:';
-        headerlayout[1]['value'] =  this.displayVND(formatExp.tongcuoc);
-        headerlayout[2]['field'] = 'Tổng số đơn hàng cần thanh toán:';
-        headerlayout[2]['value'] = data.length + '';
-        this.pdfService.exportPDF(header,headerlayout,data,title,this.getDate(),"BVC ký xác nhận","BTT ký xác nhận");
-        // insert vao bang donhangexport với thông tin gồm. header, và data status01 = 1. chờ thanh toán
-        this.createDataExport(this.searchParam.nguonxe!,this.getDate(),title,data,headerlayout,header,system,formatExp.listId);
-        this.getDataList();
+        this.commonService.getHDTTXN().pipe()
+        .subscribe(res => {
+          if(res) {
+            let formatExp = this.fnFormat();
+            let title = "Danh Sách Công Nợ";
+            let header= [['MaDH','Thông Tin Đơn Hàng', 'Ngày Phat Hành', 'Tên tài xế', "Tiền cước"]];
+            this.pdfService.clearHeader();
+            let headerlayout = Const.headerLayout;
+            headerlayout[0]['field'] = 'Đơn vi vận chuyển:';
+            headerlayout[0]['value'] = formatExp.donvivanchuyen;
+            headerlayout[1]['field'] = 'Tổng tiền thanh toán:';
+            headerlayout[1]['value'] =  this.displayVND(formatExp.tongcuoc);
+            headerlayout[2]['field'] = 'Tổng số đơn hàng cần thanh toán:';
+            headerlayout[2]['value'] = data.length + '';
+            headerlayout[3]['field'] = 'Số HDTTXN:';
+            headerlayout[3]['value'] = res;
+            this.pdfService.exportPDF(header,headerlayout,data,title,this.getDate(),"BVC ký xác nhận","BTT ký xác nhận");
+            // insert vao bang donhangexport với thông tin gồm. header, và data status01 = 1. chờ thanh toán
+            this.createDataExport(this.searchParam.nguonxe!,this.getDate(),title,data,headerlayout,header,system,formatExp.listId,res);
+            this.getDataList();
+          } else {
+            this.modalSrv.info({nzTitle: "Lỗi hệ thống không tạo được Số HDTTXN !"})
+          }
+        })
+
       }
     });
     
@@ -360,9 +377,10 @@ export class Spch00254Component extends BaseComponent implements OnInit {
   }
 
   // insert data export
-  createDataExport(nguonxe: string, ngay: any, title: string, data: any, headerlayout: any, header: any,system: string,lstid: any) {
+  createDataExport(nguonxe: string, ngay: any, title: string, data: any, headerlayout: any, header: any,system: string,lstid: any,sohdttxn:string) {
     let req = {
        syskbn: system,
+       sohdttxn: sohdttxn,
        nguonxe: nguonxe,
        ngayxuat: ngay,
        title: title,

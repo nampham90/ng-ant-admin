@@ -491,6 +491,7 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
       .subscribe(res => {
         let title = "Công nợ " + this.tenkhachhang;
         let header= [['Ngày Vận Chuyển','Thông Tin Đơn Hàng', "Tiền cước"]];
+        this.pdfService.clearHeader();
         let headerlayout = Const.headerLayout;
         headerlayout[0]['field'] = 'Kính gửi:';
         headerlayout[0]['value'] = this.tenkhachhang;

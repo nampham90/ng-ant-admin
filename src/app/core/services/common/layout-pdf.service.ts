@@ -103,4 +103,30 @@ export class LayoutPdfService {
     // pdf.save();
 
   }
+
+  clearHeader(){
+    Const.headerLayout[0]['field']= "";
+    Const.headerLayout[0]['value']= "";
+    Const.headerLayout[1]['field']= "";
+    Const.headerLayout[1]['value']= "";
+    Const.headerLayout[2]['field']= "";
+    Const.headerLayout[2]['value']= "";
+    Const.headerLayout[3]['field']= "";
+    Const.headerLayout[3]['value']= "";
+    Const.headerLayout[4]['field']= "";
+    Const.headerLayout[4]['value']= "";
+
+
+    Const.headerLayout2[0]['field']= "";
+    Const.headerLayout2[0]['value']= "";
+    Const.headerLayout2[1]['field']= "";
+    Const.headerLayout2[1]['value']= "";
+    Const.headerLayout2[2]['field']= "";
+    Const.headerLayout2[2]['value']= "";
+    Const.headerLayout2[3]['field']= "";
+    Const.headerLayout2[3]['value']= "";
+    Const.headerLayout2[4]['field']= "";
+    Const.headerLayout2[4]['value']= "";
+
+  }
 }

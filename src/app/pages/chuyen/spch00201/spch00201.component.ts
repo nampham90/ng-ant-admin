@@ -309,6 +309,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         let title = "Chứng từ hoàn thành chuyến - " + Const.doanhnghiep;
         let header = [['Khách hàng','Thông tin đơn hang','tiền cước','HTTT']];
         let data = this.fnGetDataExport(res.lstproduct);
+        this.pdfService.clearHeader();
         let layoutheader = Const.headerLayout;
         layoutheader[0]['field'] = "Số ODT:";
         layoutheader[0]['value'] = res.odt;

@@ -72,7 +72,8 @@
                         <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24">Trạng thái</nz-form-label>
                         <nz-form-control [nzXXl]="15" [nzXl]="15" [nzLg]="15" [nzMd]="15" [nzSm]="24" [nzXs]="24">
                             <nz-radio-group id="status01" name="status01" [(ngModel)]="searchParam.status01" (ngModelChange)="changeStatus($event)">
-                                <label nz-radio nzValue="0"> Chưa thanh toán </label>
+                                <label nz-radio nzValue="0"> Chưa thanh toán </label>\
+                                <label nz-radio nzValue="1"> Chờ thanh toán </label>
                                 <label nz-radio nzValue="2"> Đã thanh toán</label>
                             </nz-radio-group>
                         </nz-form-control>

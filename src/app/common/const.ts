@@ -69,6 +69,7 @@ export const CommonAnt100Listtoptongcuoctungxe = "common/commonAnt100Listtongcuo
 export const CommonAnt100GetODS = "common/commonAnt100GetODS";
 export const CommonAnt100GetODT = "common/commonAnt100GetODT";
 export const CommonAnt100GetODC = "common/commonAnt100getODC";
+export const CommonAnt100GetHDTTXN = "common/commonAnt100getHDTTXN";
 
 export const CommonAnt100Tongnoxengoai = 'common/commonAnt100Tongnoxengoai';
 

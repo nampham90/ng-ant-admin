@@ -96,6 +96,8 @@ export class Spch00253Component extends BaseComponent implements OnInit {
   stockkh = ""
   nguonxenm = "";
   stocknx = "";
+
+  btnthuhoibienlai = false;
   
   constructor(
     protected override webService: WebserviceService,
@@ -178,6 +180,14 @@ export class Spch00253Component extends BaseComponent implements OnInit {
     this.khachhangnm = "";
     this.nguonxenm = "";
     this.getDataList();
+  }
+
+  fnShowBtnThuhoibienlai($event: any) {
+    if($event == 1) {
+      this.btnthuhoibienlai = false;
+    } else {
+      this.btnthuhoibienlai = true;
+    }
   }
 
   // show modal khach hang

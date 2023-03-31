@@ -96,7 +96,7 @@
                         <!-- status02 -->
                         <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24">Trạng thái</nz-form-label>
                         <nz-form-control [nzXXl]="15" [nzXl]="15" [nzLg]="15" [nzMd]="15" [nzSm]="24" [nzXs]="24">
-                            <nz-radio-group id="status02" name="status02" [(ngModel)]="searchParam.status02">
+                            <nz-radio-group id="status02" name="status02" [(ngModel)]="searchParam.status02" (ngModelChange)="fnShowBtnThuhoibienlai($event)">
                                 <label nz-radio nzValue="1"> Chưa lấy biên lai </label>
                                 <label nz-radio nzValue="2"> Đã lấy biên lai</label>
                             </nz-radio-group>
@@ -133,7 +133,7 @@
       </ng-template>
     </app-card-table-wrap>
     <ng-template #tableBtns>
-        <button *appAuth="ActionCode.Thohoibienlai" (click)="thuhoibienlai()" nz-button nzType="primary">
+        <button *appAuth="ActionCode.Thohoibienlai" (click)="thuhoibienlai()" nz-button nzType="primary" [disabled]="btnthuhoibienlai">
           <i nz-icon nzType="check-circle"></i>
           Thu hồi biên lai
         </button>
