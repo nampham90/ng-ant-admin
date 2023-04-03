@@ -1,5 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotifiService } from '@app/core/services/common/notifi.service';
+import { WebserviceService } from '@app/core/services/common/webservice.service';
 
 import { LoginInOutService } from '@core/services/common/login-in-out.service';
 import { WindowService } from '@core/services/common/window.service';
@@ -12,7 +14,7 @@ import { LockWidgetService } from '@widget/common-widget/lock-widget/lock-widget
 import { SearchRouteService } from '@widget/common-widget/search-route/search-route.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ModalOptions } from 'ng-zorro-antd/modal';
-
+import * as Const from "src/app/common/const";
 @Component({
   selector: 'app-layout-head-right-menu',
   templateUrl: './layout-head-right-menu.component.html',
@@ -22,6 +24,7 @@ import { ModalOptions } from 'ng-zorro-antd/modal';
 export class LayoutHeadRightMenuComponent implements OnInit {
   user!: UserPsd;
   userDetail: any;
+  totalNotifi = 0;
 
   constructor(
     private router: Router,
@@ -34,7 +37,9 @@ export class LayoutHeadRightMenuComponent implements OnInit {
     private searchRouteService: SearchRouteService,
     public message: NzMessageService,
     private userInfoService: UserInfoService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private notifiService: NotifiService,
+    private webService: WebserviceService
   ) {}
 
   // 锁定屏幕
@@ -100,7 +105,34 @@ export class LayoutHeadRightMenuComponent implements OnInit {
     this.router.navigateByUrl(`/default/page-demo/personal/${path}`);
   }
 
+  getListSystem() {
+    this.webService.PostCallWs(Const.NhatkyhethongfindType,{loaithongbao:Const.System},(response)=> {
+       this.notifiService.lstsystem = response;
+       this.notifiService.status = false;
+       this.totalNotifi = this.notifiService.totalNotifi();
+    })
+  }
+
+  getListNotifi() {
+    this.webService.PostCallWs(Const.NhatkyhethongfindType,{loaithongbao:Const.Notifi},(response)=> {
+      this.notifiService.lstnotifi = response;
+      this.notifiService.status = false;
+      this.totalNotifi = this.notifiService.totalNotifi();
+   })
+  }
+
+  getListVison() {
+    this.webService.PostCallWs(Const.NhatkyhethongfindType,{loaithongbao:Const.Vison},(response)=> {
+      this.notifiService.lstvison = response;
+      this.notifiService.status = false;
+      this.totalNotifi = this.notifiService.totalNotifi();
+   })
+  }
+
   ngOnInit(): void {
+    this.getListSystem();
+    this.getListNotifi();
+    this.getListVison();
     this.userInfoService.getUserInfo().subscribe(res => {
       this.userDetail = {
         userId: res.userId,

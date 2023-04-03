@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef, OnDestroy, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { SocketService } from '@app/core/services/common/socket.service';
 
 import { fnGetRandomNum } from '@app/utils/tools';
 
@@ -89,7 +90,11 @@ export class ChatComponent implements OnInit, OnDestroy {
     'Đang rút lui'
   ];
 
-  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {}
+  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef, private socketService: SocketService) {}
+
+  socket: any;
+  message: string = "";
+  messages: string[] = [];
 
   ngOnDestroy(): void {
     console.log('Dịch vụ khách hàng đã bị phá hủy');
@@ -141,9 +146,13 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.scrollToBottom();
       this.cdr.detectChanges();
     }, 3000);
+    this.socketService.emit('chat message', msg);
   }
 
   ngOnInit(): void {
+    this.socketService.on('chat message', (msg: string) => {
+      this.messages.push(msg);
+    })
     this.validateForm = this.fb.group({
       question: [null]
     });

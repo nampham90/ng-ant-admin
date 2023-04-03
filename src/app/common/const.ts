@@ -18,6 +18,11 @@ export const Lotrinh = [
     {"1": "Hàng về"},
 ]
 
+// type notifi
+export const System = 'system';
+export const Notifi = 'notifi';
+export const Vison = 'vison';
+
 export const listTrangthaichuyen = [
     { "value": 0, "lable": "Lên kế hoạch bóc hàng"},
     { "value": 1, "lable": "Hoàn thành bóc hàng"},
@@ -122,6 +127,9 @@ export const Ant100findAllDatasc = "screenpc/ant100SearchAllDatasc";
 export const Ant100AddListDatasc = "screenpc/ant100AddListDatasc";
 export const Ant100DelDatasc = "screenpc/ant100DelDatasc";
 export const Ant100EditDatasc = "screenpc/ant100EditDatasc";
+
+// nhật ký hệ thống
+export const NhatkyhethongfindType = "nhatkyhethong/nhatkyhethongAnt100getAll"
 
 // quan ly xe
 export const XeAnt100GetAll = 'xe/xeAnt100getAll';
