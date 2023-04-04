@@ -25,7 +25,7 @@ export class MobileComponent implements OnInit {
    });
   }
   username = '';
-
+  showChats = true;
   initData: Array<any> = [];
   valueActive = [];
   show: boolean = false;

@@ -1,4 +1,5 @@
 <app-refresh-detector></app-refresh-detector>
+<app-chat (changeShows)="showChats = false" *ngIf="showChats"></app-chat>
 <div [ngClass]="[show ? 'single-menu-active' : '']">
     <div>
       <Navbar class="single-top-nav-bar" [leftContent]="'Menu'" (onLeftClick)="handleClick($event)">

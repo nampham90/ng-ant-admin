@@ -146,12 +146,13 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.scrollToBottom();
       this.cdr.detectChanges();
     }, 3000);
-    this.socketService.emit('chat message', msg);
+    this.socketService.emit('client-send-data', msg);
   }
 
   ngOnInit(): void {
-    this.socketService.on('chat message', (msg: string) => {
+    this.socketService.on('server-send-data', (msg: string) => {
       this.messages.push(msg);
+      console.log(this.messages);
     })
     this.validateForm = this.fb.group({
       question: [null]
