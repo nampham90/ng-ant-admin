@@ -172,7 +172,10 @@
             "styles": [
               "src/styles.less"
             ],
-            "scripts": []
+            "scripts": [
+              "node_nodules/jspdf/dist/jspdf.min.js",
+              "node_nodules/jspdf-autotable/dist/jspdf.plugin.autotable.js"
+            ]
           }
         }
       }

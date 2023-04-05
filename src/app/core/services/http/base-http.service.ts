@@ -28,7 +28,16 @@ export interface ActionResult<T> {
 })
 export class BaseHttpService {
 
-  uri = "http://116.103.210.19:3001/";
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+    })
+  };
+  //uri = "http://117.2.188.141:3001/";
+  uri = "http://localhost:3001/";
 
 
   protected constructor(public http: HttpClient, public message: NzMessageService) {
@@ -84,7 +93,7 @@ export class BaseHttpService {
     if (config.otherUrl) {
       reqPath = path;
     }
-    return this.http.post<ActionResult<T>>(reqPath, param).pipe(  //
+    return this.http.post<ActionResult<T>>(reqPath, param, this.httpOptions).pipe(  //
       filter(item => {
         return this.handleFilter(item, !!config?.needSuccessInfo);
       }),

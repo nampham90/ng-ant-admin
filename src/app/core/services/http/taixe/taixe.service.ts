@@ -19,5 +19,17 @@ export class TaixeService {
   updateStatusOrder(params:any):Observable<any> {
     return this.http.post(Const.TaixeAnt100Updatestatusorder, params, {needSuccessInfo: false});
   }
+
+  updateStatus01(params:any):Observable<any> {
+    return this.http.post(Const.TaixeAnt100Updatestatus01, params, {needSuccessInfo: false});
+  }
+
+  InsertChiphiProcess(params:any): Observable<any> {
+    return this.http.post(Const.TaixeAnt100Insertchiphi, params, {needSuccessInfo: false});
+  }
+
+  UpdateChiphiProcess(params:any): Observable<any> {
+    return this.http.post(Const.TaixeAnt100Updatechiphi, params, {needSuccessInfo: false});
+  }
   
 }

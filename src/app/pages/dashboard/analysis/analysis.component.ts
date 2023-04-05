@@ -16,6 +16,8 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { inNextTick } from 'ng-zorro-antd/core/util';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import * as Const from '@app/common/const'
+import { TabService } from '@app/core/services/common/tab.service';
+import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
 
 interface DataItem {
   name: string;
@@ -47,11 +49,14 @@ export class AnalysisComponent extends BaseComponent implements OnInit, AfterVie
   itemObjloinhuan!: OjbChart;
 
   loinhuanMode = 0;
+  loinhuanchuyenngoaiMode = 0;
   chiphiMode = 0;
   doanhthuMode = 0;
 
   tongchuyenhangMode = 0;
   tongnoallMode = 0;
+
+  tongnoxengoai = 0;
 
   //list top 10 khách hàng có doanh thu cao
   listtopkh = [];
@@ -130,6 +135,8 @@ export class AnalysisComponent extends BaseComponent implements OnInit, AfterVie
     protected override router: Router,
     protected  cdr :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
+    protected override tabService: TabService,
+    protected override modalVideoyoutube: VideoyoutubeService,
     private ngZone: NgZone,
     public message: NzMessageService,
     private xeService: XeService,
@@ -137,7 +144,7 @@ export class AnalysisComponent extends BaseComponent implements OnInit, AfterVie
     private currencyPipe: CurrencyPipe,
     @Inject(DOCUMENT) private document: any
     ) {
-      super(webService,router,cdr,datePipe);
+      super(webService,router,cdr,datePipe,tabService,modalVideoyoutube);
     }
 
   override ngOnInit(): void {
@@ -146,6 +153,7 @@ export class AnalysisComponent extends BaseComponent implements OnInit, AfterVie
     this.getThongketaichinhnam();
     this.getTongchuyenhangtrongnam();
     this.getTongnoall();
+    this.fnGettongnoxengoai();
     this.getListtopdoanhthu();
     this.getListtopchiphi();
     this.getListtongcuoctungxe();
@@ -462,6 +470,15 @@ export class AnalysisComponent extends BaseComponent implements OnInit, AfterVie
     .pipe()
     .subscribe(res => {
        this.tongnoallMode = res
+    })
+  }
+
+  fnGettongnoxengoai() {
+    this.commonService.Tinhtongnoxengoai()
+    .pipe()
+    .subscribe(res=> {
+      this.tongnoxengoai = res['tongno'];
+      this.loinhuanchuyenngoaiMode = res['loinhuan'];
     })
   }
 

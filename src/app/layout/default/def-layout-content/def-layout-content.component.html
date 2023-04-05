@@ -98,8 +98,10 @@
 </nz-layout>
 
 <app-setting-drawer></app-setting-drawer>
-
-<app-chat (changeShows)="showChats = false" *ngIf="showChats"></app-chat>
+<!-- <app-chat (changeShows)="showChats = false" *ngIf="showChats"></app-chat>
+<ng-container *ngFor="let lst of lstChat">
+  <app-chat (changeShows)="showChats = false" *ngIf="showChats"></app-chat>
+</ng-container> -->
 
 <ng-template #trigger>
   <ul nz-menu [nzTheme]="isMixiMode && (isOverMode$ | async) === false ? 'light' : (themesOptions$ | async)!.theme" nzMode="inline" [nzSelectable]="false">

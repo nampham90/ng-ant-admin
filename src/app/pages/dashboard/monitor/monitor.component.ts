@@ -2,8 +2,10 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UrlDisplayId } from '@app/common/UrlDisplay';
+import { TabService } from '@app/core/services/common/tab.service';
 import { WebserviceService } from '@app/core/services/common/webservice.service';
 import { PageHeaderType } from '@app/shared/components/page-header/page-header.component';
+import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { BaseComponent } from '../../system/base/base.component';
 @Component({
@@ -27,15 +29,18 @@ export class MonitorComponent extends BaseComponent{
     protected override router: Router,
     protected override cdf :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
+    protected override tabService: TabService,
+    protected override modalVideoyoutube: VideoyoutubeService,
+    
   ){
-    super(webService,router,cdf,datePipe);
+    super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }
 
   @ViewChild('pageHeaderContent', { static: false }) pageHeaderContent!: TemplateRef<NzSafeAny>;
 
   fnInit(){
     
-    this.cdf.markForCheck();
+    // this.cdf.markForCheck();
 
     this.pageHeaderInfo = {
       title: this.formItemNm[3],

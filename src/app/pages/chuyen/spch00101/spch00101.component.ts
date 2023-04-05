@@ -21,10 +21,12 @@ import { finalize } from 'rxjs';
 import { Chuyen } from '@app/core/model/chuyen.model';
 import { SubwindowChuyenService } from '@app/widget/modal/subwindowchuyen/subwindow-chuyen.service';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalService ,NzModalRef} from 'ng-zorro-antd/modal';
 import { ChuyendtoService } from '@app/core/services/http/chuyen/chuyendto.service';
 import { UrlDisplayId } from '@app/common/UrlDisplay';
 import { SubwindowChiphiService } from '@app/widget/modal/subwindowchiphi/subwindow-chiphi.service';
+import { TabService } from '@app/core/services/common/tab.service';
+import {VideoyoutubeService} from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service'
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -33,6 +35,7 @@ interface SearchParam {
   idtai : string;
   idphu : string;
   trangthai: any;
+  soodt: string;
 }
 
 class showBtn {
@@ -59,9 +62,11 @@ export class Spch00101Component extends BaseComponent implements OnInit {
   DisplayScreenID: UrlDisplayId = UrlDisplayId.spch00101;
 
   fnInit() {
-     this.cdf.markForCheck();
+    this.ngaybatdau = this.getDate();
+    this.cdf.markForCheck();
   }
   destroy() {}
+
 
   searchParam: Partial<SearchParam> = {};
   dateFormat = Const.dateFormat;
@@ -73,7 +78,7 @@ export class Spch00101Component extends BaseComponent implements OnInit {
   pageHeaderInfo: Partial<PageHeaderType> = {
     title: 'Quản lý chuyến',
     breadcrumb: ["Home","Chuyến","Quản lý chuyến"],
-    desc: ''
+    desc: '',
   };
   // mode
   tainm = "";
@@ -90,30 +95,34 @@ export class Spch00101Component extends BaseComponent implements OnInit {
   btnConfirmbochang = false; // hoàn thành bóc hàng
   btnConfirmtrahang = false; // hoàn thành trả hàng
 
-
-
+  @ViewChild('soodtTpl', { static: true }) soodtTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('Tlbiensoxe', { static: true }) Tlbiensoxe!: TemplateRef<NzSafeAny>;
   @ViewChild('Tltentai', { static: true }) Tltentai!: TemplateRef<NzSafeAny>;
   @ViewChild('Tltenphu', { static: true }) Tltenphu!: TemplateRef<NzSafeAny>;
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('tienduatruocTpl', { static: true }) tienduatruocTpl!: TemplateRef<NzSafeAny>;
+
+
   
   constructor(
     protected override webService: WebserviceService,
     protected override router: Router,
     protected override cdf :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
+    protected override modalVideoyoutube: VideoyoutubeService,
     public message: NzMessageService,
     private modalService: SubwindowXeService,
     private modalTaixeService: SubwindowTaixeService,
     private modalChuyenService: SubwindowChuyenService,
     private modalChiphiService: SubwindowChiphiService,
     private modalSrv: NzModalService,
+   
     public deptTreeService: DeptTreeService,
     private dataService: ChuyenService,
-    private chuyenDtoService : ChuyendtoService
+    private chuyenDtoService : ChuyendtoService,
+    protected override tabService: TabService,
   ) {
-    super(webService,router,cdf,datePipe);
+    super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }
 
   ngaybatdau: string | null = null;
@@ -142,6 +151,7 @@ export class Spch00101Component extends BaseComponent implements OnInit {
   handleEndOpenSoplnChange(open: boolean): void {}
 
   override ngOnInit(): void {
+    this.ngaybatdau = this.getDate();
     this.initTable();
     this.deptTreeService.initDate();   
     this.availableOptions = [...MapPipe.transformMapToArray(MapSet.available, MapKeyType.Boolean)];
@@ -167,7 +177,6 @@ export class Spch00101Component extends BaseComponent implements OnInit {
       })
     )
     .subscribe(data => {
-      console.log(data);
       const { list, total, pageNum } = data;
       this.dataList = [...list];
       for (let element of this.dataList) {
@@ -175,7 +184,7 @@ export class Spch00101Component extends BaseComponent implements OnInit {
           element['showBtn'] = showbtn;
       }
       if(this.dataList.length == 0) {
-        this.modalSrv.info({ nzContent: 'Không Có dữ liệu',});
+        this.message.info('Không Có dữ liệu');
       }
       this.tableConfig.total = total!;
       this.tableConfig.pageIndex = pageNum!;
@@ -320,6 +329,7 @@ export class Spch00101Component extends BaseComponent implements OnInit {
      this.tainm = "";
      this.phunm = "";
      this.trangthaimode = "";
+     this.getDataList();
   }
 
   fnFocusOutBiensoxe() {
@@ -435,6 +445,10 @@ export class Spch00101Component extends BaseComponent implements OnInit {
   }
   allDel() {}
 
+  copy(soodt: any) {
+    return `${soodt}`;
+  }
+
   getItem(id:any,changduong: any,idtai: any,idphu: any,biensoxe: any,tienxe:any,ngaydi:any,ngayve:any,trangthai:any) {
     this.chuyenDtoService.id = id;
     this.chuyenDtoService.biensoxe = biensoxe;
@@ -445,7 +459,10 @@ export class Spch00101Component extends BaseComponent implements OnInit {
     this.chuyenDtoService.ngayve = this.formatDate(ngayve);
     this.chuyenDtoService.tienxe = tienxe;
     this.chuyenDtoService.trangthai = trangthai;
-    this.dataService.refresh(Const.rootbase + UrlDisplayId.spch00201);
+    this.transfer(Const.rootbase + UrlDisplayId.spch00201);
+
+    //this.dataService.refresh(Const.rootbase + UrlDisplayId.spch00201);
+
   }
 
   addEditData(param: Chuyen, methodName: 'updateChuyen' | 'createChuyen'): void {
@@ -455,9 +472,9 @@ export class Spch00101Component extends BaseComponent implements OnInit {
           this.tableLoading(false);
         })
       )
-      .subscribe(() => {
+      .subscribe(res => {
+        this.searchParam.soodt = res['soodt'];
         this.getDataList();
-
       });
   }
 
@@ -486,10 +503,20 @@ export class Spch00101Component extends BaseComponent implements OnInit {
     this.tableConfig.pageSize = e;
   }
 
+  copyText() {
+    
+  }
+
   private initTable(): void {
     this.tableConfig = {
       showCheckbox: false,
       headers: [
+        {
+          title: 'Số ODT',
+          width: 250,
+          field: 'soodt',
+          tdTemplate: this.soodtTpl
+        },
         {
           title: 'Ngày khởi hành',
           field: 'ngaydi',

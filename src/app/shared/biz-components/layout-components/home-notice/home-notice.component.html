@@ -3,11 +3,11 @@
     <nz-tab nzTitle="Notification(4)">
       <ng-container *ngTemplateOutlet="notificationTpl"></ng-container>
     </nz-tab>
-    <nz-tab nzTitle="hông tin(3)">
-      <ng-container *ngTemplateOutlet="notificationTpl"></ng-container>
+    <nz-tab nzTitle="Hệ thống({{listsystem.length}})">
+      <ng-container *ngTemplateOutlet="hethongTpl"></ng-container>
     </nz-tab>
-    <nz-tab nzTitle="Sắp tới(4)">
-      <ng-container *ngTemplateOutlet="notificationTpl"></ng-container>
+    <nz-tab nzTitle="Kết hoạch sắp tơi(4)">
+      <ng-container *ngTemplateOutlet="kehoachsaptoiTpl"></ng-container>
     </nz-tab>
   </nz-tabset>
 </nz-card>
@@ -18,7 +18,7 @@
         <nz-list-item-meta-title>
           <div class="flex p-l-10 p-r-10">
             <span nz-typography nzEllipsis class="flex-1">Thay đổi mã khẩn cấp của bên thứ ba</span>
-            <nz-tag class="m-l-10" [nzColor]="'red'">do sớm</nz-tag>
+            <nz-tag class="m-l-10" [nzColor]="'red'">Xác nhận</nz-tag>
           </div>
         </nz-list-item-meta-title>
         <nz-list-item-meta-description>
@@ -34,4 +34,58 @@
       <div class="center operate-text full-with full-height">Xóa thông báo</div>
     </nz-list-footer>
   </nz-list>
+</ng-template>
+
+<ng-template #hethongTpl>
+  <nz-list nzItemLayout="horizontal">
+    <nz-list-item *ngFor="let item of listsystem">
+      <nz-list-item-meta>
+        <nz-list-item-meta-title>
+          <div class="flex p-l-10 p-r-10">
+            <span *ngIf="item" nz-typography nzEllipsis class="flex-1">
+              <ng-container *ngIf="item['iduser']">{{item['iduser']['name']}}</ng-container>
+              {{item['hanhdong']}}</span>
+            <nz-tag class="m-l-10" [nzColor]="'red'">Xác nhận</nz-tag>
+          </div>
+        </nz-list-item-meta-title>
+        <nz-list-item-meta-description>
+          <div class="p-l-10 p-r-10">
+            <p *ngIf="item" nz-typography nzType="secondary" nzEllipsis [nzEllipsisRows]="3">{{item['noidung']}}</p>
+            <p *ngIf="item" >{{item['ngay'] | date: 'dd/MM/YYYY HH:ss'}}</p>
+          </div>
+        </nz-list-item-meta-description>
+      </nz-list-item-meta>
+    </nz-list-item>
+    <!--  <nz-list-empty *ngIf="deptNoticeListObj.checkRecordDtos.length === 0"></nz-list-empty>-->
+    <nz-list-footer>
+      <div class="center operate-text full-with full-height">Xóa thông báo</div>
+    </nz-list-footer>
+  </nz-list>
+</ng-template>
+
+<ng-template #kehoachsaptoiTpl>
+  <ng-container nz-affix>
+    <nz-list nzItemLayout="horizontal">
+      <nz-list-item *ngFor="let i of 5 | numberLoop">
+        <nz-list-item-meta>
+          <nz-list-item-meta-title>
+            <div class="flex p-l-10 p-r-10">
+              <span nz-typography nzEllipsis class="flex-1">Thay đổi mã khẩn cấp của bên thứ ba</span>
+              <nz-tag class="m-l-10" [nzColor]="'red'">Xác nhận</nz-tag>
+            </div>
+          </nz-list-item-meta-title>
+          <nz-list-item-meta-description>
+            <div class="p-l-10 p-r-10">
+              <p nz-typography nzType="secondary" nzEllipsis [nzEllipsisRows]="3">Kuanlin đã được gửi vào 2017-01-06, nhiệm vụ thay đổi mã cần được hoàn thành trước 2017-01-07</p>
+              <p>Thời gian đánh giá: 2022-2-22</p>
+            </div>
+          </nz-list-item-meta-description>
+        </nz-list-item-meta>
+      </nz-list-item>
+      <!--  <nz-list-empty *ngIf="deptNoticeListObj.checkRecordDtos.length === 0"></nz-list-empty>-->
+      <nz-list-footer>
+        <div class="center operate-text full-with full-height">Xóa thông báo</div>
+      </nz-list-footer>
+    </nz-list>
+  </ng-container>
 </ng-template>

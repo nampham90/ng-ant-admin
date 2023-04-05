@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Spkh00201RoutingModule } from './spkh00201-routing.module';
 import { Spkh00201Component } from './spkh00201.component';
 import { SharedModule } from '@app/shared/shared.module';
+import { SubwindowvideoyoutubeModule } from '@app/widget/modal/subwindowvideoyoutube/subwindowvideoyoutube.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { SharedModule } from '@app/shared/shared.module';
   imports: [
     CommonModule,
     Spkh00201RoutingModule,
-    SharedModule
+    SharedModule,
+    SubwindowvideoyoutubeModule
   ]
 })
 export class Spkh00201Module { }

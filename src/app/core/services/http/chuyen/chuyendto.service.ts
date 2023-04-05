@@ -5,6 +5,7 @@ import { ChuyenService } from './chuyen.service';
   providedIn: 'root'
 })
 export class ChuyendtoService {
+  initFlg = true;
   id = "";
   ngaydi = "";
   ngayve = "";
@@ -20,6 +21,7 @@ export class ChuyendtoService {
   ) { }
 
   clear() {
+    this.initFlg = true;
     this.id = "";
     this.ngaydi = "";
     this.ngayve = "";

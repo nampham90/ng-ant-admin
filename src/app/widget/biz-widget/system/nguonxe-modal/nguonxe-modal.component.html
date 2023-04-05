@@ -1,0 +1,57 @@
+<form nz-form [formGroup]="addEditForm">
+    <nz-form-item>
+      <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="datacd">ID Nguồn xe</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" [nzErrorTip]="combineTpl">
+        <input nz-input formControlName="datacd" name="datacd" placeholder="Vui lòng nhập ID nguồn xe" id="datacd" />
+      </nz-form-control>
+    </nz-form-item>
+  
+    <nz-form-item>
+      <nz-form-label [nzSm]="4" [nzXs]="24" nzFor="datanm">Tên nguồn xe</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" [nzErrorTip]="combineTpl">
+        <input nz-input formControlName="datanm" name="datanm" placeholder="Vui lòng nhập mô tả" id="datanm" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="sodienthoai">Số điện thoại</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" [nzErrorTip]="combineTpl">
+          <input nz-input formControlName="sodienthoai" name="sodienthoai" maxlength="12" id="sodienthoai" placeholder="Số điện thoại" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="diachi">Địa chỉ</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24">
+          <input nz-input formControlName="diachi" name="diachi" maxlength="255" id="diachi" placeholder="Địa chỉ" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="thongtinthanhtoan1">Thông tin thanh toán 1</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+            <textarea
+                nz-input
+                formControlName="thongtinthanhtoan1"
+                placeholder="Nhập thông tin thanh toán bên vận chuyển."
+                [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+            ></textarea>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="thongtinthanhtoan2">Thông tin thanh toán 2</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+            <textarea
+                nz-input
+                formControlName="thongtinthanhtoan2"
+                placeholder="Nhập thông tin thanh toán bên vận chuyển."
+                [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+            ></textarea>
+        </nz-form-control>
+    </nz-form-item>
+</form>
+<ng-template #combineTpl let-control>
+    <ng-container *ngIf="control.hasError('message')">{{ control.errors.message }}</ng-container>
+    <ng-container *ngIf="control.hasError('required')">Phần bắt buộc</ng-container>
+</ng-template>

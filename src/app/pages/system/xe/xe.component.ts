@@ -16,6 +16,8 @@ import { OptionsInterface, SearchCommonVO } from '@app/core/services/types';
 import { MapKeyType, MapPipe, MapSet } from '@app/shared/pipes/map.pipe';
 import { DatePipe } from '@angular/common';
 import { UrlDisplayId } from '@app/common/UrlDisplay';
+import { TabService } from '@app/core/services/common/tab.service';
+import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
 
 interface SearchParam {
   biensoxe: string;
@@ -43,10 +45,12 @@ export class XeComponent extends BaseComponent implements OnInit {
     protected override  router: Router,
     protected override  cdf : ChangeDetectorRef,
     protected override  datePipe : DatePipe,
+    protected override modalVideoyoutube: VideoyoutubeService,
     private modalService: XeModalService,
     private dataService: XeService,
+    protected override tabService : TabService
   ){
-    super(webService,router,cdf,datePipe);
+    super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
     this.pageHeaderInfo = {
       title: this.formItemNm[1],
       breadcrumb: ['Home','Quản lý hệ thống',  'Quản lý xe'],
