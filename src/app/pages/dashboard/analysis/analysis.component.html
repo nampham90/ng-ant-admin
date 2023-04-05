@@ -59,7 +59,7 @@
             "></i>
           </div>
           <div class="card-mid">
-            <div id="miniBar"></div>
+            <!-- <div id="miniBar"></div> -->
           </div>
           <nz-divider class="m-0"></nz-divider>
           <div class="card-footer"> Đánh giá chỉ số </div>
@@ -70,12 +70,15 @@
       <div class="card-wrap">
         <nz-card [nzBodyStyle]="cardPadding" [nzBordered]="false">
           <div class="card-top">
-            <div class="title">Hiệu quả hoạt động điều hành</div>
-            <div class="number">78%</div>
+            <div class="title">Tổng nợ xe ngoài hiện tại</div>
+            <div class="number">{{tongnoxengoai*1000 | currency: "VND" : ''}}</div>
             <i nz-icon nzType="info-circle" nzTheme="outline" nz-tooltip nzTooltipTitle="Mô tả chỉ số"></i>
           </div>
           <div class="card-mid">
-            <div id="progress"></div>
+            <!-- <div id="progress"></div> -->
+            <div class="mid-text">
+              <span>NL xe ngoài: {{loinhuanchuyenngoaiMode*1000 | currency:'VND':''}} <i nz-icon nzType="caret-down" style="color: green; font-size: 12px" nzTheme="outline"></i></span>
+            </div>
           </div>
           <nz-divider class="m-0"></nz-divider>
           <div class="card-footer"> Đánh giá chỉ số </div>

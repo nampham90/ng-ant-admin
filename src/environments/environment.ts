@@ -2,8 +2,10 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-const ip = '117.2.219.153';
 
+
+const ip = '117.2.188.141';
+//const ip = 'localhost';
 const port = '3002';
 
 export const localUrl = `http://${ip}:${port}`;

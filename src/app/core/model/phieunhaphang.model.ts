@@ -11,6 +11,9 @@ export interface Phieunhaphang {
     hinhthucthanhtoan?: string; // hinh thuc thanh toan
     ghichu?: string;
     trangthai?: number;
-    iduser?: string
+    iduser?: string;
+    tennguoinhan?:string;
+    sdtnguoinhan?:string;
+    diachinguoinhan?:string;
     
 }

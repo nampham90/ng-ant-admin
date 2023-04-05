@@ -8,7 +8,8 @@ const routes: Routes = [
   { path: 'blank', loadChildren: () => import('./layout/blank/blank.module').then(m => m.BlankModule) },
   { path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule) },
   { path: 'default', loadChildren: () => import('./layout/default/default.module').then(m => m.DefaultModule) },
-  { path: 'mobile', loadChildren: () => import('./layout/mobile/mobile.module').then(m => m.MobileModule) },
+  { path: 'mobile', loadChildren: () => import('./layout/mobile/mobile.module').then(m => m.MobileModule)},
+
   { path: '', redirectTo: '/login/login-form', pathMatch: 'full' },
   { path: '**', redirectTo: '/login/login-form' }
 ];
@@ -25,3 +26,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
+

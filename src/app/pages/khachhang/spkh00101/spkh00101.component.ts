@@ -23,6 +23,8 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { KhachhangDtoService } from '@app/core/services/http/khachhang/khachhang-dto.service'
 import { Ultility } from '@core/services/common/Ultility.service'
 import { NhatkykhService } from '@app/core/services/http/nhatkykh/nhatkykh.service';
+import { TabService } from '@app/core/services/common/tab.service';
+import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
 interface SearchParam {
   phongban_id: string;
   name: string;
@@ -67,15 +69,18 @@ export class Spkh00101Component extends BaseComponent implements OnInit {
     protected override router: Router,
     protected override cdf :  ChangeDetectorRef,
     protected override  datePipe : DatePipe,
+    protected override modalVideoyoutube: VideoyoutubeService,
     public message: NzMessageService,
     private dataService: KhachhangService,
     private modalService: SubwindowKhachhangService,
     private modalSrv: NzModalService,
     private dtoKhService: KhachhangDtoService,
     private ultilityService: Ultility,
-    private nhatkykhService: NhatkykhService
+    private nhatkykhService: NhatkykhService,
+    protected override tabService: TabService,
+    
   ) {
-    super(webService,router,cdf,datePipe);
+    super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }
 
   getDataList(e?: NzTableQueryParams) {
@@ -92,7 +97,6 @@ export class Spkh00101Component extends BaseComponent implements OnInit {
       })
     )
     .subscribe(data => {
-      console.log(data);
       const { list, total, pageNum } = data;
       this.dataList = [...list];
       this.tableConfig.total = total!;
@@ -207,15 +211,17 @@ export class Spkh00101Component extends BaseComponent implements OnInit {
     });
   }
 
-  getItem(id: string, sotienno: number,name: string) {
+  getItem(id: string, sotienno: number,name: string,diachi:string, dienthoai:string) {
       this.dataService.getDetail(id)
       .pipe()
       .subscribe(res => {
         this.dtoKhService.kbnflg = true;
         this.dtoKhService.id = id;
         this.dtoKhService.sotienno = res.sotienno;
-        this.dtoKhService.name = name
-        this.ultilityService.refresh(Const.rootbase + UrlDisplayId.spkh00201)
+        this.dtoKhService.name = name;
+        this.dtoKhService.diachi = diachi;
+        this.dtoKhService.dienthoai = dienthoai;
+        this.transfer(Const.rootbase + UrlDisplayId.spkh00201)
       })
   }
 

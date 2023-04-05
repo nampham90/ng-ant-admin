@@ -31,6 +31,9 @@ export class PhieunhaphangService {
   delete(id: string): Observable<any>{
     return this.http.post(Const.PhieunhaphangAnt100Delete, { ids: id }, { needSuccessInfo: true })
   }
+  ExportDataPDFChuyen(id: string): Observable<any>{
+    return this.http.post(Const.PhieunhaphangAnt100ExportData, { id: id }, { needSuccessInfo: true })
+  }
 
   delates(){}
 }

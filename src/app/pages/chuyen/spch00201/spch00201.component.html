@@ -1,4 +1,10 @@
-<app-page-header [pageHeaderInfo]="pageHeaderInfo"></app-page-header>
+<app-page-header [backTpl]="backTpl" [backUrl]="'/default/chuyen/spch00101'"  [extraTpl]="huongdanTpl" [pageHeaderInfo]="pageHeaderInfo"></app-page-header>
+<ng-template #huongdanTpl>
+    <button nz-button nzType="primary" [nzSize]="'large'" nzShape="round" (click)="showVideo()">
+        <span nz-icon nzType="star" nzTheme="outline"></span>Hướng dẫn
+    </button>
+</ng-template>
+<ng-template #backTpl><span nz-icon nzType="arrow-left" nzTheme="outline"></span> Quay lại</ng-template>
 <div class="normal-table-wrap">
     <nz-card nzHoverable [nzBodyStyle]="{ 'padding-bottom': 0 }" class="m-b-10">
         <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
@@ -104,6 +110,9 @@
       <ng-template #tiencuocTpl let-tiencuoc="tiencuoc">
           <span>{{tiencuoc*1000 | currency : "VND" : ''}}</span>
       </ng-template>
+      <ng-template #htttTpl let-hinhthucthanhtoan="hinhthucthanhtoan">
+        <span>{{mergeHttt(hinhthucthanhtoan)}}</span>
+      </ng-template>
     </app-card-table-wrap>
     <ng-template #tableConfirm>
         <ng-container *ngIf="showConfirm">
@@ -128,7 +137,7 @@
             <span *appAuth="ActionCode.Confirm" class="operate-text">
                 <button [disabled]="!btnConfirmchiphi" (click)="Confirm4()" nz-button nzType="primary" class="m-r-8">
                     <i nz-icon nzType="caret-right"></i>
-                    Tính chi phí
+                    Tính chi phí & Xuất PDF
                 </button>
             </span>
             <span *appAuth="ActionCode.Confirm" class="operate-text">

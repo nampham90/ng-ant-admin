@@ -119,7 +119,7 @@ export class AccountComponent implements OnInit {
     this.getDataList();
   }
 
-  // 修改
+  // cập nhật
   edit(id: number): void {
     this.dataService.getAccountDetail(id).subscribe(res => {
       this.modalService.show({ nzTitle: 'Cập nhật' }, res).subscribe(({ modalValue, status }) => {

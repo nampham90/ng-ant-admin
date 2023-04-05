@@ -1,3 +1,4 @@
+import { Nguonxe } from '../core/model/nguonxe.model';
 
 /*配置权限码*/
 export const ActionCode = {
@@ -35,6 +36,11 @@ export const ActionCode = {
   DataScDel: 'default:system:datasc:del',
   DataScDelAll: 'default:system:datasc:del',
 
+  /* quản lý video hướng dẫn*/
+  HuongdanAdd: 'default:system:huongdan:add', 
+  HuongdanallDel: 'default:system:huongdan:allDel', 
+  HuongdanUpdate: 'default:system:huongdan:update', 
+
   /* ActionCode ql Xe*/
   XeAdd: 'default:system:quanlyxe:add',
   XeEdit: 'default:system:quanlyxe:update',
@@ -68,5 +74,35 @@ export const ActionCode = {
   CtcnThantoanmotphan: 'default:khachhang:spkh00201:thanhtoanmotphan',
   CtcnThanhtoan: 'default:khachhang:spkh00201:thanhtoan',
   CtcnDuyetThanhtoan: 'default:khachhang:spkh00201:duyetthanhtoan',
+  CtcnXuatPDF: 'default:khachhang:spkh00201:xuatpdf',
+
+  // nguon xe
+  Nguonxeadd: 'default:system:quanlynguonxe:add',
+  Nguonxedel: 'default:system:quanlynguonxe:del',
+  Nguonxeupdate: 'default:system:quanlynguonxe:update',
+
+  // chuyến ngoài
+  ChuyenngoaiAdd: 'default:chuyen:spch00251:add',
+  ChuyenngoaiEdit: 'default:chuyen:spch00251:update',
+  ChuyenngoaiDel: 'default:chuyen:spch00251:del',
+  ConfirmChuyenngoai: 'default:chuyen:spch00251:confirm',
+
+  // tim kiem chuyen ngoai
+  TimkiemchuyenngoaiAdd : 'default:chuyen:spch00252:add',
+  TimkiemchuyenngoaiDelete : 'default:chuyen:spch00252:delete',
+  TimkiemchuyenngoaiUpdate : 'default:chuyen:spch00252:update',
+  TimkiemchuyenngoaiExportPdf : 'default:chuyen:spch00252:exportpdf',
+  // thu hồi biên lai
+  Thohoibienlai: 'default:chuyen:spch00253:thuhoibienlai',
+
+  // công nợ chuyến ngaoif
+  Thanhtoan: 'default:chuyen:spch00254:thanhtoan',
+  Xuatpdf: 'default:chuyen:spch00254:xuatpdf',
+
+  // thanh toan chuyen ngoai
+  Thanhtoanchuyenngoai : 'default:chuyen:spch00255:thanhtoan',
+  Xuatpdfchuyenngoai : 'default:chuyen:spch00255:xuatpdf',
+
+  // 
 
 };

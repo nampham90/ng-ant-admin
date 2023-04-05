@@ -7,13 +7,26 @@ export enum UrlDisplayId {
     Monitor = "/default/dashboard/monitor",
     Workbench = "/default/dashboard/workbench",
     spxe00101 = 'xe/spxe00101',
-    //chuyen
+
+    huongdan = 'system/huongdan',
+   //chuyen
     spch00101 = 'chuyen/spch00101', // quản lý chuyến
     spch00201 = 'chuyen/spch00201', // kế hoạch bọc hàng
+    spch00251 = 'chuyen/spch00251', // đăng ký chuyến ngoài
+    spch00252 = 'chuyen/spch00252', // tìm kiếm chuyến ngoài
+    spch00253 = 'chuyen/spch00253', // thu hồi biên lai
+    spch00254 = 'chuyen/spch00254', // Công nợ xe ngoài
+    spch00255 = 'chuyen/spch00255', // Thanh toán xe ngoài
 
     // khach hang
     spkh00101 = 'khachhang/spkh00101', //quản lý công nợ
     spkh00201 = 'khachhang/spkh00201', // chi tiêt công nợ
+    spkh00301 = 'khachhang/spkh00301', // tìm kiêm số ODC
+
+    // mobi
+    mbtx00101= 'mobile/mbtx00101',
+    mbtx00201= 'mobile/mbtx00201',
+    mbtx00301= 'mobile/mbtx00301',
     
 
     

@@ -6,7 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { DestroyService } from '@core/services/common/destory.service';
 import { SplitNavStoreService } from '@store/common-store/split-nav-store.service';
 import { SettingInterface, ThemeService } from '@store/common-store/theme.service';
-
+import { SocketService } from '@app/core/services/common/socket.service';
 @Component({
   selector: 'app-def-layout-content',
   templateUrl: './def-layout-content.component.html',
@@ -16,6 +16,7 @@ import { SettingInterface, ThemeService } from '@store/common-store/theme.servic
 })
 export class DefLayoutContentComponent implements OnInit {
   showChats = true;
+  lstChat: any[] = [];
   isNightTheme$ = this.themesService.getIsNightTheme();
   themesOptions$ = this.themesService.getThemesMode();
   isMixiMode = false;
@@ -44,7 +45,8 @@ export class DefLayoutContentComponent implements OnInit {
   constructor(
     private destroy$: DestroyService,
     private themesService: ThemeService,
-    private splitNavStoreService: SplitNavStoreService
+    private splitNavStoreService: SplitNavStoreService,
+    private socketService: SocketService
   ) {}
 
   changeCollapsed(isCollapsed: boolean): void {
@@ -67,5 +69,10 @@ export class DefLayoutContentComponent implements OnInit {
 
   ngOnInit(): void {
     this.getThemeOptions();
+    this.socketService.on('admin-register-chat',(data:any)=> {
+       console.log(data);
+       this.lstChat = data;
+    })
+
   }
 }

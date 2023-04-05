@@ -1,0 +1,6 @@
+<app-card-table-wrap [tableTitle]="'Danh Sách khách hàng'" (reload)="reloadTable()">
+    <app-ant-table [tableConfig]="tableConfig" (changePageSize)="changePageSize($event)" (changePageNum)="getDataList($event)" [tableData]="dataList"></app-ant-table>
+    <ng-template #operationTpl let-id="id" let-name="name">
+        <a nz-button nzType="link"  (click)="getItem(id,name)">{{name}}</a>
+    </ng-template>
+</app-card-table-wrap>
