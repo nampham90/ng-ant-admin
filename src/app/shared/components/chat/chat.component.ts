@@ -1,9 +1,12 @@
 /* eslint-disable prettier/prettier */
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef, OnDestroy, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { LoginInOutService } from '@app/core/services/common/login-in-out.service';
 import { SocketService } from '@app/core/services/common/socket.service';
-
+import { UserInfoService } from '@app/core/services/store/common-store/userInfo.service';
 import { fnGetRandomNum } from '@app/utils/tools';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-chat',
@@ -18,6 +21,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   messageArray: Array<{ msg: string; dir: 'left' | 'right'; isReaded: boolean }> = [];
   isSending = false;
   show = false;
+  userDetail: any;
+  countemitregister = 0;
   randomReport: string[] = [
     'Tôi xin lỗi vì tôi không có ở đây bây giờ, tôi không muốn nói chuyện với bạn trong một giây',
     'Xin chào, gửi một phong bì màu đỏ nhân dân tệ để tự động mở khóa chế độ trò chuyện',
@@ -90,7 +95,14 @@ export class ChatComponent implements OnInit, OnDestroy {
     'Đang rút lui'
   ];
 
-  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef, private socketService: SocketService) {}
+  constructor(
+    private fb: FormBuilder, 
+    private cdr: ChangeDetectorRef, 
+    private userInfoService: UserInfoService,
+    private inoutService: LoginInOutService,
+    private modalSrv: NzModalService,
+    public messageShow: NzMessageService,
+    private socketService: SocketService) {}
 
   socket: any;
   message: string = "";
@@ -150,10 +162,33 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.userInfoService.getUserInfo().subscribe(res => {
+      this.userDetail = {
+        userId: res.userId,
+        username: res.username,
+        email: res.email
+      };
+      //sau khi đang nhập thành công ngươi dung đăng ký vào chat
+      if(this.countemitregister == 0) {
+        this.socketService.emit('client-register-chat', this.userDetail);
+        this.countemitregister++;
+      }
+      
+    });
+    // người dùng lăng nghe message từ sever
     this.socketService.on('server-send-data', (msg: string) => {
       this.messages.push(msg);
       console.log(this.messages);
     })
+    // người dùng đang online. đăng nhập thêm tài khoản khác. thì sẽ bị logout 
+    this.socketService.on('client-register-chat',()=> {
+       console.log(this.modalSrv);
+       this.messageShow.info("Tài khoản này được đăng nhập bởi người khác !")
+      // this.modalSrv.info({nzTitle:"Tài khoản này được đăng nhập bởi người khác !"})
+       this.inoutService.loginOut();
+      // this.countemitregister = 0;
+    })
+
     this.validateForm = this.fb.group({
       question: [null]
     });
