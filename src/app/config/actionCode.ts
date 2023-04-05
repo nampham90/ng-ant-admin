@@ -1,4 +1,3 @@
-import { Nguonxe } from '../core/model/nguonxe.model';
 
 /*配置权限码*/
 export const ActionCode = {
@@ -41,68 +40,6 @@ export const ActionCode = {
   HuongdanallDel: 'default:system:huongdan:allDel', 
   HuongdanUpdate: 'default:system:huongdan:update', 
 
-  /* ActionCode ql Xe*/
-  XeAdd: 'default:system:quanlyxe:add',
-  XeEdit: 'default:system:quanlyxe:update',
-  XeDel: 'default:system:quanlyxe:del',
 
-   /* Actioncode ql Chuyen*/
-  ChuyenAdd: 'default:chuyen:spch00101:add',
-  ChuyenEdit: 'default:chuyen:spch00101:edit',
-  ChuyenDel: 'default:chuyen:spch00101:del',
-  ChuyenConfirmbochang: 'default:chuyen:spch00101:cbochang',
-  ChuyenConfirmtrahang: 'default:chuyen:spch00101:ctrahang',
-  ChuyenConfirmchiphi: 'default:chuyen:spch00101:cchiphi',
-  ChuyenConfirmend: 'default:chuyen:spch00101:cend',
-
-  // kê hoạch bọc hang
-  AddProduct: 'default:chuyen:spch00201:add',
-  DelAllProduct: 'default:chuyen:spch00201:delall',
-  DelProduct: 'default:chuyen:spch00201:del',
-  EditProduct: 'default:chuyen:spch00201:edit',
-  SaveProduct: 'default:chuyen:spch00201:save',
-  Confirm: 'default:chuyen:spch00201:confirm',
-  Confirmbochang: 'default:chuyen:spch00201:cbochang',
-  Confirmtrahang: 'default:chuyen:spch00201:ctrahang',
-
-  // công nợ
-  KhachhangEdit: 'default:khachhang:spkh00101:edit',
-  KhachhangTattoan: 'default:khachhang:spkh00101:tattoan',
-
-  // chi tiết công nợ
-  CtcnTattoan: 'default:khachhang:spkh00201:tattoan',
-  CtcnThantoanmotphan: 'default:khachhang:spkh00201:thanhtoanmotphan',
-  CtcnThanhtoan: 'default:khachhang:spkh00201:thanhtoan',
-  CtcnDuyetThanhtoan: 'default:khachhang:spkh00201:duyetthanhtoan',
-  CtcnXuatPDF: 'default:khachhang:spkh00201:xuatpdf',
-
-  // nguon xe
-  Nguonxeadd: 'default:system:quanlynguonxe:add',
-  Nguonxedel: 'default:system:quanlynguonxe:del',
-  Nguonxeupdate: 'default:system:quanlynguonxe:update',
-
-  // chuyến ngoài
-  ChuyenngoaiAdd: 'default:chuyen:spch00251:add',
-  ChuyenngoaiEdit: 'default:chuyen:spch00251:update',
-  ChuyenngoaiDel: 'default:chuyen:spch00251:del',
-  ConfirmChuyenngoai: 'default:chuyen:spch00251:confirm',
-
-  // tim kiem chuyen ngoai
-  TimkiemchuyenngoaiAdd : 'default:chuyen:spch00252:add',
-  TimkiemchuyenngoaiDelete : 'default:chuyen:spch00252:delete',
-  TimkiemchuyenngoaiUpdate : 'default:chuyen:spch00252:update',
-  TimkiemchuyenngoaiExportPdf : 'default:chuyen:spch00252:exportpdf',
-  // thu hồi biên lai
-  Thohoibienlai: 'default:chuyen:spch00253:thuhoibienlai',
-
-  // công nợ chuyến ngaoif
-  Thanhtoan: 'default:chuyen:spch00254:thanhtoan',
-  Xuatpdf: 'default:chuyen:spch00254:xuatpdf',
-
-  // thanh toan chuyen ngoai
-  Thanhtoanchuyenngoai : 'default:chuyen:spch00255:thanhtoan',
-  Xuatpdfchuyenngoai : 'default:chuyen:spch00255:xuatpdf',
-
-  // 
 
 };

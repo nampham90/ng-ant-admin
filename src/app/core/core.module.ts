@@ -9,13 +9,11 @@ import { NZ_I18N, vi_VN } from 'ng-zorro-antd/i18n';
 
 import { SimpleReuseStrategy } from './services/common/reuse-strategy';
 import { StoreModule } from '@ngrx/store';
-import { xeReducer } from './store/xe/xe.reducer';
 
 registerLocaleData(vi);
 
 @NgModule({
   imports: [
-    StoreModule.forFeature('feature_xe', xeReducer)
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy, deps: [DOCUMENT, ScrollService] },

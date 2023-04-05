@@ -135,7 +135,10 @@ export class MenuComponent implements OnInit {
       nzOnOk: () => {
         this.tableLoading(true);
         this.dataService.delMenus(id).subscribe(
-          () => {
+          (res) => {
+            if(res == 1) {
+              this.message.success("Xóa thành công !");
+            }
             if (this.dataList.length === 1) {
               this.tableConfig.pageIndex--;
             }

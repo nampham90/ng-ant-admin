@@ -7,8 +7,6 @@ const routes: Routes = [
   { path: 'dept', loadChildren: () => import('./dept/dept.module').then(m => m.DeptModule) },
   { path: 'role-manager', loadChildren: () => import('./role-manager/role-manage.module').then(m => m.RoleManageModule) },
   { path: 'datasc', loadChildren: () => import('./datasc/datasc.module').then(m => m.DatascModule)},
-  { path: 'quanlyxe', loadChildren: () => import('./xe/xe.module').then(m => m.XeModule)},
-  { path: 'quanlynguonxe', loadChildren: () => import('./nguonxe/nguonxe.module').then(m => m.NguonxeModule)},
   { path: 'huongdan', loadChildren: () => import('./huongdan/huongdan.module').then(m => m.HuongdanModule)},
   { path: '', redirectTo: 'dept', pathMatch: 'full' }
 ];

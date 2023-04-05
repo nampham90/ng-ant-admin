@@ -22,32 +22,12 @@ const routes: Routes = [
         loadChildren: () => import('../../pages/page-demo/page-demo.module').then(m => m.PageDemoModule)
       },
       {
-        path: 'feat',
-        loadChildren: () => import('../../pages/feat/feat.module').then(m => m.FeatModule)
-      },
-      {
-        path: 'comp',
-        loadChildren: () => import('../../pages/comp/comp.module').then(m => m.CompModule)
-      },
-      {
-        path: 'level',
-        loadChildren: () => import('../../pages/level/level.module').then(m => m.LevelModule)
-      },
-      {
         path: 'about',
         loadChildren: () => import('../../pages/about/about.module').then(m => m.AboutModule)
       },
       {
         path: 'system',
         loadChildren: () => import('../../pages/system/system.module').then(m => m.SystemModule)
-      },
-      {
-        path: 'chuyen',
-        loadChildren: () => import('../../pages/chuyen/chuyen.module').then(m => m.ChuyenModule)
-      },
-      {
-        path: 'khachhang',
-        loadChildren: () => import('../../pages/khachhang/khachhang.module').then(m => m.KhachhangModule)
       },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]

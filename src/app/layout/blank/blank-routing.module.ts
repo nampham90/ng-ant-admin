@@ -12,10 +12,6 @@ const routes: Routes = [
     data: { key: 'blank', shouldDetach: 'no' },
     children: [
       {
-        path: 'empty-page',
-        loadChildren: () => import('../../pages/empty/empty.module').then(m => m.EmptyModule)
-      },
-      {
         canDeactivate: [LockLeaveGuard],
         path: 'empty-for-lock',
         loadChildren: () =>
@@ -23,7 +19,7 @@ const routes: Routes = [
       },
       {
         path: 'other-login',
-        loadChildren: () => import('../../pages/other-login/other-login.module').then(m => m.OtherLoginModule)
+        loadChildren: () => import('@app/pages/other-login/other-login.module').then(m => m.OtherLoginModule)
       }
     ]
   }

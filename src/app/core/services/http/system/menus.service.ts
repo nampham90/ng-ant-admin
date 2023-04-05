@@ -41,7 +41,7 @@ export class MenusService {
     return this.http.put(Const.Ant100EditMenu, param, { needSuccessInfo: true });
   }
 
-  public delMenus(id: any): Observable<void> {
+  public delMenus(id: any): Observable<any> {
     return this.http.post(Const.Ant100DelMenu, { ids: [id] }, { needSuccessInfo: true });
   }
 
