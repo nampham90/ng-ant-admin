@@ -24,35 +24,37 @@
             </div>
         </form>
     </nz-card>
-    <app-card-table-wrap [tableTitle]="formItemNm[7]" (reload)="reloadTable()" [btnTpl]="tableBtns">
-        <app-ant-table
-          (selectedChange)="selectedChecked($event)"
-          [checkedCashArrayFromComment]="checkedCashArray"
-          (changePageSize)="changePageSize($event)"
-          (changePageNum)="getDataList($event)"
-          [tableConfig]="tableConfig"
-          [tableData]="dataList"
-        ></app-ant-table>
-        <ng-template #operationTpl let-id="id" let-sotienno="sotienno">
-            <span *appAuth="ActionCode.HuongdanUpdate" class="operate-text">
-                <button nz-button nzType="primary" nzGhost (click)="edit(id)">{{formItemNm[10]}}</button>
-            </span>
+    <ng-container *ngIf="tableConfig">
+        <app-card-table-wrap [tableTitle]="formItemNm[7]" (reload)="reloadTable()" [btnTpl]="tableBtns">
+            <app-ant-table
+              (selectedChange)="selectedChecked($event)"
+              [checkedCashArrayFromComment]="checkedCashArray"
+              (changePageSize)="changePageSize($event)"
+              (changePageNum)="getDataList($event)"
+              [tableConfig]="tableConfig"
+              [tableData]="dataList"
+            ></app-ant-table>
+            <ng-template #operationTpl let-id="id" let-sotienno="sotienno">
+                <span *appAuth="ActionCode.HuongdanUpdate" class="operate-text">
+                    <button nz-button nzType="primary" nzGhost (click)="edit(id)">{{formItemNm[10]}}</button>
+                </span>
+            </ng-template>
+            <ng-template #linkidTpl let-id="id" let-sotienno="sotienno" let-name="name" let-diachi="diachi" let-dienthoai="dienthoai">
+                <!-- <a nz-button nzType="link"  (click)="getItem(id,sotienno,name,diachi,dienthoai)"><span>{{id}}</span></a> -->
+            </ng-template>
+            <ng-template #sotienno let-sotienno="sotienno">
+                <!-- <span>{{sotienno*1000 | currency : "VND" : ""}}</span> -->
+            </ng-template>
+        </app-card-table-wrap>
+        <ng-template #tableBtns>
+            <button *appAuth="ActionCode.HuongdanAdd" (click)="add()" nz-button nzType="primary" class="m-r-8">
+              <i nz-icon nzType="plus"></i>
+              {{formItemNm[8]}}
+            </button>
+            <button *appAuth="ActionCode.HuongdanallDel" (click)="allDel()" nz-button nzType="default">
+              <i nz-icon nzType="delete"></i>
+              {{formItemNm[9]}}
+            </button>
         </ng-template>
-        <ng-template #linkidTpl let-id="id" let-sotienno="sotienno" let-name="name" let-diachi="diachi" let-dienthoai="dienthoai">
-            <!-- <a nz-button nzType="link"  (click)="getItem(id,sotienno,name,diachi,dienthoai)"><span>{{id}}</span></a> -->
-        </ng-template>
-        <ng-template #sotienno let-sotienno="sotienno">
-            <!-- <span>{{sotienno*1000 | currency : "VND" : ""}}</span> -->
-        </ng-template>
-    </app-card-table-wrap>
-    <ng-template #tableBtns>
-        <button *appAuth="ActionCode.HuongdanAdd" (click)="add()" nz-button nzType="primary" class="m-r-8">
-          <i nz-icon nzType="plus"></i>
-          {{formItemNm[8]}}
-        </button>
-        <button *appAuth="ActionCode.HuongdanallDel" (click)="allDel()" nz-button nzType="default">
-          <i nz-icon nzType="delete"></i>
-          {{formItemNm[9]}}
-        </button>
-    </ng-template>
+    </ng-container>
 </div>
