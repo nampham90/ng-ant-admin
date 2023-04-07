@@ -3,12 +3,16 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-
+import { TokenKey, TokenPre } from '@config/constant';
 import { environment } from '@env/environment';
 import { localUrl } from '@env/environment.prod';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import * as qs from 'qs';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { LoginInOutService } from '../common/login-in-out.service';
+import { WindowService } from '../common/window.service';
+import { Router } from '@angular/router';
 
 export interface MyHttpConfig {
   needIntercept?: boolean; // 是否需要被拦截
@@ -38,7 +42,12 @@ export class BaseHttpService {
   //uri = "http://117.2.188.141:3000/";
   uri = "http://localhost:3000/";
 
-  protected constructor(public http: HttpClient, public message: NzMessageService) {
+  protected constructor(
+    public http: HttpClient, 
+    public message: NzMessageService,
+    private modalSrv: NzModalService,
+    private router: Router,
+    private windowServe: WindowService) {
     this.uri = environment.production ? localUrl : '/site/api/';
   }
 
@@ -139,7 +148,15 @@ export class BaseHttpService {
 
   handleFilter(item: ActionResult<NzSafeAny>, needSuccessInfo: boolean): boolean {
     if (item.code !== 0) {
-      this.message.error(item.msg);
+      //this.message.error(item.msg);
+      this.modalSrv.error({
+        nzTitle: item.msg,
+        nzContent: item.data,
+        nzOnOk: () => {
+          this.windowServe.removeSessionStorage(TokenKey);
+          this.router.navigate(['/login/login-form']);
+        }
+      })
     } else if (needSuccessInfo) {
       this.message.success('Thực hiện thành công !');
     }
