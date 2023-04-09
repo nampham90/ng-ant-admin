@@ -319,8 +319,8 @@ export class Spch00252Component extends BaseComponent implements OnInit {
           title: 'Hành động',
           tdTemplate: this.operationTpl,
           width: 300,
-          fixed: true,
-          fixedDir: 'right'
+          // fixed: true,
+          // fixedDir: 'right'
         }
       ],
       total: 0,
