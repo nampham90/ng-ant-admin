@@ -23,6 +23,9 @@ export const System = 'system';
 export const Notifi = 'notifi';
 export const Vison = 'vison';
 
+// rcdkbn
+export const lstkho = '0001' // danh sách mã kho có rcdkbn = '0001'
+
 export const listTrangthaichuyen = [
     { "value": 0, "lable": "Lên kế hoạch bóc hàng"},
     { "value": 1, "lable": "Hoàn thành bóc hàng"},
@@ -227,6 +230,13 @@ export const DonhangexportxengoaiAnt100Create = 'donhangexportxengoai/donhangexp
 export const DonhangexportxengoaiAnt100FindAll = 'donhangexportxengoai/donhangexportxengoaiAnt100FindAll';
 export const DonhangexportxengoaiAnt100Detail ='donhangexportxengoai/donhangexportxengoaiAnt100Detail';
 export const DonhangexportxengoaiAnt100UpdateStatus ='donhangexportxengoai/donhangexportxengoaiAnt100UpdateStatus';
+
+// quản lý kho
+export const Spin00901Ant100Search = 'spin00901/spin00901Ant100Search';
+export const Spin00901Ant100Add = 'spin00901/spin00901Ant100Add';
+export const Spin00901Ant100Update = 'spin00901/spin00901Ant100Update';
+export const Spin00901Ant100Del = 'spin00901/spin00901Ant100Del';
+export const Spin00901Ant100Alldel = 'spin00901/spin00901Ant100Alldel';
 
 
 
