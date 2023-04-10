@@ -27,6 +27,13 @@ export enum UrlDisplayId {
     mbtx00101= 'mobile/mbtx00101',
     mbtx00201= 'mobile/mbtx00201',
     mbtx00301= 'mobile/mbtx00301',
+
+    // trong kho
+    spin00301 = 'spin00301',
+    spin00251 = 'spin00251',
+    spin00601 = 'spin00601',
+    spin00801 = 'spin00801',
+    spin00901 = 'spin00901',
     
 
     
