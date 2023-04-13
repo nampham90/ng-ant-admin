@@ -12,7 +12,7 @@
                     <nz-form-item>
                         <nz-form-label [nzFor]="">{{formItemNm[5]}}</nz-form-label>
                         <nz-form-control>
-                          <input nz-input name="rcdkbn" [(ngModel)]="searchParam.datacd" placeholder="search mã kho"/>
+                          <input nz-input name="datacd" [(ngModel)]="searchParam.datacd" placeholder="search mã kho"/>
                         </nz-form-control>
                     </nz-form-item>
                 </div>
@@ -26,7 +26,7 @@
     </nz-card>
     <ng-container *ngIf="tableConfig">
         <app-card-table-wrap [tableTitle]="formItemNm[8]" (reload)="reloadTable()" [btnTpl]="tableBtns">
-            <app-ant-table
+            <app-ant-table 
             (selectedChange)="selectedChecked($event)"
             [checkedCashArrayFromComment]="checkedCashArray"
             (changePageSize)="changePageSize($event)"
@@ -34,15 +34,6 @@
             [tableConfig]="tableConfig"
             [tableData]="dataList"
           ></app-ant-table>
-          <ng-template #operationTpl let-id="id">
-            <span *appAuth="ActionCode.QuanlykhoUpdate" class="operate-text">
-                <button nz-button nzType="primary" nzGhost (click)="edit(id)">{{formItemNm[10]}}</button>
-            </span>
-            <span *appAuth="ActionCode.QuanlykhoDel" class="operate-text">
-                <button nz-button nzType="primary" nzGhost (click)="del(id)">{{formItemNm[10]}}</button>
-            </span>
-
-          </ng-template>
         </app-card-table-wrap>
         <ng-template #tableBtns>
             <button *appAuth="ActionCode.QuanlykhoAdd" (click)="add()" nz-button nzType="primary" class="m-r-8">
@@ -55,4 +46,14 @@
             </button>
         </ng-template>
     </ng-container>
+    <ng-template #operationTpl let-id="id">
+        <span *appAuth="ActionCode.QuanlykhoUpdate" class="operate-text">
+            <!--  -->
+            <button nz-button nzType="primary" nzGhost (click)="edit(id)">{{formItemNm[14]}}</button>
+        </span>
+        <span *appAuth="ActionCode.QuanlykhoDel" class="operate-text">
+            <!--  -->
+            <button nz-button nzType="primary" nzGhost (click)="del(id)">{{formItemNm[15]}}</button>
+        </span>
+      </ng-template>
 </div>

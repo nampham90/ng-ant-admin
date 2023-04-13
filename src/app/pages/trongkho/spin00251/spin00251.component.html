@@ -1,1 +1,6 @@
-<p>spin00251 works!</p>
+<app-page-header [pageHeaderInfo]="pageHeaderInfo" [extraTpl]="huongdanTpl"></app-page-header>
+<ng-template #huongdanTpl>
+  <button nz-button nzType="primary" [nzSize]="'large'" nzShape="round" (click)="showVideo()">
+      <span nz-icon nzType="star" nzTheme="outline"></span>{{formItemNm[4]}}
+  </button>
+</ng-template>

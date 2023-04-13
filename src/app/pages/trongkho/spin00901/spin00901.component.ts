@@ -14,6 +14,12 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { Spin00901Service } from '@app/core/services/http/trongkho/spin00901.service';
+import { SearchCommonVO } from '@app/core/services/types';
+import { finalize } from 'rxjs';
+import { Spin00901subService } from '@app/widget/modal/trongkho/spin00901sub/spin00901sub.service';
+import { ModalBtnStatus } from '@app/widget/base-modal';
+import { Spin00901Model } from '@app/core/model/trongkho/spin00901.model'
 
 interface SearchParam {
   datacd: string;
@@ -62,36 +68,130 @@ export class Spin00901Component extends BaseComponent implements OnInit {
     protected override modalVideoyoutube: VideoyoutubeService,
     public message: NzMessageService,
     private modalSrv: NzModalService,
+    private dataService: Spin00901Service,
+    private spin00901subSevice: Spin00901subService
   ) { 
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }
 
   add() {
-
+    this.spin00901subSevice.show({nzTitle: "Thêm mơi"}).subscribe(
+      res => {
+        if (!res || res.status === ModalBtnStatus.Cancel) {
+          return;
+        }
+        this.addEditData(res.modalValue,"create");
+      }
+    )
   }
 
   edit(id:any) {
-
-  }
-  
-  del(id:any) {
+    this.dataService.Detail({id:id})
+    .pipe()
+    .subscribe(res => {
+      this.spin00901subSevice.show({nzTitle: "Cập nhật"},res).subscribe(({ modalValue, status })=> {
+        if (status === ModalBtnStatus.Cancel) {
+          return;
+        }
+        modalValue.id = id;
+        this.addEditData(modalValue, 'update');
+      })
+    })
     
   }
 
-  allDel() {
+  addEditData(param: Spin00901Model, methodName: 'update' | 'create'): void {
+    this.dataService[methodName](param)
+    .pipe(
+      finalize(() => {
+        this.tableLoading(false);
+      })
+    )
+    .subscribe(() => {
+      this.getDataList();
+    }); 
+  }
+  
+  del(id:any) {
+    this.modalSrv.confirm(
+      {
+        nzTitle: "Bạn có chắc chắn muốn xóa không !",
+        nzContent: "Sau khi xóa dử liệu không thể khôi phục.",
+        nzOnOk: () => {
+          this.dataService.delete({id:id}).pipe()
+          .subscribe(res => {
+            if(res['deletedCount'] == 1) {
+              if (this.dataList.length === 1) {
+                this.tableConfig.pageIndex--;
+              }
+              this.getDataList();
+              this.resetForm();
+            } else {
+              this.message.info("Thực hiện không thành công !");
+            }
+          })
+        }
+    })
+  }
 
+  allDel() {
+    if(this.dataList.length > 0) {
+      this.modalSrv.confirm(
+        {
+          nzTitle: "Bạn có chắc chắn muốn xóa không !",
+          nzContent: "Sau khi xóa dử liệu không thể khôi phục.",
+          nzOnOk: () => {
+            this.dataService.deleteAll({id:this.fngetListId()}).pipe()
+            .subscribe(res => {
+              this.getDataList();
+              this.resetForm();
+            })
+          }
+      })
+    } else {
+      this.modalSrv.info({nzTitle: "Không có dư liệu"});
+    }
+
+  }
+
+  fngetListId() {
+    let listId: any[] = [];
+    for(let element of this.dataList) {
+      listId.push(element['id']);
+    }
+    return listId;
   }
 
   getDataList(e?: NzTableQueryParams) {
+    this.tableLoading(true);
+    const params: SearchCommonVO<any> = {
+      pageSize: this.tableConfig.pageSize!,
+      pageNum: e?.pageIndex || this.tableConfig.pageIndex!,
+      filters: this.searchParam
+    };
 
+    this.dataService.searchParams(params)
+    .pipe(
+      finalize(() => {
+        this.tableLoading(false);
+      })
+    )
+    .subscribe(data => {
+      const { list, total, pageNum } = data;
+      this.dataList = [...list];
+      this.tableConfig.total = total!;
+      this.tableConfig.pageIndex = pageNum!;
+      this.tableLoading(false);
+    })
   }
 
   resetForm() {
-
+    this.searchParam = {}
   }
 
   reloadTable() {
-
+    this.message.info('Đã được làm mới');
+    this.getDataList();
   }
 
   tableChangeDectction(): void {

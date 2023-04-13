@@ -107,6 +107,6 @@ export const ActionCode = {
   QuanlykhoUpdate: 'default:trongkho:spin00901:update',
   QuanlykhoAdd: 'default:trongkho:spin00901:add',
   QuanlykhoDel: 'default:trongkho:spin00901:del',
-  QuanlykhoallDel: 'default:trongkho:spin00901:allDel',
+  QuanlykhoallDel: 'default:trongkho:spin00901:delall',
 
 };

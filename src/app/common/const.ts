@@ -233,6 +233,7 @@ export const DonhangexportxengoaiAnt100UpdateStatus ='donhangexportxengoai/donha
 
 // quản lý kho
 export const Spin00901Ant100Search = 'spin00901/spin00901Ant100Search';
+export const Spin00901Ant100Detail = 'spin00901/spin00901Ant100Detail';
 export const Spin00901Ant100Add = 'spin00901/spin00901Ant100Add';
 export const Spin00901Ant100Update = 'spin00901/spin00901Ant100Update';
 export const Spin00901Ant100Del = 'spin00901/spin00901Ant100Del';

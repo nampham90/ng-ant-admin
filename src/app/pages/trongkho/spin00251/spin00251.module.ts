@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { Spin00251RoutingModule } from './spin00251-routing.module';
 import { Spin00251Component } from './spin00251.component';
+import { SharedModule } from '@app/shared/shared.module';
 
 
 @NgModule({
@@ -10,7 +11,7 @@ import { Spin00251Component } from './spin00251.component';
     Spin00251Component
   ],
   imports: [
-    CommonModule,
+    SharedModule,
     Spin00251RoutingModule
   ]
 })
