@@ -106,7 +106,7 @@ export class SubwindowsearchnguonxeComponent implements OnInit {
         {
           title: 'ID nguồn xe',
           field: 'datacd',
-          width: 150,
+          width: 250,
           tdTemplate: this.operationTpl
         },
         {

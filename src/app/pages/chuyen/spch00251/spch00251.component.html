@@ -121,7 +121,7 @@
         <ng-template #combineTpl let-control>
             <ng-container *ngIf="control.hasError('message')">{{ control.errors.message }}</ng-container>
             <ng-container *ngIf="control.hasError('required')">Phần bắt buộc</ng-container>
-          </ng-template>
+        </ng-template>
     </nz-card>
     <app-card-table-wrap [tableTitle]="'Chi tiết đơn hàng'" (reload)="reloadTable()" [btnTpl]="tableBtns" [btnConfirm]="tableConfirm">
         <app-ant-table

@@ -10,22 +10,20 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { SearchCommonVO } from '@app/core/services/types';
-import { DeptService } from '@app/core/services/http/system/dept.service';
-import { finalize } from 'rxjs';
+import * as Const from '@app/common/const'
 import { AccountService, User } from '@app/core/services/http/system/account.service';
 import { ModalBtnStatus } from '@app/widget/base-modal';
-import * as Const from '@app/common/const'
+import { finalize } from 'rxjs';
 
 interface SearchParam {
   phongban_id: string;
 }
-
 @Component({
-  selector: 'app-subwindowtaixe',
-  templateUrl: './subwindowtaixe.component.html',
-  styleUrls: ['./subwindowtaixe.component.less']
+  selector: 'app-spin00251subkhachhang',
+  templateUrl: './spin00251subkhachhang.component.html',
+  styleUrls: ['./spin00251subkhachhang.component.less']
 })
-export class SubwindowtaixeComponent implements OnInit {
+export class Spin00251subkhachhangComponent implements OnInit {
 
   tableConfig!: MyTableConfig;
   dataList: User[] = [];
@@ -33,6 +31,9 @@ export class SubwindowtaixeComponent implements OnInit {
   dataResponse: NzSafeAny = {}
   messageErrors: any = [];
   searchParam: Partial<SearchParam> = {};
+  @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('availableFlag', { static: true }) availableFlag!: TemplateRef<NzSafeAny>;
+
   constructor(
     private fb: FormBuilder,
     private validatorsService: ValidatorsService,
@@ -44,11 +45,8 @@ export class SubwindowtaixeComponent implements OnInit {
     private dataService: AccountService
   ) { }
 
-  @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
-  @ViewChild('availableFlag', { static: true }) availableFlag!: TemplateRef<NzSafeAny>;
-
   ngOnInit(): void {
-    this.searchParam.phongban_id = Const.idTaixe;
+    this.searchParam.phongban_id = Const.idKhachhang;
     this.initTable();
   }
 
@@ -106,7 +104,6 @@ export class SubwindowtaixeComponent implements OnInit {
     }
     this.modalRef.destroy({ status: ModalBtnStatus.Ok, modalValue:this.dataResponse });
   }
-
 
   private initTable(): void {
     this.tableConfig = {

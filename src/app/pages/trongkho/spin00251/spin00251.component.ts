@@ -13,6 +13,15 @@ import { PageHeaderType } from '@app/shared/components/page-header/page-header.c
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Phieunhaphang } from '@app/core/model/phieunhaphang.model';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { ModalBtnStatus } from '@app/widget/base-modal';
+import { Spin00251subService } from '@app/widget/modal/trongkho/spin00251sub/spin00251sub.service';
+import { Spin00251subkhachhangService } from '@app/widget/modal/trongkho/spin00251subkhachhang/spin00251subkhachhang.service';
+import { ThemeSkinService } from '@app/core/services/common/theme-skin.service';
+import { Spin00251Service } from '@app/core/services/http/trongkho/spin00251.service';
+import { Spin00251dtoService } from '@app/core/services/http/trongkho/spin00251dto/spin00251dto.service';
 @Component({
   selector: 'app-spin00251',
   templateUrl: './spin00251.component.html',
@@ -21,6 +30,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 
 
 export class Spin00251Component extends BaseComponent implements OnInit {
+  headerForm!: FormGroup;
   
   pageHeaderInfo: Partial<PageHeaderType> = {
     title: '',
@@ -34,8 +44,31 @@ export class Spin00251Component extends BaseComponent implements OnInit {
   checkedCashArray: any[] = [];
   ActionCode = ActionCode;
 
-  @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
 
+
+  @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('tiencuocTpl', { static: true }) tiencuocTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('noidungdonhangTpl', { static: true }) noidungdonhangTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('ghichuTpl', { static: true }) ghichuTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('soluongTpl', { static: true }) soluongTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('donvitinhTpl', { static: true }) donvitinhTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('makhoTpl', { static: true }) makhoTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('diadiembochangTpl', { static: true }) diadiembochangTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('sdtnguoinhanTpl', { static: true }) sdtnguoinhanTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('tennguoinhanTpl', { static: true }) tennguoinhanTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('diachinguoinhanTpl', { static: true }) diachinguoinhanTpl!: TemplateRef<NzSafeAny>;
+  showreturnBack = false;
+
+  usernm = "";
+  stockuser = "";
+  showConfirm = false;
+  btnConfirm = true;
+  showbtnCopy = false;
+
+  btnNew = false;
+
+  listdetail: Phieunhaphang[] = [];
+  pnh!: Phieunhaphang;
 
   override fnInit() {
 
@@ -44,10 +77,33 @@ export class Spin00251Component extends BaseComponent implements OnInit {
       breadcrumb: [this.formItemNm[1], this.formItemNm[2],this.formItemNm[3]],
       desc: ''
     };
-   
+    this.initTable();
+
+    if(this.spin00251dtoService.initFlg == false) {
+      let reqheader = {
+        "soID": this.spin00251dtoService.soID,
+        "iduser": this.spin00251dtoService.iduser,
+        "hinhthucthanhtoan": this.spin00251dtoService.hinhthucthanhtoan,
+        "ghichu": this.spin00251dtoService.ghichu
+      }
+      this.headerForm.patchValue(reqheader);
+      this.listdetail = [...this.spin00251dtoService.listsp];
+      let stt = 1;
+      for(let element of this.listdetail) {
+        element.stt = stt;
+        stt++;
+      }
+      this.getDataList();
+      this.showBtnConfirm();
+      this.spin00251dtoService.clear();
+    } else {
+      this.headerForm = this.createForm();
+    }
+
   }
+
   override destroy() {
-   
+    this.spin00251dtoService.clear();
   }
   override DisplayScreenID: UrlDisplayId = UrlDisplayId.spin00251;
 
@@ -60,8 +116,308 @@ export class Spin00251Component extends BaseComponent implements OnInit {
     protected override modalVideoyoutube: VideoyoutubeService,
     public message: NzMessageService,
     private modalSrv: NzModalService,
+    private fb: FormBuilder,
+    private spin00251subService: Spin00251subService,
+    private spin00251subkhachhangService: Spin00251subkhachhangService,
+    private dataService: Spin00251Service,
+    private spin00251dtoService: Spin00251dtoService
   ) { 
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
+  }
+
+  submitForm() {
+
+  }
+
+  createForm() {
+    return this.fb.group({
+      soID : [""],
+      iduser: [null, [Validators.required]],
+      hinhthucthanhtoan: ["1", [Validators.required]],
+      ghichu: [""]
+    })
+  }
+
+  fnFocusOutUser() {
+    if(this.headerForm.value.iduser != this.stockuser) {
+      this.usernm = "";
+    }
+  }
+
+  searchUserClick() {
+    this.spin00251subkhachhangService.show({nzTitle: "Danh sách khách hàng"},{showcomfirm:false}).subscribe(
+      res => {
+        if (!res || res.status === ModalBtnStatus.Cancel) {
+          return;
+        }
+        const param = { ...res.modalValue };
+        this.headerForm.patchValue({
+          iduser: param['id']
+        })
+        this.stockuser = param['id'];
+        this.usernm = param['name'];
+
+      }
+    )
+  }
+
+  fnBtnConfirm() {
+    if(this.spin00251dtoService.initFlg == false) {
+      // update
+      let req = {
+        "spin00251Header": this.headerForm.getRawValue(),
+        "listsp": this.dataList,
+        "mode": "update"
+      }
+      this.dataService.update(req).pipe()
+      .subscribe(res => {
+        console.log(res);
+
+      })
+      
+    } else {
+      // create
+      let req = {
+        "iduser": this.headerForm.value.iduser,
+        "hinhthucthanhtoan": this.headerForm.value.hinhthucthanhtoan,
+        "ghichu": this.headerForm.value.ghichu,
+        "listsp": this.dataList
+      }
+      this.dataService.register(req)
+      .pipe()
+      .subscribe(res => {
+        if(res) {
+          this.headerForm.patchValue({
+            soID: res
+          })
+          this.fnSendService();
+          this.showbtnCopy = true;
+          this.message.success("Đăng ký thành công");
+        } else {
+          this.message.success("Đăng ký thất bại");
+        }
+      })
+    }
+  }
+
+  fnSendService() {
+    this.spin00251dtoService.initFlg = false;
+    this.spin00251dtoService.iduser = this.headerForm.value.iduser;
+    this.spin00251dtoService.usernm = this.usernm;
+    this.spin00251dtoService.soID = this.headerForm.value.soID;
+    this.spin00251dtoService.hinhthucthanhtoan = this.headerForm.value.hinhthucthanhtoan;
+    this.spin00251dtoService.listsp = this.dataList;
+    this.spin00251dtoService.ghichu = this.headerForm.value.ghichu;
+  }
+
+  fnBtnCopy() {
+
+  }
+
+  add() {
+    this.spin00251subService.show({nzTitle: "Thêm mới"}).subscribe(
+      res => {
+        if (!res || res.status === ModalBtnStatus.Cancel){
+          return;
+        }
+        this.tableLoading(true);
+        this.mergeDetail(res.modalValue);
+        this.addListDetail();
+        this.getDataList();
+        this.showBtnConfirm();
+      },
+      error => this.tableLoading(false)
+    )
+
+  }
+
+  showBtnConfirm() {
+    if(this.dataList.length > 0) {
+      this.showConfirm = true;
+    } else {
+      this.showConfirm = false;
+    }
+  }
+
+  addListDetail() {
+    if(this.pnh){
+       this.listdetail = this.listdetail.concat(this.pnh);
+    }
+  }
+
+  mergeDetail(pndetail: any) {
+    let stt: number = 0;
+    let n = this.listdetail.length;
+    if (n == 0) {
+       stt = 1;
+    } else {
+      let sttthn = this.listdetail[n-1].stt;
+      if(sttthn && sttthn > 0) {
+        stt = sttthn + 1;
+      }
+    }
+    this.pnh = pndetail;
+    this.pnh.stt = stt;
+    return this.pnh;
+  }
+
+  mergeUpdateList(ctdetail: any) {
+    for(let element of this.listdetail) {
+      if(element.stt == ctdetail.stt) {
+        element.noidungdonhang = ctdetail['noidungdonhang'];
+        element.tiencuoc = ctdetail['tiencuoc'];
+        element.soluong = ctdetail['soluong'];
+        element.donvitinh = ctdetail['donvitinh'];
+        element.makho = ctdetail['makho'];
+        element.diadiembochang = ctdetail['diadiembochang'];
+        element.sdtnguoinhan = ctdetail['sdtnguoinhan'];
+        element.tennguoinhan = ctdetail['tennguoinhan'];
+        element.diachinguoinhan = ctdetail['diachinguoinhan'];
+        element.ghichu = ctdetail['ghichu'];
+      }
+    }
+  }
+
+  allDel() {
+
+  }
+
+  edit(stt:any) {
+    let res : any;
+    for (let element of this.dataList) {
+      if(element["stt"] === stt) {
+        res = element;
+      }
+    }
+    this.spin00251subService.show({ nzTitle: 'Cập nhật' }, res).subscribe(({ modalValue, status }) => {
+      if (status === ModalBtnStatus.Cancel) {
+        return;
+      }
+      this.tableLoading(true);
+      modalValue.stt = stt;
+      this.mergeUpdateList(modalValue);
+      this.getDataList();
+      this.message.info("Click Confirm để hoàn thành cập nhật ");
+    })
+  }
+
+  del(stt:any) {
+    this.modalSrv.confirm({
+      nzTitle: 'Bạn có chắc chắn muốn xóa nó không?',
+      nzContent: 'Không thể phục hồi sau khi xóa',
+      nzOnOk: () => {
+        this.tableLoading(true);
+        this.listdetail = this.listdetail.filter(item => item['stt'] !== stt);
+        this.dataList = [...this.listdetail];
+        this.showBtnConfirm();
+        this.tableLoading(false);
+      }
+    });
+  }
+
+  reloadTable() {
+
+  }
+
+  getDataList(e?: NzTableQueryParams) {
+    this.tableLoading(true);
+    if (this.listdetail.length > 0) {
+      this.dataList = [...this.listdetail];
+      this.tableLoading(false);
+    } else {
+      this.tableLoading(false);
+    }
+  }
+
+  selectedChecked(e: Phieunhaphang[]): void {
+    this.checkedCashArray = [...e];
+  }
+
+  changePageSize(e: number): void {
+    this.tableConfig.pageSize = e;
+  }
+
+  tableChangeDectction(): void {
+    this.dataList = [...this.dataList];
+    this.cdf.detectChanges();
+  }
+
+  tableLoading(isLoading: boolean): void {
+    this.tableConfig.loading = isLoading;
+    this.tableChangeDectction();
+  }
+
+  private initTable(): void {
+    this.tableConfig = {
+      showCheckbox: false,
+      headers: [
+        {
+          title: 'STT',
+          field: 'stt',
+          width: 80,
+        },
+        {
+          title: 'Nội dung bóc hàng',
+          width: 450,
+          field: 'noidungdonhang',
+          tdTemplate: this.noidungdonhangTpl
+        },
+        {
+          title: 'Tiền cước',
+          width: 100,
+          field: 'tiencuoc',
+          tdTemplate: this.tiencuocTpl
+        },
+        {
+          title: 'Mã kho',
+          width: 150,
+          field: 'makho',
+          tdTemplate: this.makhoTpl
+        },
+        {
+          title: 'Địa điểm bóc hàng',
+          width: 300,
+          field: 'diadiembochang',
+          tdTemplate: this.diadiembochangTpl
+        },
+        {
+          title: 'Tên người nhận',
+          width: 250,
+          field: 'tennguoinhan',
+          tdTemplate: this.tennguoinhanTpl
+        },
+        {
+          title: 'SDT người nhận',
+          width: 150,
+          field: 'sdtnguoinhan',
+          tdTemplate: this.sdtnguoinhanTpl
+        },
+        {
+          title: 'Địa chỉ người nhận',
+          width: 350,
+          field: 'diachinguoinhan',
+          tdTemplate: this.diachinguoinhanTpl
+        },
+        {
+          title: 'Ghi chú',
+          width: 450,
+          field: 'ghichu',
+          tdTemplate: this.ghichuTpl
+        },
+        {
+          title: 'Hành động',
+          tdTemplate: this.operationTpl,
+          width: 200,
+          fixed: true,
+          fixedDir: 'right'
+        }
+      ],
+      total: 0,
+      loading: true,
+      pageSize: 10,
+      pageIndex: 1,
+      yScroll: 400
+    };
   }
 
 }

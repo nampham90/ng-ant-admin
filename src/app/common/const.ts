@@ -26,6 +26,15 @@ export const Vison = 'vison';
 // rcdkbn
 export const lstkho = '0001' // danh sách mã kho có rcdkbn = '0001'
 
+// dơn vi tinh
+export const lstdonvitinh = [
+    { "value": "kg", "lable": "kg"},
+    { "value": 'Kiện', "lable": "Kiện"},
+    { "value": "Tấn", "lable":"Tấn"},
+    { "value": "Khối", "lable":"Khối"},
+    { "value": "Khác", "lable":"Khác"},
+]
+
 export const listTrangthaichuyen = [
     { "value": 0, "lable": "Lên kế hoạch bóc hàng"},
     { "value": 1, "lable": "Hoàn thành bóc hàng"},
@@ -238,6 +247,10 @@ export const Spin00901Ant100Add = 'spin00901/spin00901Ant100Add';
 export const Spin00901Ant100Update = 'spin00901/spin00901Ant100Update';
 export const Spin00901Ant100Del = 'spin00901/spin00901Ant100Del';
 export const Spin00901Ant100Alldel = 'spin00901/spin00901Ant100Alldel';
+
+// spin00251 nhap hang
+export const Spin00251Ant100Register = "spin00251/spin00251Ant100Register";
+export const Spin00251Ant100Update = "spin00251/spin00251Ant100Update";
 
 
 

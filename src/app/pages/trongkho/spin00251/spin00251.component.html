@@ -1,6 +1,152 @@
-<app-page-header [pageHeaderInfo]="pageHeaderInfo" [extraTpl]="huongdanTpl"></app-page-header>
+<app-page-header [backTpl]="backTpl" [pageHeaderInfo]="pageHeaderInfo" [extraTpl]="huongdanTpl"></app-page-header>
 <ng-template #huongdanTpl>
   <button nz-button nzType="primary" [nzSize]="'large'" nzShape="round" (click)="showVideo()">
       <span nz-icon nzType="star" nzTheme="outline"></span>{{formItemNm[4]}}
   </button>
+</ng-template>
+<ng-template #backTpl>
+  <ng-container *ngIf="showreturnBack">
+      <span nz-icon nzType="arrow-left" nzTheme="outline">Quay lại màn hình</span> 
+  </ng-container>
+</ng-template>
+<div class="normal-table-wrap">
+  <nz-card nzHoverable [nzBodyStyle]="{ 'padding-bottom': 0 }" class="m-b-10">
+    <ng-container *ngIf="headerForm">
+      <form nz-form [formGroup]="headerForm"  (ngSubmit)="submitForm()">
+        <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+          <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+            <nz-form-item>
+                <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="">Số ID</nz-form-label>
+                <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                    <input nz-input name="soID" formControlName="soID" placeholder="Số ID" [disabled]="true" readonly />
+                </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+          <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24" class="inputIcon">
+            <nz-form-item>
+                <!-- User -->
+                <nz-form-label  [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" nzRequired>Id Khách Hàng</nz-form-label>
+                <nz-form-control  [nzXXl]="10" [nzXl]="10" [nzLg]="10" [nzMd]="10" [nzSm]="20" [nzXs]="24" [nzErrorTip]="combineTpl">
+                    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButtonTaixe">
+                        <input name="iduser" type="text" nz-input formControlName="iduser" placeholder="" (blur)="fnFocusOutUser()"/>
+                    </nz-input-group>
+                    <ng-template #suffixIconButtonTaixe>
+                        <button nz-button class="bg-icon" (click)="searchUserClick()" [nzType]="'primary'"><span nz-icon nzType="search"></span></button>
+                    </ng-template>
+                    <nz-form-label [nzNoColon]="true" nzFor="" class="fix-inputIcon"><span><u>{{usernm}}</u></span></nz-form-label>
+                </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+            <nz-form-item>
+              <nz-form-label  [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" nzRequired>Hình thức thanh toán</nz-form-label>
+              <nz-form-control  [nzXXl]="10" [nzXl]="10" [nzLg]="10" [nzMd]="10" [nzSm]="20" [nzXs]="24" [nzErrorTip]="combineTpl">
+                <nz-radio-group  name="hinhthucthanhtoan" formControlName="hinhthucthanhtoan">
+                  <label nz-radio nzValue="1">Trực tiếp</label>
+                  <label nz-radio nzValue="2">Ghi nợ</label>
+                  <label nz-radio nzValue="3">Khi nhận hàng</label>
+                </nz-radio-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+          <div nz-col [nzXXl]="24" [nzXl]="24" [nzLg]="24" [nzMd]="24" [nzSm]="24" [nzXs]="24">
+            <nz-form-item>
+                <nz-form-label [nzXXl]="3" [nzXl]="3" [nzLg]="3" [nzMd]="6" [nzSm]="24" [nzXs]="24" [nzFor]="">Ghi chú</nz-form-label>
+                <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                    <textarea nz-input name="ghichu" formControlName="ghichu"  placeholder="Ghi chú"  [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+                </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </form>
+      <ng-template #combineTpl let-control>
+        <ng-container *ngIf="control.hasError('message')">{{ control.errors.message }}</ng-container>
+        <ng-container *ngIf="control.hasError('required')">Phần bắt buộc</ng-container>
+      </ng-template>
+    </ng-container>
+  </nz-card>
+  <ng-container *ngIf="tableConfig">
+    <app-card-table-wrap [tableTitle]="'Danh sách mặt hàng'" (reload)="reloadTable()" [btnTpl]="tableBtns" [btnConfirm]="tableConfirm">
+      <app-ant-table
+      (selectedChange)="selectedChecked($event)"
+      [checkedCashArrayFromComment]="checkedCashArray"
+      (changePageSize)="changePageSize($event)"
+      (changePageNum)="getDataList($event)"
+      [tableConfig]="tableConfig"
+      [tableData]="dataList"
+    ></app-ant-table>
+    </app-card-table-wrap>
+  </ng-container>
+  <ng-template #tableBtns>
+    <button *appAuth="ActionCode.Spin00251Add" (click)="add()" nz-button nzType="primary" class="m-r-8" [disabled]="btnNew">
+      <i nz-icon nzType="plus"></i>
+      Thêm mới
+    </button>
+    <button *appAuth="ActionCode.Spin00251Delall" (click)="allDel()" nz-button nzType="default" [disabled]="true">
+      <i nz-icon nzType="delete"></i>
+      Xóa tất cả
+    </button>
+  </ng-template>
+  <ng-template #tableConfirm>
+    <ng-container *ngIf="showConfirm">
+      <span *appAuth="ActionCode.Spin00251Confirm" class="operate-text">
+        <button [disabled]="!btnConfirm" (click)="fnBtnConfirm()" [disabled]="!headerForm.valid" nz-button nzType="primary" class="m-r-8">
+            <i nz-icon nzType="caret-right"></i>
+            Confirm
+        </button>
+      </span>
+      <span *appAuth="ActionCode.Spin00251Copy" class="operate-text">
+        <ng-container *ngIf="showbtnCopy">
+          <button  (click)="fnBtnCopy()" nz-button nzType="primary" class="m-r-8">
+            <i nz-icon nzType="copy"></i>
+            Sao chép
+          </button>
+        </ng-container>
+      </span>
+    </ng-container>
+  </ng-template>
+</div>
+<ng-template #operationTpl let-id="id" let-stt="stt">
+  <span *appAuth="ActionCode.Spin00251Update" class="operate-text">
+      <!--  -->
+      <button nz-button nzType="primary" nzGhost (click)="edit(stt)">Cập nhật</button>
+  </span>
+  <span *appAuth="ActionCode.Spin00251Del" class="operate-text">
+      <!--  -->
+      <button nz-button nzType="primary" nzGhost (click)="del(stt)">Xóa</button>
+  </span>
+</ng-template>
+<ng-template #tiencuocTpl let-tiencuoc="tiencuoc">
+  <span>{{tiencuoc*1000 | currency : "VND" : ''}}</span>
+</ng-template>
+<ng-template #noidungdonhangTpl let-noidungdonhang="noidungdonhang">
+  <span>{{noidungdonhang}}</span>
+</ng-template>
+<ng-template #donvitinhTpl let-donvitinh="donvitinh">
+  <span>{{donvitinh}}</span>
+</ng-template>
+<ng-template #diadiembochangTpl let-diadiembochang="diadiembochang">
+  <span>{{diadiembochang}}</span>
+</ng-template>
+<ng-template #ghichuTpl let-ghichu="ghichu">
+  <span>{{ghichu}}</span>
+</ng-template>
+<ng-template #soluongTpl let-soluong="soluong">
+  <span>{{soluong}}</span>
+</ng-template>
+<ng-template #makhoTpl let-makho="makho">
+  <span>{{makho}}</span>
+</ng-template>
+<ng-template #sdtnguoinhanTpl let-sdtnguoinhan="sdtnguoinhan">
+  <span>{{sdtnguoinhan}}</span>
+</ng-template>
+<ng-template #tennguoinhanTpl let-tennguoinhan="tennguoinhan">
+  <span>{{tennguoinhan}}</span>
+</ng-template>
+<ng-template #diachinguoinhanTpl let-diachinguoinhan="diachinguoinhan">
+  <span>{{diachinguoinhan}}</span>
 </ng-template>

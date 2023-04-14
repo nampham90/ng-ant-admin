@@ -103,10 +103,18 @@ export const ActionCode = {
   Thanhtoanchuyenngoai : 'default:chuyen:spch00255:thanhtoan',
   Xuatpdfchuyenngoai : 'default:chuyen:spch00255:xuatpdf',
 
-  // quan ly kho
+  // quan ly kho spin00901
   QuanlykhoUpdate: 'default:trongkho:spin00901:update',
   QuanlykhoAdd: 'default:trongkho:spin00901:add',
   QuanlykhoDel: 'default:trongkho:spin00901:del',
   QuanlykhoallDel: 'default:trongkho:spin00901:delall',
+
+  // nhap hang spin00251
+  Spin00251Add: 'default:trongkho:spin00251:add',
+  Spin00251Delall: 'default:trongkho:spin00251:delall',
+  Spin00251Confirm: 'default:trongkho:spin00251:confirm',
+  Spin00251Update: 'default:trongkho:spin00251:update',
+  Spin00251Del: 'default:trongkho:spin00251:del',
+  Spin00251Copy: 'default:trongkho:spin00251:copy',
 
 };

@@ -56,7 +56,6 @@ export class SubwindowctchuyenngoaiComponent implements OnInit {
       this.addEditForm.patchValue(this.params);
       this.tiencuocMode = this.params.tiencuoc;
       this.tiencuocxengoaiMode = this.params.tiencuocxengoai;
-      console.log(this.params);
     }
   }
 
