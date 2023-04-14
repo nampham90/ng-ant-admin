@@ -161,19 +161,11 @@ export class Spin00251Component extends BaseComponent implements OnInit {
     )
   }
 
+
+
   fnBtnConfirm() {
     if(this.spin00251dtoService.initFlg == false) {
       // update
-      let req = {
-        "spin00251Header": this.headerForm.getRawValue(),
-        "listsp": this.dataList,
-        "mode": "update"
-      }
-      this.dataService.update(req).pipe()
-      .subscribe(res => {
-        console.log(res);
-
-      })
       
     } else {
       // create
@@ -187,9 +179,14 @@ export class Spin00251Component extends BaseComponent implements OnInit {
       .pipe()
       .subscribe(res => {
         if(res) {
-          this.headerForm.patchValue({
-            soID: res
-          })
+          this.headerForm.patchValue(res['header']);
+          this.listdetail = [...res['listsp']];
+          let stt = 1;
+          for(let element of this.listdetail) {
+            element.stt = stt;
+            stt++;
+          }
+          this.getDataList();
           this.fnSendService();
           this.showbtnCopy = true;
           this.message.success("Đăng ký thành công");

@@ -20,4 +20,8 @@ export class Spin00251Service {
   update(params:any): Observable<any> {
     return this.http.post(Const.Spin00251Ant100Update, params,{ needSuccessInfo: false});
   }
+
+  getPHN(params:any): Observable<any> {
+    return this.http.post(Const.Spin00251Ant100GetPNH, params,{ needSuccessInfo: false});
+  }
 }

@@ -251,6 +251,7 @@ export const Spin00901Ant100Alldel = 'spin00901/spin00901Ant100Alldel';
 // spin00251 nhap hang
 export const Spin00251Ant100Register = "spin00251/spin00251Ant100Register";
 export const Spin00251Ant100Update = "spin00251/spin00251Ant100Update";
+export const Spin00251Ant100GetPNH= "spin00251/spin00251Ant100GetPNH";
 
 
 
