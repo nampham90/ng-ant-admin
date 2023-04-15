@@ -1,5 +1,6 @@
 export interface Phieunhaphang {
     id?: string;
+    soID?: string;
     stt?: number;
     idchuyen?: string | null;
     makh?: string;

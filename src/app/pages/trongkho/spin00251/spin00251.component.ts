@@ -19,9 +19,10 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ModalBtnStatus } from '@app/widget/base-modal';
 import { Spin00251subService } from '@app/widget/modal/trongkho/spin00251sub/spin00251sub.service';
 import { Spin00251subkhachhangService } from '@app/widget/modal/trongkho/spin00251subkhachhang/spin00251subkhachhang.service';
-import { ThemeSkinService } from '@app/core/services/common/theme-skin.service';
 import { Spin00251Service } from '@app/core/services/http/trongkho/spin00251.service';
 import { Spin00251dtoService } from '@app/core/services/http/trongkho/spin00251dto/spin00251dto.service';
+import _ from "lodash"
+
 @Component({
   selector: 'app-spin00251',
   templateUrl: './spin00251.component.html',
@@ -41,6 +42,7 @@ export class Spin00251Component extends BaseComponent implements OnInit {
   dateFormat = Const.dateFormat;
   tableConfig!: MyTableConfig;
   dataList: any[] = [];
+  backupdatalst: Phieunhaphang[] = [];
   checkedCashArray: any[] = [];
   ActionCode = ActionCode;
 
@@ -88,18 +90,53 @@ export class Spin00251Component extends BaseComponent implements OnInit {
       }
       this.headerForm.patchValue(reqheader);
       this.listdetail = [...this.spin00251dtoService.listsp];
+     
       let stt = 1;
       for(let element of this.listdetail) {
         element.stt = stt;
         stt++;
       }
+      this.fnBackuplist(this.listdetail);
       this.getDataList();
       this.showBtnConfirm();
-      this.spin00251dtoService.clear();
+      //this.spin00251dtoService.clear();
     } else {
       this.headerForm = this.createForm();
     }
+  }
 
+  fnBackuplist(list:Phieunhaphang[]) {
+    this.backupdatalst = [];
+    //this.backupdatalst = list.slice();
+    for(let element of list) {
+      let item: Phieunhaphang = {};
+      item.soID = element.soID;
+      item.idchuyen = element.idchuyen;
+      item.biensoxe = element.biensoxe;
+      item.iduser = element.iduser;
+      item.tiencuoc = element.tiencuoc;
+      item.lotrinh = element.lotrinh;
+      item.ngaynhap = element.ngaynhap;
+      item.noidungdonhang= element.noidungdonhang;
+      item.soluong = element.soluong;
+      item.donvitinh = element.donvitinh;
+      item.diadiembochang = element.diadiembochang;
+      item.tennguoinhan = element.tennguoinhan;
+      item.sdtnguoinhan = element.sdtnguoinhan;
+      item.diachinguoinhan = element.diachinguoinhan;
+      item.makho = element.makho;
+      item.hinhthucthanhtoan = element.hinhthucthanhtoan;
+      item.ghichu = element.ghichu;
+      item.trangthai = element.trangthai
+      item.status01 = element.status01;
+      item.status02 = element.status02;
+      item.status03 = element.status03;
+      item.status04 = element.status04;
+      item.status05 = element.status05;
+      item.id = element.id;
+      item.stt = element.stt
+      this.backupdatalst.push(item);
+    }
   }
 
   override destroy() {
@@ -161,11 +198,28 @@ export class Spin00251Component extends BaseComponent implements OnInit {
     )
   }
 
-
-
   fnBtnConfirm() {
     if(this.spin00251dtoService.initFlg == false) {
       // update
+      if(this.fnCheckChange() == true){
+         this.modalSrv.info({nzTitle: "Chưa có thay đổi"})
+      } else {
+        // update
+        let req = {
+          "spin00251Header": this.headerForm.getRawValue(),
+          "listsp": this.dataList,
+          "mode": "update"
+        }
+        this.dataService.update(req)
+        .pipe()
+        .subscribe(res => {
+          if(res==0) {
+            this.modalSrv.success({nzTitle: "Thực hiện thành công !"});
+          } else {
+            this.modalSrv.success({nzTitle: "Thực hiện thất bại !"});
+          }
+        })
+      }
       
     } else {
       // create
@@ -186,6 +240,7 @@ export class Spin00251Component extends BaseComponent implements OnInit {
             element.stt = stt;
             stt++;
           }
+          this.fnBackuplist(this.listdetail);
           this.getDataList();
           this.fnSendService();
           this.showbtnCopy = true;
@@ -207,8 +262,32 @@ export class Spin00251Component extends BaseComponent implements OnInit {
     this.spin00251dtoService.ghichu = this.headerForm.value.ghichu;
   }
 
-  fnBtnCopy() {
+  fnCheckChange() {
+    let headerForm = this.headerForm.getRawValue();
+    let headerService = {
+      "soID": this.spin00251dtoService.soID,
+      "iduser" : this.spin00251dtoService.iduser,
+      "hinhthucthanhtoan": this.spin00251dtoService.hinhthucthanhtoan,
+      "ghichu": this.spin00251dtoService.ghichu
+    }
 
+    if(_.isEqual(headerForm,headerService)){
+        if(_.isEqual(this.dataList,this.backupdatalst)){
+           return true;
+        } else {
+          return false;
+        }
+    } else {
+        return false;
+    }
+  }
+
+  fnBtnCopy() {
+    this.spin00251dtoService.clear();
+    this.headerForm.patchValue({
+      soID : "",
+    });
+    this.message.info("Sao chép thành công !");
   }
 
   add() {
