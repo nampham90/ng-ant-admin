@@ -1,0 +1,18 @@
+<app-card-table-wrap [tableTitle]="'Danh Sách Số ID'" (reload)="reloadTable()">
+    <app-ant-table [tableConfig]="tableConfig" (changePageSize)="changePageSize($event)" (changePageNum)="getDataList($event)" [tableData]="dataList"></app-ant-table>
+    <ng-template #operationTpl let-soID="soID" >
+        <a nz-button nzType="link"  (click)="getItem(soID)">{{soID}}</a>
+    </ng-template>
+    <ng-template #tenkhachhangTpl let-iduser="iduser" >
+        <nz-alert nzType="success" nzMessage="{{iduser['name']}}"></nz-alert>
+    </ng-template>
+    <ng-template #availableFlag>
+        <nz-alert nzType="success" nzMessage="Trong kho"></nz-alert>
+    </ng-template>
+    <ng-template #tiencuocTpl let-tiencuoc="tiencuoc">
+        <span>{{tiencuoc*1000 | currency : "VND" : ''}}</span>
+    </ng-template>
+    <ng-template #htttTpl let-hinhthucthanhtoan="hinhthucthanhtoan">
+        <span>{{mergeHttt(hinhthucthanhtoan)}}</span>
+      </ng-template>
+</app-card-table-wrap>

@@ -67,4 +67,9 @@ export class CommonService {
   getHDTTXN(): Observable<any> {
     return this.http.post(Const.CommonAnt100GetHDTTXN, { needSuccessInfo: false});
   }
+
+  // get list ID
+  getListSoID(params: any): Observable<any> {
+    return this.http.post(Const.CommonAnt100GetListSoID,params, { needSuccessInfo: false});
+  }
 }

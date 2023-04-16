@@ -87,6 +87,7 @@ export const CommonAnt100GetODS = "common/commonAnt100GetODS";
 export const CommonAnt100GetODT = "common/commonAnt100GetODT";
 export const CommonAnt100GetODC = "common/commonAnt100getODC";
 export const CommonAnt100GetHDTTXN = "common/commonAnt100getHDTTXN";
+export const CommonAnt100GetListSoID = "common/commonAnt100getListSoID";
 
 export const CommonAnt100Tongnoxengoai = 'common/commonAnt100Tongnoxengoai';
 
@@ -252,6 +253,11 @@ export const Spin00901Ant100Alldel = 'spin00901/spin00901Ant100Alldel';
 export const Spin00251Ant100Register = "spin00251/spin00251Ant100Register";
 export const Spin00251Ant100Update = "spin00251/spin00251Ant100Update";
 export const Spin00251Ant100GetPNH= "spin00251/spin00251Ant100GetPNH";
+
+// spin00801 search 
+export const Spin00801Ant100Search = "spin00801/spin00801Ant100Search";
+export const Spin00801Ant100Delete = "spin00801/spin00801Ant100Delete";
+export const Spin00801Ant100Deletemany = "spin00801/spin00801Ant100Deletemany";
 
 
 
