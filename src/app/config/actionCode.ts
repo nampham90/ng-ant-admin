@@ -121,4 +121,7 @@ export const ActionCode = {
   Spin00801DeleteMany: 'default:trongkho:spin00801:deletemany',
   Spin00801Delete: 'default:trongkho:spin00801:delete',
 
+  // spin00601 xuât hang
+  Spin00601Xuathang: 'default:trongkho:spin00601:xuathang',
+
 };
