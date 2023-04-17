@@ -22,6 +22,9 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ModalBtnStatus } from '@app/widget/base-modal';
 import { SearchCommonVO } from '@app/core/services/types';
 import { finalize } from 'rxjs';
+import { Spin00301Service } from '@app/core/services/http/trongkho/spin00301.service';
+import { Spin00251Service } from '@app/core/services/http/trongkho/spin00251.service';
+import { Spin00251dtoService } from '@app/core/services/http/trongkho/spin00251dto/spin00251dto.service';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -119,13 +122,32 @@ export class Spin00301Component extends BaseComponent implements OnInit {
     private modalListSoIDService: SubcommonsoidService,
     private spin00901Service: Spin00901Service,
     private spin00251subkhachhangService: Spin00251subkhachhangService,
-    private spin00801Service: Spin00801Service
+    private spin00801Service: Spin00801Service,
+    private spin00301Service: Spin00301Service,
+    private spin00251Service: Spin00251Service,
+    private spin00251DtoService: Spin00251dtoService
   ) { 
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }
 
   copy(soID: any) {
     return `${soID}`;
+  }
+
+  getItem(soID: any) {
+    this.spin00251Service.getPHN({soID:soID})
+    .subscribe(res => {
+       this.spin00251DtoService.mode = "Tìm kiếm"
+       this.spin00251DtoService.initFlg = false;
+       this.spin00251DtoService.soID = res['header']['soID'];
+       this.spin00251DtoService.iduser = res['header']['iduser']['_id'];
+       this.spin00251DtoService.hinhthucthanhtoan =  res['header']['hinhthucthanhtoan'];
+       this.spin00251DtoService.usernm = res['header']['iduser']['name'];
+       this.spin00251DtoService.ghichu = res['header']['ghichu'];
+       this.spin00251DtoService.listsp = res['listsp'];
+       this.spin00251DtoService.backurl = Const.rootbase + UrlDisplayId.spin00301
+       this.transfer(Const.rootbase + UrlDisplayId.spin00251);
+    })
   }
 
   log(): void {
@@ -195,7 +217,28 @@ export class Spin00301Component extends BaseComponent implements OnInit {
   }
 
   getDataList(e?: NzTableQueryParams) {
-    
+    this.tableLoading(true);
+    this.searchParam.ngaybatdau = this.formatDate(this.ngaybatdau);
+    this.searchParam.ngayketthuc = this.formatDate(this.ngayketthuc);
+    const params: SearchCommonVO<any> = {
+      pageSize: this.tableConfig.pageSize!,
+      pageNum: e?.pageIndex || this.tableConfig.pageIndex!,
+      filters: this.searchParam
+    };
+    this.spin00301Service.search(params)
+    .pipe(
+      finalize(() => {
+        this.tableLoading(false);
+      })
+    )
+    .subscribe(data=>{
+      const { list, total, pageNum } = data;
+      this.dataList = [...list];
+      this.tableConfig.total = total!;
+      this.tableConfig.pageIndex = pageNum!;
+      this.tableLoading(false);
+      this.checkedCashArray = [...this.checkedCashArray];
+    })
   }
 
   resetForm() {
@@ -237,10 +280,9 @@ export class Spin00301Component extends BaseComponent implements OnInit {
           tdTemplate: this.soidTpl
         },
         {
-          title: 'Trạng thái',
-          field: 'trangthai',
-          width: 220,
-          tdTemplate: this.trangthaiTpl
+          title: "Nội dung đơn hàng",
+          width: 150,
+          field: 'noidungdonhang',
         },
         {
           title: 'Tên người gửi',
@@ -253,6 +295,12 @@ export class Spin00301Component extends BaseComponent implements OnInit {
           width: 120,
           field: 'tiencuoc',
           tdTemplate: this.tiencuocTpl
+        },
+        {
+          title: 'Trạng thái',
+          field: 'trangthai',
+          width: 220,
+          tdTemplate: this.trangthaiTpl
         },
         {
           title: "Ngày nhập",
@@ -270,11 +318,7 @@ export class Spin00301Component extends BaseComponent implements OnInit {
           width: 150,
           field: 'diadiembochang',
         },
-        {
-          title: "Nội dung đơn hàng",
-          width: 150,
-          field: 'noidungdonhang',
-        },
+
         {
           title: "Số lượng",
           width: 150,
@@ -311,13 +355,13 @@ export class Spin00301Component extends BaseComponent implements OnInit {
           width: 150,
           field: 'ghichu',
         },
-        {
-          title: "Vận hành",
-          tdTemplate: this.operationTpl,
-          width: 250,
-          fixed: true,
-          fixedDir: 'right'
-        }
+        // {
+        //   title: "Vận hành",
+        //   tdTemplate: this.operationTpl,
+        //   width: 250,
+        //   fixed: true,
+        //   fixedDir: 'right'
+        // }
       ],
       total: 0,
       loading: true,

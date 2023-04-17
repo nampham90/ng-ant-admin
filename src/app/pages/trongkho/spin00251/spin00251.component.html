@@ -1,4 +1,4 @@
-<app-page-header [backTpl]="backTpl" [pageHeaderInfo]="pageHeaderInfo" [extraTpl]="huongdanTpl"></app-page-header>
+<app-page-header [backTpl]="backTpl" [backUrl]="backurl" [pageHeaderInfo]="pageHeaderInfo" [extraTpl]="huongdanTpl"></app-page-header>
 <ng-template #huongdanTpl>
   <button nz-button nzType="primary" [nzSize]="'large'" nzShape="round" (click)="showVideo()">
       <span nz-icon nzType="star" nzTheme="outline"></span>{{formItemNm[4]}}
@@ -6,7 +6,7 @@
 </ng-template>
 <ng-template #backTpl>
   <ng-container *ngIf="showreturnBack">
-      <span nz-icon nzType="arrow-left" nzTheme="outline">Quay lại màn hình</span> 
+      <span nz-icon nzType="arrow-left" nzTheme="outline">Quay lại  {{backMH}}</span> 
   </ng-container>
 </ng-template>
 <div class="normal-table-wrap">

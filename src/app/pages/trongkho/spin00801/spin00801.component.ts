@@ -162,6 +162,7 @@ export class Spin00801Component extends BaseComponent implements OnInit {
               }
               this.getDataList();
               this.resetForm();
+              this.cdf.markForCheck();
             } else {
               this.message.info("Thực hiện không thành công !");
             }
@@ -189,7 +190,7 @@ export class Spin00801Component extends BaseComponent implements OnInit {
   }
 
   searchSoIDClick() {
-    this.modalListSoIDService.show({nzTitle: "Danh Sách Số ID"},{showcomfirm:false}).subscribe(
+    this.modalListSoIDService.show({nzTitle: "Danh Sách Số ID"},{showcomfirm:false,idchuyen: "NULL",status02: "KHONG"}).subscribe(
       res => {
         if (!res || res.status === ModalBtnStatus.Cancel) {
           return;

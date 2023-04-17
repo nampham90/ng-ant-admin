@@ -68,6 +68,9 @@ export class Spin00251Component extends BaseComponent implements OnInit {
   showbtnCopy = false;
 
   btnNew = false;
+  
+  backMH = "";
+  backurl = "";
 
   listdetail: Phieunhaphang[] = [];
   pnh!: Phieunhaphang;
@@ -82,12 +85,14 @@ export class Spin00251Component extends BaseComponent implements OnInit {
     this.initTable();
 
     if(this.spin00251dtoService.initFlg == false) {
+      this.headerForm = this.createForm();
       let reqheader = {
         "soID": this.spin00251dtoService.soID,
         "iduser": this.spin00251dtoService.iduser,
-        "hinhthucthanhtoan": this.spin00251dtoService.hinhthucthanhtoan,
+        "hinhthucthanhtoan": this.spin00251dtoService.hinhthucthanhtoan + "",
         "ghichu": this.spin00251dtoService.ghichu
       }
+      this.usernm = this.spin00251dtoService.usernm;
       this.headerForm.patchValue(reqheader);
       this.listdetail = [...this.spin00251dtoService.listsp];
      
@@ -99,6 +104,10 @@ export class Spin00251Component extends BaseComponent implements OnInit {
       this.fnBackuplist(this.listdetail);
       this.getDataList();
       this.showBtnConfirm();
+      this.showbtnCopy = true;
+      this.showreturnBack = true;
+      this.backMH = this.spin00251dtoService.mode;
+      this.backurl = this.spin00251dtoService.backurl;
       //this.spin00251dtoService.clear();
     } else {
       this.headerForm = this.createForm();
@@ -140,7 +149,7 @@ export class Spin00251Component extends BaseComponent implements OnInit {
   }
 
   override destroy() {
-    this.spin00251dtoService.clear();
+   // this.spin00251dtoService.clear();
   }
   override DisplayScreenID: UrlDisplayId = UrlDisplayId.spin00251;
 
@@ -267,7 +276,7 @@ export class Spin00251Component extends BaseComponent implements OnInit {
     let headerService = {
       "soID": this.spin00251dtoService.soID,
       "iduser" : this.spin00251dtoService.iduser,
-      "hinhthucthanhtoan": this.spin00251dtoService.hinhthucthanhtoan,
+      "hinhthucthanhtoan": this.spin00251dtoService.hinhthucthanhtoan + "",
       "ghichu": this.spin00251dtoService.ghichu
     }
 

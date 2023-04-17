@@ -125,7 +125,7 @@
         </ng-template>
     </ng-container>
     <ng-template #soidTpl let-soID="soID">
-        <span>{{soID}} </span>
+        <span><a nz-button (click)="getItem(soID)" nzType="link">{{soID}}</a></span>
         <button nz-button [cdkCopyToClipboard]="copy(soID)" nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
     </ng-template>
     <ng-template #operationTpl let-soID="soID">
@@ -139,6 +139,14 @@
     </ng-template>
     <ng-template #nguoiguiTpl let-iduser="iduser" >
         <nz-alert nzType="success" nzMessage="{{iduser['name']}}"></nz-alert>
+    </ng-template>
+    <ng-template #trangthaiTpl let-status02="status02">
+        <ng-container *ngIf="status02 == 0 else statusTpl">
+            <nz-alert nzType="success" nzMessage="Trong kho"></nz-alert>
+        </ng-container>
+        <ng-template #statusTpl>
+            <nz-alert nzType="success" nzMessage="Vận chuyển"></nz-alert>
+        </ng-template>
     </ng-template>
     <ng-template #tiencuocTpl let-tiencuoc="tiencuoc">
         <span>{{tiencuoc*1000 | currency : "VND" : ''}}</span>

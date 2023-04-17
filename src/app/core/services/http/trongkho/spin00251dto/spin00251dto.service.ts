@@ -12,6 +12,7 @@ export class Spin00251dtoService {
   ghichu = "";
   listsp : any[]= [];
   mode = "";
+  backurl = ""
   constructor() { }
 
   clear() {
@@ -23,5 +24,6 @@ export class Spin00251dtoService {
      this.ghichu = "";
      this.listsp = [];
      this.mode = "";
+     this.backurl = "";
   }
 }

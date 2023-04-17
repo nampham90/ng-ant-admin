@@ -29,11 +29,11 @@ export enum UrlDisplayId {
     mbtx00301= 'mobile/mbtx00301',
 
     // trong kho
-    spin00301 = 'spin00301',
-    spin00251 = 'spin00251',
-    spin00601 = 'spin00601',
-    spin00801 = 'spin00801',
-    spin00901 = 'spin00901',
+    spin00301 = 'trongkho/spin00301',
+    spin00251 = 'trongkho/spin00251',
+    spin00601 = 'trongkho/spin00601',
+    spin00801 = 'trongkho/spin00801',
+    spin00901 = 'trongkho/spin00901',
     
 
     

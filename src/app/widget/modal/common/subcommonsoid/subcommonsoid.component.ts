@@ -52,6 +52,13 @@ export class SubcommonsoidComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    let obj = this.obj(this.params);
+    if(obj['idchuyen'] && obj['idchuyen'] == "NULL") {
+       this.searchParam.idchuyen = null;
+    }
+    if(obj['status02'] && obj['status02'] == "KHONG") {
+       this.searchParam.status02 = 0;
+    }
 
     this.initTable();
   }
@@ -67,6 +74,12 @@ export class SubcommonsoidComponent implements OnInit {
     return htttnm;
   }
 
+  obj(param:any) {
+    let str=JSON.stringify(param);
+    let obj = JSON.parse(str);
+    return obj;
+  }
+
   getItem(soID:string) {
     this.dataResponse = {
       soID: soID
@@ -76,8 +89,6 @@ export class SubcommonsoidComponent implements OnInit {
 
   getDataList(e?: NzTableQueryParams): void {
     this.tableConfig.loading = true;
-    this.searchParam.status02 = 0;
-    this.searchParam.idchuyen = null;
     const params: SearchCommonVO<any> = {
       pageSize: this.tableConfig.pageSize!,
       pageNum: e?.pageIndex || this.tableConfig.pageIndex!,
