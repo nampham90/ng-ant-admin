@@ -208,8 +208,14 @@ export class Mbtx00101Component extends BaseComponent implements OnInit {
   }
 
   updateStatus01(id: string, mode:string) {
+    let title = "";
+    if(mode == "BOCHANG") {
+      title = "Bạn chắc chắn đã bóc hàng lên xe !";
+    } else {
+      title = "Bạn chắc chắn đã giao hàng cho khách !";
+    }
     this.modalSrv.confirm({
-      nzTitle: "Bạn chắc chắn đã giao hàng cho khách ?",
+      nzTitle: title,
       nzContent: "Nhấn Ok để tiếp tục",
       nzOnOk: () => {
         this.dataService.updateStatus01({id: id, mode:mode}).pipe()

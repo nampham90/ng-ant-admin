@@ -54,20 +54,22 @@
         Ghi chú : <span [ngClass]="['hstyle']">{{lst['ghichu']}}</span>
       </div>
       <div [ngClass]="['myDiv']">
-        <ng-container *ngIf="lst['status01']==0">
+        <ng-container *ngIf="lst['status01']==0 else dagiaohangTpl">
           <a Button [type]="'primary'" [size]="'small'" [inline]="true" (click)="updateStatus01(lst['id'],'BOCHANG')">
             Đã bóc hàng
           </a>
         </ng-container>
-        <ng-container *ngIf="lst['status01']==1 else BtnDis">
-          <a Button [type]="'primary'" [size]="'small'" [inline]="true" (click)="updateStatus01(lst['id'],'GIAOHANG')">
-            Đã giao hàng
-          </a>
-        </ng-container>
-        <ng-template #BtnDis>
-          <a Button [type]="'primary'" [size]="'small'" [inline]="true"  [disabled]="true">
-             Hoàn thành
-          </a>
+        <ng-template #dagiaohangTpl>
+          <ng-container *ngIf="lst['status01']==1 else BtnDis">
+            <a Button [type]="'primary'" [size]="'small'" [inline]="true" (click)="updateStatus01(lst['id'],'GIAOHANG')">
+              Đã giao hàng
+            </a>
+          </ng-container>
+          <ng-template #BtnDis>
+            <a Button [type]="'primary'" [size]="'small'" [inline]="true"  [disabled]="true">
+               Hoàn thành
+            </a>
+          </ng-template>
         </ng-template>
       </div>
     </ListItem>
@@ -96,22 +98,23 @@
         Ghi chú : <span [ngClass]="['hstyle']">{{lst['ghichu']}}</span>
       </div>
       <div [ngClass]="['myDiv']">
-        <ng-container *ngIf="lst['status01']==0 ">
+        <ng-container *ngIf="lst['status01']==0 else dagiaohangTpl">
           <a Button [type]="'primary'" [size]="'small'" [inline]="true" (click)="updateStatus01(lst['id'],'BOCHANG')">
             Đã bốc hàng
           </a>
         </ng-container>
-        <ng-container *ngIf="lst['status01']==1 else BtnDis">
-          <a Button [type]="'primary'" [size]="'small'" [inline]="true" (click)="updateStatus01(lst['id'],'GIAOHANG')">
-            Đã giao hàng
-          </a>
-        </ng-container>
-        <ng-template #BtnDis>
-          <a Button [type]="'primary'" [size]="'small'" [inline]="true"  [disabled]="true">
-            Hoàn thành
-          </a>
+        <ng-template #dagiaohangTpl>
+          <ng-container *ngIf="lst['status01']==1 else BtnDis">
+            <a Button [type]="'primary'" [size]="'small'" [inline]="true" (click)="updateStatus01(lst['id'],'GIAOHANG')">
+              Đã giao hàng
+            </a>
+          </ng-container>
+          <ng-template #BtnDis>
+            <a Button [type]="'primary'" [size]="'small'" [inline]="true"  [disabled]="true">
+              Hoàn thành
+            </a>
+          </ng-template>
         </ng-template>
-
       </div>
     </ListItem>
 

@@ -499,12 +499,16 @@ export class Spch00201Component extends BaseComponent implements OnInit {
       nzOnOk: () => {
         this.tableLoading(true);
         this.phhService.delete(id).subscribe(
-          () => {
-            if (this.dataList.length === 1) {
-              this.tableConfig.pageIndex--;
+          (res) => {
+            if(res == 1) {
+              if (this.dataList.length === 1) {
+                this.tableConfig.pageIndex--;
+              }
+              this.getTongcuoc();
+            } else {
+              this.modalSrv.info({nzTitle: res.msgError})
             }
             this.getDataList();
-            this.getTongcuoc();
           },
           error => this.tableLoading(false)
         );
