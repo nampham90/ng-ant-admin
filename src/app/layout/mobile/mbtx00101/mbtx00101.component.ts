@@ -207,12 +207,12 @@ export class Mbtx00101Component extends BaseComponent implements OnInit {
     })
   }
 
-  updateStatus01(id: string) {
+  updateStatus01(id: string, mode:string) {
     this.modalSrv.confirm({
       nzTitle: "Bạn chắc chắn đã giao hàng cho khách ?",
       nzContent: "Nhấn Ok để tiếp tục",
       nzOnOk: () => {
-        this.dataService.updateStatus01({id: id}).pipe()
+        this.dataService.updateStatus01({id: id, mode:mode}).pipe()
         .subscribe(res => {
           this.requestInit();
         })

@@ -43,6 +43,10 @@ export class ChuyenService {
 
   delateChuyens(){}
 
+  searchParams(params:any){
+    return this.http.post(Const.ChuyenAnt100SearchParams, params, {needSuccessInfo: false});
+  }
+
   refresh(url:string): void {
     const sourceUrl = url;
     // 只有当前页签会刷新，如果涉及到tab页内的详情的页面不会刷新

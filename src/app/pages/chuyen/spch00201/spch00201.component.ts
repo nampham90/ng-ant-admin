@@ -92,8 +92,8 @@ export class Spch00201Component extends BaseComponent implements OnInit {
   tongcuoc = 0;
   availableOptions: OptionsInterface[] = [];
 
-  btnNew = false;
-  btnUpdate = false;
+  btnNew = true;
+  btnUpdate = true;
   btnDelete = false;
 
   btnConfirm = false;
@@ -175,8 +175,8 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         this.btnConfirmtrahang = false;
         this.btnConfirmchiphi = true;
         this.btnConfirmend = false;
-        this.btnNew = false;
-        this.btnUpdate = false;
+        this.btnNew = true;
+        this.btnUpdate = true;
         this.btnDelete = false;
       }; break; 
       case 4 : {
@@ -185,8 +185,8 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         this.btnConfirmtrahang = false;
         this.btnConfirmchiphi = true;
         this.btnConfirmend = true;
-        this.btnNew = false;
-        this.btnUpdate = false;
+        this.btnNew = true;
+        this.btnUpdate = true;
         this.btnDelete = false;
       }; break;
       case 5 : {
@@ -494,8 +494,8 @@ export class Spch00201Component extends BaseComponent implements OnInit {
 
   del(id: any) {
     this.modalSrv.confirm({
-      nzTitle: 'Bạn có chắc chắn muốn xóa nó không?',
-      nzContent: 'Không thể phục hồi sau khi xóa',
+      nzTitle: 'Bạn có chắc chắn muốn hủy bốc hàng?',
+      nzContent: 'Nhấn Ok để xác nhận',
       nzOnOk: () => {
         this.tableLoading(true);
         this.phhService.delete(id).subscribe(
@@ -618,11 +618,6 @@ export class Spch00201Component extends BaseComponent implements OnInit {
           width: 80,
         },
         {
-          title: 'ID Khách Hàng',
-          width: 180,
-          field: 'idkhachhang',
-        },
-        {
           title: 'Tên Khách Hàng',
           width: 170,
           field: 'tenkhachhang',
@@ -674,9 +669,9 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         {
           title: 'Hành động',
           tdTemplate: this.operationTpl,
-          width: 200,
-          // fixed: true,
-          // fixedDir: 'right'
+          width: 170,
+          fixed: true,
+          fixedDir: 'right'
         }
       ],
       total: 0,

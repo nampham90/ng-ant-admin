@@ -163,6 +163,7 @@ export const ChuyenAnt100Create = 'chuyen/chuyenAnt100create';
 export const ChuyenAnt100Delete = 'chuyen/chuyenAnt100delete';
 export const ChuyenAnt100DeleteAll = 'chuyen/chuyenAnt100deleteAll';
 export const ChuyenAnt100UpdateTrangthai = 'chuyen/chuyenAnt100updateTrangthai';
+export const ChuyenAnt100SearchParams = 'chuyen/chuyenAnt100searchParams';
 
 // phieu nhap hang 
 export const PhieunhaphangAnt100GetAll = 'phieunhaphang/phieunhaphangAnt100getAll';
@@ -261,6 +262,10 @@ export const Spin00801Ant100Deletemany = "spin00801/spin00801Ant100Deletemany";
 
 // spin00301 timkiem
 export const Spin00301Ant100Search = "spin00301/spin00301Ant100Search";
+
+// spin00601 xuat hang
+export const Spin00601Ant100XuatHang = "spin00601/spin00601Ant100XuatHang";
+export const Spin00601Ant100Xuatnhieudon = "spin00601/spin00601Ant100Xuatnhieudon";
 
 
 export const font =

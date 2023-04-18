@@ -109,11 +109,9 @@
           ></app-ant-table>
         </app-card-table-wrap>
         <ng-template #tableBtns>
-
-            <!-- <button *appAuth="ActionCode.Spin00801DeleteMany" (click)="allDel()" nz-button nzType="default">
-            <i nz-icon nzType="delete"></i>
-            Xóa tất cả
-            </button> -->
+            <button *appAuth="ActionCode.Spin00601Xuatnhieudon" (click)="xuatnhieudon()" nz-button nzType="primary">
+                <i nz-icon nzType="plus-circle"></i>Xuất nhiều đơn
+            </button>
         </ng-template>
     </ng-container>
     <ng-template #soidTpl let-soID="soID">

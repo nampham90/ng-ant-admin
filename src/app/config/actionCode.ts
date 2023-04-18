@@ -123,5 +123,6 @@ export const ActionCode = {
 
   // spin00601 xuât hang
   Spin00601Xuathang: 'default:trongkho:spin00601:xuathang',
+  Spin00601Xuatnhieudon: 'default:trongkho:spin00601:xuatnhieudon',
 
 };

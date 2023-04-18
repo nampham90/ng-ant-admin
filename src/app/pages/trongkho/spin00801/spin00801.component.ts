@@ -136,7 +136,14 @@ export class Spin00801Component extends BaseComponent implements OnInit {
             this.spin00801Service.deletemany({soIDs:soIDs})
             .pipe()
             .subscribe(data=> {
-              this.getDataList();
+              if(data == 1) {
+                this.getDataList();
+              }else {
+                this.modalSrv.info({
+                  nzTitle: data.msgError,
+                  nzContent: "Một số Đơn hàng này đã chuyển sang trạng thái chờ Vận chuyển !"
+                });
+              }
               this.resetForm();;
             })
           }
@@ -156,7 +163,7 @@ export class Spin00801Component extends BaseComponent implements OnInit {
           this.spin00801Service.delete({soID:soID})
           .pipe()
           .subscribe(data=> {
-            if(data['deletedCount'] == 1) {
+            if(data == 1) {
               if (this.dataList.length === 1) {
                 this.tableConfig.pageIndex--;
               }
@@ -164,7 +171,10 @@ export class Spin00801Component extends BaseComponent implements OnInit {
               this.resetForm();
               this.cdf.markForCheck();
             } else {
-              this.message.info("Thực hiện không thành công !");
+              this.modalSrv.info({
+                nzTitle: data.msgError,
+                nzContent: "Đơn hàng này đã chuyển sang trạng thái chờ Vận chuyển !"
+              });
             }
           })
         }

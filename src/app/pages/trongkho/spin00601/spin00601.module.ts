@@ -7,6 +7,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { SubcommonsoidModule } from '@app/widget/modal/common/subcommonsoid/subcommonsoid.module';
 import { SubwindowvideoyoutubeModule } from '@app/widget/modal/subwindowvideoyoutube/subwindowvideoyoutube.module';
 import { SharedModule } from '@app/shared/shared.module';
+import { Spin00601subxuathangModule } from '@app/widget/modal/trongkho/spin00601subxuathang/spin00601subxuathang.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { SharedModule } from '@app/shared/shared.module';
     Spin00601RoutingModule,
     SubwindowvideoyoutubeModule,
     SubcommonsoidModule,
-    ClipboardModule
+    ClipboardModule,
+    Spin00601subxuathangModule
   ]
 })
 export class Spin00601Module { }

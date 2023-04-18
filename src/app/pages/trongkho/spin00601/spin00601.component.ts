@@ -24,6 +24,10 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { Spin00801Service } from '@app/core/services/http/trongkho/spin00801.service';
 import { Spin00251Service } from '@app/core/services/http/trongkho/spin00251.service';
 import { Spin00251dtoService } from '@app/core/services/http/trongkho/spin00251dto/spin00251dto.service';
+import { ChuyenService } from '@app/core/services/http/chuyen/chuyen.service';
+import { Spin00601subxuathangService } from '@app/widget/modal/trongkho/spin00601subxuathang/spin00601subxuathang.service';
+import { Spin00601Service } from '@app/core/services/http/trongkho/spin00601.service';
+
 interface SearchParam {
   ngaybatdau: string | null;
   ngayketthuc: string | null;
@@ -113,8 +117,10 @@ export class Spin00601Component extends BaseComponent implements OnInit {
     private spin00801Service: Spin00801Service,
     private spin00251subkhachhangService: Spin00251subkhachhangService,
     private spin00251Service: Spin00251Service,
-    private spin00251DtoService: Spin00251dtoService
-    
+    private spin00251DtoService: Spin00251dtoService,
+    private chuyenService: ChuyenService,
+    private modalxuathangService: Spin00601subxuathangService,
+    private spin00601Service: Spin00601Service
   ) { 
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }
@@ -140,8 +146,94 @@ export class Spin00601Component extends BaseComponent implements OnInit {
   }
 
   xuathang(soID: any) {
+    this.chuyenService.searchParams({trangthai:3})
+    .subscribe(data=> {
+      if(data.length > 0) {
+        this.modalxuathangService.show({nzTitle: "Xuất hàng"},{lstchuyen:data}).subscribe(
+          res=>{
+            if (!res || res.status === ModalBtnStatus.Cancel) {
+              return;
+            }
+            res.modalValue["soID"] = soID;
+            this.confirm(res.modalValue);
+            
+          }
+        )
+      } else {
+        this.modalSrv.info({
+          nzTitle: " Chưa có chuyến hàng nào !",
+          nzContent: "Vui lòng tạo chuyến hàng trước khi xuất hàng"
+        });
+      }
+    })
+  }
+
+  xuatnhieudon() {
+    let soIDs = this.fnCheckdataList();
+    if(soIDs.length > 0) {
+      // thực vien xuat hang
+      this.chuyenService.searchParams({trangthai:3})
+      .subscribe(data=> {
+        if(data.length > 0) {
+          this.modalxuathangService.show({nzTitle: "Xuất hàng"},{lstchuyen:data}).subscribe(
+            res=>{
+              if (!res || res.status === ModalBtnStatus.Cancel) {
+                return;
+              }
+              res.modalValue["soIDs"] = soIDs;
+              this.confirmmany(res.modalValue);
+              
+            }
+          )
+        } else {
+          this.modalSrv.info({
+            nzTitle: " Chưa có chuyến hàng nào !",
+            nzContent: "Vui lòng tạo chuyến hàng trước khi xuất hàng"
+          });
+        }
+      })
+    } else {
+      this.modalSrv.info({nzTitle: "Vui lòng chọn ít nhất một đơn hàng !"})
+    }
 
   }
+
+  fnCheckdataList() {
+    let soIDs :string[] = [];
+    for(let element of this.dataList) {
+      if(element['_checked'] == true) {
+        soIDs.push(element['soID']);
+      }
+    }
+    return soIDs;
+  }
+
+  confirm(data:any){
+     this.spin00601Service.xuathang(data)
+     .subscribe(data=> {
+       console.log(data);
+       if(data['modifiedCount'] == 1) {
+         this.message.info("Xuất hàng thành công");
+       } else {
+          this.message.info("Xuất hàng thất bại");
+       }
+       this.getDataList();
+     })
+  }
+
+  confirmmany(data:any){
+    this.spin00601Service.xuatnhieudon(data)
+    .subscribe(data=> {
+      console.log(data);
+      if(data['modifiedCount'] == 1) {
+        this.message.info("Xuất hàng thành công");
+      } else {
+         this.message.info("Xuất hàng thất bại");
+      }
+      this.getDataList();
+    })
+ }
+
 
   getListKho() {
     const params: SearchCommonVO<any> = {

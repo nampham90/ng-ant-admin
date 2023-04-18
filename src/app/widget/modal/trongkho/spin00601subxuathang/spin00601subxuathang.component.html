@@ -1,0 +1,42 @@
+<form nz-form [formGroup]="addEditForm">
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="soODT">Số ODT</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng chọn">
+            <nz-select
+            name="soODT"
+            id="soODT"
+            formControlName="soODT"
+            nzAllowClear
+            nzShowSearch
+            nzPlaceHolder="Select"
+            (ngModelChange)="changeChuyen($event)"
+          >
+            <nz-option *ngFor="let option of listChuyen" [nzValue]="option['soodt']" [nzLabel]="option['soodt'] + ' - ' + option['biensoxe']['biensoxe']"></nz-option>
+          </nz-select>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <!-- soODT-->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="biensoxe">Biển số xe</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập ...">
+          <input nz-input formControlName="biensoxe" name="biensoxe" placeholder="Vui lòng nhập ..." id="biensoxe"/>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <!-- Max chuyen hang-->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="id">Mã chuyến hàng</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập ...">
+          <input nz-input formControlName="id" name="id" placeholder="Vui lòng nhập ..." id="id"/>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <!-- lo trình -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="lotrinh">Lộ trình</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+            <nz-radio-group formControlName="lotrinh">
+                <label nz-radio nzValue="0">Hàng đi</label>
+                <label nz-radio nzValue="1">Hàng về</label>
+            </nz-radio-group>
+        </nz-form-control>
+    </nz-form-item>
+</form>

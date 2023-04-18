@@ -140,12 +140,17 @@
     <ng-template #nguoiguiTpl let-iduser="iduser" >
         <nz-alert nzType="success" nzMessage="{{iduser['name']}}"></nz-alert>
     </ng-template>
-    <ng-template #trangthaiTpl let-status02="status02">
+    <ng-template #trangthaiTpl let-status01="status01" let-status02="status02">
         <ng-container *ngIf="status02 == 0 else statusTpl">
-            <nz-alert nzType="success" nzMessage="Trong kho"></nz-alert>
+            <nz-alert nzType="info" nzMessage="Trong kho"></nz-alert>
         </ng-container>
         <ng-template #statusTpl>
-            <nz-alert nzType="success" nzMessage="Vận chuyển"></nz-alert>
+            <ng-container *ngIf="status01 == 0 else vtTpl">
+                <nz-alert nzType="warning" nzMessage="Chờ bốc hàng"></nz-alert>
+            </ng-container>
+            <ng-template #vtTpl>
+                <nz-alert nzType="success" nzMessage="Vận chuyển"></nz-alert>
+            </ng-template>
         </ng-template>
     </ng-template>
     <ng-template #tiencuocTpl let-tiencuoc="tiencuoc">
