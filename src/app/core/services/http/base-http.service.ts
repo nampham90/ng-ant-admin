@@ -36,8 +36,8 @@ export class BaseHttpService {
       'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
     })
   };
-   uri = "http://117.2.188.141:3002/";
-  //uri = "http://localhost:3002/";
+   //uri = "http://117.2.188.141:3002/";
+  uri = "http://localhost:3002/";
 
   protected constructor(public http: HttpClient, public message: NzMessageService) {
     this.uri = environment.production ? localUrl : '/site/api/';
