@@ -198,6 +198,10 @@ export class Spin00601Component extends BaseComponent implements OnInit {
 
   }
 
+  xuatxengoai(soID: any) {
+    
+  }
+
   fnCheckdataList() {
     let soIDs :string[] = [];
     for(let element of this.dataList) {

@@ -17,13 +17,20 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { WindowService } from '../common/window.service';
 import * as Const from '@app/common/const';
+import { SocketService } from '../common/socket.service';
+import { IpService } from './ip-service.service';
 interface CustomHttpConfig {
   headers?: HttpHeaders;
 }
 
 @Injectable()
 export class HttpInterceptorService implements HttpInterceptor {
-  constructor(private windowServe: WindowService, public message: NzMessageService) {}
+  constructor(
+    private windowServe: WindowService, 
+    public message: NzMessageService,
+    private socketService:SocketService,
+    private ipService : IpService
+    ) {}
 
   intercept(req: HttpRequest<NzSafeAny>, next: HttpHandler): Observable<HttpEvent<NzSafeAny>> {
     const token = this.windowServe.getSessionStorage(TokenKey);
@@ -45,6 +52,11 @@ export class HttpInterceptorService implements HttpInterceptor {
     const status = error.status;
     let errMsg = '';
     if (status === 0) {
+      this.socketService.emit("client-get-ip","msg");
+      this.socketService.on('server-send-ip', (ip: string) => {
+          //this.message.info(ip);
+          this.ipService.ip = ip;
+      })
       errMsg = 'Đã xảy ra lỗi mạng không xác định, vui lòng kiểm tra mạng của bạn.';
       this.message.info('Đã xảy ra lỗi mạng không xác định, vui lòng kiểm tra mạng của bạn.');
     }

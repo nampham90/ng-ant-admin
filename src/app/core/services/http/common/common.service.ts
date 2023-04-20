@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BaseHttpService } from '../base-http.service';
 import * as Const from 'src/app/common/const';
-import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,6 +11,10 @@ export class CommonService {
   constructor(
     private http: BaseHttpService
   ) { }
+
+  requestInit(params: any) : Observable<any> {
+    return this.http.post(Const.CommonAnt100RequestInt, params, { needSuccessInfo: false});
+  }
 
   // get list thông kê doanh thu, chi phi, lợi nhuận từng tháng
   listtaichinh(params: any) : Observable<any> {

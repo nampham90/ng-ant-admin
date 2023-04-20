@@ -90,6 +90,7 @@ export const CommonAnt100GetHDTTXN = "common/commonAnt100getHDTTXN";
 export const CommonAnt100GetListSoID = "common/commonAnt100getListSoID";
 
 export const CommonAnt100Tongnoxengoai = 'common/commonAnt100Tongnoxengoai';
+export const CommonAnt100RequestInt = 'common/commonAnt100requestInt';
 
 // tmt101. master
 export const Tmt101Ant100Create = 'tmt101/tmt101Ant100Create';

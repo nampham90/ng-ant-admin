@@ -123,6 +123,10 @@
             <!--  -->
             <button nz-button nzType="primary" nzGhost (click)="xuathang(soID)">Xuất hàng</button>
         </span>
+        <span *appAuth="ActionCode.Spin00601Xuatxengoai" class="operate-text">
+            <!--  -->
+            <button nz-button nzType="primary" nzGhost (click)="xuatxengoai(soID)">Xuất xe ngoài</button>
+        </span>
     </ng-template>
     <ng-template #htttTpl let-hinhthucthanhtoan="hinhthucthanhtoan">
         <span>{{mergeHttt(hinhthucthanhtoan)}}</span>

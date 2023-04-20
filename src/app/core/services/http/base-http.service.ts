@@ -9,6 +9,7 @@ import { localUrl } from '@env/environment.prod';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import * as qs from 'qs';
+import { IpService } from '../interceptors/ip-service.service';
 
 export interface MyHttpConfig {
   needIntercept?: boolean; // 是否需要被拦截
@@ -40,12 +41,20 @@ export class BaseHttpService {
   uri = "http://localhost:3001/";
 
 
-  protected constructor(public http: HttpClient, public message: NzMessageService) {
-    this.uri = environment.production ? localUrl : '/site/api/';
+  protected constructor(public http: HttpClient, public message: NzMessageService, private ipService: IpService) {
+    if(this.ipService.ip == "") {
+      this.uri = environment.production ? localUrl : '/site/api/';
+    } else {
+      this.uri = `http://${this.ipService.ip}:3001/api/`;
+    }
+    
   }
 
   get<T>(path: string, param?: NzSafeAny, config?: MyHttpConfig): Observable<NzSafeAny> {
     config = config || { needSuccessInfo: false };
+    if(this.ipService.ip != "") {
+      this.uri = `http://${this.ipService.ip}:3001/api/`;
+    }
     let reqPath = this.uri + path;
     if (config.otherUrl) {
       reqPath = path;
@@ -67,7 +76,9 @@ export class BaseHttpService {
 
   delete<T>(path: string, param?: NzSafeAny, config?: MyHttpConfig): Observable<NzSafeAny> {
     config = config || { needSuccessInfo: false };
-    
+    if(this.ipService.ip != "") {
+      this.uri = `http://${this.ipService.ip}:3001/api/`;
+    }
     let reqPath = this.uri + path;
     if (config.otherUrl) {
       reqPath = path;
@@ -89,6 +100,9 @@ export class BaseHttpService {
 
   post<T>(path: string, param?: NzSafeAny, config?: MyHttpConfig): Observable<NzSafeAny> {
     config = config || { needSuccessInfo: false };
+    if(this.ipService.ip != "") {
+      this.uri = `http://${this.ipService.ip}:3001/api/`;
+    }
     let reqPath = this.uri + path;
     if (config.otherUrl) {
       reqPath = path;
@@ -109,6 +123,9 @@ export class BaseHttpService {
 
   put<T>(path: string, param?: NzSafeAny, config?: MyHttpConfig): Observable<NzSafeAny> {
     config = config || { needSuccessInfo: false };
+    if(this.ipService.ip != "") {
+      this.uri = `http://${this.ipService.ip}:3001/api/`;
+    }
     let reqPath = this.uri + path;
     if (config.otherUrl) {
       reqPath = path;
@@ -129,6 +146,9 @@ export class BaseHttpService {
 
   downZip(path: string, param?: NzSafeAny, config?: MyHttpConfig): Observable<NzSafeAny> {
     config = config || { needSuccessInfo: false };
+    if(this.ipService.ip != "") {
+      this.uri = `http://${this.ipService.ip}:3001/api/`;
+    }
     let reqPath = this.uri + path;
     if (config.otherUrl) {
       reqPath = path;
