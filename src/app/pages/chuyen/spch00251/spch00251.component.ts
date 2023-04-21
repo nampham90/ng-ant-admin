@@ -8,7 +8,7 @@ import { PageHeaderType } from '@app/shared/components/page-header/page-header.c
 import { NzMessageService } from 'ng-zorro-antd/message';
 import * as Const from '@app/common/const';
 import { ActionCode } from '@app/config/actionCode';
-import { OptionsInterface } from '@app/core/services/types';
+import { OptionsInterface, SearchCommonVO } from '@app/core/services/types';
 import { MyTableConfig } from '@app/shared/components/ant-table/ant-table.component';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
@@ -23,6 +23,8 @@ import { ChuyenngoaiService } from '@app/core/services/http/chuyenngoai/chuyenng
 import { ChuyenngoaidtoService } from '@app/core/services/http/chuyenngoai/chuyenngoaidto.service';
 import { TabService } from '@app/core/services/common/tab.service';
 import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
+import { Spin00901Service } from '@app/core/services/http/trongkho/spin00901.service';
+import { finalize } from 'rxjs';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -64,6 +66,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     private nguonxeService: NguonxeService,
     private dataService: ChuyenngoaiService,
     private chuyenngoaiDto: ChuyenngoaidtoService,
+    private spin00901Service : Spin00901Service,
     private fb: FormBuilder,
     
   ) { 
@@ -77,6 +80,9 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   checkedCashArray: any[] = [];
   ActionCode = ActionCode;
   availableOptions: OptionsInterface[] = [];
+
+  listbsxe = [];
+  listtaixe = [];
 
   pageHeaderInfo: Partial<PageHeaderType> = {
     title: 'Quản lý chuyến ngoài',
@@ -278,7 +284,57 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     }
     this.nguonxeService.postDetail(req).pipe().subscribe(res => {
        this.headerForm.patchValue({sdtnguonxe: res.sodienthoai});
+       this.fnGetListBiensoxe(res.id);
+       this.fnGetListTaiXe(res.sodienthoai);
+       this.cdf.markForCheck();
     })
+  }
+
+  // get list biên sô xe vơi rcdkbn là id của nguồn xe
+  fnGetListBiensoxe(rcdkbn: any) {
+    const params: SearchCommonVO<any> = {
+      pageSize: 0,
+      pageNum: 0,
+      filters: {rcdkbn: rcdkbn}
+    };
+    this.spin00901Service
+    .searchParams(params)
+    .pipe(
+      finalize(() => {
+      })
+    )
+    .subscribe(res => {
+      this.listbsxe = res;
+      this.cdf.markForCheck();
+    });
+  }
+
+  // get list tài xe se ngoài vơi rcdkbn là so điện thoài nguồn xe
+  fnGetListTaiXe(rcdkbn: any) {
+    const params: SearchCommonVO<any> = {
+      pageSize: 0,
+      pageNum: 0,
+      filters: {rcdkbn: rcdkbn}
+    };
+    this.spin00901Service
+    .searchParams(params)
+    .pipe(
+      finalize(() => {
+      })
+    )
+    .subscribe(res => {
+      this.listtaixe = res;
+      this.cdf.markForCheck();
+    });
+  }
+
+  fnChangeTaiXe($event: any) {
+    for(let element of this.listtaixe) {
+      if(element['datacd'] == $event) {
+         this.headerForm.patchValue({sodienthoai: element['datanm']});
+         break;
+      }
+    }
   }
 
 

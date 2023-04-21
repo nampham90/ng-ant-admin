@@ -19,6 +19,7 @@ import { ModalBtnStatus } from '@app/widget/base-modal';
 import { finalize } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
+import { UserInfoService } from '@app/core/services/store/common-store/userInfo.service';
 
 export interface Product {
   id?:string,
@@ -66,6 +67,7 @@ export class Mbtx00101Component extends BaseComponent implements OnInit {
 
   steps: any[]= [];
   current = 0;
+  tentaixe = "";
 
   onChange(event: any) {
     //console.log(event);
@@ -86,11 +88,15 @@ export class Mbtx00101Component extends BaseComponent implements OnInit {
     private cpcService: ChiphichuyenService,
     public ChuyenDto: ChuyendtoService,
     public message: NzMessageService,
+    private userInfoService: UserInfoService,
   ) {
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
    }
 
   override ngOnInit(): void {
+    this.userInfoService.getUserInfo().subscribe(user => {
+      this.tentaixe = user.username;
+   });
     this.requestInit();
     this.steps = [
       {
@@ -143,6 +149,7 @@ export class Mbtx00101Component extends BaseComponent implements OnInit {
         res.modalValue['trangthai'] = 0;
         res.modalValue['biensoxe'] = this.ChuyenDto.biensoxe;
         res.modalValue['idchuyen'] = this.ChuyenDto.id;
+        res.modalValue['mode'] = "NTH: " + this.tentaixe;
         this.addEditData(res.modalValue,'create');
       },
     );

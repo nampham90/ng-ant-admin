@@ -21,7 +21,7 @@ export class SubwindowproductComponent implements OnInit {
   const = Const;
   listKh : any[] = [];
   tenkhachhang = ""
-
+  listdonvitinh = Const.lstdonvitinh;
   constructor(
     private modalRef: NzModalRef, 
     private fb: FormBuilder,
@@ -58,6 +58,8 @@ export class SubwindowproductComponent implements OnInit {
       iduser: [null, [Validators.required]],
       noidungdonhang: [null,[Validators.required]],
       tiencuoc: [0,[Validators.required]],
+      soluong: [null,[Validators.required]],
+      donvitinh: [null,[Validators.required]],
       diadiembochang:[null,[Validators.required]],
       hinhthucthanhtoan:["1",[Validators.required]],
       lotrinh: ["0",[Validators.required]],

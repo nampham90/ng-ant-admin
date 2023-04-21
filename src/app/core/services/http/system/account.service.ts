@@ -61,7 +61,7 @@ export class AccountService {
     return this.http.put(Const.Ant100EditDetailUser, param);
   }
 
-  public editAccountPsd(param: UserPsd): Observable<void> {
-    return this.http.put('/user/psd', param);
+  public editAccountPsd(param: UserPsd): Observable<any> {
+    return this.http.put(Const.Ant100ChangePasswordUser, param);
   }
 }

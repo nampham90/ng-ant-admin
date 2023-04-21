@@ -19,6 +19,8 @@ import { ModalBtnStatus } from '@app/widget/base-modal';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { TabService } from '@app/core/services/common/tab.service';
 import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
+import { Tmt050modalService } from '@app/widget/biz-widget/system/tmt050modal/tmt050modal.service';
+import { Spin00901Service } from '@app/core/services/http/trongkho/spin00901.service';
 
 interface SearchParam {
   datacd: string;
@@ -64,7 +66,9 @@ export class NguonxeComponent extends BaseComponent implements OnInit {
     private dataService : NguonxeService,
     private modalService: NguonxeModalService,
     private modalSrv: NzModalService,
-    protected override tabService: TabService
+    protected override tabService: TabService,
+    private tmt050modalService: Tmt050modalService,
+    private spin00901Service: Spin00901Service
   ) {
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
     this.pageHeaderInfo = {
@@ -182,6 +186,58 @@ export class NguonxeComponent extends BaseComponent implements OnInit {
     });
   }
 
+  addXe(id: any) {
+    let req = {
+      "datacd": "Biển số xe",
+      "datanm": "Biển số xe hiển thị",
+      "datarnm": "Biển số xe dự phòng",
+    }
+    this.tmt050modalService.show({nzTitle: " Thêm mới xe"},req).subscribe(
+      res => {
+        if (!res || res.status === ModalBtnStatus.Cancel) {
+          return;
+        }
+        res.modalValue.rcdkbn = id;
+        res.modalValue.mode = "KHAC";
+        this.spin00901Service.create(res.modalValue)
+        .subscribe(data => {
+          if(data['acknowledged'] == true) {
+            this.message.success("Thêm thành công !")
+          } else {
+            this.modalSrv.success({nzTitle: "Thêm Thất bại vùi lòng liên hệ Người phát triển !"});
+          }
+        })
+
+      }
+    )
+  }
+
+  addTaixe(id: any) {
+    let req = {
+      "datacd": "Tên tài xế",
+      "datanm": "Số điện thoại",
+      "datarnm": "Số điện thoại dự phòng",
+    }
+    this.tmt050modalService.show({nzTitle: " Thêm mới Tài xế"},req).subscribe(
+      res => {
+        if (!res || res.status === ModalBtnStatus.Cancel) {
+          return;
+        }
+        res.modalValue.rcdkbn = id;
+        res.modalValue.mode = "KHAC";
+        this.spin00901Service.create(res.modalValue)
+        .subscribe(data => {
+          if(data['acknowledged'] == true) {
+            this.message.success("Thêm thành công !")
+          } else {
+            this.modalSrv.success({nzTitle: "Thêm Thất bại vùi lòng liên hệ Người phát triển !"});
+          }
+        })
+
+      }
+    )
+  }
+
   override ngOnInit(): void {
     this.initTable();
   }
@@ -223,7 +279,7 @@ export class NguonxeComponent extends BaseComponent implements OnInit {
         {
           title: 'Vận hành',
           tdTemplate: this.operationTpl,
-          width: 280,
+          width: 480,
           fixed: true,
           fixedDir: 'right'
         }

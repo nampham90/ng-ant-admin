@@ -80,6 +80,8 @@ export const ActionCode = {
   Nguonxeadd: 'default:system:quanlynguonxe:add',
   Nguonxedel: 'default:system:quanlynguonxe:del',
   Nguonxeupdate: 'default:system:quanlynguonxe:update',
+  Nguonxethemxe: 'default:system:quanlynguonxe.themxe',
+  Nguonxethemtaixe: 'default:system:quanlynguonxe.themtaixe',
 
   // chuyến ngoài
   ChuyenngoaiAdd: 'default:chuyen:spch00251:add',

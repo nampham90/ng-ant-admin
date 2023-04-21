@@ -8,6 +8,9 @@ import { fnCheckForm } from '@app/utils/tools';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { Observable, finalize, of } from 'rxjs';
+interface SearchParam {
+  rcdkbn: string;
+}
 @Component({
   selector: 'app-spin00251sub',
   templateUrl: './spin00251sub.component.html',
@@ -21,6 +24,8 @@ export class Spin00251subComponent implements OnInit {
   listKho: any[] = [];
   listdonvitinh = Const.lstdonvitinh;
   tenkho = "";
+
+  searchParam: Partial<SearchParam> = {};
   constructor(
     private modalRef: NzModalRef, 
     private fb: FormBuilder,
@@ -73,10 +78,11 @@ export class Spin00251subComponent implements OnInit {
   }
 
   getListKho() {
+    this.searchParam.rcdkbn = "0001";
     const params: SearchCommonVO<any> = {
       pageSize: 0,
       pageNum: 0,
-      filters: {}
+      filters: this.searchParam
     };
     this.spin00901Service
       .searchParams(params)

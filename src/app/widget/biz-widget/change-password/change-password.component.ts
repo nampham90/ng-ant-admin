@@ -13,6 +13,7 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
 })
 export class ChangePasswordComponent implements OnInit {
   validateForm!: FormGroup;
+  oldPasswordVisible = false;
   passwordVisible = false;
   compirePasswordVisible = false;
 
@@ -45,7 +46,7 @@ export class ChangePasswordComponent implements OnInit {
   initForm(): void {
     this.validateForm = this.fb.group({
       oldPassword: [null, [Validators.required]],
-      newPassword: [null, [Validators.required]],
+      newPassword: [null, [Validators.required, Validators.pattern('^[a-zA-Z0-9]{6,20}$')]],
       sureNewPassword: [null, [Validators.required, this.confirmationValidator]]
     });
   }

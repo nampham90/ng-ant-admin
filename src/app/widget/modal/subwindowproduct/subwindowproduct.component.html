@@ -31,6 +31,29 @@
         </nz-form-control>
     </nz-form-item>
     <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="soluong">Số lượng</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập số lượng">
+            <nz-input-number name="soluong" id="soluong" formControlName="soluong" [nzMin]="0" [nzMax]="10000" [nzStep]="1"></nz-input-number>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <!-- (ngModelChange)="changeKho($event)" -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="donvitinh">Đơn vị tính</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng chọn đơn vị tính">
+            <nz-select
+            name="donvitinh"
+            id="donvitinh"
+            formControlName="donvitinh"
+            nzAllowClear
+            nzShowSearch
+            nzPlaceHolder="Select"
+            
+          >
+            <nz-option *ngFor="let option of listdonvitinh" [nzValue]="option['value']" [nzLabel]="option['lable']"></nz-option>
+          </nz-select>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="trongtai">Tiền cước</nz-form-label>
         <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập tiền cước">
             <nz-input-number name="tiencuoc" id="tiencuoc" formControlName="tiencuoc" [nzMin]="100" [nzMax]="50000" [nzStep]="100"></nz-input-number>

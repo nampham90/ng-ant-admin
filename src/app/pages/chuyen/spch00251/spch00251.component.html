@@ -86,7 +86,10 @@
                     <nz-form-item>
                         <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" nzRequired>Biển số xe</nz-form-label>
                         <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24"  [nzErrorTip]="combineTpl">
-                            <input nz-input name="biensoxe" formControlName="biensoxe" placeholder="Biển số xe" />
+                            <!-- <input nz-input name="biensoxe" formControlName="biensoxe" placeholder="Biển số xe" /> -->
+                            <nz-select name="biensoxe" nzShowSearch nzAllowClear nzPlaceHolder="Select" formControlName="biensoxe" >
+                                <nz-option *ngFor="let lst of listbsxe" nzLabel="{{lst['datanm']}}" nzValue="{{lst['datacd']}}"></nz-option>
+                            </nz-select>
                         </nz-form-control>
                     </nz-form-item>
                 </div>
@@ -94,7 +97,10 @@
                     <nz-form-item>
                         <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" nzRequired>Tên tài xế</nz-form-label>
                         <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24"  [nzErrorTip]="combineTpl">
-                            <input nz-input name="tentaixe" formControlName="tentaixe" placeholder="Tên tài xê" />
+                            <!-- <input nz-input name="tentaixe" formControlName="tentaixe" placeholder="Tên tài xê" /> -->
+                            <nz-select name="tentaixe" nzShowSearch nzAllowClear nzPlaceHolder="Select" formControlName="tentaixe" (ngModelChange)="fnChangeTaiXe($event)">
+                                <nz-option *ngFor="let lst of listtaixe" nzLabel="{{lst['datacd']}}" nzValue="{{lst['datacd']}}"></nz-option>
+                            </nz-select>
                         </nz-form-control>
                     </nz-form-item>
                 </div>

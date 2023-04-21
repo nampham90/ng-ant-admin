@@ -131,7 +131,7 @@ export class Spch00255Component extends BaseComponent implements OnInit {
       const { list, total, pageNum } = data;
       this.dataList = [...list];
       if(this.dataList.length == 0) {
-        this.message.info('Không Có dữ liệu');
+        //this.message.info('Không Có dữ liệu');
       }
       this.tableConfig.total = total!;
       this.tableConfig.pageIndex = pageNum!;

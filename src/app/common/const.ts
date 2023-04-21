@@ -92,6 +92,9 @@ export const CommonAnt100GetListSoID = "common/commonAnt100getListSoID";
 export const CommonAnt100Tongnoxengoai = 'common/commonAnt100Tongnoxengoai';
 export const CommonAnt100RequestInt = 'common/commonAnt100requestInt';
 
+// tmt050 master
+export const Tmt050Ant100GetListKBN = 'tmt050/tmt050Ant100getListKBN';
+
 // tmt101. master
 export const Tmt101Ant100Create = 'tmt101/tmt101Ant100Create';
 export const Tmt101Ant100Update = 'tmt101/tmt101Ant100Update';
@@ -135,6 +138,7 @@ export const Ant100EditDetailUser = "user/ant100EditDetailUser";
 export const Ant100AddDetailUser ="user/ant100AddDetailUser";
 export const Ant100CheckEmailUser = "user/ant100CheckEmailUser";
 export const Ant100CheckNameUser = "user/ant100CheckNameUser";
+export const Ant100ChangePasswordUser = "user/ant100ChangePasswordUser";
 
 // data SC
 export const Ant100findAllDatasc = "screenpc/ant100SearchAllDatasc";

@@ -13,7 +13,7 @@ import { ChangePasswordService } from '@widget/biz-widget/change-password/change
 import { LockWidgetService } from '@widget/common-widget/lock-widget/lock-widget.service';
 import { SearchRouteService } from '@widget/common-widget/search-route/search-route.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { ModalOptions } from 'ng-zorro-antd/modal';
+import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
 import * as Const from "src/app/common/const";
 @Component({
   selector: 'app-layout-head-right-menu',
@@ -39,7 +39,8 @@ export class LayoutHeadRightMenuComponent implements OnInit {
     private userInfoService: UserInfoService,
     private accountService: AccountService,
     private notifiService: NotifiService,
-    private webService: WebserviceService
+    private webService: WebserviceService,
+    private modalSrv: NzModalService,
   ) {}
 
   // 锁定屏幕
@@ -68,9 +69,14 @@ export class LayoutHeadRightMenuComponent implements OnInit {
           newPassword: modalValue.newPassword
         };
       });
-      this.accountService.editAccountPsd(this.user).subscribe(() => {
-        this.loginOutService.loginOut().then();
-        this.message.success('Sửa đổi thành công, vui lòng đăng nhập lại');
+      this.accountService.editAccountPsd(this.user).subscribe((res) => {
+        if(res['msgId'] == "") {
+          this.loginOutService.loginOut().then();
+          this.message.success('Sửa đổi thành công, vui lòng đăng nhập lại');
+        } else {
+          this.modalSrv.info({nzTitle: res['msgId'],nzContent: res['msgError']});
+        }
+       
       });
     });
   }
