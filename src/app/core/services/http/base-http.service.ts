@@ -37,8 +37,8 @@ export class BaseHttpService {
       'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
     })
   };
-  //uri = "http://117.2.188.141:3001/";
-  uri = "http://localhost:3001/";
+  uri = "http://116.103.34.190:3001/";
+  //uri = "http://localhost:3001/";
 
 
   protected constructor(public http: HttpClient, public message: NzMessageService, private ipService: IpService) {
