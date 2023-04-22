@@ -84,6 +84,7 @@ export const ActionCode = {
   Nguonxethemtaixe: 'default:system:quanlynguonxe.themtaixe',
 
   // chuyến ngoài
+  Chuyenngoaiaddtrongkho: 'default:chuyen:spch00251:addtrongkho',
   ChuyenngoaiAdd: 'default:chuyen:spch00251:add',
   ChuyenngoaiEdit: 'default:chuyen:spch00251:update',
   ChuyenngoaiDel: 'default:chuyen:spch00251:del',

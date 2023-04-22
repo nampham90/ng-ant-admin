@@ -286,7 +286,6 @@ export class Spch00251Component extends BaseComponent implements OnInit {
        this.headerForm.patchValue({sdtnguonxe: res.sodienthoai});
        this.fnGetListBiensoxe(res.id);
        this.fnGetListTaiXe(res.sodienthoai);
-       this.cdf.markForCheck();
     })
   }
 
@@ -305,7 +304,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     )
     .subscribe(res => {
       this.listbsxe = res;
-      this.cdf.markForCheck();
+      this.cdf.detectChanges()
     });
   }
 
@@ -324,7 +323,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     )
     .subscribe(res => {
       this.listtaixe = res;
-      this.cdf.markForCheck();
+      this.cdf.detectChanges()
     });
   }
 
@@ -385,6 +384,10 @@ export class Spch00251Component extends BaseComponent implements OnInit {
       },
       error => this.tableLoading(false)
     )
+  }
+
+  addtrongkho() {
+    
   }
 
   edit(stt: any) {

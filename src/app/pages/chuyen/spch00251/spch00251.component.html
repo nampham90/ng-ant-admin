@@ -178,6 +178,10 @@
       </ng-template>
     </app-card-table-wrap>
     <ng-template #tableBtns>
+        <button *appAuth="ActionCode.Chuyenngoaiaddtrongkho" (click)="addtrongkho()" nz-button nzType="primary" class="m-r-8">
+            <i nz-icon nzType="plus"></i>
+            Thêm từ kho
+          </button>
         <button *appAuth="ActionCode.ChuyenngoaiAdd" (click)="add()" nz-button nzType="primary" class="m-r-8" [disabled]="btnNew">
           <i nz-icon nzType="plus"></i>
           Thêm mới
