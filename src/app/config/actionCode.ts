@@ -75,6 +75,7 @@ export const ActionCode = {
   CtcnThanhtoan: 'default:khachhang:spkh00201:thanhtoan',
   CtcnDuyetThanhtoan: 'default:khachhang:spkh00201:duyetthanhtoan',
   CtcnXuatPDF: 'default:khachhang:spkh00201:xuatpdf',
+  CtcnCapnhat: 'default:khachhang:spkh00201:capnhat',
 
   // nguon xe
   Nguonxeadd: 'default:system:quanlynguonxe:add',
@@ -86,6 +87,7 @@ export const ActionCode = {
   // chuyến ngoài
   Chuyenngoaiaddtrongkho: 'default:chuyen:spch00251:addtrongkho',
   ChuyenngoaiAdd: 'default:chuyen:spch00251:add',
+  ChuyenngoaiAddtrongkho: 'default:chuyen:spch00251:addtrongkho',
   ChuyenngoaiEdit: 'default:chuyen:spch00251:update',
   ChuyenngoaiDel: 'default:chuyen:spch00251:del',
   ConfirmChuyenngoai: 'default:chuyen:spch00251:confirm',

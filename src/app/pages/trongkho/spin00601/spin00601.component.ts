@@ -425,7 +425,7 @@ export class Spin00601Component extends BaseComponent implements OnInit {
         {
           title: "Vận hành",
           tdTemplate: this.operationTpl,
-          width: 250,
+          width: 120,
           fixed: true,
           fixedDir: 'right'
         }

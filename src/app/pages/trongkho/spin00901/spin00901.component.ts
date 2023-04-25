@@ -234,7 +234,7 @@ export class Spin00901Component extends BaseComponent implements OnInit {
         {
           title: this.formItemNm[16],
           tdTemplate: this.operationTpl,
-          width: 250,
+          width: 160,
           fixed: true,
           fixedDir: 'right'
         }

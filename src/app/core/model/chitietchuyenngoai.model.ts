@@ -4,6 +4,8 @@ export interface Chitietchuyenngoai {
     idchuyenngoai: Object, // mã chyến hàng
     nguonxe: string,
     thongtindonhang: string,
+    soluong:number,
+    donvitinh:string,
     diadiembochang: string,  // 
     tiencuoc:number,
     tiencuocxengoai: number,

@@ -80,9 +80,20 @@ export class SubcommonsoidComponent implements OnInit {
     return obj;
   }
 
-  getItem(soID:string) {
+  getItem(soID:string,iduser:any,tiencuoc:any,noidungdonhang:any,soluong:any,donvitinh:any,diadiembochang:any,hinhthucthanhtoan:any,tennguoinhan:any,sdtnguoinhan:any,diachinguoinhan:any,ghichu:any) {
     this.dataResponse = {
-      soID: soID
+      soID: soID,
+      iduser: iduser,
+      tiencuoc: tiencuoc,
+      noidungdonhang:noidungdonhang,
+      soluong: soluong,
+      donvitinh:donvitinh,
+      diadiembochang:diadiembochang,
+      hinhthucthanhtoan:hinhthucthanhtoan,
+      tennguoinhan:tennguoinhan,
+      sdtnguoinhan:sdtnguoinhan,
+      diachinguoinhan:diachinguoinhan,
+      ghichu:ghichu
     }
     this.modalRef.destroy({ status: ModalBtnStatus.Ok, modalValue:this.dataResponse });
   }
