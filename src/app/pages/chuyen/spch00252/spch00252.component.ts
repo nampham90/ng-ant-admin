@@ -204,8 +204,8 @@ export class Spch00252Component extends BaseComponent implements OnInit {
     })
   }
 
-  copy(idchuyenngoai: any) {
-    return `${idchuyenngoai}`;
+  copy(soods: any) {
+    return `${soods}`;
   }
 
   exportPDF(id: string) {
@@ -279,7 +279,7 @@ export class Spch00252Component extends BaseComponent implements OnInit {
       headers: [
         {
           title: 'Mã chuyến ngoài',
-          field: 'id',
+          field: 'soods',
           width: 250,
           tdTemplate: this.machuyenngoaiTpl
         },
@@ -318,9 +318,9 @@ export class Spch00252Component extends BaseComponent implements OnInit {
         {
           title: 'Hành động',
           tdTemplate: this.operationTpl,
-          width: 300,
-          // fixed: true,
-          // fixedDir: 'right'
+          width: 190,
+          fixed: true,
+          fixedDir: 'right'
         }
       ],
       total: 0,

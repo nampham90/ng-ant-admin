@@ -24,6 +24,9 @@ import { LayoutPdfService } from '@app/core/services/common/layout-pdf.service';
 import { CtchuyenngoaiService } from '@app/core/services/http/chuyenngoai/ctchuyenngoai.service';
 import { CommonService } from '@app/core/services/http/common/common.service';
 import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
+import { Spch00201subupdateTiencuocxengoaiService } from '@app/widget/modal/chuyen/spch00201subupdate-tiencuocxengoai/spch00201subupdate-tiencuocxengoai.service';
+import { Spch00201subupdateTiencuocxenhaService } from '@app/widget/modal/chuyen/spch00201subupdate-tiencuocxenha/spch00201subupdate-tiencuocxenha.service';
+import { ModalBtnStatus } from '@app/widget/base-modal';
 interface SearchParam {
   iduser?: string;
   ngaybatdau: string | null;
@@ -56,7 +59,10 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('noidungdonhangTpl', { static: true }) noidungdonhangTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('sotienTpl', { static: true }) sotienTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('soluongTpl', { static: true }) soluongTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('donvitinhTpl', { static: true }) donvitinhTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('trangthaiTpl', { static: true }) trangthaiTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('nguonxeTpl', { static: true }) nguonxeTpl!: TemplateRef<NzSafeAny>;
 
   fnInit() {
     this.cdf.markForCheck();
@@ -86,6 +92,8 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
     private pdfService: LayoutPdfService,
     private ctChuyenngoaiService: CtchuyenngoaiService,
     private commonService: CommonService,
+    private modalspch00201xenhaService: Spch00201subupdateTiencuocxenhaService,
+    private modalspch00201xengoaiService: Spch00201subupdateTiencuocxengoaiService
     
   ) {
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
@@ -287,6 +295,41 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
     })
   }
 
+  capnhat(idNhatkykh: any,idphieunhaphang: any, status01: any) {
+    if(status01 == "") {
+      // nhap dơn hàng xe nhà
+      // 1. cập nhật "tiencuoc" trong table phieunhaphang
+      // 1. cập nhật "tiencuoc" trong table nhatkykh
+      this.modalspch00201xenhaService.show({nzTitle: "Cập nhật tiền cước"},{tiencuoc:idphieunhaphang['tiencuoc']}).subscribe(
+        res => {
+          if (!res || res.status === ModalBtnStatus.Cancel) {
+            return;
+          }
+          const param = { ...res.modalValue };
+          let req = {
+            "soID": idphieunhaphang["soID"],
+            "idNhatkykh" : idNhatkykh,
+            "tiencuocupdate": param['tiencuoc']
+          }
+          console.log(req);
+        }
+      )
+      
+
+    } else {
+      // cập nhật dơn hàng xe ngoai
+      // 1. cập nhật "tiencuoc" trong table nhatkykh
+      // 2. cập nhật "tiencuoc" trong table chitietchuyenngoai
+      // gửi cái idchuyen ngoài lên modal . modal tìm tất cả các chi tiết chuyên hàng. 
+      let req = {
+        "idNhatkykh" : idNhatkykh,
+        "idctchuyenngoai": "", 
+        "tiencuocupdate": 0
+      }
+    }
+
+  }
+
   // duyet thanh toán
   duyetthanhtoan(id: string) {
 
@@ -412,6 +455,36 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
       showCheckbox: true,
       headers: [
         {
+          title: 'Nội dung đơn hàng',
+          width: 450,
+          field: 'idphieunhaphang',
+          tdTemplate: this.noidungdonhangTpl
+        },
+        {
+          title: 'Số tiền',
+          width: 120,
+          field: 'sotien',
+          tdTemplate: this.sotienTpl
+        },
+        {
+          title: 'Số lượng',
+          width: 120,
+          field: 'soluong',
+          tdTemplate: this.soluongTpl
+        },
+        {
+          title: 'Đơn vị tính',
+          width: 120,
+          field: 'donvitinh',
+          tdTemplate: this.donvitinhTpl
+        },
+        {
+          title: 'Nguồn xe',
+          width: 250,
+          field: 'nguonxe',
+          tdTemplate: this.nguonxeTpl
+        },
+        {
           title: 'Ngày',
           field: 'ngay',
           width: 150,
@@ -422,23 +495,6 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
           width: 180,
           field: 'trangthai',
           tdTemplate: this.trangthaiTpl
-        },
-        {
-          title: 'Số tiền',
-          width: 120,
-          field: 'sotien',
-          tdTemplate: this.sotienTpl
-        },
-        {
-          title: 'Nội dung đơn hàng',
-          width: 450,
-          field: 'idphieunhaphang',
-          tdTemplate: this.noidungdonhangTpl
-        },
-        {
-          title: 'Hình thức thánh toán',
-          width: 200,
-          field: 'hinhthucthanhtoan',
         },
         {
           title: 'Ghi chú',

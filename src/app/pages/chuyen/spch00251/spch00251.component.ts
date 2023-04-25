@@ -25,6 +25,7 @@ import { TabService } from '@app/core/services/common/tab.service';
 import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
 import { Spin00901Service } from '@app/core/services/http/trongkho/spin00901.service';
 import { finalize } from 'rxjs';
+import { SubcommonsoidService } from '@app/widget/modal/common/subcommonsoid/subcommonsoid.service';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -68,6 +69,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     private chuyenngoaiDto: ChuyenngoaidtoService,
     private spin00901Service : Spin00901Service,
     private fb: FormBuilder,
+    private modalListSoIDService: SubcommonsoidService,
     
   ) { 
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
@@ -371,6 +373,44 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     this.tableChangeDectction();
   }
 
+  addtrongkho() {
+    this.modalListSoIDService.show({nzTitle: "Danh Hàng tồn kho"},{showcomfirm:false,idchuyen: "NULL",status02: "KHONG"}).subscribe(
+      res => {
+        if (!res || res.status === ModalBtnStatus.Cancel) {
+          return;
+        }
+        const param = { ...res.modalValue };
+        let idUser = "";
+        if(param['iduser']['id']) {
+           idUser = param['iduser']['id'];
+        } else {
+           idUser = param['iduser']['_id'];
+        }
+        let item = {
+           soid : param['soID'],
+           idkhachhang :  idUser,
+           tiencuoc :  param['tiencuoc'],
+           thongtindonhang : param['noidungdonhang'],
+           soluong :  param['soluong'],
+           donvitinh : param['donvitinh'],
+           diadiembochang : param['diadiembochang'],
+           htttkhachhang : param['hinhthucthanhtoan']+"",
+           tennguoinhan : param['tennguoinhan'],
+           sdtnguoinhan : param['sdtnguoinhan'],
+           diachinguoinhan : param['diachinguoinhan'],
+           ghichu : param['ghichu'],
+           tiencuocxengoai : 0,
+           htttxengoai: ""
+        }
+        this.mergeDetail(item);
+        this.addListDetail();
+        this.getDataList();
+        this.showBtnConfirm();
+      }
+    )
+  }
+
+
   add() {
     this.subwinCtChuyenngoaiService.show({ nzTitle:'Thêm mới' }).subscribe(
       res => {
@@ -458,6 +498,8 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     for(let element of this.listdetail) {
       if(element.stt == ctdetail.stt) {
         element.thongtindonhang = ctdetail['thongtindonhang'];
+        element.soluong = ctdetail['soluong'];
+        element.donvitinh = ctdetail['donvitinh'];
         element.diadiembochang = ctdetail['diadiembochang'];
         element.ghichu = ctdetail['ghichu'];
         element.idkhachhang = ctdetail['idkhachhang']
@@ -546,9 +588,9 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         {
           title: 'Hành động',
           tdTemplate: this.operationTpl,
-          width: 300,
-          // fixed: true,
-          // fixedDir: 'right'
+          width: 160,
+          fixed: true,
+          fixedDir: 'right'
         }
       ],
       total: 0,

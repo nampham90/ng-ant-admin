@@ -1,0 +1,7 @@
+<nz-form-item>
+    <!-- Tiền cước -->
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="tiencuoc">Tiền cước</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập ...">
+        <app-input-currency [Amount]="tiencuocMode" (changeAmount)="changeTiencuoc($event)"></app-input-currency>
+    </nz-form-control>
+</nz-form-item>

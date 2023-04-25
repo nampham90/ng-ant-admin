@@ -20,6 +20,8 @@ export class SubwindowctchuyenngoaiComponent implements OnInit {
   const = Const;
   listKh : any[] = [];
 
+  listdonvitinh = Const.lstdonvitinh;
+
   tiencuocMode = 0;
   tiencuocxengoaiMode = 0;
   editForm = false;
@@ -63,6 +65,8 @@ export class SubwindowctchuyenngoaiComponent implements OnInit {
     this.addEditForm = this.fb.group({
       stt: [null],
       thongtindonhang: [null, [Validators.required]],
+      soluong: [null,[Validators.required]],
+      donvitinh: [null,[Validators.required]],
       diadiembochang: [null, [Validators.required]],
       htttxengoai: ["1", [Validators.required]],
       idkhachhang: ["", [Validators.required]],

@@ -225,7 +225,7 @@ export class Spin00251Component extends BaseComponent implements OnInit {
           if(res==0) {
             this.modalSrv.success({nzTitle: "Thực hiện thành công !"});
           } else {
-            this.modalSrv.success({nzTitle: "Thực hiện thất bại !"});
+            this.modalSrv.success({nzTitle: "Đơn hàng này không tồn tại !"});
           }
         })
       }
@@ -242,7 +242,17 @@ export class Spin00251Component extends BaseComponent implements OnInit {
       .pipe()
       .subscribe(res => {
         if(res) {
-          this.headerForm.patchValue(res['header']);
+          if(res['header']) {
+            let reqheader = {
+              "soID": res['header']['soID'],
+              "iduser": res['header']['iduser']['id'],
+              "hinhthucthanhtoan": res['header']['hinhthucthanhtoan'] + "",
+              "ghichu": res['header']['ghichu']
+            }
+            this.usernm = res['header']['iduser']['name'];
+            this.headerForm.patchValue(reqheader);
+          }
+         
           this.listdetail = [...res['listsp']];
           let stt = 1;
           for(let element of this.listdetail) {

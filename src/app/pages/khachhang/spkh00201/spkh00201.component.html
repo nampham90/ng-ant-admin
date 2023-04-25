@@ -127,8 +127,11 @@
           [tableData]="dataList"
         ></app-ant-table>
         <ng-template #operationTpl let-id="id" let-idphieunhaphang="idphieunhaphang" let-status01="status01" let-showBtn="showBtn">
-            <span *appAuth="ActionCode.CtcnThanhtoan" class="operate-text">
-                <button *ngIf="!showBtn['btnthanhtoan']" nz-button nzType="primary" nzGhost (click)="thanhtoan(idphieunhaphang,status01)" [disabled]="true">Thanh toán</button><!--showBtn['disabledBtnthanhtoan']-->
+            <!-- <span *appAuth="ActionCode.CtcnThanhtoan" class="operate-text">
+                <button *ngIf="!showBtn['btnthanhtoan']" nz-button nzType="primary" nzGhost (click)="thanhtoan(idphieunhaphang,status01)" [disabled]="true">Thanh toán</button>
+            </span> -->
+            <span *appAuth="ActionCode.CtcnCapnhat" class="operate-text">
+                <button nz-button nzType="primary" nzGhost (click)="capnhat(id,idphieunhaphang,status01)" >Cập nhật</button>
             </span>
             <span *appAuth="ActionCode.CtcnDuyetThanhtoan" class="operate-text">
                 <button *ngIf="!showBtn['btnduyet']" nz-button nzType="primary" nzGhost (click)="duyetthanhtoan(id)">Duyệt</button>
@@ -143,12 +146,26 @@
             </ng-template>
         </ng-template>
         <ng-template #noidungdonhangTpl let-idphieunhaphang="idphieunhaphang" let-status01="status01">
-            <ng-container *ngIf="idphieunhaphang else Block">
+            <ng-container *ngIf="status01 == '' else Block">
                 <span>{{idphieunhaphang['noidungdonhang']}}</span>
             </ng-container>
             <ng-template #Block>
-                <span>{{status01}}</span>
+                <span>{{idphieunhaphang['thongtindonhang']}}</span>
             </ng-template>
+        </ng-template>
+        <ng-template #nguonxeTpl let-idphieunhaphang="idphieunhaphang" let-status01="status01">
+            <ng-container *ngIf="status01 == '' else Block">
+                <span>KDP - {{idphieunhaphang['biensoxe']}}</span>
+            </ng-container>
+            <ng-template #Block>
+                <span>{{idphieunhaphang['nguonxe']['datanm']}}</span>
+            </ng-template>
+        </ng-template>
+        <ng-template #soluongTpl let-idphieunhaphang="idphieunhaphang">
+               <span>{{idphieunhaphang['soluong']}}</span>
+        </ng-template>
+        <ng-template #donvitinhTpl let-idphieunhaphang="idphieunhaphang">
+            <span>{{idphieunhaphang['donvitinh']}}</span>
         </ng-template>
         <ng-template #sotienTpl let-sotien="sotien">
             <span>{{sotien*1000 | currency : "VND"}}</span>

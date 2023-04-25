@@ -279,7 +279,7 @@ export class NguonxeComponent extends BaseComponent implements OnInit {
         {
           title: 'Vận hành',
           tdTemplate: this.operationTpl,
-          width: 480,
+          width: 380,
           fixed: true,
           fixedDir: 'right'
         }
