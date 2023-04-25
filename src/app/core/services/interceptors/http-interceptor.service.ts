@@ -55,7 +55,7 @@ export class HttpInterceptorService implements HttpInterceptor {
       this.socketService.emit("client-get-ip","msg");
       this.socketService.on('server-send-ip', (ip: string) => {
           //this.message.info(ip);
-          this.ipService.ip = ip;
+         // this.ipService.ip = ip;
       })
       errMsg = 'Đã xảy ra lỗi mạng không xác định, vui lòng kiểm tra mạng của bạn.';
       this.message.info('Đã xảy ra lỗi mạng không xác định, vui lòng kiểm tra mạng của bạn.');
