@@ -306,12 +306,17 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
             return;
           }
           const param = { ...res.modalValue };
+          if(param['tiencuoc'] == idphieunhaphang['tiencuoc']) {
+            this.modalSrv.info({nzTitle: "Bạn chưa thay đổi tiền cước !"})
+            return;
+          } 
+
           let req = {
             "soID": idphieunhaphang["soID"],
             "idNhatkykh" : idNhatkykh,
             "tiencuocupdate": param['tiencuoc']
           }
-          console.log(req);
+          
         }
       )
       

@@ -426,9 +426,6 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     )
   }
 
-  addtrongkho() {
-    
-  }
 
   edit(stt: any) {
     let res : any;
