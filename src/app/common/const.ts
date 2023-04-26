@@ -277,6 +277,9 @@ export const Spin00601Ant100Xuatnhieudon = "spin00601/spin00601Ant100Xuatnhieudo
 export const Spch00201Ant100UpdateTiencuocxenha = "spch00201/spch00201Ant100UpdateTiencuocxenha";
 export const Spch00201Ant100UpdateTiencuocxengoai = "spch00201/spch00201Ant100UpdateTiencuocxengoai";
 
+//spkh00301 
+export const Spkh00301Ant100Search = "spkh00301/spkh00301Ant100Search";
+
 
 
 export const font =
