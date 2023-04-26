@@ -272,7 +272,10 @@ export const Spin00301Ant100Search = "spin00301/spin00301Ant100Search";
 export const Spin00601Ant100XuatHang = "spin00601/spin00601Ant100XuatHang";
 export const Spin00601Ant100Xuatnhieudon = "spin00601/spin00601Ant100Xuatnhieudon";
 
-// spch00301 cập nhật tiền cước
+// spch00201 cập nhât tiền cươc
+//spch00201Ant100UpdateTiencuocxenha
+export const Spch00201Ant100UpdateTiencuocxenha = "spch00201/spch00201Ant100UpdateTiencuocxenha";
+export const Spch00201Ant100UpdateTiencuocxengoai = "spch00201/spch00201Ant100UpdateTiencuocxengoai";
 
 
 

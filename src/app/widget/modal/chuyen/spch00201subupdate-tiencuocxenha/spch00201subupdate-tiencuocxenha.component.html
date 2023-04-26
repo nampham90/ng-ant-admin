@@ -1,7 +1,23 @@
-<nz-form-item>
-    <!-- Tiền cước -->
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="tiencuoc">Tiền cước</nz-form-label>
-    <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập ...">
-        <app-input-currency [Amount]="tiencuocMode" (changeAmount)="changeTiencuoc($event)"></app-input-currency>
-    </nz-form-control>
-</nz-form-item>
+<form nz-form [formGroup]="addEditForm">
+    <nz-form-item>
+        <!-- Tiền cước -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="tiencuoc">Tiền cước</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập ...">
+            <app-input-currency [Amount]="tiencuocMode" (changeAmount)="changeTiencuoc($event)"></app-input-currency>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <!-- ly do thay đổi tiền cước-->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="lydo">Lý do</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+            <textarea
+                nz-input
+                name="lydo"
+                id="lydo"
+                formControlName="lydo"
+                placeholder="Nêu lý do thay đổi tiền cước."
+                [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+            ></textarea>
+        </nz-form-control>
+    </nz-form-item>
+</form>

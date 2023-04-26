@@ -27,6 +27,7 @@ import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/vid
 import { Spch00201subupdateTiencuocxengoaiService } from '@app/widget/modal/chuyen/spch00201subupdate-tiencuocxengoai/spch00201subupdate-tiencuocxengoai.service';
 import { Spch00201subupdateTiencuocxenhaService } from '@app/widget/modal/chuyen/spch00201subupdate-tiencuocxenha/spch00201subupdate-tiencuocxenha.service';
 import { ModalBtnStatus } from '@app/widget/base-modal';
+import { Spch00201Service } from '@app/core/services/http/chuyen/spch00201.service';
 interface SearchParam {
   iduser?: string;
   ngaybatdau: string | null;
@@ -93,7 +94,8 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
     private ctChuyenngoaiService: CtchuyenngoaiService,
     private commonService: CommonService,
     private modalspch00201xenhaService: Spch00201subupdateTiencuocxenhaService,
-    private modalspch00201xengoaiService: Spch00201subupdateTiencuocxengoaiService
+    private modalspch00201xengoaiService: Spch00201subupdateTiencuocxengoaiService,
+    private spch00201Service: Spch00201Service
     
   ) {
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
@@ -299,7 +301,8 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
     if(status01 == "") {
       // nhap dơn hàng xe nhà
       // 1. cập nhật "tiencuoc" trong table phieunhaphang
-      // 1. cập nhật "tiencuoc" trong table nhatkykh
+      // 2. cập nhật "tiencuoc" trong table nhatkykh
+      // 3. ghi nhật ký hệ thông có thay đổi tiền cước
       this.modalspch00201xenhaService.show({nzTitle: "Cập nhật tiền cước"},{tiencuoc:idphieunhaphang['tiencuoc']}).subscribe(
         res => {
           if (!res || res.status === ModalBtnStatus.Cancel) {
@@ -314,8 +317,16 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
           let req = {
             "soID": idphieunhaphang["soID"],
             "idNhatkykh" : idNhatkykh,
-            "tiencuocupdate": param['tiencuoc']
+            "tiencuocupdate": param['tiencuoc'],
+            "lydo": param['lydo']
           }
+          this.spch00201Service.updateTiencuocxenha(req).subscribe(res=> {
+            console.log(res);
+            if(res == 1) {
+              this.message.success("Thực hiện thành công !");
+              this.getDataList();
+            }
+          })
           
         }
       )
@@ -325,12 +336,36 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
       // cập nhật dơn hàng xe ngoai
       // 1. cập nhật "tiencuoc" trong table nhatkykh
       // 2. cập nhật "tiencuoc" trong table chitietchuyenngoai
-      // gửi cái idchuyen ngoài lên modal . modal tìm tất cả các chi tiết chuyên hàng. 
-      let req = {
-        "idNhatkykh" : idNhatkykh,
-        "idctchuyenngoai": "", 
-        "tiencuocupdate": 0
-      }
+      this.modalspch00201xenhaService.show({nzTitle: "Cập nhật tiền cước"},{tiencuoc:idphieunhaphang['tiencuoc']}).subscribe(
+        res=>{
+          if (!res || res.status === ModalBtnStatus.Cancel) {
+            return;
+          }
+          const param = { ...res.modalValue };
+          if(param['tiencuoc'] == idphieunhaphang['tiencuoc']) {
+            this.modalSrv.info({nzTitle: "Bạn chưa thay đổi tiền cước !"})
+            return;
+          } 
+          let req = {
+            "idNhatkykh" : idNhatkykh,
+            "idchuyenngoai": idphieunhaphang['idchuyenngoai'], 
+            "sdtnguoinhan": idphieunhaphang['sdtnguoinhan'],
+            "thongtindonhang": idphieunhaphang['thongtindonhang'],
+            "tiencuoc": idphieunhaphang['tiencuoc'],
+            "tiencuocupdate":  param['tiencuoc'],
+            "lydo": param['lydo']
+          }
+
+          this.spch00201Service.updateTiencuocxengoai(req).subscribe(res => {
+            console.log(res);
+            if(res == 1) {
+              this.message.success("Thực hiện thành công !");
+              this.getDataList();
+            }
+          })
+        }
+      )
+     
     }
 
   }

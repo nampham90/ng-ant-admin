@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidatorsService } from '@app/core/services/validators/validators.service';
 import { fnCheckForm } from '@app/utils/tools';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -42,7 +42,9 @@ export class Spch00201subupdateTiencuocxenhaComponent implements OnInit {
   }
 
   initForm(): void {
-    this.addEditForm = this.fb.group({});
+    this.addEditForm = this.fb.group({
+      lydo: [null, [Validators.required]],
+    });
   }
 
   changeTiencuoc($event: any) {this.tiencuocMode = $event; }
