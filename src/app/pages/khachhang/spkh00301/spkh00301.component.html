@@ -110,6 +110,25 @@
             </button> -->
         </ng-template>
     </ng-container>
+    <ng-template #linkTpl let-soodc="soodc">
+        <span><a nz-button (click)="getItem(soodc)" nzType="link">{{soodc}}</a></span>
+        <button nz-button [cdkCopyToClipboard]="copy(soodc)" nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
+    </ng-template>
+    <ng-template #tenkhachhangTpl let-idkhachhang="idkhachhang" >
+        <nz-alert nzType="success" nzMessage="{{idkhachhang['name']}}"></nz-alert>
+    </ng-template>
+
+    <ng-template #tiencuocTpl let-tongcuoc="tongcuoc">
+        <span>{{tongcuoc*1000 | currency : "VND" : ''}}</span>
+    </ng-template>
+    <ng-template #trangthaiTpl let-status01="status01">
+        <ng-container *ngIf="status01 == 0 else statusTpl">
+            <nz-alert nzType="warning" nzMessage="Chờ thanh toán"></nz-alert>
+        </ng-container>
+        <ng-template #statusTpl>
+            <nz-alert nzType="success" nzMessage="Đã thanh toán"></nz-alert>
+        </ng-template>
+    </ng-template>
 </div>
 
 

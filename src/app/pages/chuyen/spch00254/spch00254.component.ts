@@ -213,6 +213,7 @@ export class Spch00254Component extends BaseComponent implements OnInit {
     } else {
       this.btnDisble = false;
     }
+    this.getDataList();
   }
 
   private initTable(): void {
@@ -220,15 +221,21 @@ export class Spch00254Component extends BaseComponent implements OnInit {
       showCheckbox: true,
       headers: [
         {
-          title: 'Mã hóa đơn',
+          title: 'Số HDTTXN',
+          field: 'sohdttxn',
+          width: 300
+        },
+        {
+          title: 'Thông Tin đơn hàng',
           field: 'iddonhang',
           width: 250,
           tdTemplate: this.donhangTpl
         },
         {
-          title: 'Số HDTTXN',
-          field: 'sohdttxn',
-          width: 300
+          title: 'Số tiền ',
+          width: 200,
+          field: 'sotienno',
+          tdTemplate: this.sotiennoTpl
         },
         {
           title: 'Nguồn Xe',
@@ -256,12 +263,6 @@ export class Spch00254Component extends BaseComponent implements OnInit {
           title: 'SDT Tài xế',
           width: 200,
           field: 'sodienthoai',
-        },
-        {
-          title: 'Số tiền ',
-          width: 200,
-          field: 'sotienno',
-          tdTemplate: this.sotiennoTpl
         },
         {
           title: 'Ghi chú',

@@ -69,6 +69,10 @@ export class Spkh00301Component extends BaseComponent implements OnInit{
   ];
 
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('linkTpl', { static: true }) linkTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('tenkhachhangTpl', { static: true }) tenkhachhangTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('trangthaiTpl', { static: true }) trangthaiTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('tiencuocTpl', { static: true }) tiencuocTpl!: TemplateRef<NzSafeAny>;
 
   ngaybatdau: string | null = null;
   ngayketthuc: string | null = null;
@@ -110,7 +114,7 @@ export class Spkh00301Component extends BaseComponent implements OnInit{
 
   changeStatus01(): void {
     if (this.checkOptionStatus.every(item => item.checked)) {
-       this.searchParam.status01 = 2;
+       this.searchParam.status01 = null;
     } else {
        if(this.checkOptionStatus[0].checked == true) {
          this.searchParam.status01 = 0;
@@ -170,6 +174,7 @@ export class Spkh00301Component extends BaseComponent implements OnInit{
 
   resetForm() {
     this.searchParam = {};
+    this.usernm = "";
   }
 
   reloadTable(): void {
@@ -195,6 +200,14 @@ export class Spkh00301Component extends BaseComponent implements OnInit{
     this.tableConfig.pageSize = e;
   }
 
+  copy(soodc: any) {
+    return `${soodc}`;
+  }
+
+  getItem(soodc: any) {
+
+  }
+
   private initTable(): void {
     this.tableConfig = {
       showCheckbox: false,
@@ -203,31 +216,37 @@ export class Spkh00301Component extends BaseComponent implements OnInit{
           title: "Số ODC",
           field: 'soodc',
           width: 180,
+          tdTemplate: this.linkTpl
         },
         {
           title: "Tống cước",
           field: 'tongcuoc',
           width: 180,
+          tdTemplate: this.tiencuocTpl
         },
         {
           title: "Khách hàng",
           field: 'tenkhachhang',
           width: 180,
+          tdTemplate: this.tenkhachhangTpl
         },
         {
           title: "Trạng thái",
           width: 180,
           field: 'trangthai',
+          tdTemplate: this.trangthaiTpl
         },
         {
           title: "Ngày xuất",
           width: 120,
           field: 'ngayxuat',
+          pipe: 'date: dd/MM/yyyy:HH:ss'
         },
         {
           title: "Ngày thanh toán",
           width: 150,
           field: 'ngaythanhtoan',
+          pipe: 'date: dd/MM/yyyy:HH:ss'
         },
         {
           title: "Vận hành",

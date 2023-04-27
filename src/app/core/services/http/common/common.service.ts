@@ -35,6 +35,10 @@ export class CommonService {
   tongnoAll(params: any) : Observable<any> {
     return this.http.post(Const.CommonAnt100Tongnoall, params, { needSuccessInfo: false});
   }
+  // tính tống nợ 1 khách hàng
+  tongnoUser(params: any) : Observable<any> {
+    return this.http.post(Const.CommonAnt100Tongnouser, params, { needSuccessInfo: false});
+  }
 
   // list top 10 khách hàng có doanh thu cao nhất
   listtopdoanhthu(params: any) : Observable<any> {

@@ -80,6 +80,7 @@ export const CommonAnt100Listtaichinh = "common/commonAnt100Listloinhanthang";
 export const CommonAnt100Thongketaichinhnam = "common/commonAnt100Thongketaichinhnam";
 export const CommonAnt100Tongchuyenhangtrongnam = "common/commonAnt100Tongchuyenhangtrongnam";
 export const CommonAnt100Tongnoall = "common/commonAnt100Tongnoall";
+export const CommonAnt100Tongnouser = "common/commonAnt100Tongnouser";
 export const CommonAnt100Listtopdoanhthu = "common/commonAnt100Listtopdoanhthu";
 export const CommonAnt100Listtopchiphi = "common/commonAnt100Listtopchiphi";
 export const CommonAnt100Listtoptongcuoctungxe = "common/commonAnt100Listtongcuoctungxe";
