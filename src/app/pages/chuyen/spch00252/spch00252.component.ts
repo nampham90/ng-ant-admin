@@ -24,6 +24,7 @@ import { CommonService } from '../../../core/services/http/common/common.service
 import { LayoutPdfService } from '@app/core/services/common/layout-pdf.service';
 import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
 import { ModalBtnStatus } from '@app/widget/base-modal';
+import { async } from '@antv/x6/lib/registry/marker/async';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -214,13 +215,13 @@ export class Spch00252Component extends BaseComponent implements OnInit {
       nzContent: "Không thể cập nhật sau khi xuất. Nhấn OK để thực hiện xuất pdf",
       nzOnOk: ()=> {
         this.dataService.postExportDetail({id:id}).pipe()
-        .subscribe(data => {
+        .subscribe(async data => {
           let ods = data['ods'];
           let title = "Hóa Đơn Vận Chuyển - " + Const.doanhnghiep;
           let header = [['Thông tin đơn hàng','Địa điểm bóc hàng','Tên người nhận','SDT người nhận','Địa chỉ người nhận','Ghi chú']];
           let dataHeader = this.fnreturnHeaderPDF(data['resHeader'],ods);
           let lstdata = this.fngenerateData(data['listdetail']);
-          this.pdfService.exportPDF(header,dataHeader,lstdata,title,this.getDate(),"Tài xế ký nhận","Khách hàng ký nhận");
+          await this.pdfService.exportPDF(header,dataHeader,lstdata,title,this.getDate(),"Tài xế ký nhận","Khách hàng ký nhận",ods);
           // update status02 = 1;
           this.fnUpdateStatus02(id);
           this.getDataList();

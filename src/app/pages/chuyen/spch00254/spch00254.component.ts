@@ -331,7 +331,7 @@ export class Spch00254Component extends BaseComponent implements OnInit {
         //lấy list id
         //get đơn vi vận chuyển
         this.commonService.getHDTTXN().pipe()
-        .subscribe(res => {
+        .subscribe(async res => {
           if(res) {
             let formatExp = this.fnFormat();
             let title = "Danh Sách Công Nợ";
@@ -346,7 +346,7 @@ export class Spch00254Component extends BaseComponent implements OnInit {
             headerlayout[2]['value'] = data.length + '';
             headerlayout[3]['field'] = 'Số HDTTXN:';
             headerlayout[3]['value'] = res;
-            this.pdfService.exportPDF(header,headerlayout,data,title,this.getDate(),"BVC ký xác nhận","BTT ký xác nhận");
+            await this.pdfService.exportPDF(header,headerlayout,data,title,this.getDate(),"BVC ký xác nhận","BTT ký xác nhận",res);
             // insert vao bang donhangexport với thông tin gồm. header, và data status01 = 1. chờ thanh toán
             this.createDataExport(this.searchParam.nguonxe!,this.getDate(),title,data,headerlayout,header,system,formatExp.listId,res);
             this.getDataList();

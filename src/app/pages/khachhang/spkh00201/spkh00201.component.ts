@@ -641,7 +641,7 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
     if(this.generateData().length > 0) {
       // get odc 
       this.commonService.getODC().pipe()
-      .subscribe(res => {
+      .subscribe(async res => {
         let title = "Công nợ " + this.tenkhachhang;
         let header= [['Ngày Vận Chuyển','Thông Tin Đơn Hàng', "Tiền cước"]];
         this.pdfService.clearHeader();
@@ -656,7 +656,7 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
         headerlayout[3]['value'] =  this.displayVND(this.fnTongCuoc());
         headerlayout[4]['field'] = 'Số ODC:';
         headerlayout[4]['value'] =  this.displayOD(res);
-        this.pdfService.exportPDF(header,headerlayout,this.generateData(),title,this.getDate(),"Bên thanh toán","Bên Vận Chuyển");
+        await this.pdfService.exportPDF(header,headerlayout,this.generateData(),title,this.getDate(),"Bên thanh toán","Bên Vận Chuyển",res);
         // update so odc cho các don hàng đã exprot
         let lstId = [];
         for(let element of this.dataList) {

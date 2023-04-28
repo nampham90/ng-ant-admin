@@ -196,10 +196,11 @@ export class Spch00255Component extends BaseComponent implements OnInit {
 
   exportPDF(id: string) {
     this.dataService.postDetail({id:id}).pipe()
-    .subscribe(data => {
+    .subscribe(async data => {
       if(data) {
+        let filename = data['sohdttxn'];
         this.pdfService.clearHeader();
-        this.pdfService.exportPDF(data['header'],data['lstheader'],data['lstdata'],data['title'],this.getDate(),"BVC ký xác nhận","BTT ký xác nhận");
+        await this.pdfService.exportPDF(data['header'],data['lstheader'],data['lstdata'],data['title'],this.getDate(),"BVC ký xác nhận","BTT ký xác nhận",filename);
       } else {
          this.modalSrv.error({nzTitle: "Lỗi hệ thống ! vui long liên hệ bộ phận kỷ thuật"});
       }

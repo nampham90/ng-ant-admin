@@ -32,6 +32,7 @@ import { ChiphichuyenService } from '@app/core/services/http/chiphichuyen/chiphi
 import { SubwindowChiphiService } from '@app/widget/modal/subwindowchiphi/subwindow-chiphi.service';
 import { LayoutPdfService } from '@app/core/services/common/layout-pdf.service';
 import {VideoyoutubeService} from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service'
+import { async } from '@antv/x6/lib/registry/marker/async';
 
 export interface Product {
   id?:string,
@@ -295,7 +296,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
 
   fnExportDataPDF(id: string) {
     this.phhService.ExportDataPDFChuyen(id)
-    .subscribe(res => {
+    .subscribe(async res => {
       if(res) {
         // tinh tong cuoc
         let tc = this.fnTinhTongCuoc(res.lstproduct);
@@ -337,7 +338,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         // chi phi
         let headerchiphi = [['Tên chi phí', 'Số tiền chi','Ghi chú']];
         let datachiphi = this.fnGetDataExportChiPhi(res.lstchiphi);
-        this.pdfService.exportPDFChuyen(header,layoutheader,layoutheader2,data,headerchiphi,datachiphi,title,this.getDate(),"","Quản lý ký duyệt");  
+        await this.pdfService.exportPDFChuyen(header,layoutheader,layoutheader2,data,headerchiphi,datachiphi,title,this.getDate(),"","Quản lý ký duyệt",res.odt);  
       }
     })
   }

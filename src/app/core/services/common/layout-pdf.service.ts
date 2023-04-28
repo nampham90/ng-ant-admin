@@ -10,8 +10,15 @@ export class LayoutPdfService {
 
   constructor() { }
 
-  exportPDFChuyen(header: any,dataheader:any, dataheader2:any,data: any, headerp2:any, datapage2:any,title: string, ngay: string, footer1?: string, footer2?:string) {
+  async exportPDFChuyen(header: any,dataheader:any, dataheader2:any,data: any, headerp2:any, datapage2:any,title: string, ngay: string, footer1?: string, footer2?:string,filename?:string) {
     const pdf = new jsPDF('p', 'pt', 'a4');
+    let myBytes: Uint8Array;
+
+    const bgUrl = './assets/imgs/nen.jpg';
+    const bgData = await fetch(bgUrl).then(res => res.arrayBuffer());
+    myBytes = new Uint8Array(bgData);
+   // Thêm ảnh nền vào tài liệu PDF
+    pdf.addImage(myBytes, 'JPG', 0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height, '', 'FAST', 0.5);
     pdf.addFileToVFS("WorkSans-normal.ttf", Const.font);
     pdf.addFont("WorkSans-normal.ttf", "WorkSans", "normal");
     pdf.setFont("WorkSans");
@@ -61,11 +68,19 @@ export class LayoutPdfService {
     }
     
     // new window pdf
-    pdf.output('dataurlnewwindow');
+    //pdf.output('dataurlnewwindow');
+    pdf.save(`${filename}.pdf`);
   }
 
-  exportPDF(header: any,dataheader:any,data: any,title: string, ngay: string, footer1?: string, footer2?:string) {
+  async exportPDF(header: any,dataheader:any,data: any,title: string, ngay: string, footer1?: string, footer2?:string,filename?:string) {
     const pdf = new jsPDF('p', 'pt', 'a4');
+    let myBytes: Uint8Array;
+
+    const bgUrl = './assets/imgs/nen.jpg';
+    const bgData = await fetch(bgUrl).then(res => res.arrayBuffer());
+    myBytes = new Uint8Array(bgData);
+   // Thêm ảnh nền vào tài liệu PDF
+    pdf.addImage(myBytes, 'JPG', 0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height,'', 'FAST', 0.5);
     pdf.addFileToVFS("WorkSans-normal.ttf", Const.font);
     pdf.addFont("WorkSans-normal.ttf", "WorkSans", "normal");
     pdf.setFont("WorkSans");
@@ -97,10 +112,10 @@ export class LayoutPdfService {
       startY: 150,
     });
     // new window pdf
-    pdf.output('dataurlnewwindow');
+    //pdf.output('dataurlnewwindow');
 
     // save file pdf
-    // pdf.save();
+    pdf.save(`${filename}.pdf`);
 
   }
 
