@@ -25,6 +25,7 @@ export class SubwindowctchuyenngoaiComponent implements OnInit {
   tiencuocMode = 0;
   tiencuocxengoaiMode = 0;
   editForm = false;
+  _disable = false;
   changeTiencuoc($event: any) {this.tiencuocMode = $event; }
   changeTiencuocxengoai($event: any) {this.tiencuocxengoaiMode = $event; }
   constructor(
@@ -57,6 +58,9 @@ export class SubwindowctchuyenngoaiComponent implements OnInit {
       this.setFormStatusByType("enable");
       this.addEditForm.patchValue(this.params);
       this.tiencuocMode = this.params.tiencuoc;
+      if(this.params.soid && this.params.soid != "") {
+         this._disable = true;
+      }
       this.tiencuocxengoaiMode = this.params.tiencuocxengoai;
     }
   }

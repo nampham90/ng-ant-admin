@@ -124,9 +124,14 @@
             </button> -->
         </ng-template>
     </ng-container>
-    <ng-template #soidTpl let-soID="soID">
-        <span><a nz-button (click)="getItem(soID)" nzType="link">{{soID}}</a></span>
-        <button nz-button [cdkCopyToClipboard]="copy(soID)" nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
+    <ng-template #soidTpl let-soID="soID" let-tiencuoc="tiencuoc" let-status02="status02">
+        <ng-container *ngIf="tiencuoc == 0 && status02==2 else showsoID" >
+            <span><a nz-button (click)="getItem(soID)" nzType="link" [disabled]="true">{{soID}}</a></span>
+        </ng-container>
+        <ng-template #showsoID>
+            <span><a nz-button (click)="getItem(soID)" nzType="link">{{soID}}</a></span>
+            <button nz-button [cdkCopyToClipboard]="copy(soID)" nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
+        </ng-template>
     </ng-template>
     <ng-template #operationTpl let-soID="soID">
         <span *appAuth="ActionCode.Spin00801Delete" class="operate-text">

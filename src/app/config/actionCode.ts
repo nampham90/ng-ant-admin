@@ -90,7 +90,9 @@ export const ActionCode = {
   ChuyenngoaiAddtrongkho: 'default:chuyen:spch00251:addtrongkho',
   ChuyenngoaiEdit: 'default:chuyen:spch00251:update',
   ChuyenngoaiDel: 'default:chuyen:spch00251:del',
+  ChuyenngoaiHuy: 'default:chuyen:spch00251:huy',
   ConfirmChuyenngoai: 'default:chuyen:spch00251:confirm',
+
 
   // tim kiem chuyen ngoai
   TimkiemchuyenngoaiAdd : 'default:chuyen:spch00252:add',

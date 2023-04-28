@@ -37,6 +37,8 @@ export class SubcommonsoidComponent implements OnInit {
   @ViewChild('htttTpl', { static: true }) htttTpl!: TemplateRef<NzSafeAny>;
 
   constHttt = Const.Hinhthucthanhtoan;
+
+  lstsoID: any;
   
   constructor(
     private fb: FormBuilder,
@@ -59,8 +61,14 @@ export class SubcommonsoidComponent implements OnInit {
     if(obj['status02'] && obj['status02'] == "KHONG") {
        this.searchParam.status02 = 0;
     }
-
     this.initTable();
+
+    if(obj['listsoId'] && obj['listsoId'].length > 0) {
+        // ẩn mây những dòng sodi đã gửi lên
+        this.lstsoID = obj['listsoId'];
+    }
+
+
   }
 
   mergeHttt(httt: any) {
@@ -114,6 +122,16 @@ export class SubcommonsoidComponent implements OnInit {
     .subscribe(data => {
       const { list, total, pageNum } = data;
         this.dataList = [...list];
+        if(this.lstsoID.length > 0) {
+          for (let i = 0; i < this.dataList.length; i++) {
+            if (this.lstsoID.includes(this.dataList[i].soID)) {
+              this.dataList[i].disable = true;
+            } else {
+              this.dataList[i].disable = false;
+            }
+          }
+        }
+        console.log(this.dataList);
         this.tableConfig.total = total!;
         this.tableConfig.pageIndex = pageNum!;
         this.tableLoading(false);

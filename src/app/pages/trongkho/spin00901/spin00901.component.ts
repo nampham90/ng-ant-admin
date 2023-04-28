@@ -23,6 +23,7 @@ import { Spin00901Model } from '@app/core/model/trongkho/spin00901.model'
 
 interface SearchParam {
   datacd: string;
+  rcdkbn: string;
 }
 @Component({
   selector: 'app-spin00901',
@@ -163,6 +164,7 @@ export class Spin00901Component extends BaseComponent implements OnInit {
   }
 
   getDataList(e?: NzTableQueryParams) {
+    this.searchParam.rcdkbn = '0001';
     this.tableLoading(true);
     const params: SearchCommonVO<any> = {
       pageSize: this.tableConfig.pageSize!,
@@ -187,6 +189,7 @@ export class Spin00901Component extends BaseComponent implements OnInit {
 
   resetForm() {
     this.searchParam = {}
+    this.searchParam.rcdkbn = '0001';
   }
 
   reloadTable() {

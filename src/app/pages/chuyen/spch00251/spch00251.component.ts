@@ -26,6 +26,7 @@ import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/vid
 import { Spin00901Service } from '@app/core/services/http/trongkho/spin00901.service';
 import { finalize } from 'rxjs';
 import { SubcommonsoidService } from '@app/widget/modal/common/subcommonsoid/subcommonsoid.service';
+import { Spch00251Service } from '@app/core/services/http/chuyen/spch00251.service';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -70,6 +71,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     private spin00901Service : Spin00901Service,
     private fb: FormBuilder,
     private modalListSoIDService: SubcommonsoidService,
+    private spch00251Service: Spch00251Service
     
   ) { 
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
@@ -136,6 +138,8 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   btnDeleteAll = true;
   btnUpdate = true;
   showreturnBack = false;
+
+  showHuychuyenngoai = false;
   
   override ngOnInit(): void {
     this.initTable();
@@ -187,6 +191,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
             this.btnNew = false;
             this.btnUpdate = false;
             this.showreturnBack = true;
+            this.showHuychuyenngoai = true;
         });
     }
 
@@ -200,6 +205,17 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     this.nguonxeService.postAll(req).pipe().subscribe(res => {
         this.listnguonxe = res;
     })
+  }
+
+  // check htttxengoai và tiencuocxengoai trước khi đem đi tạo
+  fnCheckDataList() {
+    for(let element of this.dataList) {
+      if(element['htttxengoai'] == "" || element['tiencuocxengoai'] == 0) {
+        return true;
+        break;
+      }
+    }
+    return false;
   }
 
   fnBtnConfirm() {
@@ -221,6 +237,14 @@ export class Spch00251Component extends BaseComponent implements OnInit {
             "mode": "update" // them mới và updade củ
         }
       } else {
+        // check dataList trước khi gửi đi tạo
+        if(this.fnCheckDataList()== true) {
+          this.modalSrv.info({
+            nzTitle: "Vui lòng cập nhật đơn hàng",
+            nzContent: "Nôi dung cần cập nhật\n 1. Tiền cước xe ngoài\n 2. Httt xe ngoài"
+          });
+          return;
+        }
         mode = "create";
         title = "Bạn chắc chắn dữ liệu bạn tạo đã đúng chưa !";
         content = "Nhấn ok để hoàn thành công việc !";
@@ -251,6 +275,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
               this.chuyenngoaiDto.listdetail = res.reslistdetail;
               if(mode == "create") {
                 this.message.success("Đăng ký thành công !");
+                this.showHuychuyenngoai = true;
               } else {
                 this.message.success("Cập nhật thành công !");
               }
@@ -258,6 +283,37 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         }
       });
     }
+  }
+  
+  /// huy chuyến ngoai
+  fnBtnHuychuyen() {
+    // 1. cập nhật nhật lài tiencuoc=, status02 = 0 ở phieunhaphang . nếu đơn này lấy từ kho
+    // 2. xóa chi tiết chuyên ngoài
+    // 3. xóa chuyến ngoài
+    // params :idchuyenngoai
+    const idValue = this.headerForm.get('id')!.value
+    if(idValue == "" || idValue == null || idValue == undefined) {
+      this.modalSrv.info({nzTitle: "Chuyến hàng không tồn tại"});
+      return;
+    }
+    let req = {
+      "idchuyenngoai": idValue
+    }
+    this.modalSrv.confirm({
+      nzTitle: "Bạn chắc chắn muốn hủy chuyến hàng này không ?",
+      nzContent: "Sau khi Hủy không thể khôi phục chuyến !",
+      nzOnOk: () => {
+        this.spch00251Service.Huychuyenngoai(req).subscribe(res => {
+          if(res == 1) {
+            this.message.success("Hủy thành công !")
+            this.headerForm.reset();
+            this.dataList = [];
+            this.listdetail = [];
+            this.chuyenngoaiDto.clear();
+          }
+        });
+      }
+    })
   }
 
   createForm() {
@@ -348,6 +404,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     this.tableLoading(true);
     if (this.listdetail.length > 0) {
       this.dataList = [...this.listdetail];
+      console.log(this.dataList);
       this.tableLoading(false);
     } else {
       this.tableLoading(false);
@@ -371,9 +428,21 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     this.tableConfig.loading = isLoading;
     this.tableChangeDectction();
   }
+  
+  // lây sô  soId trong dataList đưa lên modal
+  getListsoId() {
+    let listsoId = [];
+    for(let element of this.dataList) {
+      if(element['soid'] && element['soid'] != "") {
+        listsoId.push(element['soid'])
+      }
+    }
+    return listsoId;
+  }
 
   addtrongkho() {
-    this.modalListSoIDService.show({nzTitle: "Danh Hàng tồn kho"},{showcomfirm:false,idchuyen: "NULL",status02: "KHONG"}).subscribe(
+    let listsoID = this.getListsoId(); 
+    this.modalListSoIDService.show({nzTitle: "Danh Hàng tồn kho"},{showcomfirm:false,idchuyen: "NULL",status02: "KHONG",listsoId:listsoID}).subscribe(
       res => {
         if (!res || res.status === ModalBtnStatus.Cancel) {
           return;

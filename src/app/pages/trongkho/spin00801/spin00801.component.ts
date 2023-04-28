@@ -185,7 +185,9 @@ export class Spin00801Component extends BaseComponent implements OnInit {
     const params: SearchCommonVO<any> = {
       pageSize: 0,
       pageNum: 0,
-      filters: {}
+      filters: {
+        "rcdkbn": "0001"
+      }
     };
     this.spin00901Service
       .searchParams(params)

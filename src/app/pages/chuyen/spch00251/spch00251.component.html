@@ -143,7 +143,7 @@
           <button nz-button nzType="primary" nzGhost (click)="edit(stt)" [disabled]="btnUpdate">Cập nhật</button>
         </span>
         <span *appAuth="ActionCode.ChuyenngoaiDel" class="operate-text">
-          <button nz-button nzType="primary" nzGhost (click)="del(stt)" [disabled]="btnDelete">Xóa</button>
+          <button nz-button nzType="primary" nzGhost (click)="del(stt)" [disabled]="btnDelete">Hủy</button>
         </span>
       </ng-template>
       <ng-template #tiencuocTpl let-tiencuoc="tiencuoc">
@@ -197,6 +197,14 @@
                 <button [disabled]="!btnConfirm" (click)="fnBtnConfirm()" [disabled]="!headerForm.valid" nz-button nzType="primary" class="m-r-8">
                     <i nz-icon nzType="caret-right"></i>
                     Confirm
+                </button>
+            </span>
+        </ng-container>
+        <ng-container *ngIf="showHuychuyenngoai">
+            <span *appAuth="ActionCode.ChuyenngoaiHuy" class="operate-text">
+                <button [disabled]="!btnConfirm" (click)="fnBtnHuychuyen()" [disabled]="!headerForm.valid" nz-button nzType="primary" class="m-r-8">
+                    <i nz-icon nzType="delete"></i>
+                    Hủy chuyến
                 </button>
             </span>
         </ng-container>

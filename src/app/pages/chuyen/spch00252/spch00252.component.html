@@ -116,10 +116,15 @@
         </span>
       </ng-template>
       <ng-template #machuyenngoaiTpl let-id="id" let-soods="soods">
-        <div class="copy-container">
-            <a nz-button (click)="transferSpch00251(id,'link')" nzType="link" nzBlock>{{soods}}</a>
-            <button nz-button [cdkCopyToClipboard]="copy(soods)" nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
-        </div>
+        <ng-container *ngIf="soods == '' else showId">
+               <span></span>
+        </ng-container>
+        <ng-template #showId>
+            <div class="copy-container">
+                <a nz-button (click)="transferSpch00251(id,'link')" nzType="link" nzBlock>{{soods}}</a>
+                <button nz-button [cdkCopyToClipboard]="copy(soods)" nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
+            </div>
+        </ng-template>
             <!-- <button nz-button [cdkCopyToClipboard]="copy(id)" nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button> -->
       </ng-template>
     </app-card-table-wrap>
