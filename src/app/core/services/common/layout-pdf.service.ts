@@ -14,7 +14,7 @@ export class LayoutPdfService {
     const pdf = new jsPDF('p', 'pt', 'a4');
     let myBytes: Uint8Array;
 
-    const bgUrl = './assets/imgs/nen.jpg';
+    const bgUrl = './assets/imgs/hlxv.jpg';
     const bgData = await fetch(bgUrl).then(res => res.arrayBuffer());
     myBytes = new Uint8Array(bgData);
    // Thêm ảnh nền vào tài liệu PDF
@@ -76,7 +76,7 @@ export class LayoutPdfService {
     const pdf = new jsPDF('p', 'pt', 'a4');
     let myBytes: Uint8Array;
 
-    const bgUrl = './assets/imgs/nen.jpg';
+    const bgUrl = './assets/imgs/hlxv.jpg';
     const bgData = await fetch(bgUrl).then(res => res.arrayBuffer());
     myBytes = new Uint8Array(bgData);
    // Thêm ảnh nền vào tài liệu PDF
