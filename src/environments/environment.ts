@@ -5,7 +5,7 @@
 
 
 
-const ip = '116.103.34.190';;
+const ip = '117.2.212.47';//117.2.212.47
 
 //const ip = 'localhost';
 const port = '3002';
