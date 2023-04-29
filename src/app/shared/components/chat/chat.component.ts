@@ -158,7 +158,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.scrollToBottom();
       this.cdr.detectChanges();
     }, 3000);
-    this.socketService.emit('client-send-data', msg);
+   // this.socketService.emit('client-send-data', msg);
   }
 
   ngOnInit(): void {
@@ -170,24 +170,24 @@ export class ChatComponent implements OnInit, OnDestroy {
       };
       //sau khi đang nhập thành công ngươi dung đăng ký vào chat
       if(this.countemitregister == 0) {
-        this.socketService.emit('client-register-chat', this.userDetail);
+       // this.socketService.emit('client-register-chat', this.userDetail);
         this.countemitregister++;
       }
       
     });
     // người dùng lăng nghe message từ sever
-    this.socketService.on('server-send-data', (msg: string) => {
-      this.messages.push(msg);
-      console.log(this.messages);
-    })
+    // this.socketService.on('server-send-data', (msg: string) => {
+    //   this.messages.push(msg);
+    //   console.log(this.messages);
+    // })
     // người dùng đang online. đăng nhập thêm tài khoản khác. thì sẽ bị logout 
-    this.socketService.on('client-register-chat',()=> {
-       console.log(this.modalSrv);
-       this.messageShow.info("Tài khoản này được đăng nhập bởi người khác !")
-      // this.modalSrv.info({nzTitle:"Tài khoản này được đăng nhập bởi người khác !"})
-       this.inoutService.loginOut();
-      // this.countemitregister = 0;
-    })
+    // this.socketService.on('client-register-chat',()=> {
+    //    console.log(this.modalSrv);
+    //    this.messageShow.info("Tài khoản này được đăng nhập bởi người khác !")
+    //   // this.modalSrv.info({nzTitle:"Tài khoản này được đăng nhập bởi người khác !"})
+    //    this.inoutService.loginOut();
+    //   // this.countemitregister = 0;
+    // })
 
     this.validateForm = this.fb.group({
       question: [null]

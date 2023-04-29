@@ -75,17 +75,24 @@ export const ActionCode = {
   CtcnThanhtoan: 'default:khachhang:spkh00201:thanhtoan',
   CtcnDuyetThanhtoan: 'default:khachhang:spkh00201:duyetthanhtoan',
   CtcnXuatPDF: 'default:khachhang:spkh00201:xuatpdf',
+  CtcnCapnhat: 'default:khachhang:spkh00201:capnhat',
 
   // nguon xe
   Nguonxeadd: 'default:system:quanlynguonxe:add',
   Nguonxedel: 'default:system:quanlynguonxe:del',
   Nguonxeupdate: 'default:system:quanlynguonxe:update',
+  Nguonxethemxe: 'default:system:quanlynguonxe.themxe',
+  Nguonxethemtaixe: 'default:system:quanlynguonxe.themtaixe',
 
   // chuyến ngoài
+  Chuyenngoaiaddtrongkho: 'default:chuyen:spch00251:addtrongkho',
   ChuyenngoaiAdd: 'default:chuyen:spch00251:add',
+  ChuyenngoaiAddtrongkho: 'default:chuyen:spch00251:addtrongkho',
   ChuyenngoaiEdit: 'default:chuyen:spch00251:update',
   ChuyenngoaiDel: 'default:chuyen:spch00251:del',
+  ChuyenngoaiHuy: 'default:chuyen:spch00251:huy',
   ConfirmChuyenngoai: 'default:chuyen:spch00251:confirm',
+
 
   // tim kiem chuyen ngoai
   TimkiemchuyenngoaiAdd : 'default:chuyen:spch00252:add',
@@ -103,6 +110,27 @@ export const ActionCode = {
   Thanhtoanchuyenngoai : 'default:chuyen:spch00255:thanhtoan',
   Xuatpdfchuyenngoai : 'default:chuyen:spch00255:xuatpdf',
 
-  // 
+  // quan ly kho spin00901
+  QuanlykhoUpdate: 'default:trongkho:spin00901:update',
+  QuanlykhoAdd: 'default:trongkho:spin00901:add',
+  QuanlykhoDel: 'default:trongkho:spin00901:del',
+  QuanlykhoallDel: 'default:trongkho:spin00901:delall',
+
+  // nhap hang spin00251
+  Spin00251Add: 'default:trongkho:spin00251:add',
+  Spin00251Delall: 'default:trongkho:spin00251:delall',
+  Spin00251Confirm: 'default:trongkho:spin00251:confirm',
+  Spin00251Update: 'default:trongkho:spin00251:update',
+  Spin00251Del: 'default:trongkho:spin00251:del',
+  Spin00251Copy: 'default:trongkho:spin00251:copy',
+
+  // huy nhap hang spin00801
+  Spin00801DeleteMany: 'default:trongkho:spin00801:deletemany',
+  Spin00801Delete: 'default:trongkho:spin00801:delete',
+
+  // spin00601 xuât hang
+  Spin00601Xuathang: 'default:trongkho:spin00601:xuathang',
+  Spin00601Xuatnhieudon: 'default:trongkho:spin00601:xuatnhieudon',
+  Spin00601Xuatxengoai: 'default:trongkho:spin00601:xuatxengoai',
 
 };

@@ -34,13 +34,20 @@
     <app-card-table-wrap [tableTitle]="'Danh sách nguồn xe'" (reload)="reloadTable()" [btnTpl]="tableBtns">
         <app-ant-table [tableConfig]="tableConfig" (changePageSize)="changePageSize($event)" (changePageNum)="getDataList($event)" [tableData]="dataList">
         </app-ant-table>
-        <ng-template #operationTpl let-id="id">
+        <ng-template #operationTpl let-id="id" let-sodienthoai="sodienthoai">
           <span *appAuth="ActionCode.Nguonxeupdate" class="operate-text">
             <button nz-button nzType="primary" nzGhost (click)="edit(id)">Cập nhật</button>
+          </span>
+          <span *appAuth="ActionCode.Nguonxethemxe" class="operate-text" >
+            <button nz-button nzType="primary" nzGhost (click)="addXe(id)">Thêm xe</button>
+          </span>
+          <span *appAuth="ActionCode.Nguonxethemtaixe" class="operate-text" >
+            <button nz-button nzType="primary" nzGhost (click)="addTaixe(sodienthoai)">Thêm tài xế</button>
           </span>
           <span *appAuth="ActionCode.Nguonxedel" class="operate-text" >
             <button nz-button nzType="primary" nzGhost (click)="del(id)">Xóa</button>
           </span>
+
         </ng-template>
     </app-card-table-wrap>
 </div>

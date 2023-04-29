@@ -229,12 +229,12 @@ export class Spkh00101Component extends BaseComponent implements OnInit {
     this.tableConfig = {
       showCheckbox: false,
       headers: [
-        {
-          title: 'Mã khách hàng',
-          field: 'id',
-          width: 180,
-          tdTemplate: this.linkidTpl
-        },
+        // {
+        //   title: 'Mã khách hàng',
+        //   field: 'id',
+        //   width: 180,
+        //   tdTemplate: this.linkidTpl
+        // },
         {
           title: 'Tên khách hàng',
           width: 180,

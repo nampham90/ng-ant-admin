@@ -115,7 +115,7 @@ export class SubwindowtaixeComponent implements OnInit {
         {
           title: 'Tên tài xế',
           field: 'name',
-          width: 120,
+          width: 220,
           tdTemplate: this.operationTpl
         },
         {

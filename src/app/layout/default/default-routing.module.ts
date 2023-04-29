@@ -49,6 +49,10 @@ const routes: Routes = [
         path: 'khachhang',
         loadChildren: () => import('../../pages/khachhang/khachhang.module').then(m => m.KhachhangModule)
       },
+      {
+        path: 'trongkho',
+        loadChildren: () => import('../../pages/trongkho/trongkho.module').then(m => m.TrongkhoModule)
+      },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   }

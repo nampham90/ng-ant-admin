@@ -4,8 +4,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 
-//const ip = '117.2.188.141';
-const ip = 'localhost';
+
+const ip = '116.103.34.190';;
+
+//const ip = 'localhost';
 const port = '3002';
 
 export const localUrl = `http://${ip}:${port}`;

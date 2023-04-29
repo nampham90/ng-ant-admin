@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BaseHttpService } from '../base-http.service';
 import * as Const from 'src/app/common/const';
-import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,6 +11,10 @@ export class CommonService {
   constructor(
     private http: BaseHttpService
   ) { }
+
+  requestInit(params: any) : Observable<any> {
+    return this.http.post(Const.CommonAnt100RequestInt, params, { needSuccessInfo: false});
+  }
 
   // get list thông kê doanh thu, chi phi, lợi nhuận từng tháng
   listtaichinh(params: any) : Observable<any> {
@@ -30,6 +34,10 @@ export class CommonService {
   // tính tống nợ tất cả khách hàng
   tongnoAll(params: any) : Observable<any> {
     return this.http.post(Const.CommonAnt100Tongnoall, params, { needSuccessInfo: false});
+  }
+  // tính tống nợ 1 khách hàng
+  tongnoUser(params: any) : Observable<any> {
+    return this.http.post(Const.CommonAnt100Tongnouser, params, { needSuccessInfo: false});
   }
 
   // list top 10 khách hàng có doanh thu cao nhất
@@ -66,5 +74,10 @@ export class CommonService {
   /// get HDTTXN
   getHDTTXN(): Observable<any> {
     return this.http.post(Const.CommonAnt100GetHDTTXN, { needSuccessInfo: false});
+  }
+
+  // get list ID
+  getListSoID(params: any): Observable<any> {
+    return this.http.post(Const.CommonAnt100GetListSoID,params, { needSuccessInfo: false});
   }
 }

@@ -69,10 +69,10 @@ export class DefLayoutContentComponent implements OnInit {
 
   ngOnInit(): void {
     this.getThemeOptions();
-    this.socketService.on('admin-register-chat',(data:any)=> {
-       console.log(data);
-       this.lstChat = data;
-    })
+    // this.socketService.on('admin-register-chat',(data:any)=> {
+    //    console.log(data);
+    //    this.lstChat = data;
+    // })
 
   }
 }

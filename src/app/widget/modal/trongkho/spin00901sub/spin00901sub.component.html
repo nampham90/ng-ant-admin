@@ -1,0 +1,25 @@
+<form nz-form [formGroup]="addEditForm">
+    <nz-form-item>
+        <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="name">Mã kho</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" [nzErrorTip]="combineTpl">
+          <input nz-input formControlName="datacd" id="datacd" placeholder="Mã kho" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="datanm">Tên kho</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" [nzErrorTip]="combineTpl">
+          <input nz-input formControlName="datanm" maxlength="255" id="datanm" placeholder="Tên kho" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="datarnm">Tên dự phòng</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" [nzErrorTip]="combineTpl">
+          <input nz-input formControlName="datarnm" maxlength="255" id="datarnm" placeholder="Tên  dự phòng" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <ng-template #combineTpl let-control>
+        <ng-container *ngIf="control.hasError('message')">{{ control.errors.message }}</ng-container>
+        <ng-container *ngIf="control.hasError('required')">Phần bắt buộc</ng-container>
+      </ng-template>
+</form>

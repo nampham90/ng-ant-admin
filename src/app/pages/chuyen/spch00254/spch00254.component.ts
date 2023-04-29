@@ -165,7 +165,7 @@ export class Spch00254Component extends BaseComponent implements OnInit {
       const { list, total, pageNum } = data;
       this.dataList = [...list];
       if(this.dataList.length == 0) {
-        this.message.info('Không Có dữ liệu');
+        //this.message.info('Không Có dữ liệu');
       }
       this.tableConfig.total = total!;
       this.tableConfig.pageIndex = pageNum!;
@@ -213,6 +213,7 @@ export class Spch00254Component extends BaseComponent implements OnInit {
     } else {
       this.btnDisble = false;
     }
+    this.getDataList();
   }
 
   private initTable(): void {
@@ -220,15 +221,21 @@ export class Spch00254Component extends BaseComponent implements OnInit {
       showCheckbox: true,
       headers: [
         {
-          title: 'Mã hóa đơn',
+          title: 'Số HDTTXN',
+          field: 'sohdttxn',
+          width: 300
+        },
+        {
+          title: 'Thông Tin đơn hàng',
           field: 'iddonhang',
           width: 250,
           tdTemplate: this.donhangTpl
         },
         {
-          title: 'Số HDTTXN',
-          field: 'sohdttxn',
-          width: 300
+          title: 'Số tiền ',
+          width: 200,
+          field: 'sotienno',
+          tdTemplate: this.sotiennoTpl
         },
         {
           title: 'Nguồn Xe',
@@ -256,12 +263,6 @@ export class Spch00254Component extends BaseComponent implements OnInit {
           title: 'SDT Tài xế',
           width: 200,
           field: 'sodienthoai',
-        },
-        {
-          title: 'Số tiền ',
-          width: 200,
-          field: 'sotienno',
-          tdTemplate: this.sotiennoTpl
         },
         {
           title: 'Ghi chú',
@@ -330,7 +331,7 @@ export class Spch00254Component extends BaseComponent implements OnInit {
         //lấy list id
         //get đơn vi vận chuyển
         this.commonService.getHDTTXN().pipe()
-        .subscribe(res => {
+        .subscribe(async res => {
           if(res) {
             let formatExp = this.fnFormat();
             let title = "Danh Sách Công Nợ";
@@ -345,7 +346,7 @@ export class Spch00254Component extends BaseComponent implements OnInit {
             headerlayout[2]['value'] = data.length + '';
             headerlayout[3]['field'] = 'Số HDTTXN:';
             headerlayout[3]['value'] = res;
-            this.pdfService.exportPDF(header,headerlayout,data,title,this.getDate(),"BVC ký xác nhận","BTT ký xác nhận");
+            await this.pdfService.exportPDF(header,headerlayout,data,title,this.getDate(),"BVC ký xác nhận","BTT ký xác nhận",res);
             // insert vao bang donhangexport với thông tin gồm. header, và data status01 = 1. chờ thanh toán
             this.createDataExport(this.searchParam.nguonxe!,this.getDate(),title,data,headerlayout,header,system,formatExp.listId,res);
             this.getDataList();

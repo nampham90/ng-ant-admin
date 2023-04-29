@@ -1,0 +1,140 @@
+<app-page-header [pageHeaderInfo]="pageHeaderInfo" [extraTpl]="huongdanTpl"></app-page-header>
+<ng-template #huongdanTpl>
+  <button nz-button nzType="primary" [nzSize]="'large'" nzShape="round" (click)="showVideo()">
+      <span nz-icon nzType="star" nzTheme="outline"></span>{{formItemNm[4]}}
+  </button>
+</ng-template>
+<div class="normal-table-wrap">
+    <nz-card nzHoverable [nzBodyStyle]="{ 'padding-bottom': 0 }" class="m-b-10">
+        <form nz-form>
+            <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="">Ngày bắt đầu</nz-form-label>
+                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                            <nz-date-picker
+                                name="ngaybatdau"
+                                [nzDisabledDate]="disabledStartSoplnDate" 
+                                [nzFormat]="dateFormat" 
+                                [(ngModel)]="ngaybatdau" 
+                                [nzPlaceHolder]="dateFormat"
+                                (nzOnOpenChange)="handleStartOpenSoplnChange($event)">
+                            </nz-date-picker>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="">Ngày kết thúc</nz-form-label>
+                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                            <nz-date-picker
+                                name="ngayketthuc"
+                                #endSoplnDate
+                                [nzDisabledDate]="disabledEndSoplnDate" 
+                                [nzFormat]="dateFormat" 
+                                [(ngModel)]="ngayketthuc" 
+                                [nzPlaceHolder]="dateFormat"
+                                (nzOnOpenChange)="handleEndOpenSoplnChange($event)">
+                            </nz-date-picker>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24"  class="text-right p-0 m-b-10">
+                    <button (click)="getDataList()" nz-button [nzType]="'primary'">
+                        <i nz-icon nzType="search"></i>
+                        Tìm kiếm
+                      </button>
+                      <button nz-button class="m-l-15" (click)="resetForm()">
+                        <i nz-icon nzType="close-circle" nzTheme="outline"></i>
+                        Làm mới
+                      </button>
+                </div>
+            </div>
+            <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24" class="inputIcon">
+                    <nz-form-item>
+                        <!-- Sô ID -->
+                        <nz-form-label  [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24">Số ID</nz-form-label>
+                        <nz-form-control  [nzXXl]="10" [nzXl]="10" [nzLg]="10" [nzMd]="10" [nzSm]="20" [nzXs]="24">
+                            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButtonSoID">
+                                <input name="soID" type="text" nz-input [(ngModel)]="searchParam.soID" placeholder=""/>
+                            </nz-input-group>
+                            <ng-template #suffixIconButtonSoID>
+                                <button nz-button class="bg-icon" (click)="searchSoIDClick()" [nzType]="'primary'"><span nz-icon nzType="search"></span></button>
+                            </ng-template>
+                            <nz-form-label [nzNoColon]="true" nzFor="" class="fix-inputIcon"><span><u></u></span></nz-form-label>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                    <nz-form-item>
+                        <!-- danh sach kho -->
+                        <nz-form-label  [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24">Kho</nz-form-label>
+                        <nz-form-control  [nzXXl]="10" [nzXl]="10" [nzLg]="10" [nzMd]="10" [nzSm]="20" [nzXs]="24">
+                            <nz-select name="trangthai" nzShowSearch nzAllowClear nzPlaceHolder="Select" [(ngModel)]="searchParam.makho">
+                                <nz-option *ngFor="let lst of listKho" nzLabel="{{lst['datanm']}}" nzValue="{{lst['datacd']}}"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24" class="inputIcon">
+                    <nz-form-item>
+                        <!-- User -->
+                        <nz-form-label  [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24">Id Khách Hàng</nz-form-label>
+                        <nz-form-control  [nzXXl]="10" [nzXl]="10" [nzLg]="10" [nzMd]="10" [nzSm]="20" [nzXs]="24" [nzErrorTip]="">
+                            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButtonUser">
+                                <input name="iduser" type="text" nz-input [(ngModel)]="searchParam.iduser" placeholder="" (blur)="fnFocusOutUser()"/>
+                            </nz-input-group>
+                            <ng-template #suffixIconButtonUser>
+                                <button nz-button class="bg-icon" (click)="searchUserClick()" [nzType]="'primary'"><span nz-icon nzType="search"></span></button>
+                            </ng-template>
+                            <nz-form-label [nzNoColon]="true" nzFor="" class="fix-inputIcon"><span><u>{{usernm}}</u></span></nz-form-label>
+                        </nz-form-control>
+                    </nz-form-item>
+                  </div>
+            </div>
+        </form>
+    </nz-card>
+    <ng-container *ngIf="tableConfig">
+        <app-card-table-wrap [tableTitle]="formItemNm[8]" (reload)="reloadTable()" [btnTpl]="tableBtns">
+            <app-ant-table 
+            (selectedChange)="selectedChecked($event)"
+            [checkedCashArrayFromComment]="checkedCashArray"
+            (changePageSize)="changePageSize($event)"
+            (changePageNum)="getDataList($event)"
+            [tableConfig]="tableConfig"
+            [tableData]="dataList"
+          ></app-ant-table>
+        </app-card-table-wrap>
+        <ng-template #tableBtns>
+            <button *appAuth="ActionCode.Spin00601Xuatnhieudon" (click)="xuatnhieudon()" nz-button nzType="primary">
+                <i nz-icon nzType="plus-circle"></i>Xuất nhiều đơn
+            </button>
+        </ng-template>
+    </ng-container>
+    <ng-template #soidTpl let-soID="soID">
+        <span><a nz-button (click)="getItem(soID)" nzType="link">{{soID}}</a></span>
+        <button nz-button [cdkCopyToClipboard]="copy(soID)" nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
+    </ng-template>
+    <ng-template #operationTpl let-soID="soID">
+        <span *appAuth="ActionCode.Spin00601Xuathang" class="operate-text">
+            <!--  -->
+            <button nz-button nzType="primary" nzGhost (click)="xuathang(soID)">Xuất hàng</button>
+        </span>
+        <span *appAuth="ActionCode.Spin00601Xuatxengoai" class="operate-text">
+            <!--  -->
+            <button nz-button nzType="primary" nzGhost (click)="xuatxengoai(soID)">Xuất xe ngoài</button>
+        </span>
+    </ng-template>
+    <ng-template #htttTpl let-hinhthucthanhtoan="hinhthucthanhtoan">
+        <span>{{mergeHttt(hinhthucthanhtoan)}}</span>
+    </ng-template>
+    <ng-template #nguoiguiTpl let-iduser="iduser" >
+        <nz-alert nzType="success" nzMessage="{{iduser['name']}}"></nz-alert>
+    </ng-template>
+    <ng-template #tiencuocTpl let-tiencuoc="tiencuoc">
+        <span>{{tiencuoc*1000 | currency : "VND" : ''}}</span>
+    </ng-template>
+</div>

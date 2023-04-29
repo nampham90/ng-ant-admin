@@ -39,10 +39,16 @@
         Thông tin: <span [ngClass]="['hstyle']">{{lst['noidungdonhang']}}</span>
       </div>
       <div>
-        Địa chỉ bốc hàng: <span [ngClass]="['hstyle']">{{lst['diadiembochang']}}</span>
+        Số Lượng: <span [ngClass]="['hstyle']">{{lst['soluong']}}</span>
       </div>
       <div>
-        Tiền Cước : <span [ngClass]="['hstyle']">{{lst['tiencuoc']*1000 | currency : "VND"}} - HTTT: {{mergeHttt(lst['hinhthucthanhtoan'])}}</span>
+        Đơn vị tính: <span [ngClass]="['hstyle']">{{lst['donvitinh']}}</span>
+      </div>
+      <div>
+        Địa chỉ bốc hàng: <span [ngClass]="['hstyle','nodestyle']">{{lst['diadiembochang']}}</span>
+      </div>
+      <div>
+        Tiền Cước : <span [ngClass]="['hstyle','nodestyle']">{{lst['tiencuoc']*1000 | currency : "VND"}} - HTTT: {{mergeHttt(lst['hinhthucthanhtoan'])}}</span>
       </div>
       <div>
         Người Nhận: <span [ngClass]="['hstyle']">{{lst['tennguoinhan']}} - ĐT: <a href="tel:{{lst['sdtnguoinhan']}}"><u>{{lst['sdtnguoinhan']}}</u></a></span>
@@ -54,15 +60,22 @@
         Ghi chú : <span [ngClass]="['hstyle']">{{lst['ghichu']}}</span>
       </div>
       <div [ngClass]="['myDiv']">
-        <ng-container *ngIf="lst['status01']==0 else BtnDis">
-          <a Button [type]="'primary'" [size]="'small'" [inline]="true" (click)="updateStatus01(lst['id'])">
-            Đã giao hàng
+        <ng-container *ngIf="lst['status01']==0 else dagiaohangTpl">
+          <a Button [type]="'primary'" [size]="'small'" [inline]="true" (click)="updateStatus01(lst['id'],'BOCHANG')">
+            Đã bóc hàng
           </a>
         </ng-container>
-        <ng-template #BtnDis>
-          <a Button [type]="'primary'" [size]="'small'" [inline]="true" (click)="updateStatus01(lst['id'])" [disabled]="true">
-            Đã giao hàng
-          </a>
+        <ng-template #dagiaohangTpl>
+          <ng-container *ngIf="lst['status01']==1 else BtnDis">
+            <a Button [type]="'primary'" [size]="'small'" [inline]="true" (click)="updateStatus01(lst['id'],'GIAOHANG')">
+              Đã giao hàng
+            </a>
+          </ng-container>
+          <ng-template #BtnDis>
+            <a Button [type]="'primary'" [size]="'small'" [inline]="true"  [disabled]="true">
+               Hoàn thành
+            </a>
+          </ng-template>
         </ng-template>
       </div>
     </ListItem>
@@ -76,6 +89,12 @@
         Thông tin: <span [ngClass]="['hstyle']">{{lst['noidungdonhang']}}</span>
       </div>
       <div>
+        Số Lượng: <span [ngClass]="['hstyle']">{{lst['soluong']}}</span>
+      </div>
+      <div>
+        Đơn vị tính: <span [ngClass]="['hstyle']">{{lst['donvitinh']}}</span>
+      </div>
+      <div>
         Địa chỉ bốc hàng: <span [ngClass]="['hstyle']">{{lst['diadiembochang']}}</span>
       </div>
       <div>
@@ -91,17 +110,23 @@
         Ghi chú : <span [ngClass]="['hstyle']">{{lst['ghichu']}}</span>
       </div>
       <div [ngClass]="['myDiv']">
-        <ng-container *ngIf="lst['status01']==0 else BtnDis">
-          <a Button [type]="'primary'" [size]="'small'" [inline]="true" (click)="updateStatus01(lst['id'])">
-            Đã giao hàng
+        <ng-container *ngIf="lst['status01']==0 else dagiaohangTpl">
+          <a Button [type]="'primary'" [size]="'small'" [inline]="true" (click)="updateStatus01(lst['id'],'BOCHANG')">
+            Đã bốc hàng
           </a>
         </ng-container>
-        <ng-template #BtnDis>
-          <a Button [type]="'primary'" [size]="'small'" [inline]="true" (click)="updateStatus01(lst['id'])" [disabled]="true">
-            Đã giao hàng
-          </a>
+        <ng-template #dagiaohangTpl>
+          <ng-container *ngIf="lst['status01']==1 else BtnDis">
+            <a Button [type]="'primary'" [size]="'small'" [inline]="true" (click)="updateStatus01(lst['id'],'GIAOHANG')">
+              Đã giao hàng
+            </a>
+          </ng-container>
+          <ng-template #BtnDis>
+            <a Button [type]="'primary'" [size]="'small'" [inline]="true"  [disabled]="true">
+              Hoàn thành
+            </a>
+          </ng-template>
         </ng-template>
-
       </div>
     </ListItem>
 

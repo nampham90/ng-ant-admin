@@ -3,7 +3,7 @@ export const  idTaixe = "636cf775974c56587047691e";
 export const  idKhachhang = "632ebaf77e9ad9aeef4e3d27";
 
 // đợn vi sở hưu
-export const doanhnghiep = "HLXV"
+export const doanhnghiep = "KDP"
 
 export const  tinhthanhApi = "https://provinces.open-api.vn/api/?depth=2";
 
@@ -22,6 +22,18 @@ export const Lotrinh = [
 export const System = 'system';
 export const Notifi = 'notifi';
 export const Vison = 'vison';
+
+// rcdkbn
+export const lstkho = '0001' // danh sách mã kho có rcdkbn = '0001'
+
+// dơn vi tinh
+export const lstdonvitinh = [
+    { "value": "kg", "lable": "kg"},
+    { "value": 'Kiện', "lable": "Kiện"},
+    { "value": "Tấn", "lable":"Tấn"},
+    { "value": "Khối", "lable":"Khối"},
+    { "value": "Khác", "lable":"Khác"},
+]
 
 export const listTrangthaichuyen = [
     { "value": 0, "lable": "Lên kế hoạch bóc hàng"},
@@ -68,6 +80,7 @@ export const CommonAnt100Listtaichinh = "common/commonAnt100Listloinhanthang";
 export const CommonAnt100Thongketaichinhnam = "common/commonAnt100Thongketaichinhnam";
 export const CommonAnt100Tongchuyenhangtrongnam = "common/commonAnt100Tongchuyenhangtrongnam";
 export const CommonAnt100Tongnoall = "common/commonAnt100Tongnoall";
+export const CommonAnt100Tongnouser = "common/commonAnt100Tongnouser";
 export const CommonAnt100Listtopdoanhthu = "common/commonAnt100Listtopdoanhthu";
 export const CommonAnt100Listtopchiphi = "common/commonAnt100Listtopchiphi";
 export const CommonAnt100Listtoptongcuoctungxe = "common/commonAnt100Listtongcuoctungxe";
@@ -75,8 +88,13 @@ export const CommonAnt100GetODS = "common/commonAnt100GetODS";
 export const CommonAnt100GetODT = "common/commonAnt100GetODT";
 export const CommonAnt100GetODC = "common/commonAnt100getODC";
 export const CommonAnt100GetHDTTXN = "common/commonAnt100getHDTTXN";
+export const CommonAnt100GetListSoID = "common/commonAnt100getListSoID";
 
 export const CommonAnt100Tongnoxengoai = 'common/commonAnt100Tongnoxengoai';
+export const CommonAnt100RequestInt = 'common/commonAnt100requestInt';
+
+// tmt050 master
+export const Tmt050Ant100GetListKBN = 'tmt050/tmt050Ant100getListKBN';
 
 // tmt101. master
 export const Tmt101Ant100Create = 'tmt101/tmt101Ant100Create';
@@ -121,6 +139,7 @@ export const Ant100EditDetailUser = "user/ant100EditDetailUser";
 export const Ant100AddDetailUser ="user/ant100AddDetailUser";
 export const Ant100CheckEmailUser = "user/ant100CheckEmailUser";
 export const Ant100CheckNameUser = "user/ant100CheckNameUser";
+export const Ant100ChangePasswordUser = "user/ant100ChangePasswordUser";
 
 // data SC
 export const Ant100findAllDatasc = "screenpc/ant100SearchAllDatasc";
@@ -150,6 +169,7 @@ export const ChuyenAnt100Create = 'chuyen/chuyenAnt100create';
 export const ChuyenAnt100Delete = 'chuyen/chuyenAnt100delete';
 export const ChuyenAnt100DeleteAll = 'chuyen/chuyenAnt100deleteAll';
 export const ChuyenAnt100UpdateTrangthai = 'chuyen/chuyenAnt100updateTrangthai';
+export const ChuyenAnt100SearchParams = 'chuyen/chuyenAnt100searchParams';
 
 // phieu nhap hang 
 export const PhieunhaphangAnt100GetAll = 'phieunhaphang/phieunhaphangAnt100getAll';
@@ -227,6 +247,42 @@ export const DonhangexportxengoaiAnt100Create = 'donhangexportxengoai/donhangexp
 export const DonhangexportxengoaiAnt100FindAll = 'donhangexportxengoai/donhangexportxengoaiAnt100FindAll';
 export const DonhangexportxengoaiAnt100Detail ='donhangexportxengoai/donhangexportxengoaiAnt100Detail';
 export const DonhangexportxengoaiAnt100UpdateStatus ='donhangexportxengoai/donhangexportxengoaiAnt100UpdateStatus';
+
+// quản lý kho
+export const Spin00901Ant100Search = 'spin00901/spin00901Ant100Search';
+export const Spin00901Ant100Detail = 'spin00901/spin00901Ant100Detail';
+export const Spin00901Ant100Add = 'spin00901/spin00901Ant100Add';
+export const Spin00901Ant100Update = 'spin00901/spin00901Ant100Update';
+export const Spin00901Ant100Del = 'spin00901/spin00901Ant100Del';
+export const Spin00901Ant100Alldel = 'spin00901/spin00901Ant100Alldel';
+
+// spin00251 nhap hang
+export const Spin00251Ant100Register = "spin00251/spin00251Ant100Register";
+export const Spin00251Ant100Update = "spin00251/spin00251Ant100Update";
+export const Spin00251Ant100GetPNH= "spin00251/spin00251Ant100GetPNH";
+
+// spin00801 search 
+export const Spin00801Ant100Search = "spin00801/spin00801Ant100Search";
+export const Spin00801Ant100Delete = "spin00801/spin00801Ant100Delete";
+export const Spin00801Ant100Deletemany = "spin00801/spin00801Ant100Deletemany";
+
+// spin00301 timkiem
+export const Spin00301Ant100Search = "spin00301/spin00301Ant100Search";
+
+// spin00601 xuat hang
+export const Spin00601Ant100XuatHang = "spin00601/spin00601Ant100XuatHang";
+export const Spin00601Ant100Xuatnhieudon = "spin00601/spin00601Ant100Xuatnhieudon";
+
+// spch00201 cập nhât tiền cươc
+//spch00201Ant100UpdateTiencuocxenha
+export const Spch00201Ant100UpdateTiencuocxenha = "spch00201/spch00201Ant100UpdateTiencuocxenha";
+export const Spch00201Ant100UpdateTiencuocxengoai = "spch00201/spch00201Ant100UpdateTiencuocxengoai";
+
+// spch00251 
+export const Spch00251Ant100Huychuyenngoai = "spch00251/spch00251Ant100Huychuyenngoai";
+
+//spkh00301 
+export const Spkh00301Ant100Search = "spkh00301/spkh00301Ant100Search";
 
 
 

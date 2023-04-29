@@ -7,4 +7,5 @@ import { LoginExpiredService } from './login-expired.service';
 export default [
   { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: LoginExpiredService, multi: true }
+
 ];

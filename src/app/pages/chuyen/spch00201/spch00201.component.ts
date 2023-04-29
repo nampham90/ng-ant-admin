@@ -32,6 +32,7 @@ import { ChiphichuyenService } from '@app/core/services/http/chiphichuyen/chiphi
 import { SubwindowChiphiService } from '@app/widget/modal/subwindowchiphi/subwindow-chiphi.service';
 import { LayoutPdfService } from '@app/core/services/common/layout-pdf.service';
 import {VideoyoutubeService} from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service'
+import { async } from '@antv/x6/lib/registry/marker/async';
 
 export interface Product {
   id?:string,
@@ -92,8 +93,8 @@ export class Spch00201Component extends BaseComponent implements OnInit {
   tongcuoc = 0;
   availableOptions: OptionsInterface[] = [];
 
-  btnNew = false;
-  btnUpdate = false;
+  btnNew = true;
+  btnUpdate = true;
   btnDelete = false;
 
   btnConfirm = false;
@@ -175,8 +176,8 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         this.btnConfirmtrahang = false;
         this.btnConfirmchiphi = true;
         this.btnConfirmend = false;
-        this.btnNew = false;
-        this.btnUpdate = false;
+        this.btnNew = true;
+        this.btnUpdate = true;
         this.btnDelete = false;
       }; break; 
       case 4 : {
@@ -185,8 +186,8 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         this.btnConfirmtrahang = false;
         this.btnConfirmchiphi = true;
         this.btnConfirmend = true;
-        this.btnNew = false;
-        this.btnUpdate = false;
+        this.btnNew = true;
+        this.btnUpdate = true;
         this.btnDelete = false;
       }; break;
       case 5 : {
@@ -295,7 +296,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
 
   fnExportDataPDF(id: string) {
     this.phhService.ExportDataPDFChuyen(id)
-    .subscribe(res => {
+    .subscribe(async res => {
       if(res) {
         // tinh tong cuoc
         let tc = this.fnTinhTongCuoc(res.lstproduct);
@@ -337,7 +338,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         // chi phi
         let headerchiphi = [['Tên chi phí', 'Số tiền chi','Ghi chú']];
         let datachiphi = this.fnGetDataExportChiPhi(res.lstchiphi);
-        this.pdfService.exportPDFChuyen(header,layoutheader,layoutheader2,data,headerchiphi,datachiphi,title,this.getDate(),"","Quản lý ký duyệt");  
+        await this.pdfService.exportPDFChuyen(header,layoutheader,layoutheader2,data,headerchiphi,datachiphi,title,this.getDate(),"","Quản lý ký duyệt",res.odt);  
       }
     })
   }
@@ -494,17 +495,21 @@ export class Spch00201Component extends BaseComponent implements OnInit {
 
   del(id: any) {
     this.modalSrv.confirm({
-      nzTitle: 'Bạn có chắc chắn muốn xóa nó không?',
-      nzContent: 'Không thể phục hồi sau khi xóa',
+      nzTitle: 'Bạn có chắc chắn muốn hủy bốc hàng?',
+      nzContent: 'Nhấn Ok để xác nhận',
       nzOnOk: () => {
         this.tableLoading(true);
         this.phhService.delete(id).subscribe(
-          () => {
-            if (this.dataList.length === 1) {
-              this.tableConfig.pageIndex--;
+          (res) => {
+            if(res == 1) {
+              if (this.dataList.length === 1) {
+                this.tableConfig.pageIndex--;
+              }
+              this.getTongcuoc();
+            } else {
+              this.modalSrv.info({nzTitle: res.msgError})
             }
             this.getDataList();
-            this.getTongcuoc();
           },
           error => this.tableLoading(false)
         );
@@ -618,11 +623,6 @@ export class Spch00201Component extends BaseComponent implements OnInit {
           width: 80,
         },
         {
-          title: 'ID Khách Hàng',
-          width: 180,
-          field: 'idkhachhang',
-        },
-        {
           title: 'Tên Khách Hàng',
           width: 170,
           field: 'tenkhachhang',
@@ -674,7 +674,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         {
           title: 'Hành động',
           tdTemplate: this.operationTpl,
-          width: 200,
+          width: 90,
           fixed: true,
           fixedDir: 'right'
         }

@@ -15,10 +15,11 @@
                         <nz-form-label  [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24">Mã khách hàng</nz-form-label>
                         <nz-form-control  [nzXXl]="10" [nzXl]="10" [nzLg]="10" [nzMd]="10" [nzSm]="20" [nzXs]="24">
                             <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButtonKhachhang">
-                                <input name="idkhachhang" type="text" nz-input [(ngModel)]="idkhachhang" placeholder="" (blur)="fnFocusOutKhachhang()" readonly/>
+                                <input name="iduser" type="text" nz-input [(ngModel)]="searchParam.iduser" placeholder="" (blur)="fnFocusOutKhachhang()" readonly/>
                             </nz-input-group>
                             <ng-template #suffixIconButtonKhachhang>
-                                <button nz-button class="bg-icon" (click)="searchKhachhangClick()" [nzType]="'primary'" [disabled]="btnshowmodalkh"><span nz-icon nzType="search"></span></button>
+                                <!-- [disabled]="btnshowmodalkh" -->
+                                <button nz-button class="bg-icon" (click)="searchKhachhangClick()" [nzType]="'primary'"><span nz-icon nzType="search"></span></button>
                             </ng-template>
                             <nz-form-label [nzNoColon]="true" nzFor="" class="fix-inputIcon"><span><u>{{tenkhachhang}}</u></span></nz-form-label>
                         </nz-form-control>
@@ -35,7 +36,7 @@
                       </nz-form-item>
                 </div>
                 <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24"  class="text-right p-0 m-b-10">
-                    <button (click)="getDataList()" nz-button [nzType]="'primary'" [disabled]="btnsearch">
+                    <button (click)="getDataList()" nz-button [nzType]="'primary'">
                         <i nz-icon nzType="search"></i>
                         Tìm kiếm
                       </button>
@@ -81,13 +82,9 @@
             <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
                 <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
                     <nz-form-item>
-                        <!-- status -->
-                        <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24">Trạng thái</nz-form-label>
-                        <nz-form-control [nzXXl]="15" [nzXl]="15" [nzLg]="15" [nzMd]="15" [nzSm]="24" [nzXs]="24">
-                            <nz-radio-group id="status" name="status" [(ngModel)]="status">
-                                <label nz-radio nzValue="0"> Đơn hàng nợ </label>
-                                <!-- <label nz-radio nzValue="1"> Đơn hàng trả</label> -->
-                            </nz-radio-group>
+                        <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" >Số ODC</nz-form-label>
+                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzErrorTip]="''">
+                            <input nz-input name="status05" id="status05" [(ngModel)]="searchParam.status05" placeholder=""/>
                         </nz-form-control>
                     </nz-form-item>
                 </div>
@@ -96,21 +93,10 @@
                         <!-- status -->
                         <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24">Phân loại</nz-form-label>
                         <nz-form-control [nzXXl]="15" [nzXl]="15" [nzLg]="15" [nzMd]="15" [nzSm]="24" [nzXs]="24">
-                            <nz-radio-group id="phanloai" name="phanloai" [(ngModel)]="phanloai">
+                            <nz-radio-group id="ghichu" name="ghichu" [(ngModel)]="searchParam.ghichu">
                                 <label nz-radio nzValue="Nợ">Nợ </label>
                                 <label nz-radio nzValue="Đã thanh toán">Đã thanh toán</label>
-                                <!-- <label nz-radio nzValue="Tất toán">Tất toán</label> -->
                             </nz-radio-group>
-                        </nz-form-control>
-                    </nz-form-item>
-                </div>
-            </div>
-            <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
-                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
-                    <nz-form-item>
-                        <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" >Số ODC</nz-form-label>
-                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzErrorTip]="''">
-                            <input nz-input name="soods" id="soods" [(ngModel)]="soodc" placeholder=""/>
                         </nz-form-control>
                     </nz-form-item>
                 </div>
@@ -126,10 +112,19 @@
           [tableConfig]="tableConfig"
           [tableData]="dataList"
         ></app-ant-table>
-        <ng-template #operationTpl let-id="id" let-idphieunhaphang="idphieunhaphang" let-status01="status01" let-showBtn="showBtn">
-            <span *appAuth="ActionCode.CtcnThanhtoan" class="operate-text">
-                <button *ngIf="!showBtn['btnthanhtoan']" nz-button nzType="primary" nzGhost (click)="thanhtoan(idphieunhaphang,status01)" [disabled]="true">Thanh toán</button><!--showBtn['disabledBtnthanhtoan']-->
-            </span>
+        <ng-template #operationTpl let-id="id" let-idphieunhaphang="idphieunhaphang" let-status01="status01" let-chukyno="chukyno" let-showBtn="showBtn">
+            <!-- <span *appAuth="ActionCode.CtcnThanhtoan" class="operate-text">
+                <button *ngIf="!showBtn['btnthanhtoan']" nz-button nzType="primary" nzGhost (click)="thanhtoan(idphieunhaphang,status01)" [disabled]="true">Thanh toán</button>
+            </span> -->
+            <ng-container *ngIf="chukyno==1 else ShowUpdate">
+                <span *appAuth="ActionCode.CtcnCapnhat" class="operate-text">
+                    <button nz-button nzType="primary" nzGhost (click)="capnhat(id,idphieunhaphang,status01)" [disabled]="true">Cập nhật</button>
+                </span>
+            </ng-container>
+            <ng-template #ShowUpdate>
+                <button nz-button nzType="primary" nzGhost (click)="capnhat(id,idphieunhaphang,status01)">Cập nhật</button>
+            </ng-template>
+
             <span *appAuth="ActionCode.CtcnDuyetThanhtoan" class="operate-text">
                 <button *ngIf="!showBtn['btnduyet']" nz-button nzType="primary" nzGhost (click)="duyetthanhtoan(id)">Duyệt</button>
             </span>
@@ -143,12 +138,29 @@
             </ng-template>
         </ng-template>
         <ng-template #noidungdonhangTpl let-idphieunhaphang="idphieunhaphang" let-status01="status01">
-            <ng-container *ngIf="idphieunhaphang else Block">
+            <ng-container *ngIf="status01 == '' else Block">
                 <span>{{idphieunhaphang['noidungdonhang']}}</span>
             </ng-container>
             <ng-template #Block>
-                <span>{{status01}}</span>
+                <span>{{idphieunhaphang['thongtindonhang']}}</span>
             </ng-template>
+        </ng-template>
+        <ng-template #nguonxeTpl let-idphieunhaphang="idphieunhaphang" let-status01="status01">
+            <ng-container *ngIf="status01 == '' else Block">
+                <span>KDP - {{idphieunhaphang['biensoxe']}}</span>
+            </ng-container>
+            <ng-template #Block>
+                <span>{{idphieunhaphang['nguonxe']['datanm']}}</span>
+            </ng-template>
+        </ng-template>
+        <ng-template #soluongTpl let-idphieunhaphang="idphieunhaphang">
+               <span>{{idphieunhaphang['soluong']}}</span>
+        </ng-template>
+        <ng-template #donvitinhTpl let-idphieunhaphang="idphieunhaphang">
+            <span>{{idphieunhaphang['donvitinh']}}</span>
+        </ng-template>
+        <ng-template #khachhangTpl let-iduser="iduser">
+            <nz-alert nzType="success" nzMessage="{{iduser['name']}}"></nz-alert>
         </ng-template>
         <ng-template #sotienTpl let-sotien="sotien">
             <span>{{sotien*1000 | currency : "VND"}}</span>

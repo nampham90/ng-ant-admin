@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { Spkh00301Component } from './spkh00301.component';
 
 const routes: Routes = [
-  {path: '', component: Spkh00301Component,data: { title: 'Tìm kiếm số ODC', key: 'spkh00301' }}
+  {path: '', component: Spkh00301Component,data: { title: 'Tìm kiếm công nợ', key: 'spkh00301' }}
 ];
 
 @NgModule({

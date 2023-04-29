@@ -20,9 +20,12 @@ export class SubwindowctchuyenngoaiComponent implements OnInit {
   const = Const;
   listKh : any[] = [];
 
+  listdonvitinh = Const.lstdonvitinh;
+
   tiencuocMode = 0;
   tiencuocxengoaiMode = 0;
   editForm = false;
+  _disable = false;
   changeTiencuoc($event: any) {this.tiencuocMode = $event; }
   changeTiencuocxengoai($event: any) {this.tiencuocxengoaiMode = $event; }
   constructor(
@@ -55,8 +58,10 @@ export class SubwindowctchuyenngoaiComponent implements OnInit {
       this.setFormStatusByType("enable");
       this.addEditForm.patchValue(this.params);
       this.tiencuocMode = this.params.tiencuoc;
+      if(this.params.soid && this.params.soid != "") {
+         this._disable = true;
+      }
       this.tiencuocxengoaiMode = this.params.tiencuocxengoai;
-      console.log(this.params);
     }
   }
 
@@ -64,6 +69,8 @@ export class SubwindowctchuyenngoaiComponent implements OnInit {
     this.addEditForm = this.fb.group({
       stt: [null],
       thongtindonhang: [null, [Validators.required]],
+      soluong: [null,[Validators.required]],
+      donvitinh: [null,[Validators.required]],
       diadiembochang: [null, [Validators.required]],
       htttxengoai: ["1", [Validators.required]],
       idkhachhang: ["", [Validators.required]],
