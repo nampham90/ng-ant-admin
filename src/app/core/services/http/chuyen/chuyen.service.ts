@@ -33,6 +33,7 @@ export class ChuyenService {
   updateChuyen(params: Chuyen): Observable<any>{
     return this.http.put(Const.ChuyenAnt100Update, params);
   }
+  
   updateTrangthai(params: any): Observable<Number>{
     return this.http.post(Const.ChuyenAnt100UpdateTrangthai, params, { needSuccessInfo: false});
   }

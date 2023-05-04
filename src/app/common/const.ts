@@ -96,6 +96,9 @@ export const CommonAnt100RequestInt = 'common/commonAnt100requestInt';
 // tmt050 master
 export const Tmt050Ant100GetListKBN = 'tmt050/tmt050Ant100getListKBN';
 
+// tmt030 master
+export const Tmt030Ant100GetSYSFLG = 'tmt030/tmt030Ant100getSYSFLG';
+
 // tmt101. master
 export const Tmt101Ant100Create = 'tmt101/tmt101Ant100Create';
 export const Tmt101Ant100Update = 'tmt101/tmt101Ant100Update';

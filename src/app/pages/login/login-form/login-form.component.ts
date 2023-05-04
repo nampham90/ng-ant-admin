@@ -10,6 +10,7 @@ import { MenuStoreService } from '@store/common-store/menu-store.service';
 import { SpinService } from '@store/common-store/spin.service';
 import { UserInfoService } from '@store/common-store/userInfo.service';
 import { fnCheckForm } from '@utils/tools';
+import { Tmt030Service } from '@app/core/services/http/system/tmt030.service';
 
 @Component({
   selector: 'app-login-form',
@@ -31,7 +32,8 @@ export class LoginFormComponent implements OnInit {
     private spinService: SpinService,
     private windowServe: WindowService,
     private userInfoService: UserInfoService,
-    private router: Router
+    private router: Router,
+    private tmt030Service : Tmt030Service
   ) {}
 
   submitForm(): void {
@@ -62,6 +64,7 @@ export class LoginFormComponent implements OnInit {
         this.loginInOutService
           .loginIn(userToken)
           .then(() => {
+            this.getSYSFLG();
             if(param['mode'] && param['mode'] == 'mobile') {
               this.router.navigateByUrl('mobile')
             } else {
@@ -81,6 +84,24 @@ export class LoginFormComponent implements OnInit {
       password: [null, [Validators.required]],
       remember: [null],
     });
+  }
+
+  getSYSFLG() {
+    let req = {
+      "sysflg": true
+    }
+    this.tmt030Service.getSYSFLG(req).subscribe(res=> {
+      this.tmt030Service.SYSFLG1 = res['SYSFLG1'];
+      this.tmt030Service.SYSFLG2 = res['SYSFLG2'];
+      this.tmt030Service.SYSFLG3 = res['SYSFLG3'];
+      this.tmt030Service.SYSFLG4 = res['SYSFLG4'];
+      this.tmt030Service.SYSFLG5 = res['SYSFLG5'];
+      this.tmt030Service.SYSFLG6 = res['SYSFLG6'];
+      this.tmt030Service.SYSFLG7 = res['SYSFLG7'];
+      this.tmt030Service.SYSFLG8 = res['SYSFLG8'];
+      this.tmt030Service.SYSFLG9 = res['SYSFLG9'];
+      this.tmt030Service.SYSFLG10 = res['SYSFLG10'];
+    })
   }
 
 }

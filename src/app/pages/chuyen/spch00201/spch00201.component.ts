@@ -33,6 +33,7 @@ import { SubwindowChiphiService } from '@app/widget/modal/subwindowchiphi/subwin
 import { LayoutPdfService } from '@app/core/services/common/layout-pdf.service';
 import {VideoyoutubeService} from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service'
 import { async } from '@antv/x6/lib/registry/marker/async';
+import { Tmt030Service } from '@app/core/services/http/system/tmt030.service';
 
 export interface Product {
   id?:string,
@@ -125,6 +126,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
     private modalChiphiService: SubwindowChiphiService,
     protected override tabService: TabService,
     private pdfService: LayoutPdfService,
+    private tmt030Service : Tmt030Service
     
 
   ) {
@@ -136,6 +138,10 @@ export class Spch00201Component extends BaseComponent implements OnInit {
 
     this.fnshowConfirm(this.ChuyenDto.trangthai)
     if(this.ChuyenDto.id != "" && this.ChuyenDto.id.length == 24) {
+      this.dataService.getChuyen(this.ChuyenDto.id).subscribe(res => {
+        this.ChuyenDto.trangthai = res.trangthai!;
+        this.fnshowConfirm(this.ChuyenDto.trangthai);
+      })
       this.showchuyen = false;
       this.showConfirm = true;
 
