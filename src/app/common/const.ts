@@ -24,11 +24,15 @@ export const Notifi = 'notifi';
 export const Vison = 'vison';
 
 // rcdkbn
-export const lstkho = '0001' // danh sách mã kho có rcdkbn = '0001'
+export const lstkho = '0001'; // danh sách mã kho có rcdkbn = '0001'
+export const tmt050lstdonvitinh = '0002'; // danh sách mã kho có rcdkbn = '0001'
+export const tmt050lstchiphi = '0003'; // danh sach loai chi phí
 
 // dơn vi tinh
 export const lstdonvitinh = [
     { "value": "kg", "lable": "kg"},
+    { "value": "Bộ", "lable": "Bộ"},
+    { "value": "Cái", "lable": "Cái"},
     { "value": 'Kiện', "lable": "Kiện"},
     { "value": "Tấn", "lable":"Tấn"},
     { "value": "Khối", "lable":"Khối"},
