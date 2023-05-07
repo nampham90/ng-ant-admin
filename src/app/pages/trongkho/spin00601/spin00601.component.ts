@@ -228,8 +228,7 @@ export class Spin00601Component extends BaseComponent implements OnInit {
   confirmmany(data:any){
     this.spin00601Service.xuatnhieudon(data)
     .subscribe(data=> {
-      console.log(data);
-      if(data['modifiedCount'] == 1) {
+      if(data >= 1) {
         this.message.info("Xuất hàng thành công");
       } else {
          this.message.info("Xuất hàng thất bại");
