@@ -1,8 +1,8 @@
 
 
-export const ip = '117.2.212.47';//45.76.180.157
+//export const ip = '117.2.212.47';//45.76.180.157
 
-//export const ip = 'localhost';
+export const ip = 'localhost';
 
 export const port = '3002';
 

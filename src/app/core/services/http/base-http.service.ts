@@ -38,8 +38,8 @@ export class BaseHttpService {
     })
   };
 
-  uri = "http://117.2.212.47:3002/";
-  //uri = "http://localhost:3002/";
+  //uri = "http://117.2.212.47:3002/";
+  uri = "http://localhost:3002/";
 
   protected constructor(public http: HttpClient, public message: NzMessageService, private ipService: IpService) {
     if(this.ipService.ip == "") {

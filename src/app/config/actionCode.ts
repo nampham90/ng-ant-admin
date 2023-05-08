@@ -83,6 +83,10 @@ export const ActionCode = {
   Nguonxeupdate: 'default:system:quanlynguonxe:update',
   Nguonxethemxe: 'default:system:quanlynguonxe.themxe',
   Nguonxethemtaixe: 'default:system:quanlynguonxe.themtaixe',
+  Nguonxeupdatebsx: 'default:system:quanlynguonxe:updatebsx',
+  Nguonxedelbsx: 'default:system:quanlynguonxe:delbsx',
+  Nguonxeupdatetx: 'default:system:quanlynguonxe:updatetx',
+  Nguonxedeltx: 'default:system:quanlynguonxe:deltx',
 
   // chuyến ngoài
   Chuyenngoaiaddtrongkho: 'default:chuyen:spch00251:addtrongkho',

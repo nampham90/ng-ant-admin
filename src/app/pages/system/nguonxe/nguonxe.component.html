@@ -34,6 +34,9 @@
     <app-card-table-wrap [tableTitle]="'Danh sách nguồn xe'" (reload)="reloadTable()" [btnTpl]="tableBtns">
         <app-ant-table [tableConfig]="tableConfig" (changePageSize)="changePageSize($event)" (changePageNum)="getDataList($event)" [tableData]="dataList">
         </app-ant-table>
+        <ng-template #linkTpl let-id="id" let-sodienthoai="sodienthoai" let-datacd="datacd" let-datanm="datanm" let-diachi="diachi" let-thongtinthanhtoan1="thongtinthanhtoan1" let-thongtinthanhtoan2="thongtinthanhtoan2">
+          <a nz-button nzType="link"  (click)="getItem(id,sodienthoai,datacd,datanm,diachi,thongtinthanhtoan1,thongtinthanhtoan2)"><span>{{datacd}}</span></a>
+        </ng-template>
         <ng-template #operationTpl let-id="id" let-sodienthoai="sodienthoai">
           <span *appAuth="ActionCode.Nguonxeupdate" class="operate-text">
             <button nz-button nzType="primary" nzGhost (click)="edit(id)">Cập nhật</button>
@@ -47,7 +50,6 @@
           <span *appAuth="ActionCode.Nguonxedel" class="operate-text" >
             <button nz-button nzType="primary" nzGhost (click)="del(id)">Xóa</button>
           </span>
-
         </ng-template>
     </app-card-table-wrap>
 </div>
@@ -57,4 +59,95 @@
       <i nz-icon nzType="plus"></i>
       Thêm mới
     </button>
-  </ng-template>
+</ng-template>
+
+<div class="normal-table-wrap">
+  <div nz-row [nzGutter]="[16, 16]">
+    <div nz-col [ngClass]="['styledetail']" [nzXl]="6" [nzXXl]="6" [nzLg]="6" [nzMd]="24" [nzSm]="24" [nzXs]="24">
+      <!-- hiển thị thông tin detail -->
+      <nz-form-item>
+        <!-- ID nguồn xe -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="tennguonxe">ID Nguồn xe</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24">
+            <span>{{idnguonxe}}</span>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <!-- tên nguồn xe -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="tennguonxe">Tên nguồn xe</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24">
+            <span>{{tennguonxe}}</span>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <!-- Số điện thoại -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="sodienthoai">Số điện thoại</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24">
+            <span>{{sodienthoainguonxe}}</span>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <!-- Địa chỉ -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="diachi">Địa chỉ</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24">
+            <span>{{diachinguonxe}}</span>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <!-- Thông tin thanh toan 1 -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="thongtinthanhtoan1">TTTT 1</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24">
+            <span>{{thongtinthanhtoan1}}</span>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <!-- Thông tin thanh toan 2 -->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="thongtinthanhtoan2">TTTT 2</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24">
+            <span>{{thongtinthanhtoan2}}</span>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzXl]="18" [nzXXl]="18" [nzLg]="18" [nzMd]="24" [nzSm]="24" [nzXs]="24">
+        <!-- Hiển thị table biển số xe -->
+        <app-card-table-wrap [tableTitle]="'Danh sách Biển số xe'" (reload)="reloadTableBiensoxe()">
+            <app-ant-table
+            (selectedChange)="selectedCheckedBiensoxe($event)"
+            [checkedCashArrayFromComment]="checkedCashArrayBiensoxe"
+            (changePageSize)="changePageSizeBiensoxe($event)"
+            (changePageNum)="getDataListBiensoxe($event)"
+            [tableConfig]="tableConfigBiensoxe"
+            [tableData]="dataListBiensoxe"
+          ></app-ant-table>
+          <ng-template #operationBsxTpl let-id="id">
+            <span *appAuth="ActionCode.Nguonxeupdatebsx" class="operate-text">
+              <button nz-button nzType="primary" nzGhost (click)="editbsx(id)">Cập nhật</button>
+            </span>
+            <span *appAuth="ActionCode.Nguonxedelbsx" class="operate-text" >
+              <button nz-button nzType="primary" nzGhost (click)="delbsx(id)">Xóa</button>
+            </span>
+          </ng-template>
+        </app-card-table-wrap>
+        <div nz-row [ngStyle]="{'margin-top':'10px'}"></div>
+        <!-- Hiển thị table tài xế -->
+        <app-card-table-wrap [tableTitle]="'Danh sách Tài xế'" (reload)="reloadTableBiensoxe()">
+          <app-ant-table
+          (selectedChange)="selectedCheckedTaixe($event)"
+          [checkedCashArrayFromComment]="checkedCashArrayTaixe"
+          (changePageSize)="changePageSizeTaixe($event)"
+          (changePageNum)="getDataListTaixe($event)"
+          [tableConfig]="tableConfigTaixe"
+          [tableData]="dataListTaixe"
+        ></app-ant-table>
+        <ng-template #operationTxTpl let-id="id">
+          <span *appAuth="ActionCode.Nguonxeupdatetx" class="operate-text">
+            <button nz-button nzType="primary" nzGhost (click)="edittx(id)">Cập nhật</button>
+          </span>
+          <span *appAuth="ActionCode.Nguonxedeltx" class="operate-text" >
+            <button nz-button nzType="primary" nzGhost (click)="deltx(id)">Xóa</button>
+          </span>
+        </ng-template>
+        </app-card-table-wrap>
+    </div>
+  </div>
+</div>

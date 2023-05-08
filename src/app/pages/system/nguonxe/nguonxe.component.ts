@@ -21,9 +21,14 @@ import { TabService } from '@app/core/services/common/tab.service';
 import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
 import { Tmt050modalService } from '@app/widget/biz-widget/system/tmt050modal/tmt050modal.service';
 import { Spin00901Service } from '@app/core/services/http/trongkho/spin00901.service';
+import { Tmt050Service } from '@app/core/services/http/system/tmt050.service';
 
 interface SearchParam {
   datacd: string;
+}
+
+interface SearchParamRCDKBN {
+  rcdkbn: string;
 }
 
 @Component({
@@ -53,8 +58,31 @@ export class NguonxeComponent extends BaseComponent implements OnInit {
   checkedCashArray = [];
   ActionCode = ActionCode;
 
+  // table bien so xe
+  searchBiensoxe: Partial<SearchParamRCDKBN> = {};
+  tableConfigBiensoxe!: MyTableConfig;
+  dataListBiensoxe: any[] = [];
+  checkedCashArrayBiensoxe: any[] = [];
+
+  // table tai xe
+  searchTaixe: Partial<SearchParamRCDKBN> = {};
+  tableConfigTaixe!: MyTableConfig;
+  dataListTaixe: any[] = [];
+  checkedCashArrayTaixe: any[] = [];
+
+  // detail
+  idnguonxe = "";
+  tennguonxe = "";
+  sodienthoainguonxe = "";
+  diachinguonxe = "";
+  thongtinthanhtoan1 = "";
+  thongtinthanhtoan2 = "";
+
   @ViewChild('pageHeaderContent', { static: false }) pageHeaderContent!: TemplateRef<NzSafeAny>;
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<any>;
+  @ViewChild('operationBsxTpl', { static: true }) operationBsxTpl!: TemplateRef<any>;
+  @ViewChild('operationTxTpl', { static: true }) operationTxTpl!: TemplateRef<any>;
+  @ViewChild('linkTpl', { static: true }) linkTpl!: TemplateRef<any>;
 
   constructor(
     protected override  webService: WebserviceService,
@@ -68,7 +96,8 @@ export class NguonxeComponent extends BaseComponent implements OnInit {
     private modalSrv: NzModalService,
     protected override tabService: TabService,
     private tmt050modalService: Tmt050modalService,
-    private spin00901Service: Spin00901Service
+    private spin00901Service: Spin00901Service,
+    private tmt050Service: Tmt050Service
   ) {
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
     this.pageHeaderInfo = {
@@ -127,6 +156,199 @@ export class NguonxeComponent extends BaseComponent implements OnInit {
     this.message.info('Làm mới thành công');
     this.getDataList();
   }
+
+  // table hiển thị danh sách biển số xe==============================
+  getDataListBiensoxe(e?: NzTableQueryParams): void {
+    this.tableConfigBiensoxe.loading = true;
+    const params: SearchCommonVO<any> = {
+      pageSize: this.tableConfigBiensoxe.pageSize!,
+      pageNum: e?.pageIndex || this.tableConfigBiensoxe.pageIndex!,
+      filters: this.searchBiensoxe
+    };
+    if(this.searchBiensoxe.rcdkbn && this.searchBiensoxe.rcdkbn != "") {
+      this.tmt050Service.getListKBN(params)
+      .pipe(
+        finalize(() => {
+          this.tableLoadingBiensoxe(false);
+        })
+      )
+      .subscribe(data => {
+        const { list, total, pageNum } = data;
+        this.dataListBiensoxe = [...list];
+        this.tableConfigBiensoxe.total = total!;
+        this.tableConfigBiensoxe.pageIndex = pageNum!;
+        this.tableLoadingBiensoxe(false);
+        this.checkedCashArrayBiensoxe = [...this.checkedCashArrayBiensoxe];
+      });
+    } else {
+      this.dataListBiensoxe = [];
+      this.tableLoadingBiensoxe(false);
+    }
+  }
+
+  tableChangeDectctionBiensoxe(): void {
+    this.dataListBiensoxe = [...this.dataListBiensoxe];
+    this.cdf.detectChanges();
+  }
+
+  changePageSizeBiensoxe(e: number): void {
+    this.tableConfigBiensoxe.pageSize = e;
+  }
+
+  reloadTableBiensoxe(): void {
+    this.message.info('Làm mới thành công');
+    this.getDataListBiensoxe();
+  }
+
+  tableLoadingBiensoxe(isLoading: boolean): void {
+    this.tableConfigBiensoxe.loading = isLoading;
+    this.tableChangeDectctionBiensoxe();
+  }
+
+  selectedCheckedBiensoxe(e: any[]): void {
+    this.checkedCashArrayBiensoxe = [...e];
+  }
+
+  private initTableBiensoxe(): void {
+    this.tableConfigBiensoxe = {
+      showCheckbox: false,
+      headers: [
+        {
+          title: 'Biển số xe',
+          field: 'datacd',
+          width: 150,
+        },
+        {
+          title: 'Bsx Dự phòng',
+          width: 300,
+          field: 'datanm'
+        },
+        {
+          title: 'Vận hành',
+          tdTemplate: this.operationBsxTpl,
+          width: 280,
+          fixed: true,
+          fixedDir: 'right'
+        }
+      ],
+      total: 0,
+      loading: true,
+      pageSize: 10,
+      pageIndex: 1
+    }
+  }
+
+  editbsx(id: any){
+
+  }
+
+  delbsx(id: any){
+    
+  }
+
+  // table hiển thị danh sách Tai xe==================================
+  getDataListTaixe(e?: NzTableQueryParams): void {
+    this.tableConfigTaixe.loading = true;
+    const params: SearchCommonVO<any> = {
+      pageSize: this.tableConfigTaixe.pageSize!,
+      pageNum: e?.pageIndex || this.tableConfigTaixe.pageIndex!,
+      filters: this.searchTaixe
+    };
+    if(this.searchTaixe.rcdkbn && this.searchTaixe.rcdkbn != "") {
+      this.tmt050Service.getListKBN(params)
+      .pipe(
+        finalize(() => {
+          this.tableLoadingTaixe(false);
+        })
+      )
+      .subscribe(data => {
+        const { list, total, pageNum } = data;
+        this.dataListTaixe = [...list];
+        this.tableConfigTaixe.total = total!;
+        this.tableConfigTaixe.pageIndex = pageNum!;
+        this.tableLoadingTaixe(false);
+        this.checkedCashArrayTaixe = [...this.checkedCashArrayTaixe];
+      });
+    } else {
+      this.dataListTaixe = [];
+      this.tableLoadingTaixe(false);
+    }
+  }
+
+  getItem(id: any, sodienthoai: any,datacd:any,datanm:any,diachi:any,thongtinthanhtoan1:any,thongtinthanhtoan2:any) {
+    this.searchBiensoxe.rcdkbn = id;
+    this.searchTaixe.rcdkbn = sodienthoai;
+    this.getDataListBiensoxe();
+    this.getDataListTaixe();
+    this.idnguonxe = datacd;
+    this.tennguonxe = datanm;
+    this.sodienthoainguonxe = sodienthoai;
+    this.diachinguonxe = diachi;
+    this.thongtinthanhtoan1 = thongtinthanhtoan1;
+    this.thongtinthanhtoan2 = thongtinthanhtoan2;
+  }
+
+  tableChangeDectctionTaixe(): void {
+    this.dataListTaixe = [...this.dataListTaixe];
+    this.cdf.detectChanges();
+  }
+
+  changePageSizeTaixe(e: number): void {
+    this.tableConfigTaixe.pageSize = e;
+  }
+
+  reloadTableTaixe(): void {
+    this.message.info('Làm mới thành công');
+    this.getDataListTaixe();
+  }
+
+  tableLoadingTaixe(isLoading: boolean): void {
+    this.tableConfigTaixe.loading = isLoading;
+    this.tableChangeDectctionTaixe();
+  }
+
+  selectedCheckedTaixe(e: any[]): void {
+    this.checkedCashArrayTaixe = [...e];
+  }
+
+  private initTableTaixe(): void {
+    this.tableConfigTaixe = {
+      showCheckbox: false,
+      headers: [
+        {
+          title: 'Tên Tài xế',
+          field: 'datacd',
+          width: 200
+        },
+        {
+          title: 'Số điện thoại',
+          width: 300,
+          field: 'datanm'
+        },
+        {
+          title: 'Vận hành',
+          tdTemplate: this.operationTxTpl,
+          width: 280,
+          fixed: true,
+          fixedDir: 'right'
+        }
+      ],
+      total: 0,
+      loading: true,
+      pageSize: 10,
+      pageIndex: 1
+    }
+  }
+
+  edittx(id: any){
+
+  }
+
+  deltx(id: any){
+    
+  }
+
+  //=========================================================================================
 
   // thêm mơi nguồn xe
   add(){
@@ -240,6 +462,8 @@ export class NguonxeComponent extends BaseComponent implements OnInit {
 
   override ngOnInit(): void {
     this.initTable();
+    this.initTableTaixe();
+    this.initTableBiensoxe();
   }
 
   private initTable(): void {
@@ -249,7 +473,8 @@ export class NguonxeComponent extends BaseComponent implements OnInit {
         {
           title: 'ID nguồn xe',
           field: 'datacd',
-          width: 150
+          width: 150,
+          tdTemplate: this.linkTpl
         },
         {
           title: 'Tên nguồn xe',
