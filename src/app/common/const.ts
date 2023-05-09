@@ -25,7 +25,7 @@ export const Vison = 'vison';
 
 // rcdkbn
 export const lstkho = '0001'; // danh sách mã kho có rcdkbn = '0001'
-export const tmt050lstdonvitinh = '0002'; // danh sách mã kho có rcdkbn = '0001'
+export const tmt050lstdonvitinh = '0002'; // danh sách đơn vị tinh
 export const tmt050lstchiphi = '0003'; // danh sach loai chi phí
 
 // dơn vi tinh
@@ -52,7 +52,7 @@ export const lstchiphi = [
    {"idchuyen": "", "tenchiphi": "Tiền ăn", "sotien": 0, "ghichu": ""},
    {"idchuyen": "", "tenchiphi": "Tiền bãi", "sotien": 0, "ghichu": ""},
    {"idchuyen": "", "tenchiphi": "Tiền dầu", "sotien": 0, "ghichu": ""},
-   {"idchuyen": "", "tenchiphi": "Sữa chữa", "sotien": 0, "ghichu": ""},
+   {"idchuyen": "", "tenchiphi": "Tiền dầu", "sotien": 0, "ghichu": ""},
    {"idchuyen": "", "tenchiphi": "Cầu đường", "sotien": 0, "ghichu": ""},
    {"idchuyen": "", "tenchiphi": "Công an", "sotien": 0, "ghichu": ""},
    {"idchuyen": "", "tenchiphi": "Lương Tài", "sotien": 0, "ghichu": ""},

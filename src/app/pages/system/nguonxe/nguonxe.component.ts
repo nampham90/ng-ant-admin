@@ -22,6 +22,8 @@ import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/vid
 import { Tmt050modalService } from '@app/widget/biz-widget/system/tmt050modal/tmt050modal.service';
 import { Spin00901Service } from '@app/core/services/http/trongkho/spin00901.service';
 import { Tmt050Service } from '@app/core/services/http/system/tmt050.service';
+import { Spin00901Model } from '@app/core/model/trongkho/spin00901.model'
+import { Spin00901subService } from '@app/widget/modal/trongkho/spin00901sub/spin00901sub.service';
 
 interface SearchParam {
   datacd: string;
@@ -97,7 +99,8 @@ export class NguonxeComponent extends BaseComponent implements OnInit {
     protected override tabService: TabService,
     private tmt050modalService: Tmt050modalService,
     private spin00901Service: Spin00901Service,
-    private tmt050Service: Tmt050Service
+    private tmt050Service: Tmt050Service,
+    private spin00901subSevice: Spin00901subService
   ) {
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
     this.pageHeaderInfo = {
@@ -239,11 +242,56 @@ export class NguonxeComponent extends BaseComponent implements OnInit {
   }
 
   editbsx(id: any){
-
+    this.spin00901Service.Detail({id:id})
+    .pipe()
+    .subscribe(res => {
+      let req = {
+        "datacd": "Biển số xe",
+        "datanm": "Biển số xe hiển thị",
+        "datarnm": "Biển số xe dự phòng",
+        "data": res
+      }
+      this.tmt050modalService.show({nzTitle: "Cập nhật"},req).subscribe(({ modalValue, status })=> {
+        if (status === ModalBtnStatus.Cancel) {
+          return;
+        }
+        modalValue.id = id;
+        this.addEditDataBsx(modalValue, 'update');
+      })
+    })
   }
 
   delbsx(id: any){
-    
+    this.modalSrv.confirm(
+      {
+        nzTitle: "Bạn có chắc chắn muốn xóa không !",
+        nzContent: "Sau khi xóa dử liệu không thể khôi phục.",
+        nzOnOk: () => {
+          this.spin00901Service.delete({id:id}).pipe()
+          .subscribe(res => {
+            if(res['deletedCount'] == 1) {
+              if (this.dataListBiensoxe.length === 1) {
+                this.tableConfigBiensoxe.pageIndex--;
+              }
+              this.getDataListBiensoxe();
+            } else {
+              this.message.info("Thực hiện không thành công !");
+            }
+          })
+        }
+    })
+  }
+
+  addEditDataBsx(param: Spin00901Model, methodName: 'update' | 'create'): void {
+    this.spin00901Service[methodName](param)
+    .pipe(
+      finalize(() => {
+        this.tableLoadingBiensoxe(false);
+      })
+    )
+    .subscribe(() => {
+      this.getDataListBiensoxe();
+    }); 
   }
 
   // table hiển thị danh sách Tai xe==================================
@@ -311,6 +359,7 @@ export class NguonxeComponent extends BaseComponent implements OnInit {
     this.checkedCashArrayTaixe = [...e];
   }
 
+  // table hiện thị thông tin tài xé xe ngoài
   private initTableTaixe(): void {
     this.tableConfigTaixe = {
       showCheckbox: false,
@@ -340,12 +389,59 @@ export class NguonxeComponent extends BaseComponent implements OnInit {
     }
   }
 
+  // cập nhạt thông tin tài xê của xe ngoài
   edittx(id: any){
-
+    this.spin00901Service.Detail({id:id})
+    .pipe()
+    .subscribe(res => {
+      let req = {
+        "datacd": "Tên tài xế",
+        "datanm": "Số điện thoại",
+        "datarnm": "Số điện thoại dự phòng",
+        "data": res
+      }
+      this.tmt050modalService.show({nzTitle: "Cập nhật"},req).subscribe(({ modalValue, status })=> {
+        if (status === ModalBtnStatus.Cancel) {
+          return;
+        }
+        modalValue.id = id;
+        this.addEditDataTx(modalValue, 'update');
+      })
+    })
   }
 
+  // delete tai xe của xe ngoài
   deltx(id: any){
-    
+    this.modalSrv.confirm(
+      {
+        nzTitle: "Bạn có chắc chắn muốn xóa không !",
+        nzContent: "Sau khi xóa dử liệu không thể khôi phục.",
+        nzOnOk: () => {
+          this.spin00901Service.delete({id:id}).pipe()
+          .subscribe(res => {
+            if(res['deletedCount'] == 1) {
+              if (this.dataListTaixe.length === 1) {
+                this.tableConfigTaixe.pageIndex--;
+              }
+              this.getDataListTaixe();
+            } else {
+              this.message.info("Thực hiện không thành công !");
+            }
+          })
+        }
+    })
+  }
+
+  addEditDataTx(param: Spin00901Model, methodName: 'update' | 'create'): void {
+    this.spin00901Service[methodName](param)
+    .pipe(
+      finalize(() => {
+        this.tableLoadingTaixe(false);
+      })
+    )
+    .subscribe(() => {
+      this.getDataListTaixe();
+    }); 
   }
 
   //=========================================================================================

@@ -10,6 +10,8 @@ const routes: Routes = [
   { path: 'quanlyxe', loadChildren: () => import('./xe/xe.module').then(m => m.XeModule)},
   { path: 'quanlynguonxe', loadChildren: () => import('./nguonxe/nguonxe.module').then(m => m.NguonxeModule)},
   { path: 'huongdan', loadChildren: () => import('./huongdan/huongdan.module').then(m => m.HuongdanModule)},
+  { path: 'spcm01101', loadChildren: () => import('./spcm01101/spcm01101.module').then(m => m.Spcm01101Module)},
+  { path: 'spcm01102', loadChildren: () => import('./spcm01102/spcm01102.module').then(m => m.Spcm01102Module)},
   { path: '', redirectTo: 'dept', pathMatch: 'full' }
 ];
 

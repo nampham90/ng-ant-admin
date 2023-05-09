@@ -41,6 +41,18 @@ export const ActionCode = {
   HuongdanallDel: 'default:system:huongdan:allDel', 
   HuongdanUpdate: 'default:system:huongdan:update', 
 
+  /* quản lý chi phí chuyen */
+  Spcm01102Add: 'default:system:spcm01102:add',
+  Spcm01102DelAll: 'default:system:spcm01102:delall',
+  Spcm01102Update: 'default:system:spcm01102:update',
+  Spcm01102Del: 'default:system:spcm01102:del',
+  
+  /* quản lý đơn vị tính */ 
+  Spcm01101Add: 'default:system:spcm01101:add',
+  Spcm01101DelAll: 'default:system:spcm01101:delall',
+  Spcm01101Update: 'default:system:spcm01101:update',
+  Spcm01101Del: 'default:system:spcm01101:del',
+
   /* ActionCode ql Xe*/
   XeAdd: 'default:system:quanlyxe:add',
   XeEdit: 'default:system:quanlyxe:update',

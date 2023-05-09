@@ -8,6 +8,9 @@ export enum UrlDisplayId {
     Workbench = "/default/dashboard/workbench",
     spxe00101 = 'xe/spxe00101',
 
+    spcm01101 = "system/spcm01101",
+    spcm01102 = "system/spcm01102",
+
     huongdan = 'system/huongdan',
    //chuyen
     spch00101 = 'chuyen/spch00101', // quản lý chuyến

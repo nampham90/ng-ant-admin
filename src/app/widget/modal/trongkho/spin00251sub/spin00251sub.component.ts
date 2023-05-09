@@ -8,6 +8,12 @@ import { fnCheckForm } from '@app/utils/tools';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { Observable, finalize, of } from 'rxjs';
+
+interface Donvitinh{
+  value: string;
+  lable: string;
+}
+
 interface SearchParam {
   rcdkbn: string;
 }
@@ -22,7 +28,7 @@ export class Spin00251subComponent implements OnInit {
   isEdit = false;
   const = Const;
   listKho: any[] = [];
-  listdonvitinh = Const.lstdonvitinh;
+  listdonvitinh :Donvitinh[] = [];
   tenkho = "";
 
   searchParam: Partial<SearchParam> = {};
@@ -38,6 +44,7 @@ export class Spin00251subComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.getListKho();
+    this.getListDonvitinh();
     if (Object.keys(this.params).length > 0) {
       this.isEdit = true;
       this.setFormStatusByType("enable");
@@ -94,6 +101,29 @@ export class Spin00251subComponent implements OnInit {
         this.listKho = res;
         this.cdf.markForCheck();
       });
+  }
+
+  getListDonvitinh() {
+    const params: SearchCommonVO<any> = {
+      pageSize: 0,
+      pageNum: 0,
+      filters: {
+        rcdkbn : this.const.tmt050lstdonvitinh
+      }
+    };
+    this.spin00901Service.searchParams(params).subscribe(res=> {
+       this.fnAddlstDonvitinh(res);
+    })
+  }
+
+  fnAddlstDonvitinh(lstdatacd: any) {
+    for(let element of lstdatacd) {
+        let donvitinh:Donvitinh = {
+          value: element['datacd'],
+          lable: element['datanm'],
+        }
+        this.listdonvitinh.push(donvitinh);
+    } 
   }
 
   changeKho($event: any) {

@@ -38,6 +38,10 @@ export class Tmt050modalComponent implements OnInit {
          }
       }
 
+      if(this.params.data) {
+        this.addEditForm.patchValue(this.params.data);
+      }
+
     }
   }
 

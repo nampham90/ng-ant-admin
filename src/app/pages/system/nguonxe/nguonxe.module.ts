@@ -6,6 +6,7 @@ import { NguonxeComponent } from './nguonxe.component';
 import { SharedModule } from '@app/shared/shared.module';
 import { NguonxeModalModule } from '@app/widget/biz-widget/system/nguonxe-modal/nguonxe-modal.module';
 import { Tmt050modalModule } from '@app/widget/biz-widget/system/tmt050modal/tmt050modal.module';
+import { Spin00901subModule } from '@app/widget/modal/trongkho/spin00901sub/spin00901sub.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { Tmt050modalModule } from '@app/widget/biz-widget/system/tmt050modal/tmt
     CommonModule,
     NguonxeRoutingModule,
     NguonxeModalModule,
-    Tmt050modalModule
+    Tmt050modalModule,
+    Spin00901subModule
   ]
 })
 export class NguonxeModule { }

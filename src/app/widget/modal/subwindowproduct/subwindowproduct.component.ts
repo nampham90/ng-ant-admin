@@ -2,12 +2,16 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as Const from '@app/common/const';
 import { AccountService } from '@app/core/services/http/system/account.service';
+import { Spin00901Service } from '@app/core/services/http/trongkho/spin00901.service';
 import { SearchCommonVO } from '@app/core/services/types';
 import { fnCheckForm } from '@app/utils/tools';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { finalize, Observable, of } from 'rxjs';
-
+interface Donvitinh{
+  value: string;
+  lable: string;
+}
 @Component({
   selector: 'app-subwindowproduct',
   templateUrl: './subwindowproduct.component.html',
@@ -21,18 +25,20 @@ export class SubwindowproductComponent implements OnInit {
   const = Const;
   listKh : any[] = [];
   tenkhachhang = ""
-  listdonvitinh = Const.lstdonvitinh;
+  listdonvitinh :Donvitinh[] = [];
   constructor(
     private modalRef: NzModalRef, 
     private fb: FormBuilder,
     private cdf : ChangeDetectorRef,
     private dataKhachhangService: AccountService,
+    private spin00901Service: Spin00901Service
   ) {
     this.params = {}
   }
 
   ngOnInit(): void {
     this.getListKh();
+    this. getListDonvitinh();
     this.initForm();
     if (Object.keys(this.params).length > 0) {
       this.isEdit = true;
@@ -97,5 +103,28 @@ export class SubwindowproductComponent implements OnInit {
         this.listKh = res;
         this.cdf.markForCheck();
       });
+  }
+
+  getListDonvitinh() {
+    const params: SearchCommonVO<any> = {
+      pageSize: 0,
+      pageNum: 0,
+      filters: {
+        rcdkbn : this.const.tmt050lstdonvitinh
+      }
+    };
+    this.spin00901Service.searchParams(params).subscribe(res=> {
+       this.fnAddlstDonvitinh(res);
+    })
+  }
+
+  fnAddlstDonvitinh(lstdatacd: any) {
+    for(let element of lstdatacd) {
+        let donvitinh:Donvitinh = {
+          value: element['datacd'],
+          lable: element['datanm'],
+        }
+        this.listdonvitinh.push(donvitinh);
+    } 
   }
 }
