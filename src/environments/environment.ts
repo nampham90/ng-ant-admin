@@ -7,7 +7,7 @@
 //const ip = '117.2.212.47';//117.2.212.47
 
 const ip = 'localhost';
-const port = '3002';
+const port = '3000';
 
 export const localUrl = `http://${ip}:${port}`;
 

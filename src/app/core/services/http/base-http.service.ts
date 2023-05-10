@@ -32,20 +32,20 @@ export class BaseHttpService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': 'http://localhost:3001',
+      'Access-Control-Allow-Origin': 'http://localhost:3000',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
       'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
     })
   };
 
   //uri = "http://117.2.212.47:3002/";
-  uri = "http://localhost:3002/";
+  uri = "http://localhost:3000/";
 
   protected constructor(public http: HttpClient, public message: NzMessageService, private ipService: IpService) {
     if(this.ipService.ip == "") {
       this.uri = environment.production ? localUrl : '/site/api/';
     } else {
-      this.uri = `http://${this.ipService.ip}:3001/api/`;
+      this.uri = `http://${this.ipService.ip}:3000/api/`;
     }
     
   }
@@ -53,7 +53,7 @@ export class BaseHttpService {
   get<T>(path: string, param?: NzSafeAny, config?: MyHttpConfig): Observable<NzSafeAny> {
     config = config || { needSuccessInfo: false };
     if(this.ipService.ip != "") {
-      this.uri = `http://${this.ipService.ip}:3001/api/`;
+      this.uri = `http://${this.ipService.ip}:3000/api/`;
     }
     let reqPath = this.uri + path;
     if (config.otherUrl) {
@@ -77,7 +77,7 @@ export class BaseHttpService {
   delete<T>(path: string, param?: NzSafeAny, config?: MyHttpConfig): Observable<NzSafeAny> {
     config = config || { needSuccessInfo: false };
     if(this.ipService.ip != "") {
-      this.uri = `http://${this.ipService.ip}:3001/api/`;
+      this.uri = `http://${this.ipService.ip}:3000/api/`;
     }
     let reqPath = this.uri + path;
     if (config.otherUrl) {
@@ -101,7 +101,7 @@ export class BaseHttpService {
   post<T>(path: string, param?: NzSafeAny, config?: MyHttpConfig): Observable<NzSafeAny> {
     config = config || { needSuccessInfo: false };
     if(this.ipService.ip != "") {
-      this.uri = `http://${this.ipService.ip}:3001/api/`;
+      this.uri = `http://${this.ipService.ip}:3000/api/`;
     }
     let reqPath = this.uri + path;
     if (config.otherUrl) {
@@ -124,7 +124,7 @@ export class BaseHttpService {
   put<T>(path: string, param?: NzSafeAny, config?: MyHttpConfig): Observable<NzSafeAny> {
     config = config || { needSuccessInfo: false };
     if(this.ipService.ip != "") {
-      this.uri = `http://${this.ipService.ip}:3001/api/`;
+      this.uri = `http://${this.ipService.ip}:3000/api/`;
     }
     let reqPath = this.uri + path;
     if (config.otherUrl) {
@@ -147,7 +147,7 @@ export class BaseHttpService {
   downZip(path: string, param?: NzSafeAny, config?: MyHttpConfig): Observable<NzSafeAny> {
     config = config || { needSuccessInfo: false };
     if(this.ipService.ip != "") {
-      this.uri = `http://${this.ipService.ip}:3001/api/`;
+      this.uri = `http://${this.ipService.ip}:3000/api/`;
     }
     let reqPath = this.uri + path;
     if (config.otherUrl) {

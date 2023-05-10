@@ -107,6 +107,7 @@ export class SubwindowchiphiComponent implements OnInit {
     if(this.params.listcp != undefined && this.params.listcp.length > 0) {
        this.lstchiphi = this.params.listcp;
        this.createForm();
+       this.cdf.detectChanges();
     } else {
       this.searchParam.rcdkbn = Const.tmt050lstchiphi;
       const params: SearchCommonVO<any> = {
@@ -117,6 +118,7 @@ export class SubwindowchiphiComponent implements OnInit {
       this.spin00901Service.searchParams(params).subscribe(res=> {
         this.fnAddlistchiphi(res);
         this.createForm();
+        this.cdf.detectChanges();
       })
     }
 
