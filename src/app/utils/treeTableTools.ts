@@ -27,7 +27,7 @@ function visitNode(node: TreeNodeInterface, hashMap: { [key: string]: boolean },
   }
 }
 
-// 获取map形式的treeData,入参为dataList
+// Lấy treeData dưới dạng map, đầu vào là danh sách dữ liệu (dataList)
 const fnTreeDataToMap = function tableToTreeData(dataList: any[]): { [key: string]: TreeNodeInterface[] } {
   const mapOfExpandedData: { [key: string]: TreeNodeInterface[] } = {};
   dataList.forEach(item => {
@@ -37,16 +37,18 @@ const fnTreeDataToMap = function tableToTreeData(dataList: any[]): { [key: strin
 };
 
 /**
- * 该方法用于将有父子关系的数组转换成树形结构的数组
- * 接收一个具有父子关系的数组作为参数
- * 返回一个树形结构的数组
+ * Phương thức này được sử dụng để chuyển đổi một mảng có quan hệ cha con thành một mảng có cấu trúc cây
+ * Nhận một mảng có quan hệ cha con làm đầu vào
+ * Trả về một mảng có cấu trúc cây 
  */
 const fnFlatDataHasParentToTree = function translateDataToTree(data: any[], fatherId = 'fatherId'): any {
-  //没有父节点的数据
-  let parents = data.filter(value => value[fatherId] === 0);
+  // Dữ liệu không có nút cha
+  let parents = data.filter(value => value[fatherId] === 0)
+  .sort((a, b) => a.orderNum - b.orderNum);
 
-  //有父节点的数据
-  let children = data.filter(value => value[fatherId] !== 0);
+  //Dữ liệu có nút cha
+  let children = data.filter(value => value[fatherId] !== 0)
+  .sort((a, b) => a.orderNum - b.orderNum);;
 
   let translator = (parents: any[], children: any[]): any => {
     parents.forEach(parent => {
@@ -71,12 +73,12 @@ const fnFlatDataHasParentToTree = function translateDataToTree(data: any[], fath
       });
     });
   };
-  //调用转换方法
+  //  Gọi phương thức chuyển đổi
   translator(parents, children);
   return parents;
 };
 
-// 将树状结构数据添加层级以及是否是根节点的标记，根节点isLeaf为true，层级由level表示
+// Thêm cấp độ và đánh dấu liệu có là nút gốc hay không vào dữ liệu cây, nút gốc có isLeaf là true, cấp độ được biểu thị bởi level
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const fnAddTreeDataGradeAndLeaf = function AddTreeDataGradeAndLeaf(array: any[], levelName = 'level', childrenName = 'children') {
   const recursive = (array: any[], level = 0): any => {
@@ -96,14 +98,14 @@ const fnAddTreeDataGradeAndLeaf = function AddTreeDataGradeAndLeaf(array: any[],
   return recursive(array);
 };
 
-// 摊平的tree数据
+// Dữ liệu cây được làm phẳng
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const fnFlattenTreeDataByDataList = function flattenTreeData(dataList: any[]) {
   const mapOfExpandedData: { [key: string]: TreeNodeInterface[] } = fnTreeDataToMap(dataList);
   return fnGetFlattenTreeDataByMap(mapOfExpandedData);
 };
 
-// 获取摊平的tree数据,入参为map形式的treeData
+// Lấy dữ liệu cây đã làm phẳng, đầu vào là treeData dưới dạng map"
 const fnGetFlattenTreeDataByMap = function getFlattenTreeData(mapOfExpandedData: { [key: string]: TreeNodeInterface[] }): TreeNodeInterface[] {
   const targetArray: TreeNodeInterface[] = [];
   Object.values(mapOfExpandedData).forEach(item => {

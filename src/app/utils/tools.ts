@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const  fnReload = async function reload(router: Router, url: string) {
   const sourceUrl = url;
-  // 只有当前页签会刷新，如果涉及到tab页内的详情的页面不会刷新
+  // Chỉ tab hiện tại được làm mới, nếu liên quan đến trang chi tiết trong tab sẽ không được làm mới
   const currentRoute = fnGetPathWithoutParam(sourceUrl);
   const queryParams = router.parseUrl(sourceUrl).queryParams;
   router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
@@ -30,7 +30,7 @@ const fngetPathKey = function getPathKey(router: Router,path: string): string {
   return tempPath + pathParamString;
 }
 
-/*获取1到100之间的随机整数 this.randomNum(1,101)*/
+/* Lấy một số nguyên ngẫu nhiên từ 1 đến 100 this.randomNum(1,101) */
 const fnGetRandomNum = function getRandomNum(m: number, n: number): number {
   let num = Math.floor(Math.random() * (m - n) + n);
   return num;
@@ -67,7 +67,7 @@ const fnCheckForm = function checkForm(form: FormGroup): boolean {
   return !form.invalid;
 };
 
-// 清空formArray
+// Xóa bỏ formArray
 const fnClearFormArray = function clearFormArray(formArray: FormArray): void {
   while (formArray.length !== 0) {
     formArray.removeAt(0);
@@ -80,7 +80,7 @@ const fnStopMouseEvent = function stopMouseEvent(e: MouseEvent): void {
   // e.preventDefault();
 };
 
-// 数组对象去重
+// Loại bỏ các đối tượng trùng nhau trong mảng
 const fnRemoveDouble = function removeDouble<T>(list: NzSafeAny[], col: NzSafeAny): T {
   const obj = {};
   return list.reduce((cur, next) => {
@@ -90,7 +90,7 @@ const fnRemoveDouble = function removeDouble<T>(list: NzSafeAny[], col: NzSafeAn
   }, []);
 };
 
-// 获取路由最后一个/后面的字符串
+// Lấy chuỗi sau dấu / cuối cùng của định tuyến
 const fnFormatePath = function formatePath(path: string): string {
   const newpath = path.replace(/\/[0-9]+/g, '');
   const paramIndex = newpath.substring(newpath.lastIndexOf('/') + 1).indexOf('?');
@@ -102,7 +102,7 @@ const fnFormatePath = function formatePath(path: string): string {
   }
 };
 
-// 获取没有参数的路由
+// Lấy định tuyến không có tham số
 const fnGetPathWithoutParam = function getPathWithoutParam(path: string): string {
   const paramIndex = path.indexOf('?');
   if (paramIndex > -1) {
@@ -111,7 +111,7 @@ const fnGetPathWithoutParam = function getPathWithoutParam(path: string): string
   return path;
 };
 
-// 返回uuid
+// Trả về uuid
 const fnGetUUID = function getUUID(): string {
   return uuidv4();
 };
@@ -125,12 +125,12 @@ const fnGetBase64 = function getBase64(file: File): Promise<string | ArrayBuffer
   });
 };
 
-// 加密
+// Mã hóa
 const fnEncrypt = function encrypt(word: NzSafeAny, keyStr: string): string {
   return CryptoJS.AES.encrypt(JSON.stringify(word), keyStr).toString();
 };
 
-// 解密
+// Giải mã
 const fnDecrypt = function decrypt(word: NzSafeAny, keyStr: string): LockScreenFlag {
   const bytes = CryptoJS.AES.decrypt(word, keyStr);
   return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));

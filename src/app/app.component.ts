@@ -64,7 +64,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     public router: Router
   ) {}
 
-  // 所有对话框扩展最大化按钮，将templateRef传入Modal基础service的妥协方法
+  // Phương thức dễ chấp nhận của dịch vụ Modal cơ bản, mở rộng nút tối đa cho tất cả các hộp thoại bằng cách truyền templateRef vào
   fullScreenIconClick($event: MouseEvent): void {
     this.modalFullScreenFlag = !this.modalFullScreenFlag;
     fnStopMouseEvent($event);

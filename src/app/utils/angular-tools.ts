@@ -5,7 +5,7 @@ import { OperatorFunction, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 /*https://github.com/angular/angular/issues/46119*/
-/*  V14版本才可以使用，低于V14必须使用src/app/core/services/common/destory.service.ts提供的服务
+/*  Chỉ có thể sử dụng trong phiên bản V14 trở lên, phiên bản thấp hơn phải sử dụng dịch vụ được cung cấp bởi src/app/core/services/common/destory.service.ts
  *   destroy$=untilDestroyedFn();
  *
  *    someObserve.pipe(this.destroy$).subscribe()
@@ -22,7 +22,7 @@ const untilDestroyedFn = function untilDestroyed(): OperatorFunction<any, any> {
   return takeUntil(subject.asObservable());
 };
 
-// 获取路由参数
+// Lấy tham số của định tuyến
 const getRouteParamFn = function getRouteParam(key: string): string {
   return inject(ActivatedRoute).snapshot.params[key];
 };
