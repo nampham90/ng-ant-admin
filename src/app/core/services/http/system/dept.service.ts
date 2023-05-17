@@ -7,7 +7,7 @@ import { BaseHttpService } from '../base-http.service';
 import * as Const from "src/app/common/const"
 
 /*
- *  部门列表
+ *  Model Phong Ban
  * */
 export interface Dept {
   id?: string;

@@ -66,7 +66,7 @@ export class LoginExpiredService implements HttpInterceptor {
     this.router.navigateByUrl('/login/login-form');
   }
 
-  // 登录过期拦截
+  // Chặn phiên đăng nhập hết hạn
   private loginExpiredFn(req: HttpRequest<string>, next: HttpHandler): NzSafeAny {
     return switchMap((event: HttpResponse<NzSafeAny>): NzSafeAny => {
       if (event.type !== HttpEventType.Response || event.body.code !== loginTimeOutCode) {
@@ -82,12 +82,12 @@ export class LoginExpiredService implements HttpInterceptor {
       }
 
       this.refresher = new Observable(observer => {
-        // setTimeout为了解决刷新页面的时候，由于zorro样式未加载，登录对话框会闪屏
+        // setTimeout để giải quyết việc khi làm mới trang, do giao diện zorro chưa được tải, hộp thoại đăng nhập sẽ hiện lên rồi biến mất
         setTimeout(() => {
           this.loginModalService.show({ nzTitle: 'Thông tin đăng nhập đã hết hạn, vui lòng đăng nhập lại' }).subscribe(({ modalValue, status }) => {
             if (status === ModalBtnStatus.Cancel) {
-              // 这么做是为了登录状态下token过期，刷新页面，登录窗口点击取消，需要在startUp中的获取menu的接口完成掉,
-              // 不然进不去angular应用，路由不跳转
+              // Hành động này nhằm mục đích khi token hết hạn trong trạng thái đăng nhập, làm mới trang, nhấp vào hủy trong cửa sổ đăng nhập, cần hoàn thành giao diện menu trong startUp, 
+              // Nếu không, không thể truy cập vào ứng dụng angular, không chuyển đổi tuyến đường
               observer.next(
                 new HttpResponse({
                   body: {
@@ -108,9 +108,9 @@ export class LoginExpiredService implements HttpInterceptor {
                 observer.next(data);
               },
               error => {
-                // 如果先用admin登录超时弹框，登录的却是normal账号，对目标模块没有权限，则返回登录页
-                // 这里靠后端判断新的token没有权限，请求报错403
-                this.message.error('Bạn không có quyền đăng nhập vào mô-đun này');
+               // Nếu sử dụng tài khoản admin để đăng nhập nhưng cửa sổ hết hạn xuất hiện, nhưng đăng nhập bằng tài khoản normal, không có quyền truy cập vào mô-đun đích, sẽ trở về trang đăng nhập 
+               // Ở đây, phía máy chủ kiểm tra token mới không có quyền, yêu cầu lỗi 403 trả về trang đăng nhập"
+                //this.message.error('Bạn không có quyền đăng nhập vào mô-đun này');
                 this.loginOut();
               }
             );

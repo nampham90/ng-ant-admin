@@ -41,7 +41,7 @@ export class JudgAuthTaixeGuard implements CanActivateChild {
     if ((authCodeArray.length == 3 && this.authCodeArray[0] == "1")) {
       return true;
     } else {
-      this.message.error('Bạn không có quyền đăng nhập vào mô-đun này.');
+      //this.message.error('Bạn không có quyền đăng nhập vào mô-đun này.');
       this.loginOutService.loginOut();
       return this.router.parseUrl('/login');
     }
