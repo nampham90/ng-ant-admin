@@ -30,8 +30,8 @@ export class DeptService {
     return this.http.post(Const.Ant100getAllPhongban, param);
   }
 
-  public getDeptsDetail(id: number): Observable<Dept> {
-    return this.http.get(`/department/${id}/`);
+  public getDeptsDetail(id: any): Observable<Dept> {
+    return this.http.post(Const.Ant100getIdPhongban, {id:id}, {needSuccessInfo: true});
   }
 
   public addDepts(param: Dept): Observable<void> {
@@ -43,6 +43,6 @@ export class DeptService {
   }
 
   public editDepts(param: Dept): Observable<void> {
-    return this.http.put('/department/', param);
+    return this.http.put(Const.Ant100editPhongban, param);
   }
 }

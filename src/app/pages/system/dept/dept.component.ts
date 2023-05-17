@@ -91,12 +91,12 @@ export class DeptComponent implements OnInit {
       });
   }
 
-  /*查看*/
+  /*Kiểm tra*/
   check(id: string, children: any[], parent: any[]): void {
     this.message.success(id);
   }
 
-  /*重置*/
+  /*làm mới */
   resetForm(): void {
     this.searchParam = {};
     this.getDataList();
@@ -149,8 +149,8 @@ export class DeptComponent implements OnInit {
     });
   }
 
-  // 修改
-  edit(id: number, fatherId: number): void {
+  // cập nhật
+  edit(id: any, fatherId: number): void {
     this.dataService.getDeptsDetail(id).subscribe(res => {
       this.deptModalService.show({ nzTitle: 'Edit' }, res).subscribe(
         ({ modalValue, status }) => {
