@@ -12,7 +12,7 @@ export class NzModalWrapService {
   constructor(public modal: NzModalService, public modalDragService: ModalDragService) {}
 
   /**
-   * 创建对话框, 增加可拖拽功能
+   * Tạo hộp thoại, thêm tính năng kéo thả
    *
    * @param config ModalOptions
    */

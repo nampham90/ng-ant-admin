@@ -19,7 +19,7 @@ export class DriverService {
         animate: false,
         allowClose: true,
         doneBtnText: 'Kết thúc',
-        closeBtnText: 'Khép kín',
+        closeBtnText: 'Close',
         nextBtnText: 'Bước tiếp theo',
         prevBtnText: 'Trước',
         onHighlightStarted: () => {

@@ -6,19 +6,19 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { ModalTypes, NzModalService } from 'ng-zorro-antd/modal';
 
 /**
- * 对话框拖动服务
+ * Dịch vụ kéo thả hộp thoại
  */
 @Injectable()
 export class ModalDragService {
   static readonly DRAG_CLS_PREFIX = 'NZ-MODAL-WRAP-CLS-';
   constructor(public modal: NzModalService, public dragDrop: DragDrop) {}
 
-  /**
-   * 创建拖拽手柄
-   *
-   * @param wrapCls 类名
-   * @param nzModalType 对话框类型
-   */
+/**
+ *
+ * Tạo nút kéo thả
+ * @param wrapCls: Tên lớp  
+ * @param nzModalType: Loại hộp thoại
+ */
   createDragHandler<T = NzSafeAny>(wrapCls: string, nzModalType?: ModalTypes): DragRef<T> {
     const wrapElement = document.querySelector<HTMLDivElement>(`.${wrapCls}`)!;
     const rootElement = wrapElement.querySelector<HTMLDivElement>(`.ant-modal-content`)!;
@@ -28,16 +28,17 @@ export class ModalDragService {
     return this.dragDrop.createDrag(handle).withHandles([handle]).withRootElement(rootElement);
   }
 
-  /**
-   * 获取随机类名
-   */
+/**
+ *
+ *Lấy tên lớp ngẫu nhiên
+ */
   getRandomCls() {
     return ModalDragService.DRAG_CLS_PREFIX + Date.now() + Math.random().toString().replace('0.', '');
   }
 
   /**
-   * 解决wrap的样式, 设置鼠标可以穿透
    *
+   * Giải quyết kiểu dáng của wrap, cho phép chuột đi qua
    * @param wrapElement
    * @protected
    */
@@ -46,12 +47,11 @@ export class ModalDragService {
   }
 
   /**
-   * 当前对话框点击时,设置当前对话框z-index为最大
-   *
-   * @param rootElement 当前对话框
-   * @param wrapElement 待修改z-index 容器
-   * @protected
-   */
+  Khi nhấp chuột vào hộp thoại hiện tại, đặt z-index của hộp thoại hiện tại là lớn nhất
+  @param rootElement: Hộp thoại hiện tại
+  @param wrapElement: Đối tượng chứa z-index cần chỉnh sửa
+  @protected
+  */
   protected setMaxZIndex(rootElement: HTMLElement, wrapElement: HTMLElement): void {
     rootElement.addEventListener(
       'mousedown',
@@ -66,10 +66,9 @@ export class ModalDragService {
   }
 
   /**
-   * 获取所有对话框最大值,并确定是否需要修改
-   *
-   * @param wrapElement 待修改z-index 容器
-   */
+  Lấy giá trị tối đa của tất cả các hộp thoại và xác định xem có cần chỉnh sửa hay không
+  @param wrapElement: Đối tượng chứa z-index cần chỉnh sửa
+  */
   protected getModalMaxZIndex(wrapElement: HTMLElement): number | null {
     const wrapZIndex = this.getZIndex(wrapElement);
     const maxZIndex = this.modal.openModals.reduce<number>((prev, modal) => {

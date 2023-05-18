@@ -58,20 +58,20 @@ export class HttpInterceptorService implements HttpInterceptor {
          // this.ipService.ip = ip;
       })
       errMsg = 'Đã xảy ra lỗi mạng không xác định, vui lòng kiểm tra mạng của bạn.';
-      this.message.info('Đã xảy ra lỗi mạng không xác định, vui lòng kiểm tra mạng của bạn.');
+      //this.message.info('Đã xảy ra lỗi mạng không xác định, vui lòng kiểm tra mạng của bạn.');
     }
     if (status >= 300 && status < 400) {
       errMsg = `Yêu cầu đã được chuyển hướng bởi máy chủ với mã trạng thái ${status}`;
-      this.message.info(`Yêu cầu đã được chuyển hướng bởi máy chủ với mã trạng thái ${status}`);
+      //this.message.info(`Yêu cầu đã được chuyển hướng bởi máy chủ với mã trạng thái ${status}`);
     }
     if (status >= 400 && status < 500) {
       errMsg = `Máy khách bị lỗi, có thể dữ liệu gửi sai, mã trạng thái ${status}`;
-      this.message.info(`Máy khách bị lỗi, có thể dữ liệu gửi sai, mã trạng thái ${status}`);
+      //this.message.info(`Máy khách bị lỗi, có thể dữ liệu gửi sai, mã trạng thái ${status}`);
       
     }
     if (status >= 500) {
       errMsg = `Đã xảy ra lỗi máy chủ với mã trạng thái ${status}`;
-      this.message.info(`Đã xảy ra lỗi máy chủ với mã trạng thái ${status}`);
+      //this.message.info(`Đã xảy ra lỗi máy chủ với mã trạng thái ${status}`);
     }
     return throwError({
       code: status,

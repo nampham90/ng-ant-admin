@@ -46,44 +46,44 @@ export function SubWindowWithServiceFactory(subWindowWithService: SubWindowWithS
   return () => subWindowWithService.subWindowWidth();
 }
 
-// 初始化服务
+// Khởi tạo dịch vụ
 const APPINIT_PROVIDES = [
-  // 项目启动
+  //  Khởi động dự án
   {
     provide: APP_INITIALIZER,
     useFactory: StartupServiceFactory,
     deps: [StartupService],
     multi: true
   },
-  // load阿里图标库cdn
+  // Tải dữ liệu biểu tượng của Alibaba từ CDN
   {
     provide: APP_INITIALIZER,
     useFactory: LoadAliIconCdnFactory,
     deps: [LoadAliIconCdnService],
     multi: true
   },
-  // 初始化锁屏服务
+  // Khởi tạo dịch vụ khóa màn hình
   {
     provide: APP_INITIALIZER,
     useFactory: InitLockedStatusServiceFactory,
     deps: [SubLockedStatusService],
     multi: true
   },
-  // 初始化主题
+  //Khởi tạo chủ đề
   {
     provide: APP_INITIALIZER,
     useFactory: InitThemeServiceFactory,
     deps: [InitThemeService],
     multi: true
   },
-  // 初始化监听屏幕宽度服务
+  // Khởi tạo dịch vụ theo dõi độ rộng màn hình
   {
     provide: APP_INITIALIZER,
     useFactory: SubWindowWithServiceFactory,
     deps: [SubWindowWithService],
     multi: true
   },
-  // 初始化暗黑模式还是default模式的css
+  //  Khởi tạo CSS cho chế độ tối hoặc chế độ mặc định"
   {
     provide: APP_INITIALIZER,
     useFactory: (themeService: ThemeSkinService) => () => {

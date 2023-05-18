@@ -19,7 +19,7 @@ export const enum ModalBtnStatus {
   Ok
 }
 
-// 组件实例需要继承此类
+// Thể hiện thành phần cần phải kế thừa lớp này
 export abstract class BasicConfirmModalComponent {
   protected params: NzSafeAny; // service传给component instance的参数
   protected constructor(protected modalRef: NzModalRef) {}
@@ -81,11 +81,10 @@ export class ModalWrapService {
     return +getComputedStyle(element, null).zIndex;
   }
 
-  /**
-   * 获取所有对话框最大值,并确定是否需要修改
-   *
-   * @param wrapElement 待修改z-index 容器
-   */
+/**
+ *Lấy giá trị tối đa của tất cả các hộp thoại và xác định xem có cần chỉnh sửa hay không
+  @param wrapElement: Đối tượng chứa z-index cần chỉnh sửa
+*/
   getModalMaxZIndex(wrapElement: HTMLElement): ModalZIndex {
     return this.bsModalService.openModals.reduce<ModalZIndex>(
       (prev, modal) => {
@@ -104,7 +103,7 @@ export class ModalWrapService {
     );
   }
 
-  // 当对话框面板时,设置当前对话框z-index为最大
+  // Khi bật bảng hội thoại, đặt z-index của hộp thoại hiện tại là lớn nhất.
   protected setMaxZIndex(wrapElement: HTMLElement): void {
     wrapElement.addEventListener(
       'mousedown',
@@ -140,7 +139,7 @@ export class ModalWrapService {
     wrapElement.style.pointerEvents = 'none';
   }
 
-  // 创建对话框的配置项
+  // Tạo cấu hình cho hộp thoại
   createModalConfig(component: Type<NzSafeAny>, modalOptions: ModalOptions = {}, params: object = {}, wrapCls: string): ModalOptions {
     let str=JSON.stringify(params);
     let obj = JSON.parse(str);
@@ -178,7 +177,7 @@ export class ModalWrapService {
       nzWidth: 720,
       nzComponentParams: {
         params
-      } // 参数中的属性将传入nzContent实例中
+      } //Các thuộc tính trong tham số sẽ được truyền vào thể hiện nzContent
     };
 
     const newOptions = _.merge(defaultOptions, modalOptions);
