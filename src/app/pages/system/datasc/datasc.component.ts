@@ -43,6 +43,8 @@ export class DatascComponent implements OnInit {
 
   ActionCode = ActionCode;
 
+  dataSC!: DataScObj;
+
   constructor(
     private modalSrv: NzModalService,
     private cdr: ChangeDetectorRef,
@@ -115,7 +117,22 @@ export class DatascComponent implements OnInit {
     this.getDataList();
   }
 
-  edit(id:any) {}
+  edit(id:any) {
+    this.dataService.detailDatasc(id).subscribe(res => {
+      if(res) {
+        this.dataSC = res;
+        this.modalService.show({nzTitle: "Cập nhật"},this.dataSC).subscribe(({ modalValue, status })=> {
+          if (status === ModalBtnStatus.Cancel) {
+            return;
+          }
+          modalValue.id = id;
+          this.tableLoading(true);
+          this.addEditData(modalValue,'editDatasc');
+        })
+      }
+    })
+  }
+
   del(id:any) {}
 
   getNameMenu(id: string) {
@@ -176,6 +193,11 @@ export class DatascComponent implements OnInit {
           title: 'Ngôn ngữ',
           field: 'lang',
           width: 120
+        },
+        {
+          title: 'Vị trí',
+          field: 'vitri',
+          width: 100
         },
         {
           title: 'Trạng thái',

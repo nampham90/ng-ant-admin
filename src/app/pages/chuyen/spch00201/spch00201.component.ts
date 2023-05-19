@@ -314,7 +314,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         let tiennop = tc - (tckn + tcp);
 
         let title = "Chứng từ hoàn thành chuyến - " + Const.doanhnghiep;
-        let header = [['Khách hàng','Thông tin đơn hang','tiền cước','HTTT']];
+        let header = [['Khách hàng','Nơi bốc','Nơi trả','Tên hàng','Số lượng','Đơn vị tính','Tiền cước']];
         let data = this.fnGetDataExport(res.lstproduct);
         this.pdfService.clearHeader();
         let layoutheader = Const.headerLayout;
@@ -354,9 +354,13 @@ export class Spch00201Component extends BaseComponent implements OnInit {
     for(let element of lstdata){
       let item = [
         element['iduser']['name'],
+        element['diadiembochang'],
+        element['diachinguoinhan'],
         element['noidungdonhang'],
-        this.displayVND(element['tiencuoc']),
-        element['hinhthucthanhtoan']
+        element['soluong'],
+        element['donvitinh'],
+        this.displayVND(element['tiencuoc'])
+       // element['hinhthucthanhtoan']
       ];
       data.push(item);
     }

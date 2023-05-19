@@ -3,7 +3,7 @@ export const  idTaixe = "636cf775974c56587047691e";
 export const  idKhachhang = "632ebaf77e9ad9aeef4e3d27";
 
 // đợn vi sở hưu
-export const doanhnghiep = "HLXV"
+export const doanhnghiep = "HONG QUYEN"
 
 export const  tinhthanhApi = "https://provinces.open-api.vn/api/?depth=2";
 
@@ -153,6 +153,7 @@ export const Ant100findAllDatasc = "screenpc/ant100SearchAllDatasc";
 export const Ant100AddListDatasc = "screenpc/ant100AddListDatasc";
 export const Ant100DelDatasc = "screenpc/ant100DelDatasc";
 export const Ant100EditDatasc = "screenpc/ant100EditDatasc";
+export const Ant100DetailDatasc = "screenpc/ant100DetailDatasc";
 
 // nhật ký hệ thống
 export const NhatkyhethongfindType = "nhatkyhethong/nhatkyhethongAnt100getAll"

@@ -11,6 +11,7 @@ export interface DataScObj {
   title1: string;
   title2: string;
   lang:string;
+  vitri: number;
   status: boolean;
 }
 
@@ -24,15 +25,19 @@ export class DatascService {
     return this.http.post(Const.Ant100findAllDatasc, param);
   }
 
-  public addDatasc(param: any): Observable<void> {
+  public addDatasc(param: any): Observable<any> {
     return this.http.post(Const.Ant100AddListDatasc, param);
   }
 
-  public delDatasc(ids: number[]): Observable<void> {
-    return this.http.post('/user/del/', { ids });
+  public delDatasc(id: any): Observable<any> {
+    return this.http.post(Const.Ant100DelDatasc, { id:id });
   }
 
-  public editDatasc(param: DataScObj): Observable<void> {
-    return this.http.put(Const.Ant100EditDetailUser, param);
+  public editDatasc(param: DataScObj): Observable<any> {
+    return this.http.put(Const.Ant100EditDatasc, param);
+  }
+
+  public detailDatasc(id: any): Observable<any> {
+    return this.http.post(Const.Ant100DetailDatasc, {id:id});
   }
 }

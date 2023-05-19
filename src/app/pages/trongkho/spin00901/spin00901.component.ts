@@ -238,7 +238,7 @@ export class Spin00901Component extends BaseComponent implements OnInit {
           field: 'status01',
         },
         {
-          title: this.formItemNm[16],
+          title: this.formItemNm[14],
           tdTemplate: this.operationTpl,
           width: 160,
           fixed: true,

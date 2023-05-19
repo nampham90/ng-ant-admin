@@ -36,6 +36,8 @@ export class DatascModalComponent implements OnInit {
   listdatasc : DataScObj[] = [];
   tieudeNew = "";
 
+  showBtnAddList = false;
+
   constructor(
     private modalRef: NzModalRef,
     private fb: FormBuilder,
@@ -61,6 +63,13 @@ export class DatascModalComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.getLang();
+    if (Object.keys(this.params).length > 0) {
+      if(this.params.title1 && this.params.title1 != "") {
+          this.isEdit = true;
+          this.addEditForm.patchValue(this.params);
+          this.showBtnAddList = true;
+      }
+    }
   }
 
   addList() {
@@ -72,6 +81,7 @@ export class DatascModalComponent implements OnInit {
       title1: this.addEditForm.value.tieude1,
       title2:  this.addEditForm.value.tieude2,
       lang: this.addEditForm.value.lang,
+      vitri: this.addEditForm.value.vitri,
       status:  this.addEditForm.value.status
     }
     this.listdatasc.push(obj);
@@ -92,10 +102,11 @@ export class DatascModalComponent implements OnInit {
 
   initForm(): void {
     this.addEditForm = this.fb.group({
-      tieude1: [null, [Validators.required]],
-      tieude2: [null],
+      title1: [null, [Validators.required]],
+      title2: [null],
       status: [true],
       lang: [null, [Validators.required]],
+      vitri: [null],
       list: this.listdatasc
     });
   }

@@ -48,7 +48,7 @@ const fnFlatDataHasParentToTree = function translateDataToTree(data: any[], fath
 
   //有父节点的数据
   let children = data.filter(value => value[fatherId] !== 0)
-  .sort((a, b) => a.orderNum - b.orderNum);;
+  .sort((a, b) => a.orderNum - b.orderNum);
 
   let translator = (parents: any[], children: any[]): any => {
     parents.forEach(parent => {
