@@ -77,7 +77,7 @@ export class AntTableComponent implements OnInit, OnChanges {
     return this._dataList;
   }
 
-  _tableSize: NzTableSize = 'default';
+  _tableSize: NzTableSize = 'small';
   set tableSize(value: NzTableSize) {
     this._tableSize = value;
     this.tableChangeDectction();

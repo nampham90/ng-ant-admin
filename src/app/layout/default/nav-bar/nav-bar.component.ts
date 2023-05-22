@@ -22,7 +22,7 @@ import { fnStopMouseEvent } from '@utils/tools';
   providers: [DestroyService]
 })
 export class NavBarComponent implements OnInit {
-  // 是混合模式顶部导航
+  // Đây là thanh điều hướng phía trên trong chế độ kết hợp
   @Input() isMixiHead = false;
   @Input() isMixiLeft = false;
   routerPath = this.router.url;
@@ -69,9 +69,9 @@ export class NavBarComponent implements OnInit {
       takeUntil(this.destroy$)
     );
 
-    // 监听混合模式下左侧菜单数据源
+    // Lắng nghe nguồn dữ liệu của menu bên trái trong chế độ kết hợp
     this.subMixiModeSideMenu();
-    // 监听折叠菜单事件
+    //  Lắng nghe sự kiện gập menu
     this.subIsCollapsed();
     this.subAuth();
     this.router.events
@@ -79,8 +79,8 @@ export class NavBarComponent implements OnInit {
         filter(event => event instanceof NavigationEnd),
         tap(() => {
           this.subTheme$.subscribe(() => {
-            // 主题切换为混合模式下，设置左侧菜单数据源
-            // 如果放在ngInit监听里面，会在混合模式下，刷新完页面切换路由，runOutSideAngular
+            //  Chuyển đổi sang chế độ kết hợp, thiết lập nguồn dữ liệu của menu bên trái
+            // Nếu đặt trong ngOnInit, sau khi làm mới trang và chuyển đổi định tuyến trong chế độ kết hợp, sẽ chạy ra khỏi Angular
             if (this.isMixiMode) {
               this.setMixModeLeftMenu();
             }
@@ -89,12 +89,12 @@ export class NavBarComponent implements OnInit {
           this.routerPath = this.activatedRoute.snapshot['_routerState'].url;
           this.clickMenuItem(this.menus);
           this.clickMenuItem(this.copyMenus);
-          // 是折叠的菜单并且不是over菜单,解决折叠左侧菜单时，切换tab会有悬浮框菜单的bug
+          //  Nếu là menu đã gập và không phải là menu kiểu over, giải quyết lỗi hiển thị menu lơ lửng khi gập menu bên trái và chuyển tab
           if (this.isCollapsed && !this.isOverMode) {
             this.closeMenuOpen(this.menus);
           }
 
-          // 顶部菜单模式，并且不是over模式，解决顶部模式时，切换tab会有悬浮框菜单的bug
+          // Nếu là chế độ menu phía trên và không phải là chế độ over, giải quyết lỗi hiển thị menu lơ lửng khi chuyển tab trong chế độ menu phía trên 
           if (this.themesMode === 'top' && !this.isOverMode) {
             this.closeMenu();
           }
@@ -115,7 +115,7 @@ export class NavBarComponent implements OnInit {
         takeUntil(this.destroy$)
       )
       .subscribe(routeData => {
-        // 详情页是否是打开新tab页签形式
+        // Xem xem trang chi tiết có được mở trong tab mới hay không
         let isNewTabDetailPage = routeData['newTab'] === 'true';
         this.tabService.addTab(
           {
@@ -127,7 +127,7 @@ export class NavBarComponent implements OnInit {
         );
         this.tabService.findIndex(this.routerPath);
         this.titleServe.setTitle(`${routeData['title']} - Ant Design`);
-        // 混合模式时，切换tab，让左侧菜单也相应变化
+        // Trong chế độ kết hợp, khi chuyển tab, cho phép menu bên trái thay đổi tương ứng
         this.setMixModeLeftMenu();
       });
   }
@@ -145,7 +145,7 @@ export class NavBarComponent implements OnInit {
       });
   }
 
-  // 设置混合模式时，左侧菜单"自动分割菜单"模式的数据源
+  //Thiết lập nguồn dữ liệu cho chế độ "tự động chia menu" khi chuyển sang chế độ kết hợp
   setMixModeLeftMenu(): void {
     this.menus.forEach(item => {
       if (item.selected) {
@@ -154,7 +154,7 @@ export class NavBarComponent implements OnInit {
     });
   }
 
-  // 深拷贝克隆菜单数组
+  // Sao chép mảng menu bằng cách sao chép sâu
   cloneMenuArray(sourceMenuArray: Menu[], target: Menu[] = []): Menu[] {
     sourceMenuArray.forEach(item => {
       const obj: Menu = { menuName: '', menuType: 'C', path: '', id: -1, fatherId: -1 };
@@ -175,13 +175,13 @@ export class NavBarComponent implements OnInit {
     return target;
   }
 
-  // 混合模式点击一级菜单，要让一级菜单下的第一个子菜单被选中
+  //Khi nhấp vào menu cấp 1 trong chế độ kết hợp, đảm bảo rằng menu con đầu tiên của menu cấp 1 được chọn
   changTopNav(index: number): void {
-    // 当前选中的第一级菜单对象
+    // Đối tượng menu cấp 1 hiện tại đang được chọn 
     const currentTopNav = this.menus[index];
     if (currentTopNav.children && currentTopNav.children.length > 0) {
-      // 当前左侧导航数组
-      /*添加了权限版*/
+      // Mảng điều hướng bên trái hiện tại
+      /*Thêm phiên bản có quyền truy cập*/
       let currentLeftNavArray = currentTopNav.children;
       currentLeftNavArray = currentLeftNavArray.filter(item => {
         return this.authCodeArray.includes(item.code!);
@@ -192,8 +192,8 @@ export class NavBarComponent implements OnInit {
         this.router.navigateByUrl(currentLeftNavArray[0].children[0].path!);
       }
       this.splitNavStoreService.setSplitLeftNavArrayStore(currentLeftNavArray);
-      /*添加了权限版结束*/
-      /*注释的是没有权限版*/
+      /*Kết thúc phiên bản có quyền truy cập*/
+      /*Phần chú thích là phiên bản không có quyền truy cập*/
       // const currentLeftNavArray = currentTopNav.children;
       // if (!currentLeftNavArray[0].children) {
       //   this.router.navigateByUrl(currentLeftNavArray[0].path!);
@@ -229,7 +229,7 @@ export class NavBarComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
-  // 改变当前菜单展示状态
+  // Thay đổi trạng thái hiển thị của menu hiện tại
   changeOpen(currentMenu: Menu, allMenu: Menu[]): void {
     allMenu.forEach(item => {
       item.open = false;
@@ -257,20 +257,20 @@ export class NavBarComponent implements OnInit {
     this.router.navigate([menu.path]);
   }
 
-  // 监听折叠菜单事件
+  // Lắng nghe sự kiện gập menu
   subIsCollapsed(): void {
     this.isCollapsed$.subscribe(isCollapsed => {
       this.isCollapsed = isCollapsed;
-      // 菜单展开
+      // Mở rộng menu 
       if (!this.isCollapsed) {
         this.menus = this.cloneMenuArray(this.copyMenus);
         this.clickMenuItem(this.menus);
-        // 混合模式下要在点击一下左侧菜单数据源,不然有二级菜单的菜单在折叠状态变为展开时，不open
+        //  Trong chế độ kết hợp, phải nhấp vào nguồn dữ liệu của menu bên trái một lần nữa, nếu không, các menu cấp 2 sẽ không mở ra khi chuyển từ trạng thái gập sang mở
         if (this.themesMode === 'mixi') {
           this.clickMenuItem(this.leftMenuArray);
         }
       } else {
-        // 菜单收起
+        // Thu gọn menu
         this.copyMenus = this.cloneMenuArray(this.menus);
         this.closeMenuOpen(this.menus);
       }
@@ -291,7 +291,7 @@ export class NavBarComponent implements OnInit {
       .subscribe(res => (this.authCodeArray = res.authCode));
   }
 
-  // 监听混合模式下左侧菜单数据源
+  //  Lắng nghe nguồn dữ liệu của menu bên trái trong chế độ kết hợp
   private subMixiModeSideMenu(): void {
     this.leftMenuArray$.pipe(takeUntil(this.destroy$)).subscribe(res => {
       this.leftMenuArray = res;
@@ -299,7 +299,7 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // 顶部模式时要关闭menu的open状态
+    // Khi ở chế độ menu phía trên, phải đóng trạng thái mở của menu
     this.subTheme$.subscribe(options => {
       if (options.mode === 'top' && !this.isOverMode) {
         this.closeMenu();
