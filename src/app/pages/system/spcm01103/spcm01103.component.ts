@@ -89,7 +89,7 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
         if (!res || res.status === ModalBtnStatus.Cancel) {
           return;
         }
-        res.modalValue.rcdkbn = Const.tmt050lstdonvitinh;
+        res.modalValue.rcdkbn = Const.tmt050lstdichvuthuengoai;
         res.modalValue.mode = "KHAC";
         this.addEditData(res.modalValue, 'create');
       }
@@ -181,7 +181,7 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
 
   resetForm() {
     this.searchParam = {}
-    this.searchParam.rcdkbn = Const.tmt050lstdonvitinh;
+    this.searchParam.rcdkbn = Const.tmt050lstdichvuthuengoai;
   }
 
   reloadTable() {

@@ -13,6 +13,7 @@ export interface DataScObj {
   lang:string;
   vitri: number;
   status: boolean;
+  _id?: string;
 }
 
 @Injectable({
