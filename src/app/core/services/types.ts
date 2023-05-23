@@ -78,4 +78,5 @@ export interface Menu {
   children?: Menu[];
   code?: string; // 权限码
   newLinkFlag?: 0 | 1; // 是否是新页
+  visible?: boolean;
 }

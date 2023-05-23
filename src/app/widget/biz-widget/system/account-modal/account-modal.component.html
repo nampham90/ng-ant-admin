@@ -50,13 +50,13 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="mobile">Số điện thoại</nz-form-label>
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="dienthoai">Số điện thoại</nz-form-label>
     <nz-form-control [nzSm]="18" [nzXs]="24" [nzErrorTip]="combineTpl">
-      <input nz-input formControlName="dienthoai" maxlength="11" id="mobile" placeholder="Số điện thoại" />
+      <input nz-input formControlName="dienthoai" maxlength="12" id="dienthoai" placeholder="Số điện thoại" />
     </nz-form-control>
   </nz-form-item>
 
- <!-- Nếu mỡ form edit thì không sử dùng check emal -->
+ <!-- Nếu mỡ form edit thì không sử dùng check email -->
   <ng-container *ngIf="isEdit; else elseBlock;">
     <nz-form-item #elseBlock>
       <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="email">Email</nz-form-label>

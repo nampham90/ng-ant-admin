@@ -127,7 +127,7 @@ export const Ant100findAllDatasc = "screenpc/ant100SearchAllDatasc";
 export const Ant100AddListDatasc = "screenpc/ant100AddListDatasc";
 export const Ant100DelDatasc = "screenpc/ant100DelDatasc";
 export const Ant100EditDatasc = "screenpc/ant100EditDatasc";
-
+export const Ant100DetailDatasc = "screenpc/ant100DetailDatasc";
 // nhật ký hệ thống
 export const NhatkyhethongfindType = "nhatkyhethong/nhatkyhethongAnt100getAll"
 
