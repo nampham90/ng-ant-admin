@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'huongdan', loadChildren: () => import('./huongdan/huongdan.module').then(m => m.HuongdanModule)},
   { path: 'spcm01101', loadChildren: () => import('./spcm01101/spcm01101.module').then(m => m.Spcm01101Module)},
   { path: 'spcm01102', loadChildren: () => import('./spcm01102/spcm01102.module').then(m => m.Spcm01102Module)},
+  { path: 'spcm01103', loadChildren: () => import('./spcm01103/spcm01103.module').then(m => m.Spcm01103Module)},
   { path: '', redirectTo: 'dept', pathMatch: 'full' }
 ];
 

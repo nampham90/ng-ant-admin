@@ -460,6 +460,8 @@ export class Spch00251Component extends BaseComponent implements OnInit {
            tiencuoc :  param['tiencuoc'],
            thongtindonhang : param['noidungdonhang'],
            soluong :  param['soluong'],
+           trongluong :  param['trongluong'],
+           khoiluong :  param['khoiluong'],
            donvitinh : param['donvitinh'],
            diadiembochang : param['diadiembochang'],
            htttkhachhang : param['hinhthucthanhtoan']+"",
@@ -568,6 +570,8 @@ export class Spch00251Component extends BaseComponent implements OnInit {
       if(element.stt == ctdetail.stt) {
         element.thongtindonhang = ctdetail['thongtindonhang'];
         element.soluong = ctdetail['soluong'];
+        element.trongluong = ctdetail['trongluong'];
+        element.khoiluong = ctdetail['khoiluong'];
         element.donvitinh = ctdetail['donvitinh'];
         element.diadiembochang = ctdetail['diadiembochang'];
         element.ghichu = ctdetail['ghichu'];
@@ -594,7 +598,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
           width: 80,
         },
         {
-          title: 'Thông tin đơn hàng',
+          title: 'Tên hàng',
           field: 'thongtindonhang',
           width: 280,
           tdTemplate: this.thongtindonhangTpl
@@ -604,6 +608,21 @@ export class Spch00251Component extends BaseComponent implements OnInit {
           width: 280,
           field: 'diadiembochang',
           tdTemplate: this.diadiembochangTpl
+        },
+        {
+          title: 'Số lượng',
+          field: 'soluong',
+          width: 80,
+        },
+        {
+          title: 'Trọng lượng',
+          field: 'trongluong',
+          width: 80,
+        },
+        {
+          title: 'khối lượng',
+          field: 'khoiluong',
+          width: 80,
         },
         {
           title: 'Tiền cước',

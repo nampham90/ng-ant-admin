@@ -9,8 +9,8 @@
         </nz-form-item>
     </ng-container>
     <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="noidungdonhang">Nội dung đơn hàng</nz-form-label>
-        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập nội dung đơn hàng">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="noidungdonhang">tên hàng</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập tên hàng">
           <input nz-input formControlName="noidungdonhang" name="noidungdonhang" placeholder="" id="noidungdonhang"/>
         </nz-form-control>
     </nz-form-item>
@@ -18,6 +18,18 @@
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="soluong">Số lượng</nz-form-label>
         <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập số lượng">
             <nz-input-number name="soluong" id="soluong" formControlName="soluong" [nzMin]="0" [nzMax]="10000" [nzStep]="1"></nz-input-number>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="trongluong">Trọng lượng</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+            <nz-input-number name="trongluong" id="trongluong" formControlName="trongluong" [nzMin]="0" [nzMax]="100" [nzStep]="0.001"></nz-input-number>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="khoiluong">Khối lượng</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+            <nz-input-number name="khoiluong" id="khoiluong" formControlName="khoiluong" [nzMin]="0" [nzMax]="100" [nzStep]="0.001"></nz-input-number>
         </nz-form-control>
     </nz-form-item>
     <nz-form-item>

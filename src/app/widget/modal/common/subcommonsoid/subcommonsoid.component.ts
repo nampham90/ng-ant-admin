@@ -88,13 +88,15 @@ export class SubcommonsoidComponent implements OnInit {
     return obj;
   }
 
-  getItem(soID:string,iduser:any,tiencuoc:any,noidungdonhang:any,soluong:any,donvitinh:any,diadiembochang:any,hinhthucthanhtoan:any,tennguoinhan:any,sdtnguoinhan:any,diachinguoinhan:any,ghichu:any) {
+  getItem(soID:string,iduser:any,tiencuoc:any,noidungdonhang:any,soluong:any,trongluong:any,khoiluong:any,donvitinh:any,diadiembochang:any,hinhthucthanhtoan:any,tennguoinhan:any,sdtnguoinhan:any,diachinguoinhan:any,ghichu:any) {
     this.dataResponse = {
       soID: soID,
       iduser: iduser,
       tiencuoc: tiencuoc,
       noidungdonhang:noidungdonhang,
       soluong: soluong,
+      trongluong: trongluong,
+      khoiluong: khoiluong,
       donvitinh:donvitinh,
       diadiembochang:diadiembochang,
       hinhthucthanhtoan:hinhthucthanhtoan,
@@ -212,8 +214,18 @@ export class SubcommonsoidComponent implements OnInit {
         },
         {
           title: "Số lượng",
-          width: 150,
+          width: 80,
           field: 'soluong',
+        },
+        {
+          title: "Trọng lượng",
+          width: 80,
+          field: 'trongluong',
+        },
+        {
+          title: "Khối lượng",
+          width: 80,
+          field: 'khoiluong',
         },
         {
           title: "Đơn vị tính",

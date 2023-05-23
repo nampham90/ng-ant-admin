@@ -78,8 +78,8 @@ export class DatascModalComponent implements OnInit {
     }
     let obj : DataScObj = {
       idmenu: this.params.idmenu,
-      title1: this.addEditForm.value.tieude1,
-      title2:  this.addEditForm.value.tieude2,
+      title1: this.addEditForm.value.title1,
+      title2:  this.addEditForm.value.title1,
       lang: this.addEditForm.value.lang,
       vitri: this.addEditForm.value.vitri,
       status:  this.addEditForm.value.status
