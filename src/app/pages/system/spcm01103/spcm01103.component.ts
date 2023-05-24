@@ -44,7 +44,15 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
   checkedCashArray: any[] = [];
   ActionCode = ActionCode;
 
+  tableConfigChild!: MyTableConfig;
+  dataListChild: any[] = [];
+  checkedCashArrayChild: any[] = [];
+  showchildTable = false;
+
+
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('operationchildTpl', { static: true }) operationchildTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('linkTpl', { static: true }) linkTpl!: TemplateRef<NzSafeAny>;
 
   override fnInit() {
     this.pageHeaderInfo = {
@@ -53,7 +61,6 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
       desc: ''
     };
     this.initTable();
-    
   }
   override destroy() {
     
@@ -153,6 +160,10 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
     }); 
   }
 
+  showChildTable(id: any) {
+     
+  }
+
   getDataList(e?: NzTableQueryParams) {
     this.searchParam.rcdkbn = Const.tmt050lstdichvuthuengoai;
     if(this.searchParam.datacd == "") {
@@ -215,6 +226,7 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
           title: this.formItemNm[11],
           field: 'datacd',
           width: 180,
+          tdTemplate: this.linkTpl,
         },
         {
           title: this.formItemNm[12],
@@ -224,6 +236,67 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
         {
           title: this.formItemNm[13],
           tdTemplate: this.operationTpl,
+          width: 160,
+          fixed: true,
+          fixedDir: 'right'
+        }
+      ],
+      total: 0,
+      loading: true,
+      pageSize: 10,
+      pageIndex: 1
+    };
+  }
+
+  getDataListChild(e?: NzTableQueryParams) {
+
+  }
+
+  reloadTableChild() {
+    this.message.info('Đã được làm mới');
+    this.getDataListChild();
+  }
+
+  tableChangeDectctionChild(): void {
+    this.dataListChild = [...this.dataListChild];
+    this.cdf.detectChanges();
+  }
+
+  tableLoadingChild(isLoading: boolean): void {
+    this.tableConfigChild.loading = isLoading;
+    this.tableChangeDectction();
+  }
+
+  selectedCheckedChild(e: any[]): void {
+    this.checkedCashArrayChild = [...e];
+  }
+
+  changePageSizeChild(e: number): void {
+    this.tableConfigChild.pageSize = e;
+  }
+
+  private initTableChild(): void {
+    this.tableConfig = {
+      showCheckbox: false,
+      headers: [
+        {
+          title: "Tên nhà cung cấp",
+          field: 'tennhacungcap',
+          width: 180,
+        },
+        {
+          title: "Địa chỉ",
+          width: 280,
+          field: 'diachi',
+        },
+        {
+          title: "Điện thoại",
+          width: 160,
+          field: 'sodienthoai',
+        },
+        {
+          title: "Vận hàng",
+          tdTemplate: this.operationchildTpl,
           width: 160,
           fixed: true,
           fixedDir: 'right'

@@ -56,5 +56,8 @@
             <button nz-button nzType="primary" nzGhost (click)="del(id)">{{formItemNm[15]}}</button>
         </span>
     </ng-template>
+    <ng-template #linkTpl let-id="id" let-datacd="datacd">
+        <a nz-button nzType="primary" (click)="showChildTable(id)">{{datacd}}</a>
+    </ng-template>
 </div>
 

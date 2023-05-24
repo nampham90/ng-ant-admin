@@ -98,10 +98,16 @@ export const CommonAnt100GetListSoID = "common/commonAnt100getListSoID";
 export const CommonAnt100Tongnoxengoai = 'common/commonAnt100Tongnoxengoai';
 export const CommonAnt100RequestInt = 'common/commonAnt100requestInt';
 
-// tmt050 master
+// tmt050_name master
 export const Tmt050Ant100GetListKBN = 'tmt050/tmt050Ant100getListKBN';
 
-// tmt030 master
+// tmt060_dich vu thue ngoai
+export const Tmt060Ant100getAll = 'tmt060/tmt060Ant100getAll';
+export const Tmt060Ant100add = 'tmt060/tmt060Ant100add';
+export const Tmt060Ant100delete = 'tmt060/tmt060Ant100delete';
+export const Tmt060Ant100update = 'tmt060/tmt060Ant100update';
+
+// tmt030_system master
 export const Tmt030Ant100GetSYSFLG = 'tmt030/tmt030Ant100getSYSFLG';
 
 // tmt101. master
