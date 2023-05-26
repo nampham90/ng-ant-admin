@@ -36,28 +36,63 @@
           ></app-ant-table>
         </app-card-table-wrap>
         <ng-template #tableBtns>
-            <button *appAuth="ActionCode.Spcm01101Add" (click)="add()" nz-button nzType="primary" class="m-r-8">
+            <button *appAuth="ActionCode.Spcm01103Add" (click)="add()" nz-button nzType="primary" class="m-r-8">
             <i nz-icon nzType="plus"></i>
             {{formItemNm[9]}}
             </button>
-            <button *appAuth="ActionCode.Spcm01101DelAll" (click)="allDel()" nz-button nzType="default">
+            <button *appAuth="ActionCode.Spcm01103DelAll" (click)="allDel()" nz-button nzType="default">
             <i nz-icon nzType="delete"></i>
             {{formItemNm[10]}}
             </button>
         </ng-template>
     </ng-container>
     <ng-template #operationTpl let-id="id">
-        <span *appAuth="ActionCode.Spcm01101Update" class="operate-text">
+        <span *appAuth="ActionCode.Spcm01103Update" class="operate-text">
             <!--  -->
             <button nz-button nzType="primary" nzGhost (click)="edit(id)">{{formItemNm[14]}}</button>
         </span>
-        <span *appAuth="ActionCode.Spcm01101Del" class="operate-text">
+        <span *appAuth="ActionCode.Spcm01103Del" class="operate-text">
             <!--  -->
             <button nz-button nzType="primary" nzGhost (click)="del(id)">{{formItemNm[15]}}</button>
         </span>
     </ng-template>
     <ng-template #linkTpl let-id="id" let-datacd="datacd">
-        <a nz-button nzType="primary" (click)="showChildTable(id)">{{datacd}}</a>
+        <a nz-button nzType="primary" (click)="showChildTable(id,datacd)">{{datacd}}</a>
     </ng-template>
+</div>
+<div *ngIf="showchildTable" class="normal-table-wrap">
+    <nz-card nzHoverable [nzBodyStyle]="{ 'padding-bottom': 0 }" class="m-b-10">
+        <ng-container *ngIf="tableConfigChild">
+            <app-card-table-wrap [tableTitle]="TitleTableChild" (reload)="reloadTableChild()" [btnTpl]="tableBtnsChild">
+                <app-ant-table 
+                (selectedChange)="selectedCheckedChild($event)"
+                [checkedCashArrayFromComment]="checkedCashArrayChild"
+                (changePageSize)="changePageSizeChild($event)"
+                (changePageNum)="getDataListChild($event)"
+                [tableConfig]="tableConfigChild"
+                [tableData]="dataListChild"
+              ></app-ant-table>
+            </app-card-table-wrap>
+            <ng-template #tableBtnsChild>
+                <button *appAuth="ActionCode.Spcm01103AddChild" (click)="addChild()" nz-button nzType="primary" class="m-r-8">
+                    <i nz-icon nzType="plus"></i>
+                    {{formItemNm[9]}} {{titleTablechild}} 
+                    </button>
+            </ng-template>
+            <ng-template #TitleTableChild>
+                <h3>Danh sách dịch vụ {{titleTablechild}}</h3>
+            </ng-template>
+        </ng-container>
+        <ng-template #operationChildTpl let-id="id">
+            <span *appAuth="ActionCode.Spcm01103UpdateChild" class="operate-text">
+                <!--  -->
+                <button nz-button nzType="primary" nzGhost (click)="editChild(id)">{{formItemNm[14]}}</button>
+            </span>
+            <span *appAuth="ActionCode.Spcm01103DelChild" class="operate-text">
+                <!--  -->
+                <button nz-button nzType="primary" nzGhost (click)="delChild(id)">{{formItemNm[15]}}</button>
+            </span>
+        </ng-template>
+    </nz-card>
 </div>
 

@@ -20,6 +20,9 @@ import { SearchCommonVO } from '@app/core/services/types';
 import { finalize } from 'rxjs';
 import { Spin00901Model } from '@app/core/model/trongkho/spin00901.model';
 import { ModalBtnStatus } from '@app/widget/base-modal';
+import { Spcm01103ModalService } from '@app/widget/biz-widget/system/spcm01103-modal/spcm01103-modal.service';
+import { Dichvu } from '@app/core/model/dichvuthuengoai.model';
+import { Tmt060DichvuthuengoaiService } from '@app/core/services/http/system/tmt060-dichvuthuengoai.service';
 
 interface SearchParam {
   datacd: string;
@@ -48,6 +51,11 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
   dataListChild: any[] = [];
   checkedCashArrayChild: any[] = [];
   showchildTable = false;
+
+  titleTablechild = "";
+  idTablechild = "";
+
+  dichvu!: Dichvu
 
 
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
@@ -79,7 +87,9 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
     public message: NzMessageService,
     private modalSrv: NzModalService,
     private dataService: Spin00901Service,
+    private tmt060Service: Tmt060DichvuthuengoaiService,
     private tmt050modalService: Tmt050modalService,
+    private spcm01103ModalService: Spcm01103ModalService
   ) {
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }
@@ -160,7 +170,11 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
     }); 
   }
 
-  showChildTable(id: any) {
+  showChildTable(id: any,datacd:string) {
+     this.titleTablechild = datacd;
+     this.idTablechild = id;
+     this.initTableChild();
+     this.showchildTable = true;
      
   }
 
@@ -248,8 +262,40 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
     };
   }
 
+  addChild() {
+    this.spcm01103ModalService.show({nzTitle: "Thêm mới dịch vụ "+this.titleTablechild}).subscribe(res => {
+      if (!res || res.status === ModalBtnStatus.Cancel) {
+        return;
+      }
+      res.modalValue.loaidichvu = this.idTablechild;
+      console.log(res.modalValue);
+      //this.addEditDataChild(res.modalValue,"add");
+
+    })
+  }
+
+  editChild(id: any) {
+
+  }
+
+  delChild(id: any) {
+
+  }
+
   getDataListChild(e?: NzTableQueryParams) {
 
+  }
+
+  addEditDataChild(param: Dichvu, methodName: 'update' | 'add'): void {
+    this.tmt060Service[methodName](param)
+    .pipe(
+      finalize(() => {
+        this.tableLoading(false);
+      })
+    )
+    .subscribe(() => {
+      this.getDataListChild();
+    }); 
   }
 
   reloadTableChild() {
@@ -276,7 +322,7 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
   }
 
   private initTableChild(): void {
-    this.tableConfig = {
+    this.tableConfigChild = {
       showCheckbox: false,
       headers: [
         {

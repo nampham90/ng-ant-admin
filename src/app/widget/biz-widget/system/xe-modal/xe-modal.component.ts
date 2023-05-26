@@ -17,7 +17,8 @@ export class XeModalComponent implements OnInit {
   params: object;
 
   constructor(
-    private modalRef: NzModalRef, private fb: FormBuilder
+    private modalRef: NzModalRef, 
+    private fb: FormBuilder
   ) { 
     this.params = {}
   }
