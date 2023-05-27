@@ -5,6 +5,8 @@ export interface Chitietchuyenngoai {
     nguonxe: string,
     thongtindonhang: string,
     soluong:number,
+    trongluong:number,
+    khoiluong:number,
     donvitinh:string,
     diadiembochang: string,  // 
     tiencuoc:number,

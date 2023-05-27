@@ -31,16 +31,39 @@
             height: 44px;
             width: 44px;
             margin-right: 16px;
+            animation: move 5s infinite;
           }
 
           .title {
             position: relative;
-            // color: rgba(0,0,0,.85);
+            color: #1386FF;
             font-weight: 600;
             font-size: 33px;
             font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
             vertical-align: middle;
+            animation: sparkle 5s infinite;
           }
+
+          @keyframes sparkle {
+            0% { color: #1386FF; }
+            25% { color: gold;}
+            50% { color: #F64354; }
+            75% { color: gold;}
+            100% { color: #1386FF; }
+          }
+
+          @keyframes move {
+            0% {
+              transform: translateX(0);
+            }
+            50% {
+              transform: translateX(50px);
+            }
+            100% {
+              transform: translateX(0);
+            }
+          }
+
         }
 
         .desc {

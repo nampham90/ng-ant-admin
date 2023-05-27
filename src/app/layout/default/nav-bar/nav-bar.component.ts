@@ -126,7 +126,7 @@ export class NavBarComponent implements OnInit {
           isNewTabDetailPage
         );
         this.tabService.findIndex(this.routerPath);
-        this.titleServe.setTitle(`${routeData['title']} - Ant Design`);
+        this.titleServe.setTitle(`${routeData['title']} - NANP`);
         // 混合模式时，切换tab，让左侧菜单也相应变化
         this.setMixModeLeftMenu();
       });

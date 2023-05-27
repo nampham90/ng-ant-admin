@@ -320,11 +320,20 @@ export class Spin00301Component extends BaseComponent implements OnInit {
           width: 150,
           field: 'diadiembochang',
         },
-
         {
           title: "Số lượng",
-          width: 150,
+          width: 80,
           field: 'soluong',
+        },
+        {
+          title: 'Trọng lượng',
+          field: 'trongluong',
+          width: 80,
+        },
+        {
+          title: 'khối lượng',
+          field: 'khoiluong',
+          width: 80,
         },
         {
           title: "Đơn vị tính",

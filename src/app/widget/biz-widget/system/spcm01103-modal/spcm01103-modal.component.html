@@ -1,0 +1,22 @@
+<form nz-form [formGroup]="addEditForm">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="tennhacungcap">Tên nhà cung cấp</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập Tên nhà cung cấp">
+        <input nz-input formControlName="tennhacungcap" name="tennhacungcap" placeholder="Vui lòng nhập Tên nhà cung cấp" id="tennhacungcap" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="diachi">Địa chỉ</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập Địa chỉ">
+          <input nz-input formControlName="diachi" name="diachi" placeholder="Vui lòng nhập Địa chỉ" id="diachi" />
+        </nz-form-control>
+    </nz-form-item>
+  
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="sodienthoai">Số điện thoại</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Vui lòng nhập Số điện thoại">
+          <input nz-input formControlName="sodienthoai" name="sodienthoai" placeholder="Vui lòng nhập Số điện thoại" id="sodienthoai"/>
+        </nz-form-control>
+    </nz-form-item>
+  </form>

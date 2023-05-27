@@ -11,6 +11,8 @@ export interface Phieunhaphang {
     noidungdonhang?: string;
     diadiembochang?: string;
     soluong?: number;
+    trongluong?: number;
+    khoiluong?: number;
     donvitinh?: string,
     makho?: string,
     hinhthucthanhtoan?: string; // hinh thuc thanh toan

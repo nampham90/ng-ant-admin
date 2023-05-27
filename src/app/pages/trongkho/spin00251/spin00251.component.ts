@@ -128,6 +128,8 @@ export class Spin00251Component extends BaseComponent implements OnInit {
       item.ngaynhap = element.ngaynhap;
       item.noidungdonhang= element.noidungdonhang;
       item.soluong = element.soluong;
+      item.trongluong = element.trongluong;
+      item.khoiluong = element.khoiluong;
       item.donvitinh = element.donvitinh;
       item.diadiembochang = element.diadiembochang;
       item.tennguoinhan = element.tennguoinhan;
@@ -362,6 +364,8 @@ export class Spin00251Component extends BaseComponent implements OnInit {
         element.noidungdonhang = ctdetail['noidungdonhang'];
         element.tiencuoc = ctdetail['tiencuoc'];
         element.soluong = ctdetail['soluong'];
+        element.trongluong = ctdetail['trongluong'];
+        element.khoiluong = ctdetail['khoiluong'];
         element.donvitinh = ctdetail['donvitinh'];
         element.makho = ctdetail['makho'];
         element.diadiembochang = ctdetail['diadiembochang'];
@@ -452,10 +456,25 @@ export class Spin00251Component extends BaseComponent implements OnInit {
           width: 80,
         },
         {
-          title: 'Nội dung bóc hàng',
+          title: 'Tên hàng',
           width: 450,
           field: 'noidungdonhang',
           tdTemplate: this.noidungdonhangTpl
+        },
+        {
+          title: 'Số lượng',
+          field: 'soluong',
+          width: 80,
+        },
+        {
+          title: 'Trọng lượng',
+          field: 'trongluong',
+          width: 80,
+        },
+        {
+          title: 'khối lượng',
+          field: 'khoiluong',
+          width: 80,
         },
         {
           title: 'Tiền cước',

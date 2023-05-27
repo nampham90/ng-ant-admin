@@ -1,11 +1,11 @@
 <app-card-table-wrap [tableTitle]="'Danh Sách Số ID'" (reload)="reloadTable()">
     <app-ant-table [tableConfig]="tableConfig" (changePageSize)="changePageSize($event)" (changePageNum)="getDataList($event)" [tableData]="dataList"></app-ant-table>
-    <ng-template #operationTpl let-soID="soID" let-iduser="iduser" let-tiencuoc="tiencuoc" let-noidungdonhang="noidungdonhang" let-soluong="soluong" let-donvitinh="donvitinh" let-diadiembochang="diadiembochang" let-hinhthucthanhtoan="hinhthucthanhtoan" let-tennguoinhan="tennguoinhan" let-sdtnguoinhan="sdtnguoinhan" let-diachinguoinhan="diachinguoinhan" let-ghichu="ghichu" let-disable="disable">
+    <ng-template #operationTpl let-soID="soID" let-iduser="iduser" let-tiencuoc="tiencuoc" let-noidungdonhang="noidungdonhang" let-soluong="soluong" let-trongluong="trongluong" let-khoiluong="khoiluong" let-donvitinh="donvitinh" let-diadiembochang="diadiembochang" let-hinhthucthanhtoan="hinhthucthanhtoan" let-tennguoinhan="tennguoinhan" let-sdtnguoinhan="sdtnguoinhan" let-diachinguoinhan="diachinguoinhan" let-ghichu="ghichu" let-disable="disable">
         <ng-container *ngIf="disable && disable == true else notdisableLink">
-            <a nz-button nzType="link"  (click)="getItem(soID,iduser,tiencuoc,noidungdonhang,soluong,donvitinh,diadiembochang,hinhthucthanhtoan,tennguoinhan,sdtnguoinhan,diachinguoinhan,ghichu)" [disabled]="true">{{soID}}</a>
+            <a nz-button nzType="link"  (click)="getItem(soID,iduser,tiencuoc,noidungdonhang,soluong,trongluong,khoiluong,donvitinh,diadiembochang,hinhthucthanhtoan,tennguoinhan,sdtnguoinhan,diachinguoinhan,ghichu)" [disabled]="true">{{soID}}</a>
         </ng-container>
         <ng-template #notdisableLink>
-            <a nz-button nzType="link"  (click)="getItem(soID,iduser,tiencuoc,noidungdonhang,soluong,donvitinh,diadiembochang,hinhthucthanhtoan,tennguoinhan,sdtnguoinhan,diachinguoinhan,ghichu)">{{soID}}</a>
+            <a nz-button nzType="link"  (click)="getItem(soID,iduser,tiencuoc,noidungdonhang,soluong,trongluong,khoiluong,donvitinh,diadiembochang,hinhthucthanhtoan,tennguoinhan,sdtnguoinhan,diachinguoinhan,ghichu)">{{soID}}</a>
         </ng-template>
     </ng-template>
     <ng-template #tenkhachhangTpl let-iduser="iduser" >

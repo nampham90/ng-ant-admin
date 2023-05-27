@@ -64,7 +64,7 @@ export class DatascModalComponent implements OnInit {
     this.initForm();
     this.getLang();
     if (Object.keys(this.params).length > 0) {
-      if(this.params.title1 && this.params.title1 != "") {
+      if(this.params._id && this.params._id != "") {
           this.isEdit = true;
           this.addEditForm.patchValue(this.params);
           this.showBtnAddList = true;
@@ -78,8 +78,8 @@ export class DatascModalComponent implements OnInit {
     }
     let obj : DataScObj = {
       idmenu: this.params.idmenu,
-      title1: this.addEditForm.value.tieude1,
-      title2:  this.addEditForm.value.tieude2,
+      title1: this.addEditForm.value.title1,
+      title2:  this.addEditForm.value.title2,
       lang: this.addEditForm.value.lang,
       vitri: this.addEditForm.value.vitri,
       status:  this.addEditForm.value.status

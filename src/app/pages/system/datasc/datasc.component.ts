@@ -65,7 +65,6 @@ export class DatascComponent implements OnInit {
      this.searchParam.idmenu = idmenu;
      this.getDataList();
      this.getNameMenu(this.idmenu);
-
   }
 
   getDataList(e?: NzTableQueryParams) {
@@ -88,6 +87,7 @@ export class DatascComponent implements OnInit {
       this.tableConfig.pageIndex = pageNum!;
       this.tableLoading(false);
       this.checkedCashArray = [...this.checkedCashArray];
+      
     });
   }
 
@@ -133,7 +133,21 @@ export class DatascComponent implements OnInit {
     })
   }
 
-  del(id:any) {}
+  del(id:any) {
+    this.modalSrv.confirm(
+      {
+        nzTitle: "Bạn có chắc chăn muốn xóa không ?",
+        nzContent : "Nhấn OK để tiếp tục !",
+        nzOnOk: () => {
+          this.tableLoading(true);
+          this.dataService.delDatasc(id).subscribe(res => {
+            console.log(res);
+            this.getDataList();
+         })
+        }
+      }
+    )
+  }
 
   getNameMenu(id: string) {
     this.webService.PostCallWs(Const.Ant100PostDetailMenu, {menuId: id}, (response) => {

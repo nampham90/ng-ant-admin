@@ -10,6 +10,7 @@ export enum UrlDisplayId {
 
     spcm01101 = "system/spcm01101",
     spcm01102 = "system/spcm01102",
+    spcm01103 = "system/spcm01103", // quản lý dịch vụ thuê ngoài
 
     huongdan = 'system/huongdan',
    //chuyen
