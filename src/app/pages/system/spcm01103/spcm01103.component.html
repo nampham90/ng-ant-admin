@@ -34,6 +34,7 @@
             [tableConfig]="tableConfig"
             [tableData]="dataList"
           ></app-ant-table>
+            
         </app-card-table-wrap>
         <ng-template #tableBtns>
             <button *appAuth="ActionCode.Spcm01103Add" (click)="add()" nz-button nzType="primary" class="m-r-8">
@@ -83,16 +84,18 @@
                 <h3>Danh sách dịch vụ {{titleTablechild}}</h3>
             </ng-template>
         </ng-container>
-        <ng-template #operationChildTpl let-id="id">
-            <span *appAuth="ActionCode.Spcm01103UpdateChild" class="operate-text">
-                <!--  -->
-                <button nz-button nzType="primary" nzGhost (click)="editChild(id)">{{formItemNm[14]}}</button>
-            </span>
-            <span *appAuth="ActionCode.Spcm01103DelChild" class="operate-text">
-                <!--  -->
-                <button nz-button nzType="primary" nzGhost (click)="delChild(id)">{{formItemNm[15]}}</button>
-            </span>
-        </ng-template>
+       
     </nz-card>
 </div>
+<ng-template #operationchildTpl let-id="id">
+    <span *appAuth="ActionCode.Spcm01103UpdateChild" class="operate-text">
+        <button nz-button nzType="primary" nzGhost (click)="editChild(id)">Cập nhật</button>
+    </span>
+    <span *appAuth="ActionCode.Spcm01103DelChild" class="operate-text">
+        <button nz-button nzType="primary" nzGhost (click)="delChild(id)">Xóa</button>
+    </span>
+</ng-template>
+<ng-template #linkchildTpl let-id="id" let-tennhacungcap="tennhacungcap">
+    <a nz-button nzType="link">{{tennhacungcap}}</a>
+</ng-template>
 

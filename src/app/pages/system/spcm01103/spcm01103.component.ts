@@ -29,6 +29,10 @@ interface SearchParam {
   rcdkbn: string;
 }
 
+interface SearchParamDV {
+  loaidichvu: string;
+}
+
 @Component({
   selector: 'app-spcm01103',
   templateUrl: './spcm01103.component.html',
@@ -47,6 +51,7 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
   checkedCashArray: any[] = [];
   ActionCode = ActionCode;
 
+  searchParamdv: Partial<SearchParamDV> = {};
   tableConfigChild!: MyTableConfig;
   dataListChild: any[] = [];
   checkedCashArrayChild: any[] = [];
@@ -61,6 +66,7 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('operationchildTpl', { static: true }) operationchildTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('linkTpl', { static: true }) linkTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('linkchildTpl', { static: true }) linkchildTpl!: TemplateRef<NzSafeAny>;
 
   override fnInit() {
     this.pageHeaderInfo = {
@@ -69,6 +75,7 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
       desc: ''
     };
     this.initTable();
+    this.initTableChild();
   }
   override destroy() {
     
@@ -173,8 +180,10 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
   showChildTable(id: any,datacd:string) {
      this.titleTablechild = datacd;
      this.idTablechild = id;
-     this.initTableChild();
      this.showchildTable = true;
+
+     
+     this.getDataListChild();
      
   }
 
@@ -268,29 +277,84 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
         return;
       }
       res.modalValue.loaidichvu = this.idTablechild;
-      console.log(res.modalValue);
-      //this.addEditDataChild(res.modalValue,"add");
+      
+      this.addEditDataChild(res.modalValue,"add");
 
     })
   }
 
   editChild(id: any) {
+    let req = {
+      id: id
+    }
+    this.tmt060Service.getDetail(req).subscribe(res=> {
+      if(res) {
+        this.dichvu = res;
+        this.spcm01103ModalService.show({nzTitle: "Cập nhật"},this.dichvu).subscribe(({ modalValue, status })=>{
+          if (status === ModalBtnStatus.Cancel) {
+            return;
+          }
+          modalValue.id = id;
+          this.addEditDataChild(modalValue, 'update');
+        })
+      }
+    })
 
   }
 
   delChild(id: any) {
+    this.modalSrv.confirm({
+      nzTitle: "Bạn có chắc chắn muốn xóa không ?",
+      nzContent: "Không thể khôi phúc sau khi xóa !",
+      nzOnOk: ()=> {
+        this.tmt060Service.delete({id:id}).pipe(
+          finalize(() => {
+            this.tableLoadingChild(false);
+          })
+        )
+        .subscribe(res => {
+          if(res['deletedCount'] == 1) {
+            if (this.dataListChild.length === 1) {
+              this.tableConfigChild.pageIndex--;
+            }
+            this.getDataListChild();
+          } else {
+            this.message.info("Thực hiện không thành công !");
+          }
+        })
+      }
+    })
 
   }
 
   getDataListChild(e?: NzTableQueryParams) {
-
+    this.tableLoadingChild(true);
+    this.searchParamdv.loaidichvu = this.idTablechild;
+    const params: SearchCommonVO<any> = {
+      pageSize: this.tableConfigChild.pageSize!,
+      pageNum: e?.pageIndex || this.tableConfigChild.pageIndex!,
+      filters: this.searchParamdv
+    };
+    this.tmt060Service.getAll(params)
+    .pipe(
+      finalize(() => {
+        this.tableLoadingChild(false);
+      })
+    )
+    .subscribe(data=> {
+      const { list, total, pageNum } = data;
+      this.dataListChild = [...list];
+      this.tableConfigChild.total = total!;
+      this.tableConfigChild.pageIndex = pageNum!;
+      this.tableLoadingChild(false);
+    })
   }
 
   addEditDataChild(param: Dichvu, methodName: 'update' | 'add'): void {
     this.tmt060Service[methodName](param)
     .pipe(
       finalize(() => {
-        this.tableLoading(false);
+        this.tableLoadingChild(false);
       })
     )
     .subscribe(() => {
@@ -310,7 +374,7 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
 
   tableLoadingChild(isLoading: boolean): void {
     this.tableConfigChild.loading = isLoading;
-    this.tableChangeDectction();
+    this.tableChangeDectctionChild();
   }
 
   selectedCheckedChild(e: any[]): void {
@@ -329,6 +393,7 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
           title: "Tên nhà cung cấp",
           field: 'tennhacungcap',
           width: 180,
+          tdTemplate: this.linkchildTpl
         },
         {
           title: "Địa chỉ",
@@ -341,7 +406,7 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
           field: 'sodienthoai',
         },
         {
-          title: "Vận hàng",
+          title: "Vận hành",
           tdTemplate: this.operationchildTpl,
           width: 160,
           fixed: true,
