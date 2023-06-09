@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControlName, FormGroupDirective } from '@angular/forms';
 import * as Const from '@app/common/const';
+import { NguonxeService } from '@app/core/services/http/nguonxe/nguonxe.service';
 
 import { Spin00901Service } from '@app/core/services/http/trongkho/spin00901.service';
 import { SearchCommonVO } from '@app/core/services/types';
@@ -8,7 +9,9 @@ import { fnCheckForm } from '@app/utils/tools';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { Observable, finalize, of } from 'rxjs';
-
+import { Nguonxe } from '@core/model/nguonxe.model'
+import { CommonService } from '@app/core/services/http/common/common.service';
+import { Dichvuthuengoai } from '@app/core/model/tmt060_dichvuthuengoai.model';
 interface Donvitinh{
   value: string;
   lable: string;
@@ -31,12 +34,25 @@ export class Spin00251subComponent implements OnInit {
   listdonvitinh :Donvitinh[] = [];
   tenkho = "";
 
+  isCollapse = true;
+  isCollapsenhaphang = true;
+  isCollapsetrahang = true;
+
+  listnguonxe : any = [];
+  listxecau: Dichvuthuengoai[] = [];
+  listbocxep: Dichvuthuengoai[] = [];
+
+  listbsxe = [];
+  listtaixe = [];
+
   searchParam: Partial<SearchParam> = {};
   constructor(
     private modalRef: NzModalRef, 
     private fb: FormBuilder,
     private cdf : ChangeDetectorRef,
     private spin00901Service: Spin00901Service,
+    private nguonxeService: NguonxeService,
+    private commonService: CommonService
   ) { 
     this.params = {}
   }
@@ -45,10 +61,19 @@ export class Spin00251subComponent implements OnInit {
     this.initForm();
     this.getListKho();
     this.getListDonvitinh();
+    this.fnGetAllNguonXe();
+    this.getListBocXep();
+    this.getListXeCau();
     if (Object.keys(this.params).length > 0) {
       this.isEdit = true;
       this.setFormStatusByType("enable");
+      let json_param = JSON.parse(JSON.stringify(this.params));
+      this.getlistTangbonhaphang({id:json_param['nguonxenhaphang']});
+      this.getlistTangbotrahang({id:json_param['nguonxetrahang']});
       this.addEditForm.patchValue(this.params);
+      this.isCollapse = false;
+      this.isCollapsenhaphang = false;
+      this.isCollapsetrahang = false;
     }
   }
 
@@ -82,6 +107,27 @@ export class Spin00251subComponent implements OnInit {
       tennguoinhan: [null,[Validators.required]],
       sdtnguoinhan: [null,[Validators.required]],
       diachinguoinhan: [null,[Validators.required]],
+
+      nguonxenhaphang: [null],
+      sotiennhaphang: [0],
+      htttnhaphang: [1],
+      tentaixenhaphang: [null],
+      biensoxenhaphang: [null],
+
+      nguonxetrahang: [null],
+      sotientrahang: [0],
+      httttrahang: [1],
+      tentaixetrahang: [null],
+      biensoxetrahang: [null],
+
+      xecau: [null],
+      sotienxecau: [0],
+      htttxecau: [1],
+
+      bocxep: [null],
+      sotienbocxep: [0],
+      htttbocxep: [1],
+
       ghichu: [null],
     });
   }
@@ -128,6 +174,16 @@ export class Spin00251subComponent implements OnInit {
     } 
   }
 
+  fnGetAllNguonXe() {
+    let req = {
+      pageSize: 0,
+      pageNum: 0
+    }
+    this.nguonxeService.postAll(req).pipe().subscribe(res => {
+        this.listnguonxe = res;
+    })
+  }
+
   changeKho($event: any) {
     let check = false;
     if($event == 'KHONGOAI') {
@@ -149,6 +205,122 @@ export class Spin00251subComponent implements OnInit {
       }
       // if 
     }
+  }
+
+  changeTangbonhaphang($event:any) {
+    if($event != null) {
+      this.isCollapsenhaphang = false;
+      this.addEditForm.patchValue({
+        tentaixenhaphang: null,
+        biensoxenhaphang: null,
+        sotiennhaphang:0
+      })
+      let req = {
+        id : $event
+      }
+      this.getlistTangbonhaphang(req);
+
+    } else {
+      this.isCollapsenhaphang = true;
+    }
+  }
+
+  getlistTangbonhaphang(req: any) {
+    this.nguonxeService.postDetail(req).pipe().subscribe(res => {
+      this.fnGetListBiensoxe(res.id);
+      this.fnGetListTaiXe(res.sodienthoai);
+    })
+  }
+
+  changeTangbotrahang($event:any) {
+    if($event != null) {
+      this.isCollapsetrahang = false;
+      this.addEditForm.patchValue({
+        tentaixetrahang: null,
+        biensoxetrahang: null,
+        sotientrahang: 0
+      })
+      let req = {
+        id : $event
+      }
+      this.getlistTangbotrahang(req);
+    } else {
+      this.isCollapsetrahang = true;
+    }
+  }
+
+  changeDichvuxecau($event: any) {
+    this.addEditForm.patchValue({
+      sotienxecau: 0
+    })
+  }
+
+  changeDichvubocxep($event: any) {
+    this.addEditForm.patchValue({
+      sotienbocxep: 0
+    })
+  }
+
+  getlistTangbotrahang(req: any) {
+    this.nguonxeService.postDetail(req).pipe().subscribe(res => {
+      this.fnGetListBiensoxe(res.id);
+      this.fnGetListTaiXe(res.sodienthoai);
+    })
+  }
+
+  getListXeCau() {
+    this.commonService.getListDichvuxecau().subscribe(res=> {
+      this.listxecau = res;
+    })
+  }
+
+  getListBocXep() {
+    this.commonService.getListDichvubocxep().subscribe(res => {
+      this.listbocxep = res;
+    })
+
+  }
+
+  toggleCollapse(): void {
+    this.isCollapse = !this.isCollapse;
+  }
+
+  // get list biên sô xe vơi rcdkbn là id của nguồn xe
+  fnGetListBiensoxe(rcdkbn: any) {
+    const params: SearchCommonVO<any> = {
+      pageSize: 0,
+      pageNum: 0,
+      filters: {rcdkbn: rcdkbn}
+    };
+    this.spin00901Service
+    .searchParams(params)
+    .pipe(
+      finalize(() => {
+      })
+    )
+    .subscribe(res => {
+      this.listbsxe = res;
+      this.cdf.detectChanges()
+    });
+  }
+
+  // get list tài xe se ngoài vơi rcdkbn là so điện thoài nguồn xe
+  fnGetListTaiXe(rcdkbn: any) {
+    const params: SearchCommonVO<any> = {
+      pageSize: 0,
+      pageNum: 0,
+      filters: {rcdkbn: rcdkbn}
+    };
+    this.spin00901Service
+    .searchParams(params)
+    .pipe(
+      finalize(() => {
+      })
+    )
+    .subscribe(res => {
+      this.listtaixe = res;
+      this.cdf.detectChanges()
+    });
   }
 
 }

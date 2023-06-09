@@ -29,6 +29,12 @@ export const tmt050lstdonvitinh = '0002'; // danh sách đơn vị tinh
 export const tmt050lstchiphi = '0003'; // danh sach loai chi phí
 export const tmt050lstdichvuthuengoai = '0004'; // danh sach dịch vụ thuê ngoài
 
+// id loai dịch vụ xe cau
+export const idXecau = '646c67fdb176eb4efe839ff2';
+
+// id loai dịch vụ boc xêp
+export const idBocxep = '646c6813b176eb4efe839ff6';
+
 // dơn vi tinh
 export const lstdonvitinh = [
     { "value": "kg", "lable": "kg"},
@@ -97,6 +103,9 @@ export const CommonAnt100GetListSoID = "common/commonAnt100getListSoID";
 
 export const CommonAnt100Tongnoxengoai = 'common/commonAnt100Tongnoxengoai';
 export const CommonAnt100RequestInt = 'common/commonAnt100requestInt';
+
+export const CommonAnt100GetListDichvuXeCau = 'common/commonAnt100GetListDichvuXeCau';
+export const CommonAnt100GetListDichvuBocXep = 'common/commonAnt100GetListDichvuBocXep';
 
 // tmt050_name master
 export const Tmt050Ant100GetListKBN = 'tmt050/tmt050Ant100getListKBN';

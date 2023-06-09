@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BaseHttpService } from '../base-http.service';
 import * as Const from 'src/app/common/const';
+import { Dichvuthuengoai } from '@app/core/model/tmt060_dichvuthuengoai.model';
 
 @Injectable({
   providedIn: 'root'
@@ -79,5 +80,15 @@ export class CommonService {
   // get list ID
   getListSoID(params: any): Observable<any> {
     return this.http.post(Const.CommonAnt100GetListSoID,params, { needSuccessInfo: false});
+  }
+
+  // list dich vụ xe cau
+  getListDichvuxecau() : Observable<Dichvuthuengoai[]> {
+    return this.http.post(Const.CommonAnt100GetListDichvuXeCau, { needSuccessInfo: false})
+  }
+
+  // list dịch vu boc xep
+  getListDichvubocxep() : Observable<Dichvuthuengoai[]> {
+    return this.http.post(Const.CommonAnt100GetListDichvuBocXep, { needSuccessInfo: false})
   }
 }

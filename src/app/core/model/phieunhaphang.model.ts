@@ -22,6 +22,27 @@ export interface Phieunhaphang {
     tennguoinhan?:string;
     sdtnguoinhan?:string;
     diachinguoinhan?:string;
+
+    nguonxenhaphang?:string;
+    sotiennhaphang?: number;
+    htttnhaphang?: number; 
+    tentaixenhaphang?: string;
+    biensoxenhaphang?: string;
+
+    nguonxetrahang?: string;
+    sotientrahang?: number;
+    httttrahang?: number;
+    tentaixetrahang?: string;
+    biensoxetrahang?: string;
+
+    xecau?: string;
+    sotienxecau?: number;
+    htttxecau?: number;
+
+    bocxep?: string;
+    sotienbocxep?: number;
+    htttbocxep?: number;
+
     status01?: number;
     status02?: number;
     status03?: number;

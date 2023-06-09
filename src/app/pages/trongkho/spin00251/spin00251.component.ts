@@ -47,7 +47,6 @@ export class Spin00251Component extends BaseComponent implements OnInit {
   ActionCode = ActionCode;
 
 
-
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('tiencuocTpl', { static: true }) tiencuocTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('noidungdonhangTpl', { static: true }) noidungdonhangTpl!: TemplateRef<NzSafeAny>;
@@ -373,6 +372,26 @@ export class Spin00251Component extends BaseComponent implements OnInit {
         element.tennguoinhan = ctdetail['tennguoinhan'];
         element.diachinguoinhan = ctdetail['diachinguoinhan'];
         element.ghichu = ctdetail['ghichu'];
+
+        element.nguonxenhaphang = ctdetail['nguonxenhaphang'];
+        element.sotiennhaphang =  ctdetail['sotiennhaphang'];
+        element.htttnhaphang =  ctdetail['htttnhaphang'];
+        element.tentaixenhaphang =   ctdetail['tentaixenhaphang'];
+        element.biensoxenhaphang =  ctdetail['biensoxenhaphang'];
+
+        element.nguonxetrahang = ctdetail['nguonxetrahang'];
+        element.sotientrahang = ctdetail['sotientrahang'];
+        element.httttrahang = ctdetail['httttrahang'];
+        element.tentaixetrahang = ctdetail['tentaixetrahang'];
+        element.biensoxetrahang = ctdetail['biensoxetrahang'];
+  
+        element.xecau = ctdetail['xecau'];
+        element.sotienxecau = ctdetail['sotienxecau'];
+        element.htttxecau = ctdetail['htttxecau'];
+  
+        element.bocxep = ctdetail['bocxep'];
+        element.sotienbocxep = ctdetail['sotienbocxep'];
+        element.htttbocxep = ctdetail['htttbocxep'];
       }
     }
   }
