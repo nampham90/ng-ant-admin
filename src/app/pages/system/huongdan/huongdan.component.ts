@@ -29,8 +29,8 @@ interface SearchParam {
 export class HuongdanComponent extends BaseComponent implements OnInit {
   fnInit() {
     this.pageHeaderInfo = {
-      title: this.formItemNm[2],
-      breadcrumb: [this.formItemNm[1], this.formItemNm[7],this.formItemNm[2]],
+      title: this.formItemNm[3],
+      breadcrumb: [this.formItemNm[1], this.formItemNm[2],this.formItemNm[3]],
       desc: ''
     };
 
@@ -184,17 +184,17 @@ export class HuongdanComponent extends BaseComponent implements OnInit {
       showCheckbox: false,
       headers: [
         {
-          title: this.formItemNm[4],
+          title: this.formItemNm[12],
           field: 'idyoutube',
           width: 180,
         },
         {
-          title: this.formItemNm[8],
+          title: this.formItemNm[13],
           width: 180,
           field: 'urldisplayid',
         },
         {
-          title: this.formItemNm[5],
+          title: this.formItemNm[14],
           width: 120,
           field: 'title',
         },

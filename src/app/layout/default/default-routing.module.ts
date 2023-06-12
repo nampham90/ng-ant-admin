@@ -29,6 +29,10 @@ const routes: Routes = [
         path: 'system',
         loadChildren: () => import('../../pages/system/system.module').then(m => m.SystemModule)
       },
+      {
+        path: 'product',
+        loadChildren: () => import('../../pages/product/product.module').then(m => m.ProductModule)
+      },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   }
