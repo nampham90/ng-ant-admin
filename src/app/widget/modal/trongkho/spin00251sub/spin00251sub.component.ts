@@ -45,6 +45,8 @@ export class Spin00251subComponent implements OnInit {
   listbsxe = [];
   listtaixe = [];
 
+  tongchiphi = 0;
+
   searchParam: Partial<SearchParam> = {};
   constructor(
     private modalRef: NzModalRef, 
@@ -130,6 +132,9 @@ export class Spin00251subComponent implements OnInit {
 
       ghichu: [null],
     });
+    this.addEditForm.valueChanges.subscribe(()=>{
+      this.tinhtongchiphi();
+    })
   }
 
   getListKho() {
@@ -321,6 +326,11 @@ export class Spin00251subComponent implements OnInit {
       this.listtaixe = res;
       this.cdf.detectChanges()
     });
+  }
+
+  tinhtongchiphi() {
+    const formValues = this.addEditForm.value;
+    this.tongchiphi = formValues.sotiennhaphang + formValues.sotientrahang + formValues.sotienxecau + formValues.sotienbocxep;
   }
 
 }

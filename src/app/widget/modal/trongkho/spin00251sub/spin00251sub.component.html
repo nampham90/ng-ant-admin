@@ -124,14 +124,12 @@
                 <nz-form-item>
                     <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="tentaixe">Tài xế</nz-form-label>
                     <nz-form-control [nzSm]="6" [nzXs]="24" nzErrorTip="">
-                        <!-- (ngModelChange)="fnChangeTaiXe($event)" -->
                         <nz-select name="tentaixe" nzShowSearch nzAllowClear nzPlaceHolder="Select" formControlName="tentaixenhaphang">
                             <nz-option *ngFor="let lst of listtaixe" nzLabel="{{lst['datacd']}}" nzValue="{{lst['datacd']}}"></nz-option>
                         </nz-select>
                     </nz-form-control>
                     <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="biensoxe">Biển số xe</nz-form-label>
                     <nz-form-control [nzSm]="6" [nzXs]="24" nzErrorTip="">
-                        <!-- (ngModelChange)="fnChangeTaiXe($event)" -->
                         <nz-select name="biensoxe" nzShowSearch nzAllowClear nzPlaceHolder="Select" formControlName="biensoxenhaphang" >
                             <nz-option *ngFor="let lst of listbsxe" nzLabel="{{lst['datanm']}}" nzValue="{{lst['datacd']}}"></nz-option>
                         </nz-select>
@@ -173,14 +171,13 @@
                 <nz-form-item>
                     <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="tentaixe">Tài xế</nz-form-label>
                     <nz-form-control [nzSm]="6" [nzXs]="24" nzErrorTip="">
-                        <!-- (ngModelChange)="fnChangeTaiXe($event)" -->
                         <nz-select name="tentaixe" nzShowSearch nzAllowClear nzPlaceHolder="Select" formControlName="tentaixetrahang">
                             <nz-option *ngFor="let lst of listtaixe" nzLabel="{{lst['datacd']}}" nzValue="{{lst['datacd']}}"></nz-option>
                         </nz-select>
                     </nz-form-control>
                     <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="biensoxe">Biển số xe</nz-form-label>
                     <nz-form-control [nzSm]="6" [nzXs]="24" nzErrorTip="">
-                        <!-- (ngModelChange)="fnChangeTaiXe($event)" -->
+
                         <nz-select name="biensoxe" nzShowSearch nzAllowClear nzPlaceHolder="Select" formControlName="biensoxetrahang" >
                             <nz-option *ngFor="let lst of listbsxe" nzLabel="{{lst['datanm']}}" nzValue="{{lst['datacd']}}"></nz-option>
                         </nz-select>
@@ -260,11 +257,19 @@
             </nz-form-item>
        </div>
     </ng-container>
-    <a class="collapse operate-text" (click)="toggleCollapse()">
-        <span *ngIf="isCollapse">Chi phí dịch vụ thuê ngoài</span>
-        <span *ngIf="!isCollapse">Đóng</span>
-        <i nz-icon [nzType]="isCollapse ? 'down' : 'up'"></i>
-    </a>
+    <div nz-row>
+        <div nz-col [nzSpan]="18" [nzPush]="6">
+             <span [ngStyle]="{'float':'right','color':'red'}">Tổng chi phí: {{tongchiphi*1000 | currency : "VND" : ''}}</span>
+        </div>
+        <div nz-col [nzSpan]="6" [nzPull]="18">
+            <a class="collapse operate-text" (click)="toggleCollapse()">
+                <span *ngIf="isCollapse">Chi phí dịch vụ thuê ngoài</span>
+                <span *ngIf="!isCollapse">Đóng</span>
+                <i nz-icon [nzType]="isCollapse ? 'down' : 'up'"></i>
+            </a>
+        </div>
+    </div>
+    
 
     <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="ghichu">Ghi chú</nz-form-label>
