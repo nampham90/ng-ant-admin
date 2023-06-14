@@ -161,4 +161,7 @@
     <ng-template #tiencuocTpl let-tiencuoc="tiencuoc">
         <span>{{tiencuoc*1000 | currency : "VND" : ''}}</span>
     </ng-template>
+    <ng-template #tienthuengoaiTpl let-tiencuoc="tiencuoc">
+        <a nz-button nzType="link" (click)="showTienthuengoai()">10.000đ</a>
+    </ng-template>
 </div>

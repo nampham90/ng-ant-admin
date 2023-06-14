@@ -55,6 +55,7 @@ export class Spin00301Component extends BaseComponent implements OnInit {
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('nguoiguiTpl', { static: true }) nguoiguiTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('tiencuocTpl', { static: true }) tiencuocTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('tienthuengoaiTpl', { static: true }) tienthuengoaiTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('htttTpl', { static: true }) htttTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('soidTpl', { static: true }) soidTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('trangthaiTpl', { static: true }) trangthaiTpl!: TemplateRef<NzSafeAny>;
@@ -218,6 +219,8 @@ export class Spin00301Component extends BaseComponent implements OnInit {
     )
   }
 
+  showTienthuengoai(){}
+
   getDataList(e?: NzTableQueryParams) {
     this.tableLoading(true);
     this.searchParam.ngaybatdau = this.formatDate(this.ngaybatdau);
@@ -297,6 +300,12 @@ export class Spin00301Component extends BaseComponent implements OnInit {
           width: 120,
           field: 'tiencuoc',
           tdTemplate: this.tiencuocTpl
+        },
+        {
+          title: "Tiền thuê ngoài",
+          width: 180,
+          field: 'tienthuengoai',
+          tdTemplate: this.tienthuengoaiTpl
         },
         {
           title: 'Trạng thái',

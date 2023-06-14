@@ -227,6 +227,9 @@ export class Spin00251subComponent implements OnInit {
 
     } else {
       this.isCollapsenhaphang = true;
+      this.addEditForm.patchValue({
+        sotiennhaphang:0
+      })
     }
   }
 
@@ -251,16 +254,19 @@ export class Spin00251subComponent implements OnInit {
       this.getlistTangbotrahang(req);
     } else {
       this.isCollapsetrahang = true;
+      this.addEditForm.patchValue({
+        sotientrahang: 0
+      })
     }
   }
 
-  changeDichvuxecau($event: any) {
+  changeDichvuxecau($event: Event) {
     this.addEditForm.patchValue({
       sotienxecau: 0
     })
   }
 
-  changeDichvubocxep($event: any) {
+  changeDichvubocxep($event: Event) {
     this.addEditForm.patchValue({
       sotienbocxep: 0
     })
