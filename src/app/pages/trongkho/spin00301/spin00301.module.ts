@@ -6,6 +6,7 @@ import { Spin00301Component } from './spin00301.component';
 import { SharedModule } from '@app/shared/shared.module';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { SubcommonsoidModule } from '@app/widget/modal/common/subcommonsoid/subcommonsoid.module';
+import { Spin00301subcpdvtnModule } from '@app/widget/modal/trongkho/spin00301subcpdvtn/spin00301subcpdvtn.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { SubcommonsoidModule } from '@app/widget/modal/common/subcommonsoid/subc
     SharedModule,
     Spin00301RoutingModule,
     SubcommonsoidModule,
-    ClipboardModule
+    ClipboardModule,
+    Spin00301subcpdvtnModule
   ]
 })
 export class Spin00301Module { }

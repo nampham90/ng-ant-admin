@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "concurrently \"ng serve --port 4401 --open\" \"cd server && node index.js\"",
+    "start": "concurrently \"ng serve --port 4205 --open\" \"cd server && node index.js\"",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -103,6 +103,6 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
     "prettier": "^2.7.1",
-    "typescript": "~4.7.2"
+    "typescript": "^4.7.2"
   }
 }

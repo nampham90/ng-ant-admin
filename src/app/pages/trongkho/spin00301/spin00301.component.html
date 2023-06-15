@@ -159,9 +159,12 @@
         </ng-template>
     </ng-template>
     <ng-template #tiencuocTpl let-tiencuoc="tiencuoc">
-        <span>{{tiencuoc*1000 | currency : "VND" : ''}}</span>
+        <span>{{tiencuoc*1000 | currency : "VND"}}</span>
     </ng-template>
-    <ng-template #tienthuengoaiTpl let-tiencuoc="tiencuoc">
-        <a nz-button nzType="link" (click)="showTienthuengoai()">10.000đ</a>
+    <ng-template #tienthuengoaiTpl let-tiencuoc="tiencuoc" let-cpdvtncd="cpdvtncd">
+        <ng-container *ngIf="cpdvtncd else rongTpl">
+            <a nz-button nzType="link" (click)="showTienthuengoai(cpdvtncd)">{{((cpdvtncd['sotiennhaphang'] == null? 0:cpdvtncd['sotiennhaphang']) + (cpdvtncd['sotientrahang'] == null? 0:cpdvtncd['sotientrahang']) +  (cpdvtncd['sotienxecau'] == null? 0: cpdvtncd['sotienxecau']) + (cpdvtncd['sotienbocxep']==null?0:cpdvtncd['sotienbocxep'])) * 1000 | currency : "VND"}}</a>
+        </ng-container>
+        <ng-template #rongTpl></ng-template>
     </ng-template>
 </div>

@@ -1,6 +1,9 @@
+import { TMT050NAME } from "./tmt050_name.model";
+
 export interface Dichvuthuengoai {
     id: string;
-    tennhacungcap: string;
+    tennhacungcap: string,
+    loaidichvu: TMT050NAME,
     sodienthoai: string;
     diachi:string;
     stutas01?: number | null,

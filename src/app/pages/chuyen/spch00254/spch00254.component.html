@@ -105,8 +105,13 @@
       <ng-template #nguonxeTpl let-nguonxe="nguonxe">
            <span>{{nguonxe['datacd']}}-{{nguonxe['datanm']}}</span>
       </ng-template>
-      <ng-template #donhangTpl let-iddonhang="iddonhang">
-           <span>{{iddonhang['thongtindonhang']}}</span>
+      <ng-template #donhangTpl let-iddonhang="iddonhang" let-soID="soID">
+           <ng-container *ngIf="iddonhang else soidTpl">
+                <span>{{iddonhang['thongtindonhang']}}</span>
+           </ng-container>
+           <ng-template #soidTpl>
+                <span>{{soID}}</span>
+           </ng-template>
       </ng-template>
       <ng-template #sotiennoTpl let-sotienno="sotienno">
         <nz-alert nzType="success" [nzMessage]="Message"></nz-alert>

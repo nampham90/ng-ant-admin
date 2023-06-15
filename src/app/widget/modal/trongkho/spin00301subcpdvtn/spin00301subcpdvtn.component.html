@@ -1,0 +1,91 @@
+<form nz-form>
+    <ng-container *ngIf="nguonxenhaphang && sotiennhaphang > 0">
+        <div [ngClass]="['gap']"></div>
+        <h3 [ngClass]="['styleh3']">Tăng bo nhập hàng</h3>
+        <nz-form-item>
+            <!--  -->
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="">Nguồn xe nhập hàng</nz-form-label>
+            <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+               <span>{{nguonxenhaphang}}</span>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <!--  -->
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="">SDT nguồn xe</nz-form-label>
+            <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+               <span>{{sdtnguonxenhaphang}}</span>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <!--  -->
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="">Số tiền tăng bo</nz-form-label>
+            <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+               <span>{{sotiennhaphang * 1000 | currency : "VND"}}</span>
+            </nz-form-control>
+        </nz-form-item>
+    </ng-container>
+    
+    <ng-container *ngIf="nguonxetrahang && sotientrahang > 0">
+        <div [ngClass]="['gap']"></div>
+        <h3 [ngClass]="['styleh3']">Tăng bo trả hàng</h3>
+        <nz-form-item>
+            <!--  -->
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="">Nguồn xe trả hàng</nz-form-label>
+            <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+               <span>{{nguonxetrahang}}</span>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <!--  -->
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="">SDT nguồn xe</nz-form-label>
+            <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+               <span>{{sdtnguonxetrahang}}</span>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <!--  -->
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="">Số tiền tăng bo</nz-form-label>
+            <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+               <span>{{sotientrahang * 1000 | currency : "VND"}}</span>
+            </nz-form-control>
+        </nz-form-item>
+    </ng-container>
+    
+    <ng-container *ngIf="tennccbocxep && sotienbocxep > 0">
+        <div [ngClass]="['gap']"></div>
+        <h3 [ngClass]="['styleh3']">Dịch vụ bốc xếp</h3>
+        <nz-form-item>
+            <!--  -->
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="">Bóc xếp</nz-form-label>
+            <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+               <span>{{tennccbocxep}}</span>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <!--  -->
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="">Số tiền thuê bóc xếp</nz-form-label>
+            <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+               <span>{{sotienbocxep * 1000 | currency : "VND"}}</span>
+            </nz-form-control>
+        </nz-form-item>
+    </ng-container>
+    
+    <ng-container *ngIf="tennccxecau && sotienxecau > 0">
+        <div [ngClass]="['gap']"></div>
+        <h3 [ngClass]="['styleh3']">Dịch vụ xe cẩu</h3>
+        <nz-form-item>
+            <!--  -->
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="">Xe cẩu</nz-form-label>
+            <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+               <span>{{tennccxecau}}</span>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <!--  -->
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="">Số tiền thuê xe cẩu</nz-form-label>
+            <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="">
+               <span>{{sotienxecau * 1000 | currency : "VND"}}</span>
+            </nz-form-control>
+        </nz-form-item>
+    </ng-container>
+</form>

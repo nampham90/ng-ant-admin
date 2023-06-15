@@ -52,6 +52,8 @@ export class Spin00251Component extends BaseComponent implements OnInit {
   @ViewChild('noidungdonhangTpl', { static: true }) noidungdonhangTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('ghichuTpl', { static: true }) ghichuTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('soluongTpl', { static: true }) soluongTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('trongluongTpl', { static: true }) trongluongTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('khoiluongTpl', { static: true }) khoiluongTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('donvitinhTpl', { static: true }) donvitinhTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('makhoTpl', { static: true }) makhoTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('diadiembochangTpl', { static: true }) diadiembochangTpl!: TemplateRef<NzSafeAny>;
@@ -484,16 +486,19 @@ export class Spin00251Component extends BaseComponent implements OnInit {
           title: 'Số lượng',
           field: 'soluong',
           width: 80,
+          tdTemplate: this.soluongTpl
         },
         {
           title: 'Trọng lượng',
           field: 'trongluong',
           width: 80,
+          tdTemplate: this.trongluongTpl
         },
         {
           title: 'khối lượng',
           field: 'khoiluong',
           width: 80,
+          tdTemplate: this.khoiluongTpl
         },
         {
           title: 'Tiền cước',

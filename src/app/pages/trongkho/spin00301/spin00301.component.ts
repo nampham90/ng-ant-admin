@@ -25,6 +25,9 @@ import { finalize } from 'rxjs';
 import { Spin00301Service } from '@app/core/services/http/trongkho/spin00301.service';
 import { Spin00251Service } from '@app/core/services/http/trongkho/spin00251.service';
 import { Spin00251dtoService } from '@app/core/services/http/trongkho/spin00251dto/spin00251dto.service';
+import { ChiPhiDVTN } from '@app/core/model/chiphidichvuthuengoai.model';
+import { Spin00301subcpdvtnService } from '@app/widget/modal/trongkho/spin00301subcpdvtn/spin00301subcpdvtn.service';
+import { Spin00301subcpdvtn } from '@app/widget/modal/trongkho/spin00301subcpdvtn/spin00301subcpdvtn.model';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -126,7 +129,8 @@ export class Spin00301Component extends BaseComponent implements OnInit {
     private spin00801Service: Spin00801Service,
     private spin00301Service: Spin00301Service,
     private spin00251Service: Spin00251Service,
-    private spin00251DtoService: Spin00251dtoService
+    private spin00251DtoService: Spin00251dtoService,
+    private spin00301subcpdvtnService: Spin00301subcpdvtnService
   ) { 
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }
@@ -219,7 +223,17 @@ export class Spin00301Component extends BaseComponent implements OnInit {
     )
   }
 
-  showTienthuengoai(){}
+  showTienthuengoai(cpdvtncd: ChiPhiDVTN){
+    let req: Spin00301subcpdvtn = {
+      showcomfirm:false,
+      cpdvtncd: cpdvtncd
+    }
+    this.spin00301subcpdvtnService.show({nzTitle: "Chi phí dịch vụ thuê ngoài"},req).subscribe(res => {
+      if (!res || res.status === ModalBtnStatus.Cancel) {
+        return;
+      }
+    })
+  }
 
   getDataList(e?: NzTableQueryParams) {
     this.tableLoading(true);
@@ -304,7 +318,7 @@ export class Spin00301Component extends BaseComponent implements OnInit {
         {
           title: "Tiền thuê ngoài",
           width: 180,
-          field: 'tienthuengoai',
+          field: 'cpdvtncd',
           tdTemplate: this.tienthuengoaiTpl
         },
         {
