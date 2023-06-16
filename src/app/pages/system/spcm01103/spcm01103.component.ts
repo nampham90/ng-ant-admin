@@ -23,14 +23,16 @@ import { ModalBtnStatus } from '@app/widget/base-modal';
 import { Spcm01103ModalService } from '@app/widget/biz-widget/system/spcm01103-modal/spcm01103-modal.service';
 import { Dichvu } from '@app/core/model/dichvuthuengoai.model';
 import { Tmt060DichvuthuengoaiService } from '@app/core/services/http/system/tmt060-dichvuthuengoai.service';
+import { SearchParamCNDVTN, Tmt061CongnodichvuthuengoaiService } from '@app/core/services/http/system/tmt061-congnodichvuthuengoai.service';
+import { Congnodichvuthuengoai } from '@app/core/model/tmt061_congnodichvuthuengoai.model';
 
 interface SearchParam {
-  datacd: string;
-  rcdkbn: string;
+  datacd?: string;
+  rcdkbn?: string;
 }
 
 interface SearchParamDV {
-  loaidichvu: string;
+  loaidichvu?: string;
 }
 
 @Component({
@@ -76,6 +78,7 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
     };
     this.initTable();
     this.initTableChild();
+    this.initTableCNDVTN();
   }
   override destroy() {
     
@@ -95,6 +98,7 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
     private modalSrv: NzModalService,
     private dataService: Spin00901Service,
     private tmt060Service: Tmt060DichvuthuengoaiService,
+    private tmt061Service: Tmt061CongnodichvuthuengoaiService,
     private tmt050modalService: Tmt050modalService,
     private spcm01103ModalService: Spcm01103ModalService
   ) {
@@ -181,10 +185,14 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
      this.titleTablechild = datacd;
      this.idTablechild = id;
      this.showchildTable = true;
-
-     
      this.getDataListChild();
-     
+
+     // ẩn table cntn
+    if(this.showtableCNDVTN == false) {
+      this.showtableCNDVTN = !this.showtableCNDVTN;
+    }
+    this.resetFormCNDVTN();
+    this.getDataListCNDVTN();
   }
 
   getDataList(e?: NzTableQueryParams) {
@@ -193,7 +201,7 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
       this.resetForm();
     }
     this.tableLoading(true);
-    const params: SearchCommonVO<any> = {
+    const params: SearchCommonVO<SearchParam> = {
       pageSize: this.tableConfig.pageSize!,
       pageNum: e?.pageIndex || this.tableConfig.pageIndex!,
       filters: this.searchParam
@@ -330,7 +338,7 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
   getDataListChild(e?: NzTableQueryParams) {
     this.tableLoadingChild(true);
     this.searchParamdv.loaidichvu = this.idTablechild;
-    const params: SearchCommonVO<any> = {
+    const params: SearchCommonVO<SearchParamDV> = {
       pageSize: this.tableConfigChild.pageSize!,
       pageNum: e?.pageIndex || this.tableConfigChild.pageIndex!,
       filters: this.searchParamdv
@@ -420,5 +428,128 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
     };
   }
 
+  // cong no dich vu thue ngoai
+
+  showtableCNDVTN = true;
+  titleTableCNDVTN = "";
+  manhacungcap = "";
+  searchParamCNDVTN: Partial<SearchParamCNDVTN> = {};
+  tableConfigCNDVTN!: MyTableConfig;
+  dataListCNDVTN: Congnodichvuthuengoai[] = [];
+  checkedCashArrayCNDVTN: any[] = [];
+
+  @ViewChild('soidTpl', { static: true }) soidTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('manhacungcapTpl', { static: true }) manhacungcapTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('sotienCNDVTNTpl', { static: true }) sotienCNDVTNTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('trangthaiCNDVTNTpl', { static: true }) trangthaiCNDVTNTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('operationCNDVTNTpl', { static: true }) operationCNDVTNTpl!: TemplateRef<NzSafeAny>;
+  
+  showCongno(id: string, tennhacungcap: string) {
+    this.manhacungcap = id;
+    this.titleTableCNDVTN = "Danh Sách Công Nợ " + tennhacungcap;
+    this.showtableCNDVTN = false;
+    this.getDataListCNDVTN();
+  }
+
+  changeStatus($event: Event) {
+
+  }
+  
+  getDataListCNDVTN(e?: NzTableQueryParams) {
+    this.tableLoadingCNDVTN(true);
+    if(this.manhacungcap != "") {
+      this.searchParamCNDVTN.manhacungcap = this.manhacungcap;
+    }
+    const params: SearchCommonVO<SearchParamCNDVTN> = {
+      pageSize: this.tableConfigCNDVTN.pageSize!,
+      pageNum: e?.pageIndex || this.tableConfigCNDVTN.pageIndex!,
+      filters: this.searchParamCNDVTN
+    };
+
+    this.tmt061Service.getAll(params)
+    .pipe(
+      finalize(() => {
+        this.tableLoadingCNDVTN(false);
+      })
+    ).subscribe(data => {
+      const { list, total, pageNum } = data;
+      this.dataListCNDVTN = [...list];
+      this.tableConfigCNDVTN.total = total!;
+      this.tableConfigCNDVTN.pageIndex = pageNum!;
+      this.tableLoadingCNDVTN(false);
+    })
+
+  }
+
+  resetFormCNDVTN() {
+    this.manhacungcap = "";
+    this.searchParamCNDVTN = {};
+  }
+
+  reloadTableCNDVTN() {
+    this.message.info('Đã được làm mới');
+    this.getDataListCNDVTN();
+  }
+
+  tableChangeDectctionCNDVTN(): void {
+    this.dataListCNDVTN = [...this.dataListCNDVTN];
+    this.cdf.detectChanges();
+  }
+
+  tableLoadingCNDVTN(isLoading: boolean): void {
+    this.tableConfigCNDVTN.loading = isLoading;
+    this.tableChangeDectctionCNDVTN();
+  }
+
+  selectedCheckedCNDVTN(e: any[]): void {
+    this.checkedCashArrayCNDVTN = [...e];
+  }
+
+  changePageSizeCNDVTN(e: number): void {
+    this.tableConfigCNDVTN.pageSize = e;
+  }
+
+  private initTableCNDVTN(): void {
+    this.tableConfigCNDVTN = {
+      showCheckbox: true,
+      headers: [
+        {
+          title: "Số ID",
+          field: 'soID',
+          width: 180,
+          tdTemplate: this.soidTpl
+        },
+        {
+          title: "Nhà cung cấp",
+          width: 280,
+          field: 'manhacungcap',
+          tdTemplate: this.manhacungcapTpl
+        },
+        {
+          title: "Số tiền",
+          width: 160,
+          field: 'sotien',
+          tdTemplate: this.sotienCNDVTNTpl
+        },
+        {
+          title: "Trạng thái",
+          width: 160,
+          field: 'status01',
+          tdTemplate: this.trangthaiCNDVTNTpl
+        },
+        {
+          title: "Vận hành",
+          tdTemplate: this.operationCNDVTNTpl,
+          width: 160,
+          fixed: true,
+          fixedDir: 'right'
+        }
+      ],
+      total: 0,
+      loading: true,
+      pageSize: 10,
+      pageIndex: 1
+    };
+  }
 
 }

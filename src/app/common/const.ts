@@ -117,6 +117,10 @@ export const Tmt060Ant100add = 'tmt060/tmt060Ant100add';
 export const Tmt060Ant100delete = 'tmt060/tmt060Ant100delete';
 export const Tmt060Ant100update = 'tmt060/tmt060Ant100update';
 
+// tmt061_congnodichvuthuengoai
+export const Tmt061Ant100getAll = 'tmt061/tmt061Ant100getAll';
+export const Tmt061Ant100update = 'tmt061/tmt061Ant100update';
+
 // tmt030_system master
 export const Tmt030Ant100GetSYSFLG = 'tmt030/tmt030Ant100getSYSFLG';
 

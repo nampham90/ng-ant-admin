@@ -96,6 +96,70 @@
     </span>
 </ng-template>
 <ng-template #linkchildTpl let-id="id" let-tennhacungcap="tennhacungcap">
-    <a nz-button nzType="link">{{tennhacungcap}}</a>
+    <a nz-button (click)="showCongno(id,tennhacungcap)" nzType="link">{{tennhacungcap}}</a>
 </ng-template>
+
+
+<div *ngIf="!showtableCNDVTN" class="normal-table-wrap">
+    <nz-card nzHoverable [nzBodyStyle]="{ 'padding-bottom': 0 }" class="m-b-10">
+        <form nz-form>
+            <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzFor]="">Trạng thái</nz-form-label>
+                        <nz-form-control>
+                            <nz-radio-group id="status01" name="status01" [(ngModel)]="searchParamCNDVTN.status01" (ngModelChange)="changeStatus($event)">
+                                <label nz-radio nzValue="0"> Chưa thanh toán </label>
+                                <label nz-radio nzValue="1"> Đã thanh toán </label>
+    
+                            </nz-radio-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24"></div>
+                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24"  class="text-right p-0 m-b-10">
+                    <button (click)="getDataListCNDVTN()" nz-button [nzType]="'primary'"> <i nz-icon nzType="search"></i>{{formItemNm[6]}}</button>
+                    <button nz-button class="m-l-15" (click)="resetFormCNDVTN()"><i nz-icon nzType="close-circle" nzTheme="outline"></i>{{formItemNm[7]}}</button>
+                </div>
+            </div>
+        </form>
+        <ng-container *ngIf="tableConfigCNDVTN">
+            <app-card-table-wrap [tableTitle]="TitleTableCNDVTN" (reload)="reloadTableCNDVTN()" [btnTpl]="tableBtnsCNDVTN">
+                <app-ant-table 
+                (selectedChange)="selectedCheckedCNDVTN($event)"
+                [checkedCashArrayFromComment]="checkedCashArrayCNDVTN"
+                (changePageSize)="changePageSizeCNDVTN($event)"
+                (changePageNum)="getDataListCNDVTN($event)"
+                [tableConfig]="tableConfigCNDVTN"
+                [tableData]="dataListCNDVTN"
+              ></app-ant-table>
+            </app-card-table-wrap>
+            <ng-template #tableBtnsCNDVTN>
+
+            </ng-template>
+            <ng-template #TitleTableCNDVTN>
+                <h3>{{titleTableCNDVTN}}</h3>
+            </ng-template>
+        </ng-container>
+    </nz-card>
+</div>
+<ng-template #manhacungcapTpl let-manhacungcap="manhacungcap">
+    <span>{{manhacungcap['tennhacungcap']}}</span>
+</ng-template>
+<ng-template #sotienCNDVTNTpl let-sotien="sotien">
+    <span>{{sotien*1000 | currency : "VND"}}</span>
+</ng-template>
+
+<ng-template #trangthaiCNDVTNTpl let-status01="status01">
+    <nz-alert nzType="warning" [nzMessage]="Ghichu"></nz-alert>
+        <ng-template #Ghichu>
+            <ng-container *ngIf="status01 == 0 else Dathanhtoan">
+                <span>Chưa thanh toán</span>
+            </ng-container>
+            <ng-template #Dathanhtoan>
+                <span>Đã thanh toán</span>
+            </ng-template>
+        </ng-template>
+</ng-template>
+
 
