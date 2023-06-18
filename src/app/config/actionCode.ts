@@ -61,6 +61,7 @@ export const ActionCode = {
   Spcm01103AddChild: 'default:system:spcm01103:addchild',
   Spcm01103UpdateChild: 'default:system:spcm01103:updatechild',
   Spcm01103DelChild: 'default:system:spcm01103:delchild',
+  Spcm01103Checkout: 'default:system:spcm01103:checkout',
 
   /* ActionCode ql Xe*/
   XeAdd: 'default:system:quanlyxe:add',

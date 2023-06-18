@@ -119,6 +119,8 @@ export const Tmt060Ant100update = 'tmt060/tmt060Ant100update';
 
 // tmt061_congnodichvuthuengoai
 export const Tmt061Ant100getAll = 'tmt061/tmt061Ant100getAll';
+export const Tmt061Ant100Checkout = 'tmt061/tmt061Ant100Checkout';
+
 export const Tmt061Ant100update = 'tmt061/tmt061Ant100update';
 
 // tmt030_system master

@@ -6,9 +6,9 @@ export interface Congnodichvuthuengoai {
     manhacungcap: Dichvuthuengoai,
     sotien: number;
     ngaylamviec:string;
-    stutas01?: string | null,
-    stutas02?: string | null,
-    stutas03?: string | null,
-    stutas04?: string | null,
-    stutas05?: string | null
+    status01?: string | null,
+    status02?: string | null,
+    status03?: string | null,
+    status04?: string | null,
+    status05?: string | null
 }

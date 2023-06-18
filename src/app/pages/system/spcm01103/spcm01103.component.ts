@@ -23,7 +23,7 @@ import { ModalBtnStatus } from '@app/widget/base-modal';
 import { Spcm01103ModalService } from '@app/widget/biz-widget/system/spcm01103-modal/spcm01103-modal.service';
 import { Dichvu } from '@app/core/model/dichvuthuengoai.model';
 import { Tmt060DichvuthuengoaiService } from '@app/core/services/http/system/tmt060-dichvuthuengoai.service';
-import { SearchParamCNDVTN, Tmt061CongnodichvuthuengoaiService } from '@app/core/services/http/system/tmt061-congnodichvuthuengoai.service';
+import { ParamCheckout, SearchParamCNDVTN, Tmt061CongnodichvuthuengoaiService } from '@app/core/services/http/system/tmt061-congnodichvuthuengoai.service';
 import { Congnodichvuthuengoai } from '@app/core/model/tmt061_congnodichvuthuengoai.model';
 
 interface SearchParam {
@@ -429,14 +429,14 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
   }
 
   // cong no dich vu thue ngoai
-
+  showbtnCheckout = true;
   showtableCNDVTN = true;
   titleTableCNDVTN = "";
   manhacungcap = "";
   searchParamCNDVTN: Partial<SearchParamCNDVTN> = {};
   tableConfigCNDVTN!: MyTableConfig;
   dataListCNDVTN: Congnodichvuthuengoai[] = [];
-  checkedCashArrayCNDVTN: any[] = [];
+  checkedCashArrayCNDVTN: Congnodichvuthuengoai[] = [];
 
   @ViewChild('soidTpl', { static: true }) soidTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('manhacungcapTpl', { static: true }) manhacungcapTpl!: TemplateRef<NzSafeAny>;
@@ -448,9 +448,42 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
     this.manhacungcap = id;
     this.titleTableCNDVTN = "Danh Sách Công Nợ " + tennhacungcap;
     this.showtableCNDVTN = false;
+    this.checkedCashArrayCNDVTN = [];
     this.getDataListCNDVTN();
   }
 
+  checkout() {
+    if(this.checkListThanhToan(this.checkedCashArrayCNDVTN) == true) {
+       // thong bao list khong hop le
+       this.message.info("Dử liệu thánh toán không hợp lệ !")
+    } else {
+      // thưc hiện thanh toán
+      // hiển thị cảnh báo bạn có muốn thánh toán khong
+      this.modalSrv.confirm({
+        nzTitle: "Bạn có chắc chăn muốn thanh toán những đơn hàng này ?",
+        nzContent: "Nhấn OK để hoàn thành việt thanh toán !",
+        nzOnOk: ()=> {
+          const params : ParamCheckout = {
+             listcheckout: this.checkedCashArrayCNDVTN
+          }
+          this.tmt061Service.checkout(params).subscribe(res=> {
+             this.getDataListCNDVTN();
+          })
+        }
+      })
+
+    }
+  }
+
+  checkListThanhToan(listdonhangthanhtoan: Congnodichvuthuengoai[]): boolean {
+    for(let e of listdonhangthanhtoan) {
+      if(e.status01 != "0") {
+        return true;
+      } 
+    }
+    return false;
+  }
+ 
   changeStatus($event: Event) {
 
   }
@@ -501,8 +534,13 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
     this.tableChangeDectctionCNDVTN();
   }
 
-  selectedCheckedCNDVTN(e: any[]): void {
+  selectedCheckedCNDVTN(e: Congnodichvuthuengoai[]): void {
     this.checkedCashArrayCNDVTN = [...e];
+    if(this.checkedCashArrayCNDVTN.length > 0) {
+       this.showbtnCheckout = false;
+    } else {
+      this.showbtnCheckout = true;
+    }
   }
 
   changePageSizeCNDVTN(e: number): void {
@@ -530,6 +568,12 @@ export class Spcm01103Component extends BaseComponent implements OnInit {
           width: 160,
           field: 'sotien',
           tdTemplate: this.sotienCNDVTNTpl
+        },
+        {
+          title: "Ngày làm việc",
+          width: 200,
+          field: 'ngaylamviec',
+          pipe: "date: dd/MM/YYYY HH:mm"
         },
         {
           title: "Trạng thái",

@@ -135,7 +135,11 @@
               ></app-ant-table>
             </app-card-table-wrap>
             <ng-template #tableBtnsCNDVTN>
-
+                <!-- Spcm01103Checkout -->
+                <button *appAuth="ActionCode.Spcm01103Checkout" (click)="checkout()" nz-button nzType="primary" class="m-r-8" [disabled]="showbtnCheckout">
+                    <i nz-icon nzType="caret-right"></i>
+                         Thanh Toán
+                </button>
             </ng-template>
             <ng-template #TitleTableCNDVTN>
                 <h3>{{titleTableCNDVTN}}</h3>

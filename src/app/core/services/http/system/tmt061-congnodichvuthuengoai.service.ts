@@ -11,6 +11,10 @@ export interface SearchParamCNDVTN {
   status01?: number;
 }
 
+export interface ParamCheckout {
+  listcheckout: Congnodichvuthuengoai[]
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,5 +26,9 @@ export class Tmt061CongnodichvuthuengoaiService {
 
   getAll(params:SearchCommonVO<SearchParamCNDVTN>): Observable<PageInfo<Congnodichvuthuengoai>> {
     return this.http.post(Const.Tmt061Ant100getAll, params,{ needSuccessInfo: false});
+  }
+
+  checkout(params: ParamCheckout): Observable<void> {
+    return this.http.post(Const.Tmt061Ant100Checkout, params, {needSuccessInfo: false});
   }
 }
