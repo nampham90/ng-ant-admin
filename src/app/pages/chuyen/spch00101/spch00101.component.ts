@@ -101,9 +101,8 @@ export class Spch00101Component extends BaseComponent implements OnInit {
   @ViewChild('Tltenphu', { static: true }) Tltenphu!: TemplateRef<NzSafeAny>;
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('tienduatruocTpl', { static: true }) tienduatruocTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('trangthaiTpl', { static: true }) trangthaiTpl!: TemplateRef<NzSafeAny>;
 
-
-  
   constructor(
     protected override webService: WebserviceService,
     protected override router: Router,
@@ -460,9 +459,7 @@ export class Spch00101Component extends BaseComponent implements OnInit {
     this.chuyenDtoService.tienxe = tienxe;
     this.chuyenDtoService.trangthai = trangthai;
     this.transfer(Const.rootbase + UrlDisplayId.spch00201);
-
     //this.dataService.refresh(Const.rootbase + UrlDisplayId.spch00201);
-
   }
 
   addEditData(param: Chuyen, methodName: 'updateChuyen' | 'createChuyen'): void {
@@ -477,8 +474,6 @@ export class Spch00101Component extends BaseComponent implements OnInit {
         this.getDataList();
       });
   }
-
-
 
   reloadTable(): void {
     this.message.info('Đã được làm mới');
@@ -516,6 +511,12 @@ export class Spch00101Component extends BaseComponent implements OnInit {
           width: 250,
           field: 'soodt',
           tdTemplate: this.soodtTpl
+        },
+        {
+          title: 'Trạng thái chuyến hàng',
+          width: 250,
+          field: 'trangthai',
+          tdTemplate: this.trangthaiTpl
         },
         {
           title: 'Ngày khởi hành',

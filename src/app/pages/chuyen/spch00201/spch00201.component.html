@@ -99,6 +99,12 @@
         [tableConfig]="tableConfig"
         [tableData]="dataList"
       ></app-ant-table>
+      <ng-template #soidTpl let-soID="soID">
+        <div class="copy-container">
+            <span> {{soID}}</span>
+            <button nz-button [cdkCopyToClipboard]="copy(soID)" nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
+        </div>
+      </ng-template>
       <ng-template #operationTpl let-id="id">
         <!-- <span *appAuth="ActionCode.EditProduct" class="operate-text">
           <button nz-button nzType="primary" nzGhost (click)="edit(id)" [disabled]="btnUpdate">Cập nhật</button>
@@ -109,6 +115,12 @@
       </ng-template>
       <ng-template #tiencuocTpl let-tiencuoc="tiencuoc">
           <span>{{tiencuoc*1000 | currency : "VND" : ''}}</span>
+      </ng-template>
+      <ng-template #tienthuengoaiTpl let-tiencuoc="tiencuoc" let-cpdvtncd="cpdvtncd">
+        <ng-container *ngIf="cpdvtncd else rongTpl">
+            <a nz-button nzType="link" (click)="showTienthuengoai(cpdvtncd)">{{((cpdvtncd['sotiennhaphang'] == null? 0:cpdvtncd['sotiennhaphang']) + (cpdvtncd['sotientrahang'] == null? 0:cpdvtncd['sotientrahang']) +  (cpdvtncd['sotienxecau'] == null? 0: cpdvtncd['sotienxecau']) + (cpdvtncd['sotienbocxep']==null?0:cpdvtncd['sotienbocxep'])) * 1000 | currency : "VND"}}</a>
+        </ng-container>
+        <ng-template #rongTpl></ng-template>
       </ng-template>
       <ng-template #htttTpl let-hinhthucthanhtoan="hinhthucthanhtoan">
         <span>{{mergeHttt(hinhthucthanhtoan)}}</span>

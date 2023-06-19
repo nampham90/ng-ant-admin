@@ -1,3 +1,5 @@
+import { ChiPhiDVTN } from "./chiphidichvuthuengoai.model";
+
 export interface Phieunhaphang {
     id?: string;
     soID?: string;
@@ -6,6 +8,7 @@ export interface Phieunhaphang {
     makh?: string;
     biensoxe?:string | null;
     tiencuoc?: number; // tiền cước
+    cpdvtncd?: ChiPhiDVTN;
     ngaynhap?: Date;
     lotrinh?: number;
     noidungdonhang?: string;

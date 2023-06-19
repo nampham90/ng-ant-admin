@@ -30,11 +30,13 @@ export interface MyTableConfig {
   yScroll?: number; //列表纵向滚动条
   virtualItemSize?: number; //虚拟滚动时每一列的高度，与 cdk itemSize 相同
   showCheckbox?: boolean; // 如果需要checkBox,则需要showCheckbox=true,并且使用app-ant-table组件时传入 [checkedCashArrayFromComment]="cashArray"，cashArray为业务组件中自己定义的数组，并且需要table中的data都有一个id属性
+  showExpand?: boolean;
   pageIndex: number; // 当前页码，（与页面中页码双向绑定）
   pageSize: number; // 每一页显示的数据条数（与页面中pageSize双向绑定）
   total: number; // 数据总量，用于计算分页（应该从后端接口中获得）
   loading: boolean; // 是否显示表格加载中
   headers: TableHeader[]; // 列设置
+  headersChild?: TableHeader[];
 }
 
 export abstract class AntTableComponentToken {
@@ -60,6 +62,7 @@ export class AntTableComponent implements OnInit, OnChanges {
   _dataList!: NzSafeAny[];
   _tableConfig!: MyTableConfig;
   _scrollConfig: { x: string; y: string } | {} = {};
+
   nodata= "Không có dữ liệu";
   @Input() checkedCashArrayFromComment: NzSafeAny[] = [];
 
@@ -70,6 +73,11 @@ export class AntTableComponent implements OnInit, OnChanges {
       this._dataList.forEach(item => {
         item['_checked'] = false;
       });
+    }
+    if(this.tableConfig.showExpand) {
+      this._dataList.forEach(item => {
+        item['expand'] = false;
+      })
     }
   }
 
@@ -123,6 +131,7 @@ export class AntTableComponent implements OnInit, OnChanges {
       this._scrollConfig = {};
     }
   }
+
 
   changeSort(tableHeader: TableHeader): void {
     this.tableConfig.headers.forEach(item => {

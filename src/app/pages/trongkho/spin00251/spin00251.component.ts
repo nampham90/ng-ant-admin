@@ -330,10 +330,12 @@ export class Spin00251Component extends BaseComponent implements OnInit {
   }
 
   showBtnConfirm() {
-    if(this.dataList.length > 0) {
+    if(this.dataList.length == 1) {
+      this.btnNew = true;
       this.showConfirm = true;
     } else {
       this.showConfirm = false;
+      this.btnNew = false;
     }
   }
 

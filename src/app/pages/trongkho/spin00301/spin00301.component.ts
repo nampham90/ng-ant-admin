@@ -28,6 +28,7 @@ import { Spin00251dtoService } from '@app/core/services/http/trongkho/spin00251d
 import { ChiPhiDVTN } from '@app/core/model/chiphidichvuthuengoai.model';
 import { Spin00301subcpdvtnService } from '@app/widget/modal/trongkho/spin00301subcpdvtn/spin00301subcpdvtn.service';
 import { Spin00301subcpdvtn } from '@app/widget/modal/trongkho/spin00301subcpdvtn/spin00301subcpdvtn.model';
+import { Tmt030Service } from '@app/core/services/http/system/tmt030.service';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -92,6 +93,7 @@ export class Spin00301Component extends BaseComponent implements OnInit {
 
   usernm = "";
   stockuser = "";
+  sysflg1 = 0;
 
   checkOptionStatus = [
     { label: 'Trong kho', value: 0, checked: false },
@@ -104,6 +106,7 @@ export class Spin00301Component extends BaseComponent implements OnInit {
       breadcrumb: [this.formItemNm[1], this.formItemNm[2],this.formItemNm[3]],
       desc: ''
     };
+    this.sysflg1 = this.tmt030System.SYSFLG1;
 
     this.initTable();
     this.getListKho();
@@ -130,7 +133,8 @@ export class Spin00301Component extends BaseComponent implements OnInit {
     private spin00301Service: Spin00301Service,
     private spin00251Service: Spin00251Service,
     private spin00251DtoService: Spin00251dtoService,
-    private spin00301subcpdvtnService: Spin00301subcpdvtnService
+    private spin00301subcpdvtnService: Spin00301subcpdvtnService,
+    private tmt030System :Tmt030Service
   ) { 
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }

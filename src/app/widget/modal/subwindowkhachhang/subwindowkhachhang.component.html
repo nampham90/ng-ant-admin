@@ -1,5 +1,11 @@
 <form nz-form [formGroup]="addEditForm">
     <nz-form-item>
+      <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="makhachhang">Mã Khách Hàng</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" [nzErrorTip]="combineTpl">
+        <input nz-input formControlName="makhachhang" id="makhachhang" placeholder="Mã khách hàng" />
+    </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
         <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="name">Tên tài khoản</nz-form-label>
         <nz-form-control [nzSm]="18" [nzXs]="24" [nzErrorTip]="combineTpl">
           <input nz-input formControlName="name" id="name" placeholder="Tên tài khoản" />

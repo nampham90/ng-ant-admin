@@ -34,14 +34,22 @@ import { LayoutPdfService } from '@app/core/services/common/layout-pdf.service';
 import {VideoyoutubeService} from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service'
 import { async } from '@antv/x6/lib/registry/marker/async';
 import { Tmt030Service } from '@app/core/services/http/system/tmt030.service';
+import { ChiPhiDVTN } from '@app/core/model/chiphidichvuthuengoai.model';
+import { Spin00301subcpdvtn } from '@app/widget/modal/trongkho/spin00301subcpdvtn/spin00301subcpdvtn.model';
+import { Spin00301subcpdvtnService } from '@app/widget/modal/trongkho/spin00301subcpdvtn/spin00301subcpdvtn.service';
 
 export interface Product {
   id?:string,
   stt?: number;
+  soID?: string;
   idkhachhang?: string;
   tenkhachhang?: string;
   noidungmathang?: string;
   tiencuoc?: number;
+  cpdvtncd?: ChiPhiDVTN;
+  soluong?: number;
+  trongluong?: number;
+  khoiluong?:number;
   diadiembochang?: string;
   hinhthucthanhtoan?: any;
   lotrinh?: any;
@@ -107,7 +115,8 @@ export class Spch00201Component extends BaseComponent implements OnInit {
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('tiencuocTpl', { static: true }) tiencuocTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('htttTpl', { static: true }) htttTpl!: TemplateRef<NzSafeAny>;
-
+  @ViewChild('soidTpl', { static: true }) soidTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('tienthuengoaiTpl', { static: true }) tienthuengoaiTpl!: TemplateRef<NzSafeAny>;
 
   constructor(
     protected override webService: WebserviceService,
@@ -126,8 +135,8 @@ export class Spch00201Component extends BaseComponent implements OnInit {
     private modalChiphiService: SubwindowChiphiService,
     protected override tabService: TabService,
     private pdfService: LayoutPdfService,
-    private tmt030Service : Tmt030Service
-    
+    private tmt030Service : Tmt030Service,
+    private spin00301subcpdvtnService: Spin00301subcpdvtnService
 
   ) {
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
@@ -478,8 +487,13 @@ export class Spch00201Component extends BaseComponent implements OnInit {
       let req = {
         "idchuyen": res.idchuyen,
         "biensoxe": res.biensoxe,
+        "soID": res.soID,
         "iduser": res.iduser,
         "tiencuoc": res.tiencuoc,
+        "cpdvtncd": res.cpdvtncd,
+        "soluong": res.soluong,
+        "trongluong": res.trongluong,
+        "khoiluong": res.khoiluong,
         "lotrinh": res.lotrinh,
         "ngaynhap": res.ngaynhap,
         "noidungdonhang": res.noidungdonhang,
@@ -585,6 +599,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
           let itemProduc: Product = {}
           itemProduc.id = item['id'];
           itemProduc.stt = (i+1);
+          itemProduc.soID = item.soID;
           itemProduc.idkhachhang = item.iduser['_id'];
           itemProduc.tenkhachhang = item.iduser['name'];
           itemProduc.noidungmathang = item['noidungdonhang'];
@@ -592,6 +607,11 @@ export class Spch00201Component extends BaseComponent implements OnInit {
           itemProduc.diadiembochang = item['diadiembochang'];
           itemProduc.hinhthucthanhtoan = item['hinhthucthanhtoan'];
           itemProduc.tiencuoc = item['tiencuoc'];
+          itemProduc.cpdvtncd = item['cpdvtncd'];
+
+          itemProduc.soluong = item['soluong'];
+          itemProduc.trongluong = item['trongluong'];
+          itemProduc.khoiluong = item['khoiluong'];
           itemProduc.trangthai = item['trangthai'];
           itemProduc.ghichu = item['ghichu'];
           itemProduc.tennguoinhan = item['tennguoinhan'];
@@ -602,6 +622,18 @@ export class Spch00201Component extends BaseComponent implements OnInit {
       }
     }
     return listP;
+  }
+
+  showTienthuengoai(cpdvtncd: ChiPhiDVTN){
+    let req: Spin00301subcpdvtn = {
+      showcomfirm:false,
+      cpdvtncd: cpdvtncd
+    }
+    this.spin00301subcpdvtnService.show({nzTitle: "Chi phí dịch vụ thuê ngoài"},req).subscribe(res => {
+      if (!res || res.status === ModalBtnStatus.Cancel) {
+        return;
+      }
+    })
   }
 
   reloadTable(): void {
@@ -631,6 +663,12 @@ export class Spch00201Component extends BaseComponent implements OnInit {
           title: 'STT',
           field: 'stt',
           width: 80,
+        },
+        {
+          title: "Số ID",
+          field: "soID",
+          width: 200,
+          tdTemplate: this.soidTpl
         },
         {
           title: 'Tên Khách Hàng',
@@ -664,6 +702,12 @@ export class Spch00201Component extends BaseComponent implements OnInit {
           width: 100,
           field: 'tiencuoc',
           tdTemplate: this.tiencuocTpl
+        },
+        {
+          title: "Tiền thuê ngoài",
+          width: 180,
+          field: 'cpdvtncd',
+          tdTemplate: this.tienthuengoaiTpl
         },
         {
           title: 'Địa điểm bóc hàng',
@@ -710,6 +754,10 @@ export class Spch00201Component extends BaseComponent implements OnInit {
       pageIndex: 1,
       yScroll: 400
     };
+  }
+
+  copy(soodt: any) {
+    return `${soodt}`;
   }
 
 }

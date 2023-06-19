@@ -150,7 +150,7 @@
             <nz-alert nzType="info" nzMessage="Trong kho"></nz-alert>
         </ng-container>
         <ng-template #statusTpl>
-            <ng-container *ngIf="status01 == 0 else vtTpl">
+            <ng-container *ngIf="status01 == 0 && sysflg1 == 1 else vtTpl">
                 <nz-alert nzType="warning" nzMessage="Chờ bốc hàng"></nz-alert>
             </ng-container>
             <ng-template #vtTpl>

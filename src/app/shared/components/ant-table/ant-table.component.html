@@ -21,6 +21,7 @@
   <ng-template #rangeTemplate let-range="range" let-total> Total row: {{ total }} </ng-template>
   <thead>
     <tr>
+      <th nzWidth="40px" *ngIf="_tableConfig.showExpand" [nzLeft]="true"></th>
       <th
         class="animate-bg-0"
         [nzLeft]="true"
@@ -60,32 +61,105 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let row of _dataList; let rowIndex = index; trackBy: trackByTableBody">
-      <td class="animate-bg-0" nzEllipsis *ngIf="_tableConfig.showCheckbox" [nzLeft]="true" (nzCheckedChange)="checkRowSingle($event, rowIndex)" [nzChecked]="row['_checked']"></td>
-      <ng-container *ngFor="let head of _tableConfig.headers">
-        <td
-          *ngIf="head.show === undefined || head.show === true"
-          [ngClass]="[head.tdClassList ? head.tdClassList : [], head.tdClassFn ? head.tdClassFn(row, rowIndex) : ''].flat()"
-          [nzEllipsis]="!head.notNeedEllipsis"
-          [nzLeft]="!!head.fixed && head.fixedDir === 'left'"
-          [nzRight]="!!head.fixed && head.fixedDir === 'right'"
-        >
-          <ng-container *ngIf="head.tdTemplate; else rowTpl">
-            <ng-container *ngTemplateOutlet="head.tdTemplate; context: row"></ng-container>
-          </ng-container>
-          <ng-template #rowTpl>
-            <ng-container *ngIf="head.pipe; else noPipe">
-              <span [title]="row | tableFiledPipe: head.field | map: head.pipe">{{ row | tableFiledPipe: head.field | map: head.pipe }}</span>
+    <ng-container *ngFor="let row of _dataList; let rowIndex = index; trackBy: trackByTableBody">
+      <tr>
+        <td class="animate-bg-0" nzEllipsis [nzLeft]="true" *ngIf="_tableConfig.showExpand" [(nzExpand)]="row.expand"></td>
+        <td class="animate-bg-0" nzEllipsis *ngIf="_tableConfig.showCheckbox" [nzLeft]="true" (nzCheckedChange)="checkRowSingle($event, rowIndex)" [nzChecked]="row['_checked']"></td>
+        <ng-container *ngFor="let head of _tableConfig.headers">
+          <td
+            *ngIf="head.show === undefined || head.show === true"
+            [ngClass]="[head.tdClassList ? head.tdClassList : [], head.tdClassFn ? head.tdClassFn(row, rowIndex) : ''].flat()"
+            [nzEllipsis]="!head.notNeedEllipsis"
+            [nzLeft]="!!head.fixed && head.fixedDir === 'left'"
+            [nzRight]="!!head.fixed && head.fixedDir === 'right'"
+          >
+            <ng-container *ngIf="head.tdTemplate; else rowTpl">
+              <ng-container *ngTemplateOutlet="head.tdTemplate; context: row"></ng-container>
             </ng-container>
-            <ng-template #noPipe>
-              <ng-container>
-                <span [title]="row | tableFiledPipe: head.field">{{ row | tableFiledPipe: head.field }}</span>
+            <ng-template #rowTpl>
+              <ng-container *ngIf="head.pipe; else noPipe">
+                <span [title]="row | tableFiledPipe: head.field | map: head.pipe">{{ row | tableFiledPipe: head.field | map: head.pipe }}</span>
               </ng-container>
+              <ng-template #noPipe>
+                <ng-container>
+                  <span [title]="row | tableFiledPipe: head.field">{{ row | tableFiledPipe: head.field }}</span>
+                </ng-container>
+              </ng-template>
             </ng-template>
-          </ng-template>
-        </td>
-      </ng-container>
-    </tr>
+          </td>
+        </ng-container>
+      </tr>
+      <tr *ngIf="_tableConfig.showExpand" [nzExpand]="row.expand">
+        <nz-table 
+           *ngIf="row.dataListChild && _tableConfig.headersChild"
+           #innerTable 
+           [nzData]="row.dataListChild" 
+           nzSize="small" 
+           [nzShowPagination]="false"
+           [nzScroll]="{x: '1500px',y:'400px'}"
+           [nzNoResult] = "templateEmpty"
+           >
+           
+           <thead>
+            <tr>
+              <ng-container *ngFor="let headChild of _tableConfig.headersChild; let headIndexChild = index; let last = last; let first = first">
+                  <th
+                  class="animate-bg-0"
+                  [ngClass]="[headChild.thClassList ? headChild.thClassList : [], headChild.thClassFn ? headChild.thClassFn(headChild) : ''].flat()"
+                  [nzWidth]="headChild.width + 'px'"
+                  nz-resizable
+                  nzPreview
+                  nzBounds="parent"
+                  [nzMaxWidth]="1200"
+                  [nzMinWidth]="1"
+                  (nzResizeEnd)="onResize($event, headChild.title)"
+                  [nzRight]="!!headChild.fixed && headChild.fixedDir === 'right'"
+                  [nzLeft]="!!headChild.fixed && headChild.fixedDir === 'left'"
+                  *ngIf="headChild.show === undefined || headChild.show === true"
+                >
+                  <div>
+                    {{ headChild.title }}
+                    <div class="sort-wrap m-l-8 hand-model" (click)="changeSort(headChild)" *ngIf="headChild.showSort">
+                      <i class="sort-caret ascending" [class.sort-caret-sel-asc]="headChild.sortDir === 'asc'"></i>
+                      <i class="sort-caret descending" [class.sort-caret-sel-desc]="headChild.sortDir === 'desc'"></i>
+                    </div>
+                  </div>
+                </th>
+              </ng-container>
+            </tr>
+           </thead>
+           <tbody>
+            <ng-container *ngFor="let data of innerTable.data; let rowIndexChild = index">
+              <tr>
+                <ng-container *ngFor="let headChild of _tableConfig.headersChild">
+                  <td
+                    *ngIf="headChild.show === undefined || headChild.show === true"
+                    [ngClass]="[headChild.tdClassList ? headChild.tdClassList : [], headChild.tdClassFn ? headChild.tdClassFn(data, rowIndexChild) : ''].flat()"
+                    [nzEllipsis]="!headChild.notNeedEllipsis"
+                    [nzLeft]="!!headChild.fixed && headChild.fixedDir === 'left'"
+                    [nzRight]="!!headChild.fixed && headChild.fixedDir === 'right'"
+                  >
+                    <ng-container *ngIf="headChild.tdTemplate; else rowTpl">
+                      <ng-container *ngTemplateOutlet="headChild.tdTemplate; context: data"></ng-container>
+                    </ng-container>
+                    <ng-template #rowTpl>
+                      <ng-container *ngIf="headChild.pipe; else noPipe">
+                        <span [title]="data | tableFiledPipe: headChild.field | map: headChild.pipe">{{ data | tableFiledPipe: headChild.field | map: headChild.pipe }}</span>
+                      </ng-container>
+                      <ng-template #noPipe>
+                        <ng-container>
+                          <span [title]="data | tableFiledPipe: headChild.field">{{ data | tableFiledPipe: headChild.field }}</span>
+                        </ng-container>
+                      </ng-template>
+                    </ng-template>
+                  </td>
+                </ng-container>
+              </tr>
+            </ng-container>
+           </tbody>
+        </nz-table>
+      </tr>
+    </ng-container>
   </tbody>
 </nz-table>
 <ng-template #templateEmpty>

@@ -47,6 +47,7 @@ export class Spkh00101Component extends BaseComponent implements OnInit {
   searchParam: Partial<SearchParam> = {};
   dateFormat = Const.dateFormat;
   tableConfig!: MyTableConfig;
+  tableConfigChild!: MyTableConfig;
   dataList: any[] = [];
   checkedCashArray: any[] = [];
   ActionCode = ActionCode;
@@ -99,6 +100,38 @@ export class Spkh00101Component extends BaseComponent implements OnInit {
     .subscribe(data => {
       const { list, total, pageNum } = data;
       this.dataList = [...list];
+      this.dataList.forEach(item=> {
+        item['dataListChild'] = [
+          {
+             "makhachhang" : "KH001",
+             "name" : "Nam Pham",
+             "dienthoai" : "0914123123",
+             "field1" : "hahha",
+             "field2" : "hahha",
+             "field3" : "hahha",
+             "field4" : "hahha",
+             "field5" : "hahha",
+             "field6" : "hahha",
+             "field7" : "hahha",
+             "field8" : "hahha",
+             "field9" : "hahha",
+          },
+          {
+            "makhachhang" : "KH002",
+            "name" : "Cẩm kha",
+            "dienthoai" : "0914123345",
+            "field1" : "hahha hahha hahha",
+            "field2" : "hahha hahha hahha hahha",
+            "field3" : "hahha",
+            "field4" : "hahha",
+            "field5" : "hahha",
+            "field6" : "hahha",
+            "field7" : "hahha",
+            "field8" : "hahha",
+            "field9" : "hahha",
+          }
+        ]
+      })
       this.tableConfig.total = total!;
       this.tableConfig.pageIndex = pageNum!;
       this.tableLoading(false);
@@ -228,13 +261,14 @@ export class Spkh00101Component extends BaseComponent implements OnInit {
   private initTable(): void {
     this.tableConfig = {
       showCheckbox: false,
+      showExpand: true,
       headers: [
-        // {
-        //   title: 'Mã khách hàng',
-        //   field: 'id',
-        //   width: 180,
-        //   tdTemplate: this.linkidTpl
-        // },
+        {
+          title: 'Mã khách hàng',
+          field: 'makhachhang',
+          width: 180,
+          tdTemplate: this.linkidTpl
+        },
         {
           title: 'Tên khách hàng',
           width: 180,
@@ -267,6 +301,68 @@ export class Spkh00101Component extends BaseComponent implements OnInit {
           width: 250,
           fixed: true,
           fixedDir: 'right'
+        }
+      ],
+      headersChild: [
+        {
+          title: 'Mã khách hàng khách hàng',
+          field: 'makhachhang',
+          width: 180,
+        },
+        {
+          title: 'Tên khách hàng',
+          width: 180,
+          field: 'name',
+        },
+        {
+          title: 'Số điện thoại',
+          width: 120,
+          field: 'dienthoai',
+        },
+        {
+          title: 'Mã khách hàng',
+          field: 'field1',
+          width: 380,
+        },
+        {
+          title: 'Tên khách hàng',
+          width: 380,
+          field: 'field2',
+        },
+        {
+          title: 'Số điện thoại',
+          width: 320,
+          field: 'field3',
+        },
+        {
+          title: 'Mã khách hàng',
+          field: 'field4',
+          width: 380,
+        },
+        {
+          title: 'Tên khách hàng',
+          width: 380,
+          field: 'field5',
+        },
+        {
+          title: 'Số điện thoại',
+          width: 320,
+          field: 'field6',
+        },
+        {
+          title: 'Mã khách hàng',
+          field: 'field7',
+          width: 380,
+        },
+        {
+          title: 'Tên khách hàng khach hang',
+          width: 380,
+          field: 'field8',
+        },
+        {
+          title: 'Số điện thoại',
+          width: 320,
+          field: 'field9',
         }
       ],
       total: 0,

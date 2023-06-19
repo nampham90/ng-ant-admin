@@ -50,6 +50,7 @@ export class SubwindowkhachhangComponent implements OnInit {
 
   initForm(): void {
     this.addEditForm = this.fb.group({
+      makhachhang: [null,[Validators.required]],
       name: [null, [Validators.required]],
       dienthoai: [null, [this.validatorsService.mobileValidator()]],
       diachi: [null],
