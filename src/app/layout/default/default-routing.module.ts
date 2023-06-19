@@ -53,6 +53,10 @@ const routes: Routes = [
         path: 'trongkho',
         loadChildren: () => import('../../pages/trongkho/trongkho.module').then(m => m.TrongkhoModule)
       },
+      {
+        path: 'report',
+        loadChildren: () => import('../../pages/report/report.module').then(m => m.ReportModule)
+      },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   }

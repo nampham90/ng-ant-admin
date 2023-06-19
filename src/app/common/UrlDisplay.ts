@@ -13,6 +13,9 @@ export enum UrlDisplayId {
     spcm01103 = "system/spcm01103", // quản lý dịch vụ thuê ngoài
 
     huongdan = 'system/huongdan',
+    //report
+    sprp00701 = "report/sprp00701",
+    sprp00702 = "report/sprp00702",
    //chuyen
     spch00101 = 'chuyen/spch00101', // quản lý chuyến
     spch00201 = 'chuyen/spch00201', // kế hoạch bọc hàng
