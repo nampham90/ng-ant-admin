@@ -55,6 +55,20 @@ export abstract class BaseComponent implements OnInit, OnDestroy {
         return date;
     }
 
+    getFirstDayOfMonth() {
+        const currentDate = new Date();
+        const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+        const formattedFirstDayOfMonth = this.datePipe.transform(firstDayOfMonth, 'yyyy/MM/dd');
+        return formattedFirstDayOfMonth;
+    }
+
+    getLastDayOfMonth() {
+        const currentDate = new Date();
+        const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+        const formattedLastDayOfMonth = this.datePipe.transform(lastDayOfMonth, 'yyyy/MM/dd');
+        return formattedLastDayOfMonth;
+    }
+
     formatDate(d: any) {
         if(d == null || d == '') {
             return '';

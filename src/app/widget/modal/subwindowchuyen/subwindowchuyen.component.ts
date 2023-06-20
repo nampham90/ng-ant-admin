@@ -9,6 +9,7 @@ import * as Const from '@app/common/const'
 import { XeService } from '@app/core/services/http/xe/xe.service';
 import { SearchCommonVO } from '@app/core/services/types';
 import { AccountService } from '../../../core/services/http/system/account.service';
+import { Chuyen } from '@app/core/model/chuyen.model';
 
 @Component({
   selector: 'app-subwindowchuyen',
@@ -18,7 +19,7 @@ import { AccountService } from '../../../core/services/http/system/account.servi
 })
 export class SubwindowchuyenComponent implements OnInit {
   addEditForm!: FormGroup;
-  params: object;
+  params!: Chuyen;
   const = Const;
   listXetai: any[] = [];
   listTaixe: any[] = [];
@@ -29,7 +30,6 @@ export class SubwindowchuyenComponent implements OnInit {
     private dataTaixeService: AccountService,
     private cdf : ChangeDetectorRef
   ) {
-    this.params = {}
   }
 
 
@@ -71,8 +71,15 @@ export class SubwindowchuyenComponent implements OnInit {
     this.getListTaixe();
     this.initForm();
     if (Object.keys(this.params).length > 0) {
-      this.addEditForm.patchValue(this.params);
-      console.log(this.params);
+      this.addEditForm.patchValue({
+        ngaydi: this.params.ngaydi,
+        ngayve: this.params.ngayve,
+        biensoxe: this.params.biensoxe.id,
+        tienxe: this.params.tienxe,
+        idtai: this.params.idtai.id,
+        idphu: this.params.idphu.id,
+        changduong: this.params.changduong
+      });
     }
    
   }

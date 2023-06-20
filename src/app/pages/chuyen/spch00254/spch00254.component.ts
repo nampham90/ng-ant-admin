@@ -283,14 +283,25 @@ export class Spch00254Component extends BaseComponent implements OnInit {
   
     for(let element of this.dataList) {
       if(element['_checked'] === true) {
-        let item = [
-          element['iddonhang']['_id'],
-          element['iddonhang']['thongtindonhang'],
-          this.formatDate(element['ngaynhap']),
-          element['tentaixe'],
-          this.displayVND(element['sotienno'])
-        ]
-        data.push(item);
+        if(element.soID) {
+          let item = [
+            element['soID'],
+            element['iddonhang']['noidungdonhang'],
+            this.formatDate(element['ngaynhap']),
+            element['tentaixe'],
+            this.displayVND(element['sotienno'])
+          ]
+          data.push(item);
+        } else {
+          let item = [
+            element['iddonhang']['_id'],
+            element['iddonhang']['thongtindonhang'],
+            this.formatDate(element['ngaynhap']),
+            element['tentaixe'],
+            this.displayVND(element['sotienno'])
+          ]
+          data.push(item);
+        }
       }
     }
     return data;
@@ -335,7 +346,7 @@ export class Spch00254Component extends BaseComponent implements OnInit {
           if(res) {
             let formatExp = this.fnFormat();
             let title = "Danh Sách Công Nợ";
-            let header= [['MaDH','Thông Tin Đơn Hàng', 'Ngày Phat Hành', 'Tên tài xế', "Tiền cước"]];
+            let header= [['MaDH','Tên hàng', 'Ngày Phat Hành', 'Tên tài xế', "Tiền cước"]];
             this.pdfService.clearHeader();
             let headerlayout = Const.headerLayout;
             headerlayout[0]['field'] = 'Đơn vi vận chuyển:';

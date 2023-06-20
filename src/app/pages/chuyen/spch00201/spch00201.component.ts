@@ -674,13 +674,13 @@ export class Spch00201Component extends BaseComponent implements OnInit {
           title: 'Tên Khách Hàng',
           width: 170,
           field: 'tenkhachhang',
-         // tdTemplate: this.Tltentai
+          //tdTemplate: this.tenkhachhangTpl
         },
         {
           title: 'Tên hàng',
           width: 450,
           field: 'noidungmathang',
-          //tdTemplate: this.tiencuocTpl
+          //tdTemplate: this.noidungdonhangTpl
         },
         {
           title: 'Số lượng',

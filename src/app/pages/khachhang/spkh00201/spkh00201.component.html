@@ -147,7 +147,7 @@
         </ng-template>
         <ng-template #nguonxeTpl let-idphieunhaphang="idphieunhaphang" let-status01="status01">
             <ng-container *ngIf="status01 == '' else Block">
-                <span>KDP - {{idphieunhaphang['biensoxe']}}</span>
+                <span>{{idphieunhaphang['biensoxe']}}</span>
             </ng-container>
             <ng-template #Block>
                 <span>{{idphieunhaphang['nguonxe']['datanm']}}</span>

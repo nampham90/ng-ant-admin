@@ -1,1 +1,235 @@
-<p>sprp00701 works!</p>
+<app-page-header [pageHeaderInfo]="pageHeaderInfo" [extraTpl]="huongdanTpl"></app-page-header>
+<ng-template #huongdanTpl>
+  <button nz-button nzType="primary" [nzSize]="'large'" nzShape="round" (click)="showVideo()">
+      <span nz-icon nzType="star" nzTheme="outline"></span>{{formItemNm[4]}}
+  </button>
+</ng-template>
+<div class="normal-table-wrap">
+    <nz-card nzHoverable [nzBodyStyle]="{ 'padding-bottom': 0 }" class="m-b-10">
+        <form nz-form>
+            <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="">Ngày bắt đầu</nz-form-label>
+                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                            <nz-date-picker
+                                name="ngaybatdau"
+                                [nzDisabledDate]="disabledStartSoplnDate" 
+                                [nzFormat]="dateFormat" 
+                                [(ngModel)]="ngaybatdau" 
+                                [nzPlaceHolder]="dateFormat"
+                                (nzOnOpenChange)="handleStartOpenSoplnChange($event)">
+                            </nz-date-picker>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="">Ngày kết thúc</nz-form-label>
+                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                            <nz-date-picker
+                                name="ngayketthuc"
+                                #endSoplnDate
+                                [nzDisabledDate]="disabledEndSoplnDate" 
+                                [nzFormat]="dateFormat" 
+                                [(ngModel)]="ngayketthuc" 
+                                [nzPlaceHolder]="dateFormat"
+                                (nzOnOpenChange)="handleEndOpenSoplnChange($event)">
+                            </nz-date-picker>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24"  class="text-right p-0 m-b-10">
+                    <button (click)="getDataList()" nz-button [nzType]="'primary'">
+                        <i nz-icon nzType="search"></i>
+                        Tìm kiếm
+                      </button>
+                      <button nz-button class="m-l-15" (click)="resetForm()">
+                        <i nz-icon nzType="close-circle" nzTheme="outline"></i>
+                        Làm mới
+                      </button>
+                </div>
+            </div>
+            <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24" class="inputIcon">
+                    <nz-form-item>
+                        <!-- Tài Chinh -->
+                        <nz-form-label  [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24">Tài chính</nz-form-label>
+                        <nz-form-control  [nzXXl]="10" [nzXl]="10" [nzLg]="10" [nzMd]="10" [nzSm]="20" [nzXs]="24">
+                            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButtonTaixe">
+                                <input name="idtai" type="text" nz-input [(ngModel)]="searchParam.idtai" placeholder="" (blur)="fnFocusOutTaixe()"/>
+                            </nz-input-group>
+                            <ng-template #suffixIconButtonTaixe>
+                                <button nz-button class="bg-icon" (click)="searchTaixeClick()" [nzType]="'primary'"><span nz-icon nzType="search"></span></button>
+                            </ng-template>
+                            <nz-form-label [nzNoColon]="true" nzFor="" class="fix-inputIcon"><span><u>{{tainm}}</u></span></nz-form-label>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24" class="inputIcon">
+                    <nz-form-item>
+                        <!-- Tài phụ -->
+                        <nz-form-label  [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24">Tài phụ</nz-form-label>
+                        <nz-form-control  [nzXXl]="10" [nzXl]="10" [nzLg]="10" [nzMd]="10" [nzSm]="20" [nzXs]="24">
+                            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButtonPhuxe">
+                                <input name="idphu" type="text" nz-input [(ngModel)]="searchParam.idphu" placeholder="" (blur)="fnFocusOutPhuxe()"/>
+                            </nz-input-group>
+                            <ng-template #suffixIconButtonPhuxe>
+                                <button nz-button class="bg-icon" (click)="searchPhuxeClick()" [nzType]="'primary'"><span nz-icon nzType="search"></span></button>
+                            </ng-template>
+                            <nz-form-label [nzNoColon]="true" nzFor="" class="fix-inputIcon"><span><u>{{phunm}}</u></span></nz-form-label>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24" class="inputIcon">
+                    <nz-form-item>
+                        <!-- Biến số xe -->
+                        <nz-form-label  [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24">Biển số xe</nz-form-label>
+                        <nz-form-control  [nzXXl]="10" [nzXl]="10" [nzLg]="10" [nzMd]="10" [nzSm]="20" [nzXs]="24">
+                            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButtonBiensoxe">
+                                <input name="biensoxe" type="text" nz-input [(ngModel)]="searchParam.biensoxe" placeholder="" (blur)="fnFocusOutBiensoxe()"/>
+                            </nz-input-group>
+                            <ng-template #suffixIconButtonBiensoxe>
+                                <button nz-button class="bg-icon" (click)="searchBiensoxeClick()" [nzType]="'primary'"><span nz-icon nzType="search"></span></button>
+                            </ng-template>
+                            <nz-form-label [nzNoColon]="true" nzFor="" class="fix-inputIcon"><span><u>{{biensoxenm}}</u></span></nz-form-label>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </nz-card>
+    <ng-container *ngIf="tableConfig">
+        <app-card-table-wrap [tableTitle]="'Kết quả tìm kiếm'" (reload)="reloadTable()" [btnTpl]="tableBtns" [btnConfirm]="baocao">
+            <app-ant-table
+              (selectedChange)="selectedChecked($event)"
+              [checkedCashArrayFromComment]="checkedCashArray"
+              (changePageSize)="changePageSize($event)"
+              (changePageNum)="getDataList($event)"
+              [tableConfig]="tableConfig"
+              [tableData]="dataList"
+            ></app-ant-table>
+            
+        </app-card-table-wrap>
+        <ng-template #tableBtns>
+            <button  nz-button nzType="primary" class="m-r-8">
+              <i nz-icon nzType="export"></i>
+              Xuất PDF
+            </button>
+            <!-- *appAuth="ActionCode.DataScDelAll" (click)="allDel()" -->
+            <button  nz-button nzType="default">
+              <i nz-icon nzType="export"></i>
+              Xuất CSV
+            </button>
+        </ng-template>
+        <ng-template #baocao>
+            <nz-card nzHoverable [nzBodyStyle]="{ 'padding-bottom': 0 }" class="m-b-10">
+                <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+                    <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                        <nz-form-item>
+                            <nz-form-label  [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24">Tổng doanh thu</nz-form-label>
+                            <nz-form-control  [nzXXl]="10" [nzXl]="10" [nzLg]="10" [nzMd]="10" [nzSm]="20" [nzXs]="24">
+                                <span [ngClass]="['stylekq']">{{tongdoanhthu * 1000 | currency : "VND" }}</span>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                        <nz-form-item>
+                            <nz-form-label  [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24">Tổng chi phí</nz-form-label>
+                            <nz-form-control  [nzXXl]="10" [nzXl]="10" [nzLg]="10" [nzMd]="10" [nzSm]="20" [nzXs]="24">
+                                <span [ngClass]="['stylekq']">{{tongchiphi * 1000 | currency : "VND"}}</span>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                        <nz-form-item>
+                            <nz-form-label  [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24">Tống chi phí dịch vụ</nz-form-label>
+                            <nz-form-control  [nzXXl]="10" [nzXl]="10" [nzLg]="10" [nzMd]="10" [nzSm]="20" [nzXs]="24">
+                                <span [ngClass]="['stylekq']">{{tongchiphidichvu * 1000 | currency : "VND"}}</span>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+                <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+                    <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                        <nz-form-item>
+                            <nz-form-label  [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24">Tổng Lợi nhuận</nz-form-label>
+                            <nz-form-control  [nzXXl]="10" [nzXl]="10" [nzLg]="10" [nzMd]="10" [nzSm]="20" [nzXs]="24">
+                                <span [ngClass]="['stylekq']">{{tongloinhuan * 1000 | currency : "VND"}}</span>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </nz-card>
+        </ng-template>
+    </ng-container>
+</div>
+<ng-template #trangthaiTpl let-trangthai="trangthai">
+    <ng-container *ngIf="trangthai == 0">
+        <nz-alert nzType="info" nzMessage="Khởi tạo"></nz-alert>
+    </ng-container>
+    <ng-container *ngIf="trangthai == 1">
+        <nz-alert nzType="warning" nzMessage="Hoàn thành bốc hàng"></nz-alert>
+    </ng-container>
+    <ng-container *ngIf="trangthai == 2">
+        <nz-alert nzType="warning" nzMessage="Hoàn thành trả hàng"></nz-alert>
+    </ng-container>
+    <ng-container *ngIf="trangthai == 3">
+        <nz-alert nzType="warning" nzMessage="Tính chi phí"></nz-alert>
+    </ng-container>
+    <ng-container *ngIf="trangthai == 4">
+        <nz-alert nzType="warning" nzMessage="Kết thúc chuyến hàng"></nz-alert>
+    </ng-container>
+    <ng-container *ngIf="trangthai == 5">
+        <nz-alert nzType="success" nzMessage="Hoàn thành chuyến hàng"></nz-alert>
+    </ng-container>
+</ng-template>
+<ng-template #Tltentai let-idtai="idtai">
+    <span>{{idtai.name}}</span>
+</ng-template>
+<ng-template #Tltenphu let-idphu="idphu">
+    <span>{{idphu.name}}</span>
+</ng-template>
+<ng-template #Tlbiensoxe let-biensoxe="biensoxe" >
+    <span>{{biensoxe.biensoxe}}</span>
+</ng-template>
+<ng-template #operationTpl let-id="id" let-name="name" let-tongcuoc="tongcuoc" let-tongchiphi="tongchiphi">
+   <span>TC: {{tongcuoc * 1000 | currency : "VND"}} |<a nz-button nzType="link" (click)="showChiphi(id)">CP: {{tongchiphi * 1000 | currency : "VND"}}</a></span>  
+</ng-template>
+<ng-template #tienduatruocTpl let-tienxe="tienxe">
+    <span>{{tienxe*1000 | currency : "VND" : ""}}</span>
+</ng-template>
+<ng-template #soodtTpl let-soodt="soodt" let-biensoxe="biensoxe" let-id="id" let-changduong="changduong" let-idtai="idtai['name']" let-idphu="idphu['name']" let-tienxe="tienxe" let-ngaydi="ngaydi" let-ngayve="ngayve" let-trangthai="trangthai">
+    <div class="copy-container">
+        <a nz-button nzType="link" class="copy-link"> {{soodt}}</a>
+        <button nz-button [cdkCopyToClipboard]="copy(soodt)" nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
+    </div>
+</ng-template>
+
+<!-- sub table -->
+<ng-template #soidTpl let-soID="soID">
+    <div class="copy-container">
+        <span> {{soID}}</span>
+        <button nz-button [cdkCopyToClipboard]="copy(soID)" nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
+    </div>
+</ng-template>
+<ng-template #tenkhachhangTpl let-iduser="iduser">
+    <span>{{iduser['name']}}</span>
+</ng-template>
+<ng-template #noidungdonhangTpl let-noidungdonhang="noidungdonhang">
+    <span>{{noidungdonhang}}</span>
+</ng-template>
+<ng-template #tienthuengoaiTpl let-tiencuoc="tiencuoc" let-cpdvtncd="cpdvtncd">
+    <ng-container *ngIf="cpdvtncd else rongTpl">
+        <a nz-button nzType="link" (click)="showTienthuengoai(cpdvtncd)">{{((cpdvtncd['sotiennhaphang'] == null? 0:cpdvtncd['sotiennhaphang']) + (cpdvtncd['sotientrahang'] == null? 0:cpdvtncd['sotientrahang']) +  (cpdvtncd['sotienxecau'] == null? 0: cpdvtncd['sotienxecau']) + (cpdvtncd['sotienbocxep']==null?0:cpdvtncd['sotienbocxep'])) * 1000 | currency : "VND"}}</a>
+    </ng-container>
+    <ng-template #rongTpl></ng-template>
+</ng-template>
+<ng-template #tiencuocTpl let-tiencuoc="tiencuoc">
+    <span>{{tiencuoc*1000 | currency : "VND" : ''}}</span>
+</ng-template>
+<ng-template #htttTpl let-hinhthucthanhtoan="hinhthucthanhtoan">
+    <span>{{mergeHttt(hinhthucthanhtoan)}}</span>
+</ng-template>

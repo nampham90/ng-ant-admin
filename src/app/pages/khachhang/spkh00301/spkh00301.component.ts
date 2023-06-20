@@ -215,7 +215,7 @@ export class Spkh00301Component extends BaseComponent implements OnInit{
         {
           title: "Số ODC",
           field: 'soodc',
-          width: 180,
+          width: 220,
           tdTemplate: this.linkTpl
         },
         {

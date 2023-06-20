@@ -396,9 +396,6 @@ export class Spch00101Component extends BaseComponent implements OnInit {
 
   edit(id:string) {
     this.dataService.getChuyen(id).subscribe(res => {
-      res.biensoxe = res.biensoxe['_id'];
-      res.idphu = res.idphu['_id'];
-      res.idtai = res.idtai['_id']
       this.modalChuyenService.show({ nzTitle: 'Cập nhật' }, res).subscribe(({ modalValue, status }) => {
         if (status === ModalBtnStatus.Cancel) {
           return;

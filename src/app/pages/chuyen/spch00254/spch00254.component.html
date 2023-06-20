@@ -106,11 +106,11 @@
            <span>{{nguonxe['datacd']}}-{{nguonxe['datanm']}}</span>
       </ng-template>
       <ng-template #donhangTpl let-iddonhang="iddonhang" let-soID="soID">
-           <ng-container *ngIf="iddonhang else soidTpl">
+           <ng-container *ngIf="iddonhang && soID == null else soidTpl">
                 <span>{{iddonhang['thongtindonhang']}}</span>
            </ng-container>
            <ng-template #soidTpl>
-                <span>{{soID}}</span>
+                <span>{{iddonhang['noidungdonhang']}}</span>
            </ng-template>
       </ng-template>
       <ng-template #sotiennoTpl let-sotienno="sotienno">

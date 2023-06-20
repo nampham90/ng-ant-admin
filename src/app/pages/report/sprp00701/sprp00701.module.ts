@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { Sprp00701RoutingModule } from './sprp00701-routing.module';
 import { Sprp00701Component } from './sprp00701.component';
+import { SharedModule } from '@app/shared/shared.module';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 
 @NgModule({
@@ -10,8 +12,9 @@ import { Sprp00701Component } from './sprp00701.component';
     Sprp00701Component
   ],
   imports: [
-    CommonModule,
-    Sprp00701RoutingModule
+    SharedModule,
+    Sprp00701RoutingModule,
+    ClipboardModule
   ]
 })
 export class Sprp00701Module { }
