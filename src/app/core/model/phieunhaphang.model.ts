@@ -11,7 +11,7 @@ export interface Phieunhaphang {
     cpdvtncd?: ChiPhiDVTN;
     ngaynhap?: Date;
     lotrinh?: number;
-    noidungdonhang?: string;
+    tenhang?: string;
     diadiembochang?: string;
     soluong?: number;
     trongluong?: number;

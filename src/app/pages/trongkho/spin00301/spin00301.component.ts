@@ -303,9 +303,9 @@ export class Spin00301Component extends BaseComponent implements OnInit {
           tdTemplate: this.soidTpl
         },
         {
-          title: "Nội dung đơn hàng",
+          title: "Tên hàng",
           width: 150,
-          field: 'noidungdonhang',
+          field: 'tenhang',
         },
         {
           title: 'Tên người gửi',

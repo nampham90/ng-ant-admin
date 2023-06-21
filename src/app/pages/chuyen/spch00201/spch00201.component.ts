@@ -44,7 +44,7 @@ export interface Product {
   soID?: string;
   idkhachhang?: string;
   tenkhachhang?: string;
-  noidungmathang?: string;
+  tenhang?: string;
   tiencuoc?: number;
   cpdvtncd?: ChiPhiDVTN;
   soluong?: number;
@@ -365,7 +365,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         element['iduser']['name'],
         element['diadiembochang'],
         element['diachinguoinhan'],
-        element['noidungdonhang'],
+        element['tenhang'],
         element['soluong'],
         element['donvitinh'],
         this.displayVND(element['tiencuoc'])
@@ -496,7 +496,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         "khoiluong": res.khoiluong,
         "lotrinh": res.lotrinh,
         "ngaynhap": res.ngaynhap,
-        "noidungdonhang": res.noidungdonhang,
+        "tenhang": res.tenhang,
         "diadiembochang": res.diadiembochang,
         "hinhthucthanhtoan": res.hinhthucthanhtoan + "",
         "ghichu": null,
@@ -602,7 +602,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
           itemProduc.soID = item.soID;
           itemProduc.idkhachhang = item.iduser['_id'];
           itemProduc.tenkhachhang = item.iduser['name'];
-          itemProduc.noidungmathang = item['noidungdonhang'];
+          itemProduc.tenhang = item['tenhang'];
           itemProduc.lotrinh = item['lotrinh'];
           itemProduc.diadiembochang = item['diadiembochang'];
           itemProduc.hinhthucthanhtoan = item['hinhthucthanhtoan'];

@@ -77,7 +77,7 @@ export class SubwindowctchuyenngoaiComponent implements OnInit {
   initForm(): void {
     this.addEditForm = this.fb.group({
       stt: [null],
-      thongtindonhang: [null, [Validators.required]],
+      tenhang: [null, [Validators.required]],
       soluong: [null,[Validators.required]],
       trongluong: [null],
       khoiluong: [null],

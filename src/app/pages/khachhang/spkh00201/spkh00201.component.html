@@ -137,12 +137,12 @@
                 <nz-alert nzType="success" nzMessage="Đã thanh toán" nzShowIcon></nz-alert>
             </ng-template>
         </ng-template>
-        <ng-template #noidungdonhangTpl let-idphieunhaphang="idphieunhaphang" let-status01="status01">
+        <ng-template #tenhangTpl let-idphieunhaphang="idphieunhaphang" let-status01="status01">
             <ng-container *ngIf="status01 == '' else Block">
-                <span>{{idphieunhaphang['noidungdonhang']}}</span>
+                <span>{{idphieunhaphang['tenhang']}}</span>
             </ng-container>
             <ng-template #Block>
-                <span>{{idphieunhaphang['thongtindonhang']}}</span>
+                <span>{{idphieunhaphang['tenhang']}}</span>
             </ng-template>
         </ng-template>
         <ng-template #nguonxeTpl let-idphieunhaphang="idphieunhaphang" let-status01="status01">

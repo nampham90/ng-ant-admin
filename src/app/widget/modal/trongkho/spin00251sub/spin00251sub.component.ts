@@ -98,7 +98,7 @@ export class Spin00251subComponent implements OnInit {
   initForm(): void {
     this.addEditForm = this.fb.group({
       stt: [null],
-      noidungdonhang: [null,[Validators.required]],
+      tenhang: [null,[Validators.required]],
       tiencuoc: [0,[Validators.required]],
       diadiembochang:[null,[Validators.required]],
       soluong: [null,[Validators.required]],

@@ -290,9 +290,9 @@ export class Spch00253Component extends BaseComponent implements OnInit {
           tdTemplate: this.nguonxeTpl
         },
         {
-          title: 'Thông tin đơn hàng',
+          title: 'Tên hàng',
           width: 250,
-          field: 'thongtindonhang',
+          field: 'tenhang',
         },
         {
           title: 'Địa điểm bóc hàng',

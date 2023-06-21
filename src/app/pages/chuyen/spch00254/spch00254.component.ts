@@ -286,7 +286,7 @@ export class Spch00254Component extends BaseComponent implements OnInit {
         if(element.soID) {
           let item = [
             element['soID'],
-            element['iddonhang']['noidungdonhang'],
+            element['iddonhang']['tenhang'],
             this.formatDate(element['ngaynhap']),
             element['tentaixe'],
             this.displayVND(element['sotienno'])
@@ -295,7 +295,7 @@ export class Spch00254Component extends BaseComponent implements OnInit {
         } else {
           let item = [
             element['iddonhang']['_id'],
-            element['iddonhang']['thongtindonhang'],
+            element['iddonhang']['tenhang'],
             this.formatDate(element['ngaynhap']),
             element['tentaixe'],
             this.displayVND(element['sotienno'])

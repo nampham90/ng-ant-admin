@@ -102,7 +102,7 @@ export class Sprp00701Component extends BaseComponent implements OnInit {
 
   // sub table
   @ViewChild('tenkhachhangTpl', { static: true }) tenkhachhangTpl!: TemplateRef<NzSafeAny>;
-  @ViewChild('noidungdonhangTpl', { static: true }) noidungdonhangTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('tenhangTpl', { static: true }) tenhangTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('tiencuocTpl', { static: true }) tiencuocTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('htttTpl', { static: true }) htttTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('soidTpl', { static: true }) soidTpl!: TemplateRef<NzSafeAny>;
@@ -404,7 +404,7 @@ export class Sprp00701Component extends BaseComponent implements OnInit {
           title: 'Tên hàng',
           width: 450,
           field: 'noidungmathang',
-          tdTemplate: this.noidungdonhangTpl
+          tdTemplate: this.tenhangTpl
         },
         {
           title: 'Số lượng',

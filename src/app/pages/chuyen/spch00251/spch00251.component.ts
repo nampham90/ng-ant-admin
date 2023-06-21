@@ -97,7 +97,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('tiencuocTpl', { static: true }) tiencuocTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('tiencuocxengoaiTpl', { static: true }) tiencuocxengoaiTpl!: TemplateRef<NzSafeAny>;
-  @ViewChild('thongtindonhangTpl', { static: true }) thongtindonhangTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('tenhangTpl', { static: true }) tenhangTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('diadiembochangTpl', { static: true }) diadiembochangTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('ghichuTpl', { static: true }) ghichuTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('htttkhachhangTpl', { static: true }) htttkhachhangTpl!: TemplateRef<NzSafeAny>;
@@ -458,7 +458,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
            soid : param['soID'],
            idkhachhang :  idUser,
            tiencuoc :  param['tiencuoc'],
-           thongtindonhang : param['noidungdonhang'],
+           tenhang : param['tenhang'],
            soluong :  param['soluong'],
            trongluong :  param['trongluong'],
            khoiluong :  param['khoiluong'],
@@ -568,7 +568,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   mergeUpdateList(ctdetail: any) {
     for(let element of this.listdetail) {
       if(element.stt == ctdetail.stt) {
-        element.thongtindonhang = ctdetail['thongtindonhang'];
+        element.tenhang = ctdetail['tenhang'];
         element.soluong = ctdetail['soluong'];
         element.trongluong = ctdetail['trongluong'];
         element.khoiluong = ctdetail['khoiluong'];
@@ -599,9 +599,9 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         },
         {
           title: 'Tên hàng',
-          field: 'thongtindonhang',
+          field: 'tenhang',
           width: 280,
-          tdTemplate: this.thongtindonhangTpl
+          tdTemplate: this.tenhangTpl
         },
         {
           title: 'Địa điểm bốc hàng',

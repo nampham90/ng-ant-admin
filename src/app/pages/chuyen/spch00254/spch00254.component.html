@@ -107,10 +107,10 @@
       </ng-template>
       <ng-template #donhangTpl let-iddonhang="iddonhang" let-soID="soID">
            <ng-container *ngIf="iddonhang && soID == null else soidTpl">
-                <span>{{iddonhang['thongtindonhang']}}</span>
+                <span>{{iddonhang['tenhang']}}</span>
            </ng-container>
            <ng-template #soidTpl>
-                <span>{{iddonhang['noidungdonhang']}}</span>
+                <span>{{iddonhang['tenhang']}}</span>
            </ng-template>
       </ng-template>
       <ng-template #sotiennoTpl let-sotienno="sotienno">

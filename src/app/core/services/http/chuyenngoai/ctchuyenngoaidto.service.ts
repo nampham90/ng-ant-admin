@@ -7,7 +7,7 @@ export class CtchuyenngoaidtoService {
   initFlg = true;
   id = "";
   idchuyenngoai = {}; // mã chyến hàng
-  thongtindonhang = "";
+  tenhang = "";
   diadiembochang = "";  // 
   tiencuoc = 0;
   tiencuocxengoai = 0;
@@ -29,7 +29,7 @@ export class CtchuyenngoaidtoService {
     this.initFlg = true;
     this.id = "";
     this.idchuyenngoai = {};
-    this.thongtindonhang = "";
+    this.tenhang = "";
     this.diadiembochang = "";
     this.tiencuoc = 0;
     this.tiencuocxengoai = 0;

@@ -36,7 +36,7 @@
     <ListItem *ngFor="let lst of lsthangdi" wrap  [className]="'spe'">
       <div>Người gửi: <span [ngClass]="['hstyle']">{{lst['iduser']['name']}}- ĐT: <a href="tel:{{lst['iduser']['dienthoai']}}"><u>{{lst["iduser"]["dienthoai"]}}</u></a></span> </div>
       <div>
-        Thông tin: <span [ngClass]="['hstyle']">{{lst['noidungdonhang']}}</span>
+        Tên hàng: <span [ngClass]="['hstyle']">{{lst['tenhang']}}</span>
       </div>
       <div>
         Số Lượng: <span [ngClass]="['hstyle']">{{lst['soluong']}}</span>
@@ -86,7 +86,7 @@
     <ListItem *ngFor="let lst of lsthangve" wrap  [className]="'spe'">
       <div>Người gửi: <span [ngClass]="['hstyle']">{{lst['iduser']['name']}}- ĐT: <a href="tel:{{lst['iduser']['dienthoai']}}"><u>{{lst["iduser"]["dienthoai"]}}</u></a></span> </div>
       <div>
-        Thông tin: <span [ngClass]="['hstyle']">{{lst['noidungdonhang']}}</span>
+        Tên hàng: <span [ngClass]="['hstyle']">{{lst['tenhang']}}</span>
       </div>
       <div>
         Số Lượng: <span [ngClass]="['hstyle']">{{lst['soluong']}}</span>

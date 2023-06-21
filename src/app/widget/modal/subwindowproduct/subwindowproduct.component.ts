@@ -62,7 +62,7 @@ export class SubwindowproductComponent implements OnInit {
     this.addEditForm = this.fb.group({
       id : [null],
       iduser: [null, [Validators.required]],
-      noidungdonhang: [null,[Validators.required]],
+      tenhang: [null,[Validators.required]],
       tiencuoc: [0,[Validators.required]],
       soluong: [null,[Validators.required]],
       trongluong: [null],

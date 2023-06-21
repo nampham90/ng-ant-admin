@@ -49,7 +49,7 @@ export class Spin00251Component extends BaseComponent implements OnInit {
 
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('tiencuocTpl', { static: true }) tiencuocTpl!: TemplateRef<NzSafeAny>;
-  @ViewChild('noidungdonhangTpl', { static: true }) noidungdonhangTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('tenhangTpl', { static: true }) tenhangTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('ghichuTpl', { static: true }) ghichuTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('soluongTpl', { static: true }) soluongTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('trongluongTpl', { static: true }) trongluongTpl!: TemplateRef<NzSafeAny>;
@@ -127,7 +127,7 @@ export class Spin00251Component extends BaseComponent implements OnInit {
       item.tiencuoc = element.tiencuoc;
       item.lotrinh = element.lotrinh;
       item.ngaynhap = element.ngaynhap;
-      item.noidungdonhang= element.noidungdonhang;
+      item.tenhang= element.tenhang;
       item.soluong = element.soluong;
       item.trongluong = element.trongluong;
       item.khoiluong = element.khoiluong;
@@ -364,7 +364,7 @@ export class Spin00251Component extends BaseComponent implements OnInit {
   mergeUpdateList(ctdetail: any) {
     for(let element of this.listdetail) {
       if(element.stt == ctdetail.stt) {
-        element.noidungdonhang = ctdetail['noidungdonhang'];
+        element.tenhang = ctdetail['tenhang'];
         element.tiencuoc = ctdetail['tiencuoc'];
         element.soluong = ctdetail['soluong'];
         element.trongluong = ctdetail['trongluong'];
@@ -481,8 +481,8 @@ export class Spin00251Component extends BaseComponent implements OnInit {
         {
           title: 'Tên hàng',
           width: 450,
-          field: 'noidungdonhang',
-          tdTemplate: this.noidungdonhangTpl
+          field: 'tenhang',
+          tdTemplate: this.tenhangTpl
         },
         {
           title: 'Số lượng',

@@ -59,7 +59,7 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
   checkedCashArray: any[] = [];
   ActionCode = ActionCode;
   @ViewChild('operationTpl', { static: true }) operationTpl!: TemplateRef<NzSafeAny>;
-  @ViewChild('noidungdonhangTpl', { static: true }) noidungdonhangTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('tenhangTpl', { static: true }) tenhangTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('sotienTpl', { static: true }) sotienTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('soluongTpl', { static: true }) soluongTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('donvitinhTpl', { static: true }) donvitinhTpl!: TemplateRef<NzSafeAny>;
@@ -351,7 +351,7 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
             "idNhatkykh" : idNhatkykh,
             "idchuyenngoai": idphieunhaphang['idchuyenngoai'], 
             "sdtnguoinhan": idphieunhaphang['sdtnguoinhan'],
-            "thongtindonhang": idphieunhaphang['thongtindonhang'],
+            "tenhang": idphieunhaphang['tenhang'],
             "tiencuoc": idphieunhaphang['tiencuoc'],
             "tiencuocupdate":  param['tiencuoc'],
             "lydo": param['lydo']
@@ -555,7 +555,7 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
           title: 'Nội dung đơn hàng',
           width: 450,
           field: 'idphieunhaphang',
-          tdTemplate: this.noidungdonhangTpl
+          tdTemplate: this.tenhangTpl
         },
         {
           title: 'Số tiền',
@@ -620,10 +620,10 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
       if(element['_checked'] == true) {
         let nddh = "";
         if(element['status01'] == '') {
-           nddh = element['idphieunhaphang']['noidungdonhang']
+           nddh = element['idphieunhaphang']['tenhang']
            
         } else {
-           nddh = element['idphieunhaphang']['thongtindonhang']
+           nddh = element['idphieunhaphang']['tenhang']
         }
         let item = [
           this.formatDate(element['ngay']),

@@ -253,7 +253,7 @@ export class Spch00252Component extends BaseComponent implements OnInit {
     let data : any[] = [];
     for(let element of lstdata) {
       let item = [
-        element['thongtindonhang'],
+        element['tenhang'],
         element['diadiembochang'],
         element['tennguoinhan'],
         element['sdtnguoinhan'],
