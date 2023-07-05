@@ -40,6 +40,7 @@ export class Spkh00101Component extends BaseComponent implements OnInit {
   fnInit() {
     this.cdf.markForCheck();
   }
+
   destroy() {
 
   }
@@ -64,6 +65,13 @@ export class Spkh00101Component extends BaseComponent implements OnInit {
   @ViewChild('linkidTpl', { static: true }) linkidTpl!: TemplateRef<NzSafeAny>;
 
   @ViewChild('sotienno', { static: true }) sotienno!: TemplateRef<NzSafeAny>;
+  @ViewChild('tenhangTpl', { static: true }) tenhangTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('soluongTpl', { static: true }) soluongTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('khoiluongTpl', { static: true }) khoiluongTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('trongluongTpl', { static: true }) trongluongTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('tiencuocTpl', { static: true }) tiencuocTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('ghichuTpl', { static: true }) ghichuTpl!: TemplateRef<NzSafeAny>;
+
 
   constructor(
     protected override webService: WebserviceService,
@@ -121,7 +129,6 @@ export class Spkh00101Component extends BaseComponent implements OnInit {
       })
     )
     .subscribe(data => {
-      console.log(data);
       const { list, total, pageNum } = data;
       this.dataList = [...list];
       this.tableConfig.total = total!;
@@ -276,26 +283,36 @@ export class Spkh00101Component extends BaseComponent implements OnInit {
           title: 'Tên hàng',
           field: 'tenhang',
           width: 220,
+          tdTemplate: this.tenhangTpl
         },
         {
           title: 'Số lượng',
-          width: 100,
+          width: 80,
           field: 'soluong',
+          tdTemplate: this.soluongTpl
         },
         {
           title: 'Khối lượng',
-          width: 120,
+          width: 80,
           field: 'khoiluong',
+          tdTemplate: this.khoiluongTpl
         },
         {
           title: 'Trọng lượng',
           field: 'trongluong',
-          width: 120,
+          width: 80,
+          tdTemplate: this.trongluongTpl
         },
         {
           title: 'Tiền cước',
-          width: 150,
+          width: 120,
           field: 'tiencuoc',
+          tdTemplate: this.tiencuocTpl
+        },
+        {
+          title: 'Ghi chú',
+          width: 150,
+          field: 'ghichu',
         }
       ],
       total: 0,

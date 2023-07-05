@@ -51,4 +51,19 @@
     </app-card-table-wrap>
 
 </div>
+<ng-template #tenhangTpl let-idphieunhaphang="idphieunhaphang">
+    <span>{{idphieunhaphang['tenhang']}}</span>
+</ng-template>
+<ng-template #soluongTpl let-idphieunhaphang="idphieunhaphang">
+    <span>{{idphieunhaphang['soluong']}}</span>
+</ng-template>
+<ng-template #khoiluongTpl let-idphieunhaphang="idphieunhaphang">
+    <span>{{idphieunhaphang['khoiluong']}}</span>
+</ng-template>
+<ng-template #trongluongTpl let-idphieunhaphang="idphieunhaphang">
+    <span>{{idphieunhaphang['trongluong']}}</span>
+</ng-template>
+<ng-template #tiencuocTpl let-idphieunhaphang="idphieunhaphang">
+    <span>{{idphieunhaphang['tiencuoc'] * 1000 | currency : "VND"}}</span>
+</ng-template>
 
