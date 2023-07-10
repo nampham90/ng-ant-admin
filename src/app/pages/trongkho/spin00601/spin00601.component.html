@@ -98,7 +98,7 @@
         </form>
     </nz-card>
     <ng-container *ngIf="tableConfig">
-        <app-card-table-wrap [tableTitle]="formItemNm[8]" (reload)="reloadTable()" [btnTpl]="tableBtns">
+        <app-card-table-wrap [tableTitle]="formItemNm[8]" (reload)="reloadTable()" [btnTpl]="tableBtns" [btnConfirm]="xuatCSV">
             <app-ant-table 
             (selectedChange)="selectedChecked($event)"
             [checkedCashArrayFromComment]="checkedCashArray"
@@ -113,6 +113,14 @@
                 <i nz-icon nzType="plus-circle"></i>Xuất nhiều đơn
             </button>
         </ng-template>
+        <ng-template #xuatCSV>
+            <ng-container *ngIf="!showCSV">
+                <!-- Spin00601XuatCSV -->
+                    <button *appAuth="ActionCode.Spin00601XuatCSV" (click)="fnxuatCSV()" nz-button nzType="primary">
+                        <i nz-icon nzType="export"></i>Xuất CSV
+                    </button>
+            </ng-container>
+       </ng-template>
     </ng-container>
     <ng-template #soidTpl let-soID="soID">
         <span><a nz-button (click)="getItem(soID)" nzType="link">{{soID}}</a></span>

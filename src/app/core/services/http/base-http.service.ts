@@ -2,7 +2,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
 import { localUrl } from '@env/environment.prod';
@@ -10,6 +10,7 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import * as qs from 'qs';
 import { IpService } from '../interceptors/ip-service.service';
+import { saveAs } from 'file-saver';
 
 export interface MyHttpConfig {
   needIntercept?: boolean; // 是否需要被拦截
@@ -157,6 +158,24 @@ export class BaseHttpService {
       responseType: 'blob',
       headers: new HttpHeaders().append('Content-Type', 'application/json')
     });
+  }
+
+  downCSV(path: string, param?: NzSafeAny, config?: MyHttpConfig): Observable<NzSafeAny> {
+    if(this.ipService.ip != "") {
+      this.uri = `http://${this.ipService.ip}:3000/api/`;
+    }
+    let reqPath = this.uri + path;
+    
+    return this.http.post(reqPath, param, {
+      responseType: 'text',
+      headers: new HttpHeaders().append('Content-Type', 'text/csv')
+    }).pipe(
+      tap((response: any) => {
+        // Lưu file CSV
+        const blob = new Blob([response], { type: 'text/csv' });
+        saveAs(blob, 'filename.csv');
+      })
+    );
   }
 
   handleFilter(item: ActionResult<NzSafeAny>, needSuccessInfo: boolean): boolean {
