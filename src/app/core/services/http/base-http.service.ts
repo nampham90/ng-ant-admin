@@ -38,7 +38,7 @@ export class BaseHttpService {
     })
   };
 
-  uri = "http://117.2.201.43:3000/";
+  uri = "http://116.103.64.154:3000/";
   //uri = "http://localhost:3000/";
 
   protected constructor(public http: HttpClient, public message: NzMessageService, private ipService: IpService) {
