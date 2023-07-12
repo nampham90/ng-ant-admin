@@ -158,5 +158,6 @@ export const ActionCode = {
   Spin00601Xuathang: 'default:trongkho:spin00601:xuathang',
   Spin00601Xuatnhieudon: 'default:trongkho:spin00601:xuatnhieudon',
   Spin00601Xuatxengoai: 'default:trongkho:spin00601:xuatxengoai',
+  Spin00601XuatCSV: 'default:trongkho:spin00601:xuatcsv',
 
 };

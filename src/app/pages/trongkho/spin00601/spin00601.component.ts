@@ -28,7 +28,7 @@ import { ChuyenService } from '@app/core/services/http/chuyen/chuyen.service';
 import { Spin00601subxuathangService } from '@app/widget/modal/trongkho/spin00601subxuathang/spin00601subxuathang.service';
 import { Spin00601Service } from '@app/core/services/http/trongkho/spin00601.service';
 
-interface SearchParam {
+export interface SearchParam {
   ngaybatdau: string | null;
   ngayketthuc: string | null;
   soID: string;
@@ -88,6 +88,8 @@ export class Spin00601Component extends BaseComponent implements OnInit {
 
   usernm = "";
   stockuser = "";
+
+  showCSV = false;
   
   override fnInit() {
     this.pageHeaderInfo = {
@@ -196,6 +198,18 @@ export class Spin00601Component extends BaseComponent implements OnInit {
       this.modalSrv.info({nzTitle: "Vui lòng chọn ít nhất một đơn hàng !"})
     }
 
+  }
+
+  fnxuatCSV() {
+    this.tableLoading(true);
+    this.searchParam.ngaybatdau = this.formatDate(this.ngaybatdau);
+    this.searchParam.ngayketthuc = this.formatDate(this.ngayketthuc);
+    const params: SearchCommonVO<any> = {
+      pageSize: 0,
+      pageNum: 0,
+      filters: this.searchParam
+    };
+    this.spin00601Service.xuatCSV(params).subscribe((res) => {this.tableLoading(false);});
   }
 
   xuatxengoai(soID: any) {

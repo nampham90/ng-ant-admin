@@ -303,6 +303,7 @@ export const Spin00301Ant100Search = "spin00301/spin00301Ant100Search";
 // spin00601 xuat hang
 export const Spin00601Ant100XuatHang = "spin00601/spin00601Ant100XuatHang";
 export const Spin00601Ant100Xuatnhieudon = "spin00601/spin00601Ant100Xuatnhieudon";
+export const Spin00601Ant100Xuatcsv = "spin00601/spin00601Ant100Xuatcsv";
 
 // spch00201 cập nhât tiền cươc
 //spch00201Ant100UpdateTiencuocxenha
