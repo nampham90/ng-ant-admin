@@ -29,9 +29,9 @@ export class CardTableWrapComponent implements OnInit, AfterContentInit {
   @ContentChild(AntTreeTableComponentToken) antTreeTableComponent!: AntTreeTableComponentToken;
   tableConfigVisible = false;
   tableSizeOptions: TableSizeItem[] = [
-    { sizeName: 'Mặc định', selected: true, value: 'default' },
+    { sizeName: 'Mặc định', selected: false, value: 'default' },
     { sizeName: 'Vừa phải', selected: false, value: 'middle' },
-    { sizeName: 'Nhỏ', selected: false, value: 'small' }
+    { sizeName: 'Nhỏ', selected: true, value: 'small' }
   ];
   tableHeaders: TableHeader[] = [];
   currentTableComponent!: AntTableComponentToken | AntTreeTableComponentToken;

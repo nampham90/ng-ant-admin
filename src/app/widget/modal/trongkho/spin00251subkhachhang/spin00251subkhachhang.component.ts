@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@a
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { BaseComponent } from '@app/pages/system/base/base.component';
 import { MyTableConfig } from '@app/shared/components/ant-table/ant-table.component';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ValidationFormService } from '@app/core/services/common/message-errors.service';
 import { WebserviceService } from '@app/core/services/common/webservice.service';
 import { ValidatorsService } from '@app/core/services/validators/validators.service';
@@ -24,7 +24,7 @@ interface SearchParam {
   styleUrls: ['./spin00251subkhachhang.component.less']
 })
 export class Spin00251subkhachhangComponent implements OnInit {
-
+  headerForm!: FormGroup;
   tableConfig!: MyTableConfig;
   dataList: User[] = [];
   params!: Object;
@@ -44,6 +44,18 @@ export class Spin00251subkhachhangComponent implements OnInit {
     private modalRef: NzModalRef,
     private dataService: AccountService
   ) { }
+
+  submitForm() {
+
+  }
+
+  reset() {
+
+  }
+
+  addNew() {
+    
+  }
 
   ngOnInit(): void {
     this.searchParam.phongban_id = Const.idKhachhang;
