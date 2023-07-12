@@ -167,13 +167,19 @@ export class BaseHttpService {
     let reqPath = this.uri + path;
     
     return this.http.post(reqPath, param, {
-      responseType: 'text',
-      headers: new HttpHeaders().append('Content-Type', 'text/csv')
+      responseType: 'json',
+      headers: new HttpHeaders().append('Content-Type', 'application/json')
     }).pipe(
       tap((response: any) => {
         // Lưu file CSV
-        const blob = new Blob([response], { type: 'text/csv' });
-        saveAs(blob, 'filename.csv');
+        console.log(response);
+        let dataRes = response['data'];
+        if(dataRes != null) {
+          const blob = new Blob([dataRes['csv_data']], { type: 'text/csv' });
+          saveAs(blob, dataRes['fileName']);
+        } else {
+          this.message.info("Không có dử liệu !")
+        }
       })
     );
   }

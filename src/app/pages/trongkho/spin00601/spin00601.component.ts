@@ -204,12 +204,10 @@ export class Spin00601Component extends BaseComponent implements OnInit {
     this.tableLoading(true);
     this.searchParam.ngaybatdau = this.formatDate(this.ngaybatdau);
     this.searchParam.ngayketthuc = this.formatDate(this.ngayketthuc);
-    const params: SearchParam = {
-      ngaybatdau : this.searchParam.ngaybatdau,
-      ngayketthuc: this.searchParam.ngayketthuc,
-      iduser: this.searchParam.iduser!,
-      makho: this.searchParam.makho!,
-      soID: this.searchParam.soID!,
+    const params: SearchCommonVO<any> = {
+      pageSize: 0,
+      pageNum: 0,
+      filters: this.searchParam
     };
     this.spin00601Service.xuatCSV(params).subscribe((res) => {this.tableLoading(false);});
   }
