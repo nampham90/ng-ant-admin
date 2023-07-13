@@ -107,6 +107,14 @@
           </button>
         </ng-container>
       </span>
+      <span *appAuth="ActionCode.Spin00251NewOrder" class="operate-text">
+        <ng-container *ngIf="btnnewOrder">
+          <button  (click)="fnNewOrder()" nz-button nzType="primary" class="m-r-8">
+            <i nz-icon nzType="copy"></i>
+            Đớn mới
+          </button>
+        </ng-container>
+      </span>
     </ng-container>
   </ng-template>
 </div>

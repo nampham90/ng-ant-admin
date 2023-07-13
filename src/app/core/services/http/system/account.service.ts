@@ -26,6 +26,15 @@ export interface User {
   departmentName?: string;
 }
 
+export interface SmartUser {
+  phongban_id: string;
+  makhachhang: string;
+  name: string;
+  dienthoai: string;
+  email: String;
+  password: String;
+}
+
 /*
  * 用户修改密码
  * */
@@ -51,6 +60,10 @@ export class AccountService {
 
   public addAccount(param: User): Observable<void> {
     return this.http.post(Const.Ant100AddDetailUser, param);
+  }
+
+  public addSmartAccount(param: SmartUser): Observable<void> {
+    return this.http.post(Const.Ant100AddSmartDetailUser, param);
   }
 
   public delAccount(ids: number[]): Observable<void> {

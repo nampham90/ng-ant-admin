@@ -22,6 +22,7 @@ import { Spin00251subkhachhangService } from '@app/widget/modal/trongkho/spin002
 import { Spin00251Service } from '@app/core/services/http/trongkho/spin00251.service';
 import { Spin00251dtoService } from '@app/core/services/http/trongkho/spin00251dto/spin00251dto.service';
 import _ from "lodash"
+import { SubcommonsoidService } from '@app/widget/modal/common/subcommonsoid/subcommonsoid.service';
 
 @Component({
   selector: 'app-spin00251',
@@ -69,6 +70,8 @@ export class Spin00251Component extends BaseComponent implements OnInit {
   showbtnCopy = false;
 
   btnNew = false;
+
+  btnnewOrder = false;
   
   backMH = "";
   backurl = "";
@@ -169,13 +172,25 @@ export class Spin00251Component extends BaseComponent implements OnInit {
     private spin00251subService: Spin00251subService,
     private spin00251subkhachhangService: Spin00251subkhachhangService,
     private dataService: Spin00251Service,
-    private spin00251dtoService: Spin00251dtoService
+    private spin00251dtoService: Spin00251dtoService,
+    private modalListSoIDService: SubcommonsoidService,
   ) { 
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
   }
 
   submitForm() {
 
+  }
+
+  fnNewOrder() {
+    this.spin00251dtoService.clear();
+    this.headerForm = this.createForm();
+    this.dataList = [];
+    this.listdetail = [];
+    this.usernm = "";
+    this.btnnewOrder = false;
+    this.showbtnCopy = false;
+    this.showBtnConfirm()
   }
 
   createForm() {
@@ -227,6 +242,9 @@ export class Spin00251Component extends BaseComponent implements OnInit {
         .subscribe(res => {
           if(res==0) {
             this.modalSrv.success({nzTitle: "Thực hiện thành công !"});
+            this.btnnewOrder = true;
+            this.btnConfirm = false;
+            this.showbtnCopy = true;
           } else {
             this.modalSrv.success({nzTitle: "Đơn hàng này không tồn tại !"});
           }
@@ -266,6 +284,9 @@ export class Spin00251Component extends BaseComponent implements OnInit {
           this.getDataList();
           this.fnSendService();
           this.showbtnCopy = true;
+          this.btnConfirm = false;
+          this.showBtnConfirm();
+          this.btnnewOrder = true;
           this.message.success("Đăng ký thành công");
         } else {
           this.message.success("Đăng ký thất bại");
@@ -309,6 +330,10 @@ export class Spin00251Component extends BaseComponent implements OnInit {
     this.headerForm.patchValue({
       soID : "",
     });
+    this.showbtnCopy = false;
+    this.btnnewOrder = false;
+    this.btnConfirm = true;
+
     this.message.info("Sao chép thành công !");
   }
 

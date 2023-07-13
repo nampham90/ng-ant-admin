@@ -1,0 +1,24 @@
+<form nz-form [formGroup]="addForm">
+    <nz-form-item>
+        <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="makhachhang">Mã khách hàng</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" [nzErrorTip]="combineTpl">
+          <input nz-input formControlName="makhachhang" id="makhachhang" placeholder="Mã khách hàng" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="name">Tên khách hàng</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" [nzErrorTip]="combineTpl">
+          <input nz-input formControlName="name" id="name" placeholder="Tên khách hàng" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="dienthoai">Số điện thoại</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" [nzErrorTip]="combineTpl">
+          <input nz-input formControlName="dienthoai" id="dienthoai" placeholder="Số điện thoại" />
+        </nz-form-control>
+    </nz-form-item>
+</form>
+<ng-template #combineTpl let-control>
+    <ng-container *ngIf="control.hasError('message')">{{ control.errors.message }}</ng-container>
+    <ng-container *ngIf="control.hasError('required')">Phần bắt buộc</ng-container>
+</ng-template>

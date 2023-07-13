@@ -149,6 +149,7 @@ export const ActionCode = {
   Spin00251Update: 'default:trongkho:spin00251:update',
   Spin00251Del: 'default:trongkho:spin00251:del',
   Spin00251Copy: 'default:trongkho:spin00251:copy',
+  Spin00251NewOrder: 'default:trongkho:spin00251:neworder',
 
   // huy nhap hang spin00801
   Spin00801DeleteMany: 'default:trongkho:spin00801:deletemany',
