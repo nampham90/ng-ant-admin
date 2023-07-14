@@ -109,6 +109,7 @@ export class Spin00251Component extends BaseComponent implements OnInit {
       this.getDataList();
       this.showBtnConfirm();
       this.showbtnCopy = true;
+      this.btnnewOrder = true;
       this.showreturnBack = true;
       this.backMH = this.spin00251dtoService.mode;
       this.backurl = this.spin00251dtoService.backurl;
@@ -119,27 +120,29 @@ export class Spin00251Component extends BaseComponent implements OnInit {
   }
 
   fnBackuplist(list:Phieunhaphang[]) {
+    console.log(list);
     this.backupdatalst = [];
     //this.backupdatalst = list.slice();
     for(let element of list) {
       let item: Phieunhaphang = {};
+      item.id = element.id;
       item.soID = element.soID;
       item.idchuyen = element.idchuyen;
       item.biensoxe = element.biensoxe;
+      item.tenhang= element.tenhang;
       item.iduser = element.iduser;
       item.tiencuoc = element.tiencuoc;
       item.lotrinh = element.lotrinh;
+      item.diadiembochang = element.diadiembochang;
       item.ngaynhap = element.ngaynhap;
-      item.tenhang= element.tenhang;
       item.soluong = element.soluong;
       item.trongluong = element.trongluong;
       item.khoiluong = element.khoiluong;
       item.donvitinh = element.donvitinh;
-      item.diadiembochang = element.diadiembochang;
+      item.makho = element.makho;
       item.tennguoinhan = element.tennguoinhan;
       item.sdtnguoinhan = element.sdtnguoinhan;
       item.diachinguoinhan = element.diachinguoinhan;
-      item.makho = element.makho;
       item.hinhthucthanhtoan = element.hinhthucthanhtoan;
       item.ghichu = element.ghichu;
       item.trangthai = element.trangthai
@@ -148,7 +151,22 @@ export class Spin00251Component extends BaseComponent implements OnInit {
       item.status03 = element.status03;
       item.status04 = element.status04;
       item.status05 = element.status05;
-      item.id = element.id;
+      item.nguonxenhaphang = element.nguonxenhaphang;
+      item.sotiennhaphang = element.sotiennhaphang;
+      item.htttnhaphang = element.htttnhaphang;
+      item.tentaixenhaphang = element.tentaixenhaphang;
+      item.biensoxenhaphang = element.biensoxenhaphang;
+      item.nguonxetrahang = element.nguonxetrahang;
+      item.sotientrahang = element.sotientrahang;
+      item.httttrahang = element.httttrahang;
+      item.tentaixetrahang = element.tentaixetrahang;
+      item.biensoxetrahang = element.biensoxetrahang;
+      item.xecau = element.xecau;
+      item.sotienxecau = element.sotienxecau;
+      item.htttxecau = element.htttxecau;
+      item.bocxep = element.bocxep;
+      item.sotienbocxep = element.sotienbocxep;
+      item.htttbocxep = element.htttbocxep;
       item.stt = element.stt
       this.backupdatalst.push(item);
     }
@@ -284,7 +302,7 @@ export class Spin00251Component extends BaseComponent implements OnInit {
           this.getDataList();
           this.fnSendService();
           this.showbtnCopy = true;
-          this.btnConfirm = false;
+          //this.btnConfirm = false;
           this.showBtnConfirm();
           this.btnnewOrder = true;
           this.message.success("Đăng ký thành công");
@@ -315,11 +333,12 @@ export class Spin00251Component extends BaseComponent implements OnInit {
     }
 
     if(_.isEqual(headerForm,headerService)){
-        if(_.isEqual(this.dataList,this.backupdatalst)){
-           return true;
-        } else {
-          return false;
-        }
+      const isEqualArrays = JSON.stringify(this.dataList) === JSON.stringify(this.backupdatalst)
+      if(isEqualArrays){
+          return true;
+      } else {
+        return false;
+      }
     } else {
         return false;
     }
