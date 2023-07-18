@@ -4,6 +4,7 @@ import * as Const from '@app/common/const';
 import { ValidationFormService } from '@app/core/services/common/message-errors.service';
 import { WebserviceService } from '@app/core/services/common/webservice.service';
 import { CommonService } from '@app/core/services/http/common/common.service';
+import { Spin00901Service } from '@app/core/services/http/trongkho/spin00901.service';
 import { SearchCommonVO } from '@app/core/services/types';
 import { ValidatorsService } from '@app/core/services/validators/validators.service';
 import { MyTableConfig } from '@app/shared/components/ant-table/ant-table.component';
@@ -16,6 +17,8 @@ import { finalize } from 'rxjs';
 interface SearchParam {
   idchuyen: any;
   status02: number;
+  makho: string;
+  makhachhang: string;
 }
 @Component({
   selector: 'app-subcommonsoid',
@@ -26,7 +29,8 @@ export class SubcommonsoidComponent implements OnInit {
   tableConfig!: MyTableConfig;
   dataList: any[] = [];
   params!: Object;
-  dataResponse: NzSafeAny = {}
+  dataResponse: string[] = []
+  checkedCashArray: any[] = [];
   messageErrors: any = [];
   searchParam: Partial<SearchParam> = {};
 
@@ -39,6 +43,8 @@ export class SubcommonsoidComponent implements OnInit {
   constHttt = Const.Hinhthucthanhtoan;
 
   lstsoID: any;
+
+  listKho = [];
   
   constructor(
     private fb: FormBuilder,
@@ -49,7 +55,7 @@ export class SubcommonsoidComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private modalRef: NzModalRef,
     private commonService: CommonService,
-    
+    private spin00901Service: Spin00901Service,
 
   ) { }
 
@@ -62,13 +68,26 @@ export class SubcommonsoidComponent implements OnInit {
        this.searchParam.status02 = 0;
     }
     this.initTable();
+    this.getListKho();
 
     if(obj['listsoId'] && obj['listsoId'].length > 0) {
         // ẩn mây những dòng sodi đã gửi lên
         this.lstsoID = obj['listsoId'];
     }
+  }
 
-
+  // xuât nhiều don hàng
+  xuatnhieudon() {
+    console.log(this.checkedCashArray);
+    if(this.checkedCashArray.length == 0) {
+      this.message.info("Vùi lòng chọn ít nhất một đơn hàng");
+    } else {
+      this.dataResponse = [];
+      for(let element of this.checkedCashArray) {
+        this.dataResponse.push(element['soID']);
+      }
+      this.modalRef.destroy({ status: ModalBtnStatus.Ok, modalValue:this.dataResponse });
+    }
   }
 
   mergeHttt(httt: any) {
@@ -88,24 +107,30 @@ export class SubcommonsoidComponent implements OnInit {
     return obj;
   }
 
-  getItem(soID:string,iduser:any,tiencuoc:any,tenhang:any,soluong:any,trongluong:any,khoiluong:any,donvitinh:any,diadiembochang:any,hinhthucthanhtoan:any,tennguoinhan:any,sdtnguoinhan:any,diachinguoinhan:any,ghichu:any) {
-    this.dataResponse = {
-      soID: soID,
-      iduser: iduser,
-      tiencuoc: tiencuoc,
-      tenhang:tenhang,
-      soluong: soluong,
-      trongluong: trongluong,
-      khoiluong: khoiluong,
-      donvitinh:donvitinh,
-      diadiembochang:diadiembochang,
-      hinhthucthanhtoan:hinhthucthanhtoan,
-      tennguoinhan:tennguoinhan,
-      sdtnguoinhan:sdtnguoinhan,
-      diachinguoinhan:diachinguoinhan,
-      ghichu:ghichu
-    }
+  // xuat 1 đơn hàng
+  getItem(soID:string) {
+    this.dataResponse.push(soID);
     this.modalRef.destroy({ status: ModalBtnStatus.Ok, modalValue:this.dataResponse });
+  }
+
+  getListKho() {
+    const params: SearchCommonVO<any> = {
+      pageSize: 0,
+      pageNum: 0,
+      filters: {
+        "rcdkbn": "0001"
+      }
+    };
+    this.spin00901Service
+      .searchParams(params)
+      .pipe(
+        finalize(() => {
+        })
+      )
+      .subscribe(res => {
+        this.listKho = res;
+        this.cdr.markForCheck();
+      });
   }
 
   getDataList(e?: NzTableQueryParams): void {
@@ -123,20 +148,20 @@ export class SubcommonsoidComponent implements OnInit {
     )
     .subscribe(data => {
       const { list, total, pageNum } = data;
-        this.dataList = [...list];
-        if(this.lstsoID.length > 0) {
-          for (let i = 0; i < this.dataList.length; i++) {
-            if (this.lstsoID.includes(this.dataList[i].soID)) {
-              this.dataList[i].disable = true;
-            } else {
-              this.dataList[i].disable = false;
-            }
+      this.dataList = [...list];
+      this.tableConfig.total = total!;
+      this.tableConfig.pageIndex = pageNum!;
+      this.checkedCashArray = [...this.checkedCashArray];
+      if(this.lstsoID.length > 0) {
+        for (let i = 0; i < this.dataList.length; i++) {
+          if (this.lstsoID.includes(this.dataList[i].soID)) {
+            this.dataList[i].disable = true;
+          } else {
+            this.dataList[i].disable = false;
           }
         }
-        console.log(this.dataList);
-        this.tableConfig.total = total!;
-        this.tableConfig.pageIndex = pageNum!;
-        this.tableLoading(false);
+      }
+      this.tableLoading(false);
     })
   }
 
@@ -154,6 +179,10 @@ export class SubcommonsoidComponent implements OnInit {
     this.tableConfig.pageSize = e;
   }
 
+  selectedChecked(e: any[]): void {
+    this.checkedCashArray = [...e];
+  }
+
   resetForm(): void {
     this.searchParam = {};
     this.getDataList();
@@ -166,7 +195,7 @@ export class SubcommonsoidComponent implements OnInit {
 
   private initTable(): void {
     this.tableConfig = {
-      showCheckbox: false,
+      showCheckbox: true,
       headers: [
         {
           title: 'Số ID',

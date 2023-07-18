@@ -32,7 +32,7 @@ interface SearchParam {
   nguonxe : string;
   biensoxe: string;
   _id: string;
-  soods: string;
+  soodn: string;
 }
 
 @Component({
@@ -205,8 +205,8 @@ export class Spch00252Component extends BaseComponent implements OnInit {
     })
   }
 
-  copy(soods: any) {
-    return `${soods}`;
+  copy(soodn: any) {
+    return `${soodn}`;
   }
 
   exportPDF(id: string) {
@@ -238,7 +238,7 @@ export class Spch00252Component extends BaseComponent implements OnInit {
     const timezone = 'UTC+7';
     const formattedDate = formatDate(ngayvanchuyen, format, locale, timezone);
     let layoutHeader = Const.headerLayout;
-    layoutHeader[0]['field'] = 'số ODS:';
+    layoutHeader[0]['field'] = 'số ODN:';
     layoutHeader[0]['value'] = ods;
     layoutHeader[1]['field'] = 'Tài xế:';
     layoutHeader[1]['value'] = dataheader['tentaixe'];
@@ -280,7 +280,7 @@ export class Spch00252Component extends BaseComponent implements OnInit {
       headers: [
         {
           title: 'Mã chuyến ngoài',
-          field: 'soods',
+          field: 'soodn',
           width: 250,
           tdTemplate: this.machuyenngoaiTpl
         },

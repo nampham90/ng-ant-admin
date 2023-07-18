@@ -59,9 +59,9 @@ export class CommonService {
   Tinhtongnoxengoai() : Observable<any> {
     return this.http.post(Const.CommonAnt100Tongnoxengoai, { needSuccessInfo: false});
   }
-  // get ODS
-  getODS(): Observable<any> {
-    return this.http.post(Const.CommonAnt100GetODS, { needSuccessInfo: false});
+  // get ODN
+  getODN(): Observable<any> {
+    return this.http.post(Const.CommonAnt100GetODN, { needSuccessInfo: false});
   }
   /// get ODT
   getODT(): Observable<any> {

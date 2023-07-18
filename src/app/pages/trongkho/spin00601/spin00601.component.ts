@@ -249,7 +249,7 @@ export class Spin00601Component extends BaseComponent implements OnInit {
       }
       this.getDataList();
     })
- }
+  }
 
 
   getListKho() {
