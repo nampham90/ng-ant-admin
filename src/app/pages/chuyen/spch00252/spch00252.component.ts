@@ -216,7 +216,7 @@ export class Spch00252Component extends BaseComponent implements OnInit {
       nzOnOk: ()=> {
         this.dataService.postExportDetail({id:id}).pipe()
         .subscribe(async data => {
-          let ods = data['ods'];
+          let ods = data['odn'];
           let title = "Hóa Đơn Vận Chuyển - " + Const.doanhnghiep;
           let header = [['Thông tin đơn hàng','Địa điểm bóc hàng','Tên người nhận','SDT người nhận','Địa chỉ người nhận','Ghi chú']];
           let dataHeader = this.fnreturnHeaderPDF(data['resHeader'],ods);

@@ -20,6 +20,10 @@ export class PhieunhaphangService {
     return this.http.get(`${Const.PhieunhaphangAnt100Get}/${id}/`);
   }
 
+  getDetailsoID(soID: string): Observable<any>{
+    return this.http.post(Const.PhieunhaphangAnt100GetsoID, {soID:soID},{ needSuccessInfo: false});
+  }
+
   create(params: Phieunhaphang): Observable<any>{
     return this.http.post(Const.PhieunhaphangAnt100Create, params,{ needSuccessInfo: false});
   }

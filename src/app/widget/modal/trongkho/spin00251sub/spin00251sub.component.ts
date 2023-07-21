@@ -102,6 +102,7 @@ export class Spin00251subComponent implements OnInit {
       tiencuoc: [0,[Validators.required]],
       diadiembochang:[null,[Validators.required]],
       soluong: [null,[Validators.required]],
+      soluongthucte: [null,[Validators.required]],
       trongluong: [null],
       khoiluong: [null],
       donvitinh: [null,[Validators.required]],

@@ -78,7 +78,6 @@ export class SubcommonsoidComponent implements OnInit {
 
   // xuât nhiều don hàng
   xuatnhieudon() {
-    console.log(this.checkedCashArray);
     if(this.checkedCashArray.length == 0) {
       this.message.info("Vùi lòng chọn ít nhất một đơn hàng");
     } else {

@@ -280,6 +280,11 @@ export class Spkh00101Component extends BaseComponent implements OnInit {
       ],
       headersChild: [
         {
+          title: "Số ID",
+          field: 'soID',
+          width: 200,
+        },
+        {
           title: 'Tên hàng',
           field: 'tenhang',
           width: 220,

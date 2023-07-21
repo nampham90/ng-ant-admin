@@ -145,21 +145,25 @@
     <ng-template #nguoiguiTpl let-iduser="iduser" >
         <nz-alert nzType="success" nzMessage="{{iduser['name']}}"></nz-alert>
     </ng-template>
-    <ng-template #trangthaiTpl let-status01="status01" let-status02="status02">
-        <ng-container *ngIf="status02 == 0 else statusTpl">
-            <nz-alert nzType="info" nzMessage="Trong kho"></nz-alert>
+    <ng-template #trangthaiTpl let-trangthai="trangthai" >
+        <ng-container *ngIf="trangthai == 0">
+            <nz-alert nzType="info" nzMessage="Dự định"></nz-alert>
         </ng-container>
-        <ng-template #statusTpl>
-            <ng-container *ngIf="status01 == 0 && sysflg1 == 1 else vtTpl">
-                <nz-alert nzType="warning" nzMessage="Chờ bốc hàng"></nz-alert>
-            </ng-container>
-            <ng-template #vtTpl>
-                <nz-alert nzType="success" nzMessage="Vận chuyển"></nz-alert>
-            </ng-template>
-        </ng-template>
+        <ng-container *ngIf="trangthai == 1">
+            <nz-alert nzType="info" nzMessage="Thực tế"></nz-alert>
+        </ng-container>
+        <ng-container *ngIf="trangthai == 2">
+            <nz-alert nzType="info" nzMessage="Đang vận chuyển"></nz-alert>
+        </ng-container>
+        <ng-container *ngIf="trangthai == 3">
+            <nz-alert nzType="info" nzMessage="Đã giao hàng"></nz-alert>
+        </ng-container>
     </ng-template>
     <ng-template #tiencuocTpl let-tiencuoc="tiencuoc">
         <span>{{tiencuoc*1000 | currency : "VND"}}</span>
+    </ng-template>
+    <ng-template #nguoiphathanhTpl let-nguoiphathanh="nguoiphathanh">
+        <span>{{nguoiphathanh['name']}}</span>
     </ng-template>
     <ng-template #tienthuengoaiTpl let-tiencuoc="tiencuoc" let-cpdvtncd="cpdvtncd">
         <ng-container *ngIf="cpdvtncd else rongTpl">

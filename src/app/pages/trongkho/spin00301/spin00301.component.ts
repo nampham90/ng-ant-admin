@@ -30,13 +30,17 @@ import { Spin00301subcpdvtnService } from '@app/widget/modal/trongkho/spin00301s
 import { Spin00301subcpdvtn } from '@app/widget/modal/trongkho/spin00301subcpdvtn/spin00301subcpdvtn.model';
 import { Tmt030Service } from '@app/core/services/http/system/tmt030.service';
 
+interface lstTrangthai {
+  trangthai: number
+}
+
 interface SearchParam {
   ngaybatdau: string | null;
   ngayketthuc: string | null;
   soID: string;
   makho:string;
   iduser: string;
-  status02: number | null;
+  trangthai: lstTrangthai[];
 }
 @Component({
   selector: 'app-spin00301',
@@ -62,6 +66,7 @@ export class Spin00301Component extends BaseComponent implements OnInit {
   @ViewChild('tienthuengoaiTpl', { static: true }) tienthuengoaiTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('htttTpl', { static: true }) htttTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('soidTpl', { static: true }) soidTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('nguoiphathanhTpl', { static: true }) nguoiphathanhTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('trangthaiTpl', { static: true }) trangthaiTpl!: TemplateRef<NzSafeAny>;
 
   ngaybatdau: string | null = null;
@@ -96,8 +101,10 @@ export class Spin00301Component extends BaseComponent implements OnInit {
   sysflg1 = 0;
 
   checkOptionStatus = [
-    { label: 'Trong kho', value: 0, checked: false },
-    { label: 'Vận chuyển', value: 1, checked: false }
+    { label: 'Dự định', value: 0, checked: false },
+    { label: 'Thực tế', value: 1, checked: false },
+    { label: 'Đang vận chuyển', value: 2, checked: false },
+    { label: 'Đã giao hàng', value: 3, checked: false },
   ];
   
   override fnInit() {
@@ -160,17 +167,16 @@ export class Spin00301Component extends BaseComponent implements OnInit {
   }
 
   log(): void {
-    if (this.checkOptionStatus.every(item => item.checked)) {
-       this.searchParam.status02 = 2;
-    } else {
-       if(this.checkOptionStatus[0].checked == true) {
-         this.searchParam.status02 = 0;
-       } else if(this.checkOptionStatus[1].checked == true) {
-         this.searchParam.status02 = 1;
-       } else {
-         this.searchParam.status02 = null;
-       }
-    }
+    let lststs: lstTrangthai[] = [];
+    this.checkOptionStatus.forEach(item => {
+      if(item.checked == true) {
+        let element: lstTrangthai = {
+          trangthai : item.value
+        }
+        lststs.push(element);
+      }
+    });
+    this.searchParam.trangthai = lststs;
   }
 
   getListKho() {
@@ -300,12 +306,16 @@ export class Spin00301Component extends BaseComponent implements OnInit {
           title: 'Số ID',
           field: 'soID',
           width: 250,
-          tdTemplate: this.soidTpl
+          tdTemplate: this.soidTpl,
+          fixed: true,
+          fixedDir: 'left'
         },
         {
           title: "Tên hàng",
           width: 150,
           field: 'tenhang',
+          fixed: true,
+          fixedDir: 'left'
         },
         {
           title: 'Tên người gửi',
@@ -332,9 +342,27 @@ export class Spin00301Component extends BaseComponent implements OnInit {
           tdTemplate: this.trangthaiTpl
         },
         {
-          title: "Ngày nhập",
+          title: "Ngày nhập dự định",
           width: 180,
-          field: 'ngaynhap',
+          field: 'ngaynhapdudinh',
+          pipe: "date: dd/MM/YYYY HH:mm"
+        },
+        {
+          title: "Ngày nhập thực tế",
+          width: 180,
+          field: 'ngaynhapthucte',
+          pipe: "date: dd/MM/YYYY HH:mm"
+        },
+        {
+          title: "Ngày vận chuyển",
+          width: 180,
+          field: 'ngayvanchuyen',
+          pipe: "date: dd/MM/YYYY HH:mm"
+        },
+        {
+          title: "Ngày trả hàng",
+          width: 180,
+          field: 'ngaytrahang',
           pipe: "date: dd/MM/YYYY HH:mm"
         },
         {
@@ -351,6 +379,11 @@ export class Spin00301Component extends BaseComponent implements OnInit {
           title: "Số lượng",
           width: 80,
           field: 'soluong',
+        },
+        {
+          title: "Số lượng thực tế",
+          width: 80,
+          field: 'soluongthucte',
         },
         {
           title: 'Trọng lượng',
@@ -389,9 +422,40 @@ export class Spin00301Component extends BaseComponent implements OnInit {
           field: 'diachinguoinhan',
         },
         {
+          title: "Chi phí đền hàng",
+          width: 150,
+          field: 'chiphidenhang',
+        },
+        {
+          title: "Lý đo đền hàng",
+          width: 150,
+          field: 'lydodenhang',
+        },
+        {
           title: "Ghi chú",
           width: 150,
           field: 'ghichu',
+        },
+        {
+          title: "Số ODT",
+          width: 150,
+          field: 'soODT',
+        },
+        {
+          title: "Số ODN",
+          width: 150,
+          field: 'soODN',
+        },
+        {
+          title: "Số HDTTCN",
+          width: 150,
+          field: 'soHDTTCN',
+        },
+        {
+          title: "Người phát hành",
+          width: 150,
+          field: 'nguoiphathanh',
+          tdTemplate: this.nguoiphathanhTpl
         },
         // {
         //   title: "Vận hành",

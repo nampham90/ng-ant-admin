@@ -14,7 +14,7 @@ export class NhatkykhService {
   ) { }
 
   getlists(params:any): Observable<any>{
-    return this.http.post(Const.NhatkykhAnt100GetAll, params, {needSuccessInfo: false});
+    return this.http.post(Const.Spkh00201Ant100GetAll, params, {needSuccessInfo: false});
   }
 
   // req tất toán

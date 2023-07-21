@@ -11,7 +11,6 @@ export class Spin00801Service {
     private http: BaseHttpService
   ) { }
 
-  
   search(params:any): Observable<any> {
     return this.http.post(Const.Spin00801Ant100Search, params,{ needSuccessInfo: false});
   }

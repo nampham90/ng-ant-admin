@@ -524,7 +524,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         "trongluong": res.trongluong,
         "khoiluong": res.khoiluong,
         "lotrinh": res.lotrinh,
-        "ngaynhap": res.ngaynhap,
+        "ngaynhapdudinh": res.ngaynhapdudinh,
         "tenhang": res.tenhang,
         "diadiembochang": res.diadiembochang,
         "hinhthucthanhtoan": res.hinhthucthanhtoan + "",

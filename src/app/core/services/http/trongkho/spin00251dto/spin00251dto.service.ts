@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Phieunhaphang } from '@app/core/model/phieunhaphang.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class Spin00251dtoService {
   usernm = ""
   hinhthucthanhtoan = "1";
   ghichu = "";
-  listsp : any[]= [];
+  listsp : Phieunhaphang[]= [];
   mode = "";
   backurl = ""
   constructor() { }
