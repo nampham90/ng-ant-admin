@@ -37,6 +37,9 @@ import { Tmt030Service } from '@app/core/services/http/system/tmt030.service';
 import { ChiPhiDVTN } from '@app/core/model/chiphidichvuthuengoai.model';
 import { Spin00301subcpdvtn } from '@app/widget/modal/trongkho/spin00301subcpdvtn/spin00301subcpdvtn.model';
 import { Spin00301subcpdvtnService } from '@app/widget/modal/trongkho/spin00301subcpdvtn/spin00301subcpdvtn.service';
+import { SubcommonsoidService } from '@app/widget/modal/common/subcommonsoid/subcommonsoid.service';
+import { ThemeSkinService } from '@app/core/services/common/theme-skin.service';
+import { Spin00601Service } from '@app/core/services/http/trongkho/spin00601.service';
 
 export interface Product {
   id?:string,
@@ -93,7 +96,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
   tableConfig!: MyTableConfig;
 
 
-  dataList: Product[] = [];
+  dataList: any[] = [];
   checkedCashArray: any[] = [];
   listchiphi: any[] = [];
   ActionCode = ActionCode;
@@ -136,7 +139,9 @@ export class Spch00201Component extends BaseComponent implements OnInit {
     protected override tabService: TabService,
     private pdfService: LayoutPdfService,
     private tmt030Service : Tmt030Service,
-    private spin00301subcpdvtnService: Spin00301subcpdvtnService
+    private spin00301subcpdvtnService: Spin00301subcpdvtnService,
+    private modalListSoIDService: SubcommonsoidService,
+    private spin00601Service: Spin00601Service
 
   ) {
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
@@ -153,6 +158,9 @@ export class Spch00201Component extends BaseComponent implements OnInit {
       })
       this.showchuyen = false;
       this.showConfirm = true;
+      if(this.ChuyenDto.trangthai < 4) {
+        this.btnNew = false;
+      }
 
     } else {
       this.ChuyenDto.clear();
@@ -459,22 +467,43 @@ export class Spch00201Component extends BaseComponent implements OnInit {
      }
      return listKhachNo;
   }
+  // lây sô  soId trong dataList đưa lên modal
+  getListsoId() {
+    let listsoId = [];
+    for(let element of this.dataList) {
+      if(element['soid'] && element['soid'] != "") {
+        listsoId.push(element['soid'])
+      }
+    }
+    return listsoId;
+  }
 
   // add product
-  add() {
-    this.modashowProduct.show({ nzTitle:'Thêm mới' }).subscribe( //  this.formItemNm[15]
+  addtrongkho() {
+    let listsoID = this.getListsoId(); 
+    this.modalListSoIDService.show({nzTitle: "Danh Hàng tồn kho"},{showcomfirm:false,idchuyen: "NULL",status02: "KHONG",listsoId:listsoID}).subscribe(
       res => {
         if (!res || res.status === ModalBtnStatus.Cancel) {
           return;
         }
-        res.modalValue['trangthai'] = 0;
-        res.modalValue['biensoxe'] = this.ChuyenDto.biensoxe;
-        res.modalValue['idchuyen'] = this.ChuyenDto.id;
-        this.tableLoading(true);
-        this.addEditData(res.modalValue, 'create');
-      },
-      error => this.tableLoading(false)
-    );
+        let req = {
+          "soIDs": res.modalValue,
+          "id": this.ChuyenDto.id,
+          "biensoxe": this.ChuyenDto.biensoxe,
+          "lotrinh": 0,
+          "soODT": this.ChuyenDto.soODT
+        }
+        this.spin00601Service.xuatnhieudon(req)
+        .pipe(
+          finalize(() => {
+            this.tableLoading(false);
+          })
+        )
+        .subscribe(data => {
+           this.getDataList();
+        })
+      }
+    )
   }
 
   allDel() {
@@ -495,7 +524,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         "trongluong": res.trongluong,
         "khoiluong": res.khoiluong,
         "lotrinh": res.lotrinh,
-        "ngaynhap": res.ngaynhap,
+        "ngaynhapdudinh": res.ngaynhapdudinh,
         "tenhang": res.tenhang,
         "diadiembochang": res.diadiembochang,
         "hinhthucthanhtoan": res.hinhthucthanhtoan + "",

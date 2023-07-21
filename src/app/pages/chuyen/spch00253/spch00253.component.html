@@ -85,9 +85,9 @@
             <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
                 <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
                     <nz-form-item>
-                        <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" >Số ODS</nz-form-label>
+                        <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" >Số ODN</nz-form-label>
                         <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzErrorTip]="''">
-                            <input nz-input name="soods" id="soods" [(ngModel)]="searchParam.soods" placeholder=""/>
+                            <input nz-input name="soodn" id="soodn" [(ngModel)]="searchParam.soodn" placeholder=""/>
                         </nz-form-control>
                     </nz-form-item>
                 </div>
@@ -115,9 +115,9 @@
         [tableConfig]="tableConfig"
         [tableData]="dataList"
       ></app-ant-table>
-      <ng-template #operationTpl let-soods="soods">
-          <span>{{soods}} </span>
-          <button nz-button [cdkCopyToClipboard]="copy(soods)" nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
+      <ng-template #operationTpl let-soodn="soodn">
+          <span>{{soodn}} </span>
+          <button nz-button [cdkCopyToClipboard]="copy(soodn)" nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
       </ng-template>
       <ng-template #tiencuocTpl let-tiencuoc="tiencuoc">
         <span>{{tiencuoc*1000 | currency : "VND" : ""}}</span>

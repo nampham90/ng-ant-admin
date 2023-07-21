@@ -6,6 +6,7 @@ import { ChuyenService } from './chuyen.service';
 })
 export class ChuyendtoService {
   initFlg = true;
+  soODT = "";
   id = "";
   ngaydi = "";
   ngayve = "";
@@ -22,6 +23,7 @@ export class ChuyendtoService {
 
   clear() {
     this.initFlg = true;
+    this.soODT = "";
     this.id = "";
     this.ngaydi = "";
     this.ngayve = "";

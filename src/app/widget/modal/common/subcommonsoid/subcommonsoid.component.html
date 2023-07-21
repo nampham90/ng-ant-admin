@@ -1,11 +1,46 @@
-<app-card-table-wrap [tableTitle]="'Danh Sách Số ID'" (reload)="reloadTable()">
-    <app-ant-table [tableConfig]="tableConfig" (changePageSize)="changePageSize($event)" (changePageNum)="getDataList($event)" [tableData]="dataList"></app-ant-table>
+
+<nz-card nzHoverable [nzBodyStyle]="{ 'padding-bottom': 0 }" class="m-b-10">
+    <form nz-form>
+        <div nz-row [nzGutter]="{md: 24 }">
+            <div nz-col [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="24" [nzSm]="24" [nzXs]="24">
+                <nz-form-item>
+                    <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="9" [nzSm]="24" [nzXs]="24" [nzFor]="">Kho hàng</nz-form-label>
+                    <nz-form-control [nzXXl]="15" [nzXl]="15" [nzLg]="15" [nzMd]="15" [nzSm]="24" [nzXs]="24">
+                        <nz-select name="makho" nzShowSearch nzAllowClear nzPlaceHolder="Select" [(ngModel)]="searchParam.makho">
+                            <nz-option *ngFor="let lst of listKho" nzLabel="{{lst['datanm']}}" nzValue="{{lst['datacd']}}"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="24" [nzSm]="24" [nzXs]="24">
+                <nz-form-item>
+                    <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="">Mã khách hàng</nz-form-label>
+                    <nz-form-control [nzXXl]="15" [nzXl]="15" [nzLg]="15" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                        <input nz-input name="makhachhang" [(ngModel)]="searchParam.makhachhang" placeholder="Mã khách hàng"  />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div nz-row [nzGutter]="{md: 24 }" [ngClass]="['toright']">
+            <button (click)="getDataList()" nz-button nzType="primary"><i nz-icon nzType="search"></i>Tìm kiếm</button>
+            <button class="m-l-20" nzGhost (click)="resetForm()" nz-button nzType="primary"><i nz-icon nzType="close-circle"></i>Làm mới</button>
+        </div>
+    </form>
+</nz-card>
+<app-card-table-wrap [tableTitle]="'Danh Sách Số ID'" (reload)="reloadTable()" [btnTpl]="tableTpl" [isNormalTable]="false">
+    <app-ant-table 
+        [tableConfig]="tableConfig" 
+        (selectedChange)="selectedChecked($event)"
+        (changePageSize)="changePageSize($event)" 
+        (changePageNum)="getDataList($event)" 
+        [tableData]="dataList">
+    </app-ant-table>
     <ng-template #operationTpl let-soID="soID" let-iduser="iduser" let-tiencuoc="tiencuoc" let-tenhang="tenhang" let-soluong="soluong" let-trongluong="trongluong" let-khoiluong="khoiluong" let-donvitinh="donvitinh" let-diadiembochang="diadiembochang" let-hinhthucthanhtoan="hinhthucthanhtoan" let-tennguoinhan="tennguoinhan" let-sdtnguoinhan="sdtnguoinhan" let-diachinguoinhan="diachinguoinhan" let-ghichu="ghichu" let-disable="disable">
         <ng-container *ngIf="disable && disable == true else notdisableLink">
-            <a nz-button nzType="link"  (click)="getItem(soID,iduser,tiencuoc,tenhang,soluong,trongluong,khoiluong,donvitinh,diadiembochang,hinhthucthanhtoan,tennguoinhan,sdtnguoinhan,diachinguoinhan,ghichu)" [disabled]="true">{{soID}}</a>
+            <a nz-button nzType="link"  (click)="getItem(soID)" [disabled]="true">{{soID}}</a>
         </ng-container>
         <ng-template #notdisableLink>
-            <a nz-button nzType="link"  (click)="getItem(soID,iduser,tiencuoc,tenhang,soluong,trongluong,khoiluong,donvitinh,diadiembochang,hinhthucthanhtoan,tennguoinhan,sdtnguoinhan,diachinguoinhan,ghichu)">{{soID}}</a>
+            <a nz-button nzType="link"  (click)="getItem(soID)">{{soID}}</a>
         </ng-template>
     </ng-template>
     <ng-template #tenkhachhangTpl let-iduser="iduser" >
@@ -29,5 +64,10 @@
     </ng-template>
     <ng-template #htttTpl let-hinhthucthanhtoan="hinhthucthanhtoan">
         <span>{{mergeHttt(hinhthucthanhtoan)}}</span>
-      </ng-template>
+    </ng-template>
 </app-card-table-wrap>
+<ng-template #tableTpl>
+    <button nz-button nzType="primary" (click)="xuatnhieudon()">Xuất nhiều đơn</button>
+</ng-template>
+
+

@@ -34,6 +34,7 @@ export interface SearchParam {
   soID: string;
   makho:string;
   iduser: string;
+  mode: string;
 }
 @Component({
   selector: 'app-spin00601',
@@ -249,7 +250,7 @@ export class Spin00601Component extends BaseComponent implements OnInit {
       }
       this.getDataList();
     })
- }
+  }
 
 
   getListKho() {
@@ -319,6 +320,7 @@ export class Spin00601Component extends BaseComponent implements OnInit {
     this.tableLoading(true);
     this.searchParam.ngaybatdau = this.formatDate(this.ngaybatdau);
     this.searchParam.ngayketthuc = this.formatDate(this.ngayketthuc);
+    this.searchParam.mode = "spin00601";
     const params: SearchCommonVO<any> = {
       pageSize: this.tableConfig.pageSize!,
       pageNum: e?.pageIndex || this.tableConfig.pageIndex!,
@@ -405,6 +407,11 @@ export class Spin00601Component extends BaseComponent implements OnInit {
           title: "Số lượng",
           width: 80,
           field: 'soluong',
+        },
+        {
+          title: "Số lượng thực tế",
+          width: 150,
+          field: 'soluongthucte',
         },
         {
           title: 'Trọng lượng',

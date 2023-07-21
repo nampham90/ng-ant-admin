@@ -16,7 +16,7 @@
                             <button nz-button nzType="primary" nzGhost (click)="selectChuyen()">Chọn Chuyến</button>
                         </ng-container>
                         <ng-template #showmachuyen>
-                            <span [ngStyle]="{'color':'#177ddc'}">{{ChuyenDto.id}}</span>
+                            <span [ngStyle]="{'color':'#177ddc'}">{{ChuyenDto.soODT}}</span>
                         </ng-template>
                     </nz-form-control>
                 </nz-form-item>
@@ -161,9 +161,9 @@
         </ng-container>
     </ng-template>
     <ng-template #tableBtns>
-        <button *appAuth="ActionCode.AddProduct" (click)="add()" nz-button nzType="primary" class="m-r-8" [disabled]="btnNew">
+        <button *appAuth="ActionCode.AddProduct" (click)="addtrongkho()" nz-button nzType="primary" class="m-r-8" [disabled]="btnNew">
           <i nz-icon nzType="plus"></i>
-          Thêm mới
+          Thêm từ kho
         </button>
         <button *appAuth="ActionCode.DelAllProduct" (click)="allDel()" nz-button nzType="default" [disabled]="true">
           <i nz-icon nzType="delete"></i>

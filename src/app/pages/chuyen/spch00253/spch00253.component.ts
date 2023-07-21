@@ -29,7 +29,7 @@ interface SearchParam {
   idkhachhang : string;
   nguonxe : string;
   status02: any;
-  soods: string;
+  soodn: string;
 }
 
 @Component({
@@ -278,8 +278,8 @@ export class Spch00253Component extends BaseComponent implements OnInit {
       showCheckbox: true,
       headers: [
         {
-          title: 'Số ODS',
-          field: 'soods',
+          title: 'Số ODN',
+          field: 'soodn',
           width: 300,
           tdTemplate: this.operationTpl
         },

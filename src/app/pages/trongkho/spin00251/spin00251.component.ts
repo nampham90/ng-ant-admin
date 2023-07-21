@@ -53,6 +53,7 @@ export class Spin00251Component extends BaseComponent implements OnInit {
   @ViewChild('tenhangTpl', { static: true }) tenhangTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('ghichuTpl', { static: true }) ghichuTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('soluongTpl', { static: true }) soluongTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('soluongthucteTpl', { static: true }) soluongthucteTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('trongluongTpl', { static: true }) trongluongTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('khoiluongTpl', { static: true }) khoiluongTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('donvitinhTpl', { static: true }) donvitinhTpl!: TemplateRef<NzSafeAny>;
@@ -120,22 +121,25 @@ export class Spin00251Component extends BaseComponent implements OnInit {
   }
 
   fnBackuplist(list:Phieunhaphang[]) {
-    console.log(list);
     this.backupdatalst = [];
     //this.backupdatalst = list.slice();
     for(let element of list) {
       let item: Phieunhaphang = {};
       item.id = element.id;
       item.soID = element.soID;
+      item.soODT = element.soODT;
+      item.soODN = element.soODN;
       item.idchuyen = element.idchuyen;
+      item.idchuyenngoai = element.idchuyenngoai;
       item.biensoxe = element.biensoxe;
       item.tenhang= element.tenhang;
       item.iduser = element.iduser;
       item.tiencuoc = element.tiencuoc;
       item.lotrinh = element.lotrinh;
       item.diadiembochang = element.diadiembochang;
-      item.ngaynhap = element.ngaynhap;
+      item.ngaynhapdudinh = element.ngaynhapdudinh;
       item.soluong = element.soluong;
+      item.soluongthucte = element.soluongthucte
       item.trongluong = element.trongluong;
       item.khoiluong = element.khoiluong;
       item.donvitinh = element.donvitinh;
@@ -145,12 +149,31 @@ export class Spin00251Component extends BaseComponent implements OnInit {
       item.diachinguoinhan = element.diachinguoinhan;
       item.hinhthucthanhtoan = element.hinhthucthanhtoan;
       item.ghichu = element.ghichu;
-      item.trangthai = element.trangthai
+      item.trangthai = element.trangthai;
+      item.chiphidenhang = element.chiphidenhang;
+      item.lydodenhang = element.lydodenhang;
       item.status01 = element.status01;
       item.status02 = element.status02;
       item.status03 = element.status03;
       item.status04 = element.status04;
       item.status05 = element.status05;
+      item.status06 = element.status01;
+      item.status07 = element.status02;
+      item.status08 = element.status03;
+      item.status09 = element.status04;
+      item.status10 = element.status05;
+      item.strrsrv1 = element.strrsrv1;
+      item.strrsrv2 = element.strrsrv2;
+      item.strrsrv3 = element.strrsrv3;
+      item.strrsrv4 = element.strrsrv4;
+      item.strrsrv5 = element.strrsrv5;
+      item.strrsrv6 = element.strrsrv6;
+      item.strrsrv7 = element.strrsrv7;
+      item.strrsrv8 = element.strrsrv8;
+      item.strrsrv9 = element.strrsrv9;
+      item.strrsrv10 = element.strrsrv10;
+      item.nguoiphathanh = element.nguoiphathanh;
+      item.soHDTTCN = element.soHDTTCN;
       item.nguonxenhaphang = element.nguonxenhaphang;
       item.sotiennhaphang = element.sotiennhaphang;
       item.htttnhaphang = element.htttnhaphang;
@@ -247,7 +270,7 @@ export class Spin00251Component extends BaseComponent implements OnInit {
     if(this.spin00251dtoService.initFlg == false) {
       // update
       if(this.fnCheckChange() == true){
-         this.modalSrv.info({nzTitle: "Chưa có thay đổi"})
+         this.modalSrv.info({nzTitle: "Chưa có thay đổi"});
       } else {
         // update
         let req = {
@@ -261,8 +284,9 @@ export class Spin00251Component extends BaseComponent implements OnInit {
           if(res==0) {
             this.modalSrv.success({nzTitle: "Thực hiện thành công !"});
             this.btnnewOrder = true;
-            this.btnConfirm = false;
+            this.btnConfirm = true;
             this.showbtnCopy = true;
+            this.fnBackuplist(this.listdetail);
           } else {
             this.modalSrv.success({nzTitle: "Đơn hàng này không tồn tại !"});
           }
@@ -411,6 +435,7 @@ export class Spin00251Component extends BaseComponent implements OnInit {
         element.tenhang = ctdetail['tenhang'];
         element.tiencuoc = ctdetail['tiencuoc'];
         element.soluong = ctdetail['soluong'];
+        element.soluongthucte = ctdetail['soluongthucte'];
         element.trongluong = ctdetail['trongluong'];
         element.khoiluong = ctdetail['khoiluong'];
         element.donvitinh = ctdetail['donvitinh'];
@@ -449,6 +474,7 @@ export class Spin00251Component extends BaseComponent implements OnInit {
   }
 
   edit(stt:any) {
+    this.btnConfirm = true;
     let res : any;
     for (let element of this.dataList) {
       if(element["stt"] === stt) {
@@ -489,6 +515,7 @@ export class Spin00251Component extends BaseComponent implements OnInit {
     this.tableLoading(true);
     if (this.listdetail.length > 0) {
       this.dataList = [...this.listdetail];
+      
       this.tableLoading(false);
     } else {
       this.tableLoading(false);
@@ -533,6 +560,12 @@ export class Spin00251Component extends BaseComponent implements OnInit {
           field: 'soluong',
           width: 80,
           tdTemplate: this.soluongTpl
+        },
+        {
+          title: 'Số lượng thực tế',
+          field: 'soluong',
+          width: 150,
+          tdTemplate: this.soluongthucteTpl
         },
         {
           title: 'Trọng lượng',

@@ -95,7 +95,7 @@ export const CommonAnt100Tongnouser = "common/commonAnt100Tongnouser";
 export const CommonAnt100Listtopdoanhthu = "common/commonAnt100Listtopdoanhthu";
 export const CommonAnt100Listtopchiphi = "common/commonAnt100Listtopchiphi";
 export const CommonAnt100Listtoptongcuoctungxe = "common/commonAnt100Listtongcuoctungxe";
-export const CommonAnt100GetODS = "common/commonAnt100GetODS";
+export const CommonAnt100GetODN = "common/commonAnt100GetODN";
 export const CommonAnt100GetODT = "common/commonAnt100GetODT";
 export const CommonAnt100GetODC = "common/commonAnt100getODC";
 export const CommonAnt100GetHDTTXN = "common/commonAnt100getHDTTXN";
@@ -206,6 +206,7 @@ export const ChuyenAnt100SearchParams = 'chuyen/chuyenAnt100searchParams';
 // phieu nhap hang 
 export const PhieunhaphangAnt100GetAll = 'phieunhaphang/phieunhaphangAnt100getAll';
 export const PhieunhaphangAnt100Get = 'phieunhaphang/phieunhaphangAnt100get';
+export const PhieunhaphangAnt100GetsoID = 'phieunhaphang/phieunhaphangAnt100getsoID';
 export const PhieunhaphangAnt100Update = 'phieunhaphang/phieunhaphangAnt100update';
 export const PhieunhaphangAnt100Create = 'phieunhaphang/phieunhaphangAnt100create';
 export const PhieunhaphangAnt100Delete = 'phieunhaphang/phieunhaphangAnt100delete';
@@ -228,7 +229,7 @@ export const KhachhangAnt100Update = 'khachhang/khachhangAnt100update';
 export const KhachhangAnt100GetDetail = 'khachhang/khachhangAnt100getDetail';
 
 // nhatkykh
-export const NhatkykhAnt100GetAll = 'nhatkykh/nhatkykhAnt100getAll';
+export const Spkh00201Ant100GetAll = 'spkh00201/spkh00201Ant100getAll';
 export const NhatkykhAnt100PostTattoan = 'nhatkykh/nhatkykhAnt100postTattoan';
 export const NhatkykhAnt100PostThanhtoanmotphan = 'nhatkykh/nhatkykhAnt100postThanhtoanmotphan';
 export const NhatkykhAnt100PostThanhtoan = 'nhatkykh/nhatkykhAnt100postThanhtoan';

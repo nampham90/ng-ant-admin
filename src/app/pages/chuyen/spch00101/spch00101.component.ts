@@ -27,6 +27,7 @@ import { UrlDisplayId } from '@app/common/UrlDisplay';
 import { SubwindowChiphiService } from '@app/widget/modal/subwindowchiphi/subwindow-chiphi.service';
 import { TabService } from '@app/core/services/common/tab.service';
 import {VideoyoutubeService} from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service'
+import { ThemeSkinService } from '@app/core/services/common/theme-skin.service';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -445,8 +446,9 @@ export class Spch00101Component extends BaseComponent implements OnInit {
     return `${soodt}`;
   }
 
-  getItem(id:any,changduong: any,idtai: any,idphu: any,biensoxe: any,tienxe:any,ngaydi:any,ngayve:any,trangthai:any) {
+  getItem(id:any, soODT:string, changduong: any,idtai: any,idphu: any,biensoxe: any,tienxe:any,ngaydi:any,ngayve:any,trangthai:any) {
     this.chuyenDtoService.id = id;
+    this.chuyenDtoService.soODT = soODT;
     this.chuyenDtoService.biensoxe = biensoxe;
     this.chuyenDtoService.changduong = changduong;
     this.chuyenDtoService.idphu = idphu;

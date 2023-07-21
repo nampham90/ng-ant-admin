@@ -81,9 +81,9 @@
                 </div>
                 <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
                     <nz-form-item>
-                        <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" >Số ODS</nz-form-label>
+                        <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" >Số ODN</nz-form-label>
                         <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzErrorTip]="''">
-                            <input nz-input name="soods" id="soods" [(ngModel)]="searchParam.soods" placeholder=""/>
+                            <input nz-input name="soodn" id="soodn" [(ngModel)]="searchParam.soodn" placeholder=""/>
                         </nz-form-control>
                     </nz-form-item>
                 </div>
@@ -115,14 +115,14 @@
             <button nz-button nzType="primary" nzGhost (click)="exportPDF(id)">Xuất PDF</button>
         </span>
       </ng-template>
-      <ng-template #machuyenngoaiTpl let-id="id" let-soods="soods">
-        <ng-container *ngIf="soods == '' else showId">
+      <ng-template #machuyenngoaiTpl let-id="id" let-soodn="soodn">
+        <ng-container *ngIf="soodn == '' else showId">
                <span></span>
         </ng-container>
         <ng-template #showId>
             <div class="copy-container">
-                <a nz-button (click)="transferSpch00251(id,'link')" nzType="link" nzBlock>{{soods}}</a>
-                <button nz-button [cdkCopyToClipboard]="copy(soods)" nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
+                <a nz-button (click)="transferSpch00251(id,'link')" nzType="link" nzBlock>{{soodn}}</a>
+                <button nz-button [cdkCopyToClipboard]="copy(soodn)" nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
             </div>
         </ng-template>
             <!-- <button nz-button [cdkCopyToClipboard]="copy(id)" nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button> -->

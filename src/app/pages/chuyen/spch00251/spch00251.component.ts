@@ -27,6 +27,8 @@ import { Spin00901Service } from '@app/core/services/http/trongkho/spin00901.ser
 import { finalize } from 'rxjs';
 import { SubcommonsoidService } from '@app/widget/modal/common/subcommonsoid/subcommonsoid.service';
 import { Spch00251Service } from '@app/core/services/http/chuyen/spch00251.service';
+import { Phieunhaphang } from '@app/core/model/phieunhaphang.model';
+import { PhieunhaphangService } from '@app/core/services/http/phieunhaphang/phieunhaphang.service';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -71,7 +73,8 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     private spin00901Service : Spin00901Service,
     private fb: FormBuilder,
     private modalListSoIDService: SubcommonsoidService,
-    private spch00251Service: Spch00251Service
+    private spch00251Service: Spch00251Service,
+    private phieunhaphangService: PhieunhaphangService
     
   ) { 
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
@@ -105,6 +108,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   @ViewChild('sdtnguoinhanTpl', { static: true }) sdtnguoinhanTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('tennguoinhanTpl', { static: true }) tennguoinhanTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('diachinguoinhanTpl', { static: true }) diachinguoinhanTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('chiphidvtnTpl', { static: true }) chiphidvtnTpl!: TemplateRef<NzSafeAny>;
   // mode
   idchuyenngoai: any;
 
@@ -122,6 +126,8 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   tentaixe = "";
   sodienthoai = "";
   ghichu = "";
+
+  listPNH: Phieunhaphang[] = []
 
   listdetail: Chitietchuyenngoai[] = [];
   ctchuyenngoai!: Chitietchuyenngoai;
@@ -447,39 +453,55 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         if (!res || res.status === ModalBtnStatus.Cancel) {
           return;
         }
-        const param = { ...res.modalValue };
-        let idUser = "";
-        if(param['iduser']['id']) {
-           idUser = param['iduser']['id'];
-        } else {
-           idUser = param['iduser']['_id'];
-        }
-        let item = {
-           soid : param['soID'],
-           idkhachhang :  idUser,
-           tiencuoc :  param['tiencuoc'],
-           tenhang : param['tenhang'],
-           soluong :  param['soluong'],
-           trongluong :  param['trongluong'],
-           khoiluong :  param['khoiluong'],
-           donvitinh : param['donvitinh'],
-           diadiembochang : param['diadiembochang'],
-           htttkhachhang : param['hinhthucthanhtoan']+"",
-           tennguoinhan : param['tennguoinhan'],
-           sdtnguoinhan : param['sdtnguoinhan'],
-           diachinguoinhan : param['diachinguoinhan'],
-           ghichu : param['ghichu'],
-           tiencuocxengoai : 0,
-           htttxengoai: ""
-        }
-        this.mergeDetail(item);
-        this.addListDetail();
-        this.getDataList();
-        this.showBtnConfirm();
+        this.getListDetailFromKho(res.modalValue);
       }
     )
   }
 
+  getListDetailFromKho(listIDs: string[]): void{
+    for(let element of listIDs) {
+      this.phieunhaphangService.getDetailsoID(element).subscribe(res => {
+        let item: Chitietchuyenngoai = this.fnmergePNHtoCTCN(res);
+        this.mergeDetail(item);
+        this.addListDetail();
+        this.getDataList();
+        this.showBtnConfirm();
+      })
+    }
+  }
+
+  fnmergePNHtoCTCN(pnh: Phieunhaphang): Chitietchuyenngoai {
+    let ctcn: Chitietchuyenngoai = {
+        stt: 0,
+        idchuyenngoai: null,
+        nguonxe: null,
+        soid : pnh.soID,
+        tenhang : pnh.tenhang!,
+        soluong : pnh.soluong!,
+        trongluong : pnh.trongluong!,
+        khoiluong : pnh.khoiluong!,
+        donvitinh : pnh.donvitinh!,
+        diadiembochang : pnh.diadiembochang!,
+        tiencuoc : pnh.tiencuoc!,
+        tiencuocxengoai : 0,
+        htttxengoai : "",
+        idkhachhang : pnh.iduser!,
+        htttkhachhang : pnh.hinhthucthanhtoan!,
+        sdtnguoinhan : pnh.sdtnguoinhan!,
+        tennguoinhan : pnh.tennguoinhan!,
+        diachinguoinhan : pnh.diachinguoinhan!,
+        ghichu : pnh.ghichu,
+        chiphidvtn : this.tongcptnPNH(pnh), // tong chi phi thue ngaoi
+    };
+
+    return ctcn;
+  }
+
+  tongcptnPNH(pnh:Phieunhaphang): number {
+    let tongtiendvtn = 0;
+    tongtiendvtn = tongtiendvtn + pnh.cpdvtncd!['sotienbocxep']! + pnh.cpdvtncd!['sotienbocxep']! + pnh.cpdvtncd!['sotiennhaphang']! + pnh.cpdvtncd!['sotientrahang']! + pnh.cpdvtncd!['sotienxecau']!;
+    return tongtiendvtn;
+  }
 
   add() {
     this.subwinCtChuyenngoaiService.show({ nzTitle:'Thêm mới' }).subscribe(
@@ -549,7 +571,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     }
   }
 
-  mergeDetail(ctdetail: any) {
+  mergeDetail(ctdetail: Chitietchuyenngoai) {
     let stt: number = 0;
     let n = this.listdetail.length;
     if (n == 0) {
@@ -631,6 +653,12 @@ export class Spch00251Component extends BaseComponent implements OnInit {
           tdTemplate: this.tiencuocTpl
         },
         {
+          title: "CP Dịch vu thuê ngoài",
+          width: 160,
+          field: "chiphidvtn",
+          tdTemplate: this.chiphidvtnTpl
+        },
+        {
           title: 'Tiền thuê xe ngoài',
           width: 250,
           field: 'tiencuocxengoai',
@@ -672,6 +700,11 @@ export class Spch00251Component extends BaseComponent implements OnInit {
           width: 350,
           field: 'ghichu',
           tdTemplate: this.ghichuTpl
+        },
+        {
+          title: "Số ID",
+          width: 150,
+          field: 'soid'
         },
         {
           title: 'Hành động',
