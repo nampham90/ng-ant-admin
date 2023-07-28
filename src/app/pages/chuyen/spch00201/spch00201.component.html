@@ -128,16 +128,16 @@
     </app-card-table-wrap>
     <ng-template #tableConfirm>
         <ng-container *ngIf="showConfirm">
-            <span *appAuth="ActionCode.Confirm" class="operate-text">
+            <!-- <span *appAuth="ActionCode.Confirm" class="operate-text">
                 <button [disabled]="!btnConfirm" (click)="Confirm(1)" nz-button nzType="primary" class="m-r-8">
                     <i nz-icon nzType="caret-right"></i>
-                    Hoàn thành kế hoạch nhập
+                    Xác nhận thực tế bốc hàng đi
                 </button>
             </span>
             <span *appAuth="ActionCode.Confirm" class="operate-text">
                 <button [disabled]="!btnConfirmbochang" (click)="Confirm(2)" nz-button nzType="primary" class="m-r-8">
                     <i nz-icon nzType="caret-right"></i>
-                    Hoàn thành bóc hàng
+                    Xác nhận thực tế trả hàng đi
                 </button>
             </span>
             <span *appAuth="ActionCode.Confirm" class="operate-text">
@@ -145,17 +145,17 @@
                     <i nz-icon nzType="caret-right"></i>
                     Hoàn thành trả hàng
                 </button>
-            </span>
+            </span> -->
             <span *appAuth="ActionCode.Confirm" class="operate-text">
-                <button [disabled]="!btnConfirmchiphi" (click)="Confirm4()" nz-button nzType="primary" class="m-r-8">
+                <button [disabled]="!btnConfirmchiphi" (click)="tinhchiphi()" nz-button nzType="primary" class="m-r-8">
                     <i nz-icon nzType="caret-right"></i>
                     Tính chi phí & Xuất PDF
                 </button>
             </span>
             <span *appAuth="ActionCode.Confirm" class="operate-text">
-                <button [disabled]="!btnConfirmend" (click)="Confirm(5)" nz-button nzType="primary" class="m-r-8">
+                <button [disabled]="!btnConfirmend" (click)="Confirm()" nz-button nzType="primary" class="m-r-8">
                     <i nz-icon nzType="caret-right"></i>
-                    Kết thúc chuyến hàng
+                    Hoàn thành chuyến hàng
                 </button>
             </span>
         </ng-container>
@@ -165,9 +165,9 @@
           <i nz-icon nzType="plus"></i>
           Thêm từ kho
         </button>
-        <button *appAuth="ActionCode.DelAllProduct" (click)="allDel()" nz-button nzType="default" [disabled]="true">
+        <!-- <button *appAuth="ActionCode.DelAllProduct" (click)="allDel()" nz-button nzType="default" [disabled]="true">
           <i nz-icon nzType="delete"></i>
           Xóa tất cả
-        </button>
+        </button> -->
     </ng-template>
 </div>

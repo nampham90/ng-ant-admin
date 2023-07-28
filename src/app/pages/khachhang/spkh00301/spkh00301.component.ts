@@ -23,9 +23,7 @@ import { finalize } from 'rxjs';
 interface SearchParam {
   ngaybatdau: string | null;
   ngayketthuc: string | null;
-  soODC: string;
-  iduser: string;
-  status01: number | null;
+  soHDTTCN: string;
 }
 @Component({
   selector: 'app-spkh00301',
@@ -113,39 +111,28 @@ export class Spkh00301Component extends BaseComponent implements OnInit{
   }
 
   changeStatus01(): void {
-    if (this.checkOptionStatus.every(item => item.checked)) {
-       this.searchParam.status01 = null;
-    } else {
-       if(this.checkOptionStatus[0].checked == true) {
-         this.searchParam.status01 = 0;
-       } else if(this.checkOptionStatus[1].checked == true) {
-         this.searchParam.status01 = 1;
-       } else {
-         this.searchParam.status01 = null;
-       }
-    }
+
   }
 
-  fnFocusOutUser() {
-    if(this.searchParam.iduser != this.stockuser) {
-      this.usernm = "";
-    }
-  }
+  // fnFocusOutUser() {
+  //   if(this.searchParam.iduser != this.stockuser) {
+  //     this.usernm = "";
+  //   }
+  // }
 
-  searchUserClick() {
-    this.spin00251subkhachhangService.show({nzTitle: "Danh sách khách hàng"},{showcomfirm:false}).subscribe(
-      res => {
-        if (!res || res.status === ModalBtnStatus.Cancel) {
-          return;
-        }
-        const param = { ...res.modalValue };
-        this.searchParam.iduser = param['id'];
-        this.stockuser = param['id'];
-        this.usernm = param['name'];
+  // searchUserClick() {
+  //   this.spin00251subkhachhangService.show({nzTitle: "Danh sách khách hàng"},{showcomfirm:false}).subscribe(
+  //     res => {
+  //       if (!res || res.status === ModalBtnStatus.Cancel) {
+  //         return;
+  //       }
+  //       const param = { ...res.modalValue };
+  //       this.stockuser = param['id'];
+  //       this.usernm = param['name'];
 
-      }
-    )
-  }
+  //     }
+  //   )
+  // }
 
   getDataList(e?: NzTableQueryParams) {
     this.tableLoading(true);
@@ -200,12 +187,8 @@ export class Spkh00301Component extends BaseComponent implements OnInit{
     this.tableConfig.pageSize = e;
   }
 
-  copy(soodc: any) {
-    return `${soodc}`;
-  }
-
-  getItem(soodc: any) {
-
+  copy(soHDTTCN: any) {
+    return `${soHDTTCN}`;
   }
 
   private initTable(): void {
@@ -213,40 +196,33 @@ export class Spkh00301Component extends BaseComponent implements OnInit{
       showCheckbox: false,
       headers: [
         {
-          title: "Số ODC",
-          field: 'soodc',
+          title: "Số ID",
+          field: 'soID',
+          width: 200,
+        },
+        {
+          title: "Số HDTTCN",
+          field: 'soHDTTCN',
           width: 220,
           tdTemplate: this.linkTpl
         },
         {
-          title: "Tống cước",
-          field: 'tongcuoc',
+          title: "Ngày phát hành",
+          field: 'ngayphathanh',
           width: 180,
-          tdTemplate: this.tiencuocTpl
+          pipe: 'date: dd/MM/yyyy:HH:ss'
         },
         {
-          title: "Khách hàng",
-          field: 'tenkhachhang',
+          title: "Ngày thanh toán",
+          field: 'ngaythanhtoan',
           width: 180,
-          tdTemplate: this.tenkhachhangTpl
+          pipe: 'date: dd/MM/yyyy:HH:ss'
         },
         {
           title: "Trạng thái",
           width: 180,
           field: 'trangthai',
           tdTemplate: this.trangthaiTpl
-        },
-        {
-          title: "Ngày xuất",
-          width: 120,
-          field: 'ngayxuat',
-          pipe: 'date: dd/MM/yyyy:HH:ss'
-        },
-        {
-          title: "Ngày thanh toán",
-          width: 150,
-          field: 'ngaythanhtoan',
-          pipe: 'date: dd/MM/yyyy:HH:ss'
         },
         {
           title: "Vận hành",

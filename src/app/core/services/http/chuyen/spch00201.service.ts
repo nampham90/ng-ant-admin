@@ -12,11 +12,8 @@ export class Spch00201Service {
     private http: BaseHttpService,
   ) { }
 
-  updateTiencuocxenha(params: any): Observable<any> {
-    return this.http.post(Const.Spch00201Ant100UpdateTiencuocxenha, params,{ needSuccessInfo: false});
+  updateTiencuocSoID(params: any): Observable<any> {
+    return this.http.post(Const.Spch00201Ant100UpdateTiencuocSoID, params,{ needSuccessInfo: false});
   }
   
-  updateTiencuocxengoai(params: any): Observable<any> {
-    return this.http.post(Const.Spch00201Ant100UpdateTiencuocxengoai, params,{ needSuccessInfo: false});
-  }
 }

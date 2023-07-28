@@ -152,10 +152,12 @@ export class Spin00251subkhachhangComponent implements OnInit {
     this.getDataList();
   }
   
-  getItem(id:string, name:string) {
+  getItem(id:string, name:string, dienthoai: string, diachi: string) {
     this.dataResponse = {
       id: id,
-      name: name
+      name: name,
+      sodienthoai: dienthoai,
+      diachi: diachi
     }
     this.modalRef.destroy({ status: ModalBtnStatus.Ok, modalValue:this.dataResponse });
   }

@@ -37,6 +37,10 @@ export class ChuyenService {
   updateTrangthai(params: any): Observable<Number>{
     return this.http.post(Const.ChuyenAnt100UpdateTrangthai, params, { needSuccessInfo: false});
   }
+
+  hoanthanhchuyenhang(params: any): Observable<Number>{
+    return this.http.post(Const.ChuyenAnt100Hoanthanhchuyenhang, params, { needSuccessInfo: false});
+  }
   
   deleteChuyen(id: string): Observable<void>{
     return this.http.post(Const.ChuyenAnt100Delete, { ids: id }, { needSuccessInfo: true })

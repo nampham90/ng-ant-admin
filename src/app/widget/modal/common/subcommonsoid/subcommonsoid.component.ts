@@ -15,8 +15,6 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { finalize } from 'rxjs';
 interface SearchParam {
-  idchuyen: any;
-  status02: number;
   makho: string;
   makhachhang: string;
 }
@@ -61,12 +59,6 @@ export class SubcommonsoidComponent implements OnInit {
 
   ngOnInit(): void {
     let obj = this.obj(this.params);
-    if(obj['idchuyen'] && obj['idchuyen'] == "NULL") {
-       this.searchParam.idchuyen = null;
-    }
-    if(obj['status02'] && obj['status02'] == "KHONG") {
-       this.searchParam.status02 = 0;
-    }
     this.initTable();
     this.getListKho();
 
@@ -215,15 +207,21 @@ export class SubcommonsoidComponent implements OnInit {
           tdTemplate: this.tenkhachhangTpl
         },
         {
+          title: "Tên hàng",
+          width: 280,
+          field: 'tenhang'
+        },
+        {
           title: "Tiền cước",
-          width: 180,
+          width: 120,
           field: 'tiencuoc',
           tdTemplate: this.tiencuocTpl
         },
         {
           title: "Ngày nhập",
-          width: 120,
-          field: 'ngaynhap',
+          width: 150,
+          field: 'ngaynhapthucte',
+          pipe: 'date: dd/MM/YYYY HH:mm'
         },
         {
           title: "Kho",

@@ -69,7 +69,7 @@
                 </div>
                 <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
                     <nz-form-item>
-                        <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" nzRequired>Ngày dự kiến GH</nz-form-label>
+                        <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="">Ngày dự kiến GH</nz-form-label>
                         <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24"  [nzErrorTip]="combineTpl">
                             <nz-date-picker
                                 name="ngaydukiengiaohang"
@@ -113,6 +113,19 @@
                     </nz-form-item>
                 </div>
             </div>
+            <div nz-row>
+                <div nz-col [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+                    <nz-form-item>
+                      <nz-form-label  [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" nzRequired>Hình thức thanh toán</nz-form-label>
+                      <nz-form-control  [nzXXl]="10" [nzXl]="10" [nzLg]="10" [nzMd]="10" [nzSm]="20" [nzXs]="24" [nzErrorTip]="combineTpl">
+                        <nz-radio-group  name="hinhthucthanhtoan" formControlName="hinhthucthanhtoan">
+                          <label nz-radio nzValue="0">Trực tiếp</label>
+                          <label nz-radio nzValue="1">Ghi nợ</label>
+                        </nz-radio-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+            </div>
             <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
                 <div nz-col [nzXXl]="24" [nzXl]="24" [nzLg]="24" [nzMd]="24" [nzSm]="24" [nzXs]="24">
                     <nz-form-item>
@@ -138,9 +151,9 @@
         [tableConfig]="tableConfig"
         [tableData]="dataList"
       ></app-ant-table>
-      <ng-template #operationTpl let-id="id" let-stt="stt" let-status03="status03">
+      <ng-template #operationTpl let-id="id" let-stt="stt" let-soID="soID" let-iduser="iduser" let-tenhang="tenhang" let-diadiembochang="diadiembochang" let-soluong="soluong" let-trongluong="trongluong" let-khoiluong="khoiluong" let-tiencuoc="tiencuoc" let-donvitinh="donvitinh" let-status02="status02" let-hinhthucthanhtoan="hinhthucthanhtoan" let-tennguoinhan="tennguoinhan" let-sdtnguoinhan="sdtnguoinhan" let-diachinguoinhan="diachinguoinhan" let-ghichu="ghichu"  let-status03="status03">
         <span *appAuth="ActionCode.ChuyenngoaiEdit" class="operate-text">
-          <button nz-button nzType="primary" nzGhost (click)="edit(stt)" [disabled]="btnUpdate">Cập nhật</button>
+          <button nz-button nzType="primary" nzGhost (click)="edit(id,stt,soID,tenhang,iduser,diadiembochang,soluong,trongluong,khoiluong,tiencuoc,donvitinh,status02,hinhthucthanhtoan,tennguoinhan,sdtnguoinhan,diachinguoinhan,ghichu,status03)" [disabled]="btnUpdate">Cập nhật</button>
         </span>
         <span *appAuth="ActionCode.ChuyenngoaiDel" class="operate-text">
           <button nz-button nzType="primary" nzGhost (click)="del(stt)" [disabled]="btnDelete">Hủy</button>
@@ -164,8 +177,8 @@
       <ng-template #ghichuTpl let-ghichu="ghichu">
         <span>{{ghichu}}</span>
       </ng-template>
-      <ng-template #htttkhachhangTpl let-htttkhachhang="htttkhachhang">
-        <span>{{mergeHttt(htttkhachhang)}}</span>
+      <ng-template #htttkhachhangTpl let-hinhthucthanhtoan="hinhthucthanhtoan">
+        <span>{{mergeHttt(hinhthucthanhtoan)}}</span>
       </ng-template>
       <ng-template #htttxengoaiTpl let-htttxengoai="htttxengoai">
         <span>{{mergeHttt(htttxengoai)}}</span>
@@ -189,10 +202,10 @@
           <i nz-icon nzType="plus"></i>
           Thêm mới
         </button>
-        <button *appAuth="ActionCode.DataScDelAll" (click)="allDel()" nz-button nzType="default" [disabled]="btnDeleteAll">
+        <!-- <button *appAuth="ActionCode.DataScDelAll" (click)="allDel()" nz-button nzType="default" [disabled]="btnDeleteAll">
           <i nz-icon nzType="delete"></i>
           Xóa tất cả
-        </button>
+        </button> -->
     </ng-template>
     <ng-template #tableConfirm>
         <ng-container *ngIf="showConfirm">

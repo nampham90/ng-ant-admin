@@ -18,18 +18,19 @@ import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
-import { finalize } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
 import * as Const from "src/app/common/const";
 import { LayoutPdfService } from '@app/core/services/common/layout-pdf.service';
 import { CtchuyenngoaiService } from '@app/core/services/http/chuyenngoai/ctchuyenngoai.service';
 import { CommonService } from '@app/core/services/http/common/common.service';
 import { VideoyoutubeService } from '@app/widget/modal/subwindowvideoyoutube/videoyoutube.service';
-import { Spch00201subupdateTiencuocxengoaiService } from '@app/widget/modal/chuyen/spch00201subupdate-tiencuocxengoai/spch00201subupdate-tiencuocxengoai.service';
+
 import { Spch00201subupdateTiencuocxenhaService } from '@app/widget/modal/chuyen/spch00201subupdate-tiencuocxenha/spch00201subupdate-tiencuocxenha.service';
 import { ModalBtnStatus } from '@app/widget/base-modal';
 import { Spch00201Service } from '@app/core/services/http/chuyen/spch00201.service';
 import { Spin00251subkhachhangService } from '@app/widget/modal/trongkho/spin00251subkhachhang/spin00251subkhachhang.service';
 import { Spkh00201Service } from '@app/core/services/http/khachhang/spkh00201.service';
+import { Spkh00201subthanhtoanService } from '@app/widget/modal/khachhang/spkh00201subthanhtoan/spkh00201subthanhtoan.service';
 interface SearchParam {
   iduser?: string;
   ngaybatdau: string | null;
@@ -39,8 +40,6 @@ interface SearchParam {
 
 class showbtnTable {
    btnthanhtoan = false;
-   btnduyet = false;
-   disabledBtnthanhtoan = false;
 }
 
 @Component({
@@ -75,8 +74,8 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
   DisplayScreenID: UrlDisplayId = UrlDisplayId.spkh00201;
   availableOptions: OptionsInterface[] = [];
   pageHeaderInfo: Partial<PageHeaderType> = {
-    title: 'Chi tiết công nợ',
-    breadcrumb: ['Home', 'Khách Hàng', 'Chi tiết công nợ']
+    title: 'Thanh toán công nợ',
+    breadcrumb: ['Home', 'Khách Hàng', 'Thanh toán công nợ']
   };
 
   constructor(
@@ -92,12 +91,11 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
     private khachhangService : KhachhangService,
     protected override tabService : TabService,
     private pdfService: LayoutPdfService,
-    private ctChuyenngoaiService: CtchuyenngoaiService,
     private commonService: CommonService,
     private modalspch00201xenhaService: Spch00201subupdateTiencuocxenhaService,
-    private modalspch00201xengoaiService: Spch00201subupdateTiencuocxengoaiService,
     private spch00201Service: Spch00201Service,
     private spin00251subkhachhangService: Spin00251subkhachhangService,
+    private spkh00201subthanhtoanService: Spkh00201subthanhtoanService
     
   ) {
     super(webService,router,cdf,datePipe,tabService,modalVideoyoutube);
@@ -108,7 +106,6 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
   btnshowmodalkh = false;
   btntattoan = false;
   btnthanhtoanmotphan = false;
-  btnxuatpdf = false;
   btnsearch = false;
   idkhachhang = "";
   tenkhachhang = "";
@@ -146,44 +143,12 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
 
   showConfirm = true;
   override ngOnInit(): void {
-    // check khach hàng dto service 
-    // if kbnflg = true => show id khach khách , tên khach hang, tong nợ, danh sach chi tiên nợ.
-    // if kbnflg = false => show button modal khach hang để  lấy thông tin khách hàng. dataList = [];
-    // search từ ngày đến ngày. search chi tiêt trả. chi tiêt nơ. mặt định chu kỳ nợ = 0
-    // search chu ký nợ = 1. những nợ đã tất toán.
-    // search có ghi chú là tất toán.
-    if(this.khdtoService.kbnflg === false) {
-       this.ngaybatdau = null;
-       this.ngayketthuc = null;
-       this.btnshowmodalkh = false;
-       this.idkhachhang = "";
-       this.tenkhachhang = "";
-       this.sdtkhachhang = "";
-       this.diachikhachhang = "";
-       this.sotienno = 0;
-       this.status = '0'
-       this.btntattoan = true;
-       this.btnthanhtoanmotphan = true;
-       this.btnsearch = true;
-    } else {
-      this.btnshowmodalkh = true;
-      this.idkhachhang = this.khdtoService.id;
-      this.tenkhachhang = this.khdtoService.name;
-      this.sotienno = this.khdtoService.sotienno;
-      this.sdtkhachhang = this.khdtoService.dienthoai;
-      this.diachikhachhang = this.khdtoService.diachi;
-      this.status = '0';
-      this.btntattoan = false;
-      this.btnthanhtoanmotphan = true;
-      this.btnsearch = false;
-    }
-
     // lay ngay giơ mặc chua
     this.initTable();
-    this.cdf.markForCheck();
   }
 
   getDataList(e?: NzTableQueryParams) {
+    this.checkedCashArray = [];
     this.tableLoading(true);
     this.searchParam.ngaybatdau = this.formatDate(this.ngaybatdau);
     this.searchParam.ngayketthuc = this.formatDate(this.ngayketthuc);
@@ -205,89 +170,103 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
       this.tableConfig.pageIndex = pageNum!;
       this.tableLoading(false);
       this.checkedCashArray = [...this.checkedCashArray];
-      this.showbtn();
+      this.showbtnxuatPdf();
     })
   }
 
   // 
-  showbtn() {
-    if(this.dataList.length > 0) {
-      this.btntattoan = false;
-      this.btnthanhtoanmotphan = false;
+  showbtnxuatPdf() {
+    if(this.sotienno > 0 && this.checkedCashArray.length > 0) {
+      this.showConfirm = true;
     } else {
-      this.btntattoan = true;
-      this.btnthanhtoanmotphan = true;
-    }
-    let checkStatus05 = false;
-    for(let element of this.dataList) {
-      if(element['status05'] != "") {
-        checkStatus05 = true;
-        break;
-      }
-    } 
-    if(checkStatus05 == true) {
-      this.btnxuatpdf = true;
-    } else {
-      this.btnxuatpdf = false;
+      this.showConfirm = false;
+
     }
   }
 
-  // show btn table
-  showBtnTable(trangthai: number): showbtnTable {
-    let btn = new showbtnTable();
-    switch(trangthai) {
-      case 0 : {
-        btn.btnthanhtoan = false;
-        btn.btnduyet = true;
-      }; break;
-      case 1 : {
-        btn.btnthanhtoan = true;
-        btn.btnduyet = false;
-      }; break;
-      case 2 : {
-        btn.btnduyet = true;
-        btn.btnthanhtoan = true;
-      }
-    }
-    return btn;
-  }
 
   // thanh toán một đơn hàng
-  thanhtoan(pnh: any, status01: any) {
-    this.modalSrv.confirm({
-      nzTitle: 'Bạn có chắc chắn muốn thanh toán đơn hàng này?',
-      nzContent: 'Nhấn OK để hoàn thành',
-      nzOnOk: () => {
-
+  thanhtoan() {
+    this.spkh00201subthanhtoanService.show({nzTitle: "Thanh toán đơn hàng"}).subscribe(res => {
+      if (!res || res.status === ModalBtnStatus.Cancel) {
+        return;
       }
+      const param = { ...res.modalValue };
+      switch(param['type']) {
+        case 'A' : this.thanhtoanhoadon(param['sohdttcnkh']); break;
+        case 'B' : this.huythanhtoan(param['sohdttcnkh']); break;
+        case 'C' : this.phathanhlai(param['sohdttcnkh']); break;
+        case 'D' : this.huyphathanh(param['sohdttcnkh']); break;
+      }
+    })
+
+  }
+
+  // thanh toan công nợ khách hàng
+  thanhtoanhoadon(sohdttcnkh: string): void {
+    this.dataService.thanhtoanhoadon(sohdttcnkh)
+    .subscribe(res => {
+      if(res === 1) {
+       return  this.modalSrv.success({nzTitle: "Thanh toán thành công !"})
+      }
+      return this.modalSrv.error({nzTitle: "Số hóa đơn không hợp lệ !", nzContent: "Vùi lòng liên lệ bộ phận kỷ thuất để hổ trợ"})
     })
   }
 
-  capnhat(idNhatkykh: any,idphieunhaphang: any, status01: any) {
-    if(status01 == "") {
-      // nhap dơn hàng xe nhà
-      // 1. cập nhật "tiencuoc" trong table phieunhaphang
-      // 2. cập nhật "tiencuoc" trong table nhatkykh
-      // 3. ghi nhật ký hệ thông có thay đổi tiền cước
-      this.modalspch00201xenhaService.show({nzTitle: "Cập nhật tiền cước"},{tiencuoc:idphieunhaphang['tiencuoc']}).subscribe(
+  // hủy thanh toán cộng nợ khách hàng
+  huythanhtoan(sohdttcnkh: string): void {
+    this.dataService.huythanhtoan(sohdttcnkh)
+    .subscribe(res => {
+      if(res === 1) {
+        return  this.modalSrv.success({nzTitle: "Hủy thanh toán thành công !"})
+      }
+      return this.modalSrv.error({nzTitle: "Số hóa đơn không hợp lệ !", nzContent: "Vùi lòng liên lệ bộ phận kỷ thuất để hổ trợ"})
+    })
+  }
+
+  // phát hành lại cộng nợ
+  phathanhlai(sohdttcnkh: string): void {
+    this.dataService.phathanhlai(sohdttcnkh)
+    .subscribe(res => {
+      if(res) {
+        // goi hàm phat hành lại
+        this.fnphathanhdonhang(res);
+        return  this.modalSrv.success({nzTitle: "Phát hành lại thành công !"})
+      }
+      return this.modalSrv.error({nzTitle: "Số hóa đơn không hợp lệ !", nzContent: "Vùi lòng liên lệ bộ phận kỷ thuất để hổ trợ"})
+    })
+  }
+
+  // hủy phat hành lại công nợ
+  huyphathanh(sohdttcnkh: string): void {
+    this.dataService.huyphathanh(sohdttcnkh)
+    .subscribe(res => {
+      if(res === 1) {
+        return  this.modalSrv.success({nzTitle: "Hủy phát hành thành công !"})
+      }
+      return this.modalSrv.error({nzTitle: "Số hóa đơn không hợp lệ !", nzContent: "Vùi lòng liên lệ bộ phận kỷ thuất để hổ trợ"})
+    })
+  }
+
+  // cập nhật tiền cược
+  capnhat(soID: string, tiencuoc: number): void {
+      this.modalspch00201xenhaService.show({nzTitle: "Cập nhật tiền cước"},{tiencuoc:tiencuoc}).subscribe(
         res => {
           if (!res || res.status === ModalBtnStatus.Cancel) {
             return;
           }
           const param = { ...res.modalValue };
-          if(param['tiencuoc'] == idphieunhaphang['tiencuoc']) {
+          if(param['tiencuoc'] == tiencuoc) {
             this.modalSrv.info({nzTitle: "Bạn chưa thay đổi tiền cước !"})
             return;
           } 
 
           let req = {
-            "soID": idphieunhaphang["soID"],
-            "idNhatkykh" : idNhatkykh,
+            "soID": soID,
             "tiencuocupdate": param['tiencuoc'],
             "lydo": param['lydo']
           }
-          this.spch00201Service.updateTiencuocxenha(req).subscribe(res=> {
-            console.log(res);
+          this.spch00201Service.updateTiencuocSoID(req).subscribe(res=> {
             if(res == 1) {
               this.message.success("Thực hiện thành công !");
               this.getDataList();
@@ -295,57 +274,6 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
           })
         }
       )
-    } else {
-      // cập nhật dơn hàng xe ngoai
-      // 1. cập nhật "tiencuoc" trong table nhatkykh
-      // 2. cập nhật "tiencuoc" trong table chitietchuyenngoai
-      this.modalspch00201xenhaService.show({nzTitle: "Cập nhật tiền cước"},{tiencuoc:idphieunhaphang['tiencuoc']}).subscribe(
-        res=>{
-          if (!res || res.status === ModalBtnStatus.Cancel) {
-            return;
-          }
-          const param = { ...res.modalValue };
-          if(param['tiencuoc'] == idphieunhaphang['tiencuoc']) {
-            this.modalSrv.info({nzTitle: "Bạn chưa thay đổi tiền cước !"})
-            return;
-          } 
-          let req = {
-            "idNhatkykh" : idNhatkykh,
-            "idchuyenngoai": idphieunhaphang['idchuyenngoai'], 
-            "sdtnguoinhan": idphieunhaphang['sdtnguoinhan'],
-            "tenhang": idphieunhaphang['tenhang'],
-            "tiencuoc": idphieunhaphang['tiencuoc'],
-            "tiencuocupdate":  param['tiencuoc'],
-            "lydo": param['lydo']
-          }
-
-          this.spch00201Service.updateTiencuocxengoai(req).subscribe(res => {
-            console.log(res);
-            if(res == 1) {
-              this.message.success("Thực hiện thành công !");
-              this.getDataList();
-            }
-          })
-        }
-      )
-    }
-  }
-
-  // duyet thanh toán
-  duyetthanhtoan(id: string) {
-
-  }
-
-  // tất toán tất cả các đơn hàng
-  tattoan() {
-    this.modalSrv.confirm({
-      nzTitle: 'Bạn có chắc chắn muốn Tất toán?',
-      nzContent: 'Nhấn OK để hoàn thành',
-      nzOnOk: () => {
-        this.tableLoading(true);
-       
-      }
-    })
   }
 
   // get detail khach hang
@@ -359,40 +287,6 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
       })
   }
 
-  // thanh toán các đơn hàng được chọn
-  thanhtoanmotphan() {
-    if(this.searchParam.iduser == "" || this.searchParam.iduser == null || this.searchParam.iduser == undefined) {
-      this.modalSrv.info({nzTitle:"Vui lòng Chọn khách hang cần thanh toán !"});
-      return;
-    }
-    let listIdPN: NzSafeAny[] = [];
-    let checksoodc = false;
-    let checkdetailsoodc = false;
-    let soodc = "";
-    for(let element of this.dataList) {
-      if(element['_checked'] == true) {
-        if(element['idphieunhaphang']['idchuyen']) {
-          listIdPN.push(element['idphieunhaphang']['_id']);
-        } else {
-          listIdPN.push(element['status01']);
-        }
-
-      }
-
-    }
-    if(listIdPN.length == 0) {
-      this.modalSrv.info({nzTitle:"Vùi lòng tích vào đơn hàng !"});
-      return;
-    }
-
-    this.modalSrv.confirm({
-      nzTitle: 'Bạn có chắc chắn muốn thanh toán không ?',
-      nzContent: 'Nhấn OK để hoàn thành việc thanh toán',
-      nzOnOk: () => {
-       
-      }
-    })
-  }
 
   resetForm() {
     this.searchParam = {};
@@ -416,6 +310,8 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
         this.idkhachhang = param['id'];
         this.stocktenkhachhang = param['id'];
         this.tenkhachhang = param['name'];
+        this.sdtkhachhang = param['sodienthoai'];
+        this.diachikhachhang = param['diachi']
         this.commonService.tongnoUser({iduser:param['id']}).subscribe(res=>{
            this.sotienno = res;
            this.cdf.detectChanges();
@@ -442,6 +338,7 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
 
   selectedChecked(e: any): void {
     this.checkedCashArray = [...e];
+    this.showbtnxuatPdf();
   }
 
   changePageSize(e: number): void {
@@ -524,24 +421,55 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
     };
   }
 
-    // data exprot pdf
+  async fnphathanhdonhang(res: NzSafeAny)  {
+    let data: NzSafeAny[] = [];
+    for(let element of res['lstData']) {
+      let item = [
+        this.formatDate(element['ngaynhapthucte']),
+        element['tenhang'],
+        this.displayVND(element['tiencuoc']),
+        element['soluong'],
+        element['khoiluong'],
+        element['trongluong'],
+        element['nguoiphathanh']
+      ]
+      data.push(item);
+    }
+
+    let title = "Công nợ " + res['header'].tenkhachhang;
+    let header= [['Ngày nhập hàng','Tên Hàng', "Tiền cước", "Số lượng", "Trọng lượng", "Khối lượng", "Người phát hành"]];
+    this.pdfService.clearHeader();
+    let headerlayout = Const.headerLayout;
+    headerlayout[0]['field'] = 'Kính gửi:';
+    headerlayout[0]['value'] = res['header'].tenkhachhang;
+    headerlayout[1]['field'] = 'Số điện thoại:';
+    headerlayout[1]['value'] = res['header'].sdtkhachhang;
+    headerlayout[2]['field'] = 'Địa chỉ:';
+    headerlayout[2]['value'] = res['header'].diachi;
+    headerlayout[3]['field'] = 'Tổng tiền thanh toán:';
+    headerlayout[3]['value'] =  this.displayVND(res['header'].tongcuoc);
+    headerlayout[4]['field'] = 'Số HDTTCNKH:';
+    headerlayout[4]['value'] =  this.displayOD(res['header'].sohdttcnkh);
+    await this.pdfService.exportPDF(header,headerlayout,data,title,this.getDate(),"Bên thanh toán","Bên Vận Chuyển",res['header'].sohdttcnkh);
+
+  }
+
+  // data exprot pdf
   generateData() {
     let data : any[] = [];
     for(let element of this.dataList) {
       if(element['_checked'] == true) {
-        let nddh = "";
-        if(element['status01'] == '') {
-           nddh = element['idphieunhaphang']['tenhang']
-           
-        } else {
-           nddh = element['idphieunhaphang']['tenhang']
-        }
         let item = [
-          this.formatDate(element['ngay']),
-          nddh,
-          this.displayVND(element['sotien']) 
+          this.formatDate(element['ngaynhapthucte']),
+          element['tenhang'],
+          this.displayVND(element['tiencuoc']),
+          element['soluong'],
+          element['khoiluong'],
+          element['trongluong'],
+          element['nguoiphathanh']['name']
         ]
         data.push(item);
+        
       }
     }
     return data;
@@ -551,10 +479,10 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
   xuatpdf() {
     if(this.generateData().length > 0) {
       // get odc 
-      this.commonService.getODC().pipe()
+      this.commonService.getSoHDTTCNKH().pipe()
       .subscribe(async res => {
         let title = "Công nợ " + this.tenkhachhang;
-        let header= [['Ngày Vận Chuyển','Thông Tin Đơn Hàng', "Tiền cước"]];
+        let header= [['Ngày nhập hàng','Tên Hàng', "Tiền cước", "Số lượng", "Trọng lượng", "Khối lượng", "Người phát hành"]];
         this.pdfService.clearHeader();
         let headerlayout = Const.headerLayout;
         headerlayout[0]['field'] = 'Kính gửi:';
@@ -565,28 +493,31 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
         headerlayout[2]['value'] = this.diachikhachhang;
         headerlayout[3]['field'] = 'Tổng tiền thanh toán:';
         headerlayout[3]['value'] =  this.displayVND(this.fnTongCuoc());
-        headerlayout[4]['field'] = 'Số ODC:';
+        headerlayout[4]['field'] = 'Số HDTTCNKH:';
         headerlayout[4]['value'] =  this.displayOD(res);
         await this.pdfService.exportPDF(header,headerlayout,this.generateData(),title,this.getDate(),"Bên thanh toán","Bên Vận Chuyển",res);
         // update so odc cho các don hàng đã exprot
-        let lstId = [];
-        for(let element of this.dataList) {
-           lstId.push(element['id']);
+        let lstsoID = [];
+        for(let element of this.checkedCashArray) {
+          lstsoID.push(element['soID']);
         }
         let req = {
-          lstId : lstId,
-          soodc : res,
+          lstsoID : lstsoID,
+          SoHDTTCNKH : res,
           idkhachhang:this.idkhachhang,
           tongcuoc: this.fnTongCuoc()
         }
-        // update soodc vào trong trường status05
-        // this.dataService.UpdateStauts05(req).pipe()
-        // .subscribe(res=> {
-        //   if(res == 1) {
-        //     this.modalSrv.info({nzTitle: "Cập nhật thành công !"});
-        //     this.getDataList();
-        //   }
-        // })
+
+        this.dataService.xuatpdf(req)
+        .pipe(
+          finalize(() => {
+            this.tableLoading(false);
+          })
+        )
+        .subscribe(res => {
+          console.log(res);
+          this.getDataList();
+        })
       })
      
     } else {
@@ -597,8 +528,8 @@ export class Spkh00201Component extends BaseComponent implements OnInit {
 
   fnTongCuoc() {
     let tongcuoc = 0;
-    for(let element of this.dataList) {
-        tongcuoc = tongcuoc + element['sotien'];
+    for(let element of this.checkedCashArray) {
+        tongcuoc = tongcuoc + element['tiencuoc'];
     }
     return tongcuoc;
   }

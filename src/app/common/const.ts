@@ -97,7 +97,7 @@ export const CommonAnt100Listtopchiphi = "common/commonAnt100Listtopchiphi";
 export const CommonAnt100Listtoptongcuoctungxe = "common/commonAnt100Listtongcuoctungxe";
 export const CommonAnt100GetODN = "common/commonAnt100GetODN";
 export const CommonAnt100GetODT = "common/commonAnt100GetODT";
-export const CommonAnt100GetODC = "common/commonAnt100getODC";
+export const CommonAnt100GetSoHDTTCNKH = "common/commonAnt100getSoHDTTCNKH";
 export const CommonAnt100GetHDTTXN = "common/commonAnt100getHDTTXN";
 export const CommonAnt100GetListSoID = "common/commonAnt100getListSoID";
 
@@ -201,6 +201,7 @@ export const ChuyenAnt100Create = 'chuyen/chuyenAnt100create';
 export const ChuyenAnt100Delete = 'chuyen/chuyenAnt100delete';
 export const ChuyenAnt100DeleteAll = 'chuyen/chuyenAnt100deleteAll';
 export const ChuyenAnt100UpdateTrangthai = 'chuyen/chuyenAnt100updateTrangthai';
+export const ChuyenAnt100Hoanthanhchuyenhang = 'chuyen/chuyenAnt100Hoanthanhchuyenhang';
 export const ChuyenAnt100SearchParams = 'chuyen/chuyenAnt100searchParams';
 
 // phieu nhap hang 
@@ -230,6 +231,12 @@ export const KhachhangAnt100GetDetail = 'khachhang/khachhangAnt100getDetail';
 
 // nhatkykh
 export const Spkh00201Ant100GetAll = 'spkh00201/spkh00201Ant100getAll';
+export const Spkh00201Ant100XuatPdf = 'spkh00201/spkh00201Ant100XuatPdf';
+export const Spkh00201Ant100Thanhtoan = 'spkh00201/spkh00201Ant100Thanhtoan';
+export const Spkh00201Ant100Huythanhtoan = 'spkh00201/spkh00201Ant100Huythanhtoan';
+export const Spkh00201Ant100Phathanhlai = 'spkh00201/spkh00201Ant100Phathanhlai';
+export const Spkh00201Ant100Huyphathanh = 'spkh00201/spkh00201Ant100Huyphathanh';
+
 export const NhatkykhAnt100PostTattoan = 'nhatkykh/nhatkykhAnt100postTattoan';
 export const NhatkykhAnt100PostThanhtoanmotphan = 'nhatkykh/nhatkykhAnt100postThanhtoanmotphan';
 export const NhatkykhAnt100PostThanhtoan = 'nhatkykh/nhatkykhAnt100postThanhtoan';
@@ -309,8 +316,8 @@ export const Spin00601Ant100Xuatcsv = "spin00601/spin00601Ant100Xuatcsv";
 
 // spch00201 cập nhât tiền cươc
 //spch00201Ant100UpdateTiencuocxenha
-export const Spch00201Ant100UpdateTiencuocxenha = "spch00201/spch00201Ant100UpdateTiencuocxenha";
-export const Spch00201Ant100UpdateTiencuocxengoai = "spch00201/spch00201Ant100UpdateTiencuocxengoai";
+export const Spch00201Ant100UpdateTiencuocSoID = "spch00201/spch00201Ant100UpdateTiencuocSoID";
+
 
 // spch00251 
 export const Spch00251Ant100Huychuyenngoai = "spch00251/spch00251Ant100Huychuyenngoai";

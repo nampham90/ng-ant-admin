@@ -67,9 +67,9 @@ export class CommonService {
   getODT(): Observable<any> {
     return this.http.post(Const.CommonAnt100GetODT, { needSuccessInfo: false});
   }
-  /// get ODc
-  getODC(): Observable<any> {
-    return this.http.post(Const.CommonAnt100GetODC, { needSuccessInfo: false});
+  /// get SoHDTTCNKH
+  getSoHDTTCNKH(): Observable<any> {
+    return this.http.post(Const.CommonAnt100GetSoHDTTCNKH, { needSuccessInfo: false});
   }
 
   /// get HDTTXN

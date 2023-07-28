@@ -14,7 +14,7 @@ export class ChuyenngoaidtoService {
   sdtnguonxe  = ""; // so dien thoai nguon xe
   tentaixe = ""; // tài xế
   sodienthoai = "";// điện thoại tài xế
-  listdetail = [];
+  listID = [];
   status01 = 0; // 0. chuyến đang hoat động. 1. chuyến đã kết thúc
   status02 = 0;
   status03 = 0;
@@ -35,7 +35,7 @@ export class ChuyenngoaidtoService {
     this.biensoxe = "";
     this.sdtnguonxe = "";
     this.tentaixe = "";
-    this.listdetail = [];
+    this.listID = [];
     this.status01 = 0; // 0. chuyến đang hoat động. 1. chuyến đã kết thúc
     this.status02 = 0;
     this.status03 = 0;
