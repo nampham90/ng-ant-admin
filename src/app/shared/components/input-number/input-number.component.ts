@@ -19,7 +19,7 @@ export class InputNumberComponent implements OnInit {
 
   @Input()
   set Number(value: NzSafeAny) {
-    this._number = this.decimalPipe.transform(value,"1.0-0");;
+    this._number = this.decimalPipe.transform(value,"1.0-0");
   }
 
   get Number(): NzSafeAny {
