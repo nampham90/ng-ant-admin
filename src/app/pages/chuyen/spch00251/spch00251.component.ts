@@ -83,7 +83,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   searchParam: Partial<SearchParam> = {};
   dateFormat = Const.dateFormat;
   tableConfig!: MyTableConfig;
-  dataList: any[] = [];
+  dataList: Phieunhaphang[] = [];
   checkedCashArray: any[] = [];
   ActionCode = ActionCode;
   availableOptions: OptionsInterface[] = [];
@@ -127,10 +127,8 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   sodienthoai = "";
   ghichu = "";
 
-  listPNH: Phieunhaphang[] = []
-
-  listdetail: Chitietchuyenngoai[] = [];
-  ctchuyenngoai!: Chitietchuyenngoai;
+  listID: Phieunhaphang[] = []
+  ctchuyenngoai!: Phieunhaphang;
 
   // disbale
   disabledidchuyenngoai = true;
@@ -165,9 +163,9 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         this.tableLoading(true);
         this.dataService.postDetail({id:this.chuyenngoaiDto.id}).pipe()
         .subscribe(data => {
-            this.listdetail = [...data.listdetail];
+            this.listID = [...data.listID];
             let stt = 1;
-            for(let element of this.listdetail) {
+            for(let element of this.listID) {
               element.stt = stt;
               stt++;
             }
@@ -183,9 +181,9 @@ export class Spch00251Component extends BaseComponent implements OnInit {
        this.tableLoading(true);
        this.dataService.postDetail({id:this.chuyenngoaiDto.id}).pipe()
         .subscribe(data => {
-            this.listdetail = [...data.listdetail];
+            this.listID = [...data.listID];
             let stt = 1;
-            for(let element of this.listdetail) {
+            for(let element of this.listID) {
               element.stt = stt;
               stt++;
             }
@@ -214,15 +212,15 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   }
 
   // check htttxengoai và tiencuocxengoai trước khi đem đi tạo
-  fnCheckDataList() {
-    for(let element of this.dataList) {
-      if(element['htttxengoai'] == "" || element['tiencuocxengoai'] == 0) {
-        return true;
-        break;
-      }
-    }
-    return false;
-  }
+  // fnCheckDataList() {
+  //   for(let element of this.dataList) {
+  //     if(element['htttxengoai'] == "" || element['tiencuocxengoai'] == 0) {
+  //       return true;
+  //       break;
+  //     }
+  //   }
+  //   return false;
+  // }
 
   fnBtnConfirm() {
     if(this.headerForm.value.id && this.chuyenngoaiDto.id == "" && this.headerForm.value.id.length == 24) {
@@ -244,13 +242,13 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         }
       } else {
         // check dataList trước khi gửi đi tạo
-        if(this.fnCheckDataList()== true) {
-          this.modalSrv.info({
-            nzTitle: "Vui lòng cập nhật đơn hàng",
-            nzContent: "Nôi dung cần cập nhật\n 1. Tiền cước xe ngoài\n 2. Httt xe ngoài"
-          });
-          return;
-        }
+        // if(this.fnCheckDataList()== true) {
+        //   this.modalSrv.info({
+        //     nzTitle: "Vui lòng cập nhật đơn hàng",
+        //     nzContent: "Nôi dung cần cập nhật\n 1. Tiền cước xe ngoài\n 2. Httt xe ngoài"
+        //   });
+        //   return;
+        // }
         mode = "create";
         title = "Bạn chắc chắn dữ liệu bạn tạo đã đúng chưa !";
         content = "Nhấn ok để hoàn thành công việc !";
@@ -268,9 +266,9 @@ export class Spch00251Component extends BaseComponent implements OnInit {
           .pipe()
           .subscribe(res => {
               this.tableLoading(true);
-              this.listdetail = res.reslistdetail
+              this.listID = res.reslistdetail
               let stt = 1;
-              for(let element of this.listdetail) {
+              for(let element of this.listID) {
                 element.stt = stt;
                 stt++;
               }
@@ -278,7 +276,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
               this.getDataList();
               this.chuyenngoaiDto.initFlg = false;
               this.chuyenngoaiDto.mode = "update";
-              this.chuyenngoaiDto.listdetail = res.reslistdetail;
+              this.chuyenngoaiDto.listID = res.reslistdetail;
               if(mode == "create") {
                 this.message.success("Đăng ký thành công !");
                 this.showHuychuyenngoai = true;
@@ -314,7 +312,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
             this.message.success("Hủy thành công !")
             this.headerForm.reset();
             this.dataList = [];
-            this.listdetail = [];
+            this.listID = [];
             this.chuyenngoaiDto.clear();
           }
         });
@@ -333,6 +331,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
       biensoxe: [null, [Validators.required]],
       tentaixe: [null, [Validators.required]],
       sodienthoai: [null, [Validators.required]],
+      hinhthucthanhtoan: ["0", [Validators.required]],
       ghichu: [""]
     })
   }
@@ -408,16 +407,15 @@ export class Spch00251Component extends BaseComponent implements OnInit {
 
   getDataList(e?: NzTableQueryParams) {
     this.tableLoading(true);
-    if (this.listdetail.length > 0) {
-      this.dataList = [...this.listdetail];
-      console.log(this.dataList);
+    if (this.listID.length > 0) {
+      this.dataList = [...this.listID];
       this.tableLoading(false);
     } else {
       this.tableLoading(false);
     }
   }
 
-  selectedChecked(e: Chitietchuyenngoai[]): void {
+  selectedChecked(e: Phieunhaphang[]): void {
     this.checkedCashArray = [...e];
   }
 
@@ -439,8 +437,8 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   getListsoId() {
     let listsoId = [];
     for(let element of this.dataList) {
-      if(element['soid'] && element['soid'] != "") {
-        listsoId.push(element['soid'])
+      if(element.soID && element.soID != "") {
+        listsoId.push(element.soID)
       }
     }
     return listsoId;
@@ -461,7 +459,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   getListDetailFromKho(listIDs: string[]): void{
     for(let element of listIDs) {
       this.phieunhaphangService.getDetailsoID(element).subscribe(res => {
-        let item: Chitietchuyenngoai = this.fnmergePNHtoCTCN(res);
+        let item: Phieunhaphang = this.fnmergePNHtoCTCN(res);
         this.mergeDetail(item);
         this.addListDetail();
         this.getDataList();
@@ -470,12 +468,11 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     }
   }
 
-  fnmergePNHtoCTCN(pnh: Phieunhaphang): Chitietchuyenngoai {
-    let ctcn: Chitietchuyenngoai = {
+  fnmergePNHtoCTCN(pnh: Phieunhaphang): Phieunhaphang {
+    let ctcn: Phieunhaphang = {
         stt: 0,
         idchuyenngoai: null,
-        nguonxe: null,
-        soid : pnh.soID,
+        soID : pnh.soID,
         tenhang : pnh.tenhang!,
         soluong : pnh.soluong!,
         trongluong : pnh.trongluong!,
@@ -483,15 +480,13 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         donvitinh : pnh.donvitinh!,
         diadiembochang : pnh.diadiembochang!,
         tiencuoc : pnh.tiencuoc!,
-        tiencuocxengoai : 0,
-        htttxengoai : "",
-        idkhachhang : pnh.iduser!,
-        htttkhachhang : pnh.hinhthucthanhtoan!,
+        status02 : 0,
+        iduser : pnh.iduser!,
+        hinhthucthanhtoan : pnh.hinhthucthanhtoan!,
         sdtnguoinhan : pnh.sdtnguoinhan!,
         tennguoinhan : pnh.tennguoinhan!,
         diachinguoinhan : pnh.diachinguoinhan!,
-        ghichu : pnh.ghichu,
-        chiphidvtn : this.tongcptnPNH(pnh), // tong chi phi thue ngaoi
+        ghichu : pnh.ghichu
     };
 
     return ctcn;
@@ -520,33 +515,63 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   }
 
 
-  edit(stt: any) {
-    let res : any;
-    for (let element of this.dataList) {
-      if(element["stt"] === stt) {
-        res = element;
-      }
-    }
-    this.subwinCtChuyenngoaiService.show({ nzTitle: 'Cập nhật' }, res).subscribe(({ modalValue, status }) => {
+  edit(id: string,stt: number,soID: string,tenhang: string,iduser:string,diadiembochang:string,soluong:number,trongluong:number,khoiluong:number,tiencuoc:number,donvitinh:string, status02:number,hinhthucthanhtoan:string,tennguoinhan:string,sdtnguoinhan:string,diachinguoinhan:string,ghichu:string,status03:number):void {
+    let item : Phieunhaphang = {
+       id: id,
+       stt: stt,
+       soID: soID,
+       tenhang: tenhang,
+       iduser: iduser,
+       diadiembochang: diadiembochang,
+       soluong: soluong,
+       trongluong: trongluong,
+       khoiluong: khoiluong,
+       tiencuoc: tiencuoc,
+       donvitinh: donvitinh,
+       status02: status02,
+       hinhthucthanhtoan: hinhthucthanhtoan,
+       tennguoinhan: tennguoinhan,
+       sdtnguoinhan: sdtnguoinhan,
+       diachinguoinhan: diachinguoinhan,
+       ghichu: ghichu,
+       status03: status03
+    };
+    soID != "" ? this.updatePNHFromKho(item) : this.updatePNHNew(item);
+  }
+
+  // showupdate phiếu nhập hàng tạo mơi
+  updatePNHNew(pnh: Phieunhaphang) :void {
+    this.subwinCtChuyenngoaiService.show({ nzTitle: 'Cập nhật' }, pnh).subscribe(({ modalValue, status }) => {
       if (status === ModalBtnStatus.Cancel) {
         return;
       }
       this.tableLoading(true);
-      modalValue.stt = stt;
+      modalValue.stt = pnh.stt;
       this.mergeUpdateList(modalValue);
       this.getDataList();
       this.message.info("Click Confirm để hoàn thành cập nhật ");
     })
   }
 
-  del(stt:any) {
+  // show update phiêu nhâp hàng từ kho
+  updatePNHFromKho(pnh: Phieunhaphang): void {
+    pnh.status04 = 1;
+    this.subwinCtChuyenngoaiService.show({nzTitle: 'Cập nhật'},pnh).subscribe(({ modalValue, status }) => {
+      if (status === ModalBtnStatus.Cancel) {
+        return;
+      }
+      console.log(modalValue);
+    })
+  }
+
+  del(stt: number) {
     this.modalSrv.confirm({
       nzTitle: 'Bạn có chắc chắn muốn xóa nó không?',
       nzContent: 'Không thể phục hồi sau khi xóa',
       nzOnOk: () => {
         this.tableLoading(true);
-        this.listdetail = this.listdetail.filter(item => item['stt'] !== stt);
-        this.dataList = [...this.listdetail];
+        this.listID = this.listID.filter(item => item['stt'] !== stt);
+        this.dataList = [...this.listID];
         this.showBtnConfirm();
         this.tableLoading(false);
       }
@@ -567,17 +592,17 @@ export class Spch00251Component extends BaseComponent implements OnInit {
 
   addListDetail() {
     if(this.ctchuyenngoai){
-       this.listdetail = this.listdetail.concat(this.ctchuyenngoai);
+       this.listID = this.listID.concat(this.ctchuyenngoai);
     }
   }
 
-  mergeDetail(ctdetail: Chitietchuyenngoai) {
+  mergeDetail(ctdetail: Phieunhaphang) {
     let stt: number = 0;
-    let n = this.listdetail.length;
+    let n = this.listID.length;
     if (n == 0) {
        stt = 1;
     } else {
-      let sttthn = this.listdetail[n-1].stt;
+      let sttthn = this.listID[n-1].stt;
       if(sttthn && sttthn > 0) {
         stt = sttthn + 1;
       }
@@ -588,7 +613,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   }
 
   mergeUpdateList(ctdetail: any) {
-    for(let element of this.listdetail) {
+    for(let element of this.listID) {
       if(element.stt == ctdetail.stt) {
         element.tenhang = ctdetail['tenhang'];
         element.soluong = ctdetail['soluong'];
@@ -597,15 +622,14 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         element.donvitinh = ctdetail['donvitinh'];
         element.diadiembochang = ctdetail['diadiembochang'];
         element.ghichu = ctdetail['ghichu'];
-        element.idkhachhang = ctdetail['idkhachhang']
-        element.htttkhachhang = ctdetail['htttkhachhang'];
-        element.htttxengoai = ctdetail['htttxengoai'];
+        element.iduser = ctdetail['iduser']
+        element.hinhthucthanhtoan = ctdetail['hinhthucthanhtoan'];
         element.sdtnguoinhan = ctdetail['sdtnguoinhan'];
         element.tennguoinhan = ctdetail['tennguoinhan'];
         element.diachinguoinhan = ctdetail['diachinguoinhan'];
         element.tiencuoc = ctdetail['tiencuoc'];
-        element.status02 = ctdetail['status02'];
-        element.tiencuocxengoai = ctdetail['tiencuocxengoai'];
+        element.status02 = ctdetail['tiencuocxengoai'];
+        element.soID = ""
       }
     }
   }
@@ -618,6 +642,11 @@ export class Spch00251Component extends BaseComponent implements OnInit {
           title: 'STT',
           field: 'stt',
           width: 80,
+        },
+        {
+          title: "Số ID",
+          width: 150,
+          field: 'soID'
         },
         {
           title: 'Tên hàng',
@@ -655,26 +684,19 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         {
           title: "CP Dịch vu thuê ngoài",
           width: 160,
-          field: "chiphidvtn",
+          field: "cpdvtncd",
           tdTemplate: this.chiphidvtnTpl
         },
         {
           title: 'Tiền thuê xe ngoài',
           width: 250,
-          field: 'tiencuocxengoai',
+          field: 'status02',
           tdTemplate: this.tiencuocxengoaiTpl
-        },
-        {
-          title: 'HTTT xe ngoài',
-          width: 200,
-          field: 'htttxengoai',
-          tdTemplate: this.htttxengoaiTpl
-
         },
         {
           title: 'HTTT khách hàng',
           width: 200,
-          field: 'htttkhachhang',
+          field: 'hinhthucthanhtoan',
           tdTemplate: this.htttkhachhangTpl
         },
         {
@@ -700,11 +722,6 @@ export class Spch00251Component extends BaseComponent implements OnInit {
           width: 350,
           field: 'ghichu',
           tdTemplate: this.ghichuTpl
-        },
-        {
-          title: "Số ID",
-          width: 150,
-          field: 'soid'
         },
         {
           title: 'Hành động',

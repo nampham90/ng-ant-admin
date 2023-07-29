@@ -85,8 +85,8 @@ export class Spch00201Component extends BaseComponent implements OnInit {
   }
 
   pageHeaderInfo: Partial<PageHeaderType> = {
-    title: 'Kế hoạch bóc hàng',
-    breadcrumb: ["Home","Chuyến","Kế hoạch bóc hàng"],
+    title: 'Chi tiết chuyến',
+    breadcrumb: ["Home","Chuyến","Chi tiết chuyến"],
     desc: ''
   };
 
@@ -110,8 +110,6 @@ export class Spch00201Component extends BaseComponent implements OnInit {
   btnDelete = false;
 
   btnConfirm = false;
-  btnConfirmbochang = false;
-  btnConfirmtrahang = false;
   btnConfirmchiphi = false;
   btnConfirmend = false;
 
@@ -173,56 +171,22 @@ export class Spch00201Component extends BaseComponent implements OnInit {
   fnshowConfirm(trangthai: number) {
     switch(trangthai) {
       case 0 : {
-        this.btnConfirm = true;
-        this.btnConfirmbochang = false;
-        this.btnConfirmtrahang = false;
-        this.btnConfirmchiphi = false;
+        this.btnConfirmchiphi = true;
         this.btnConfirmend = false;
       }; break;
       case 1 : {
-        this.btnConfirm = false;
-        this.btnConfirmbochang = true;
-        this.btnConfirmtrahang = false;
-        this.btnConfirmchiphi = false;
-        this.btnConfirmend = false;
-      }; break;
-      case 2 : {
-        this.btnConfirm = false;
-        this.btnConfirmbochang = false;
-        this.btnConfirmtrahang = true;
-        this.btnConfirmchiphi = false;
-        this.btnConfirmend = false;
-      }; break;
-      case 3 : {
-        this.btnConfirm = false;
-        this.btnConfirmbochang = false;
-        this.btnConfirmtrahang = false;
-        this.btnConfirmchiphi = true;
-        this.btnConfirmend = false;
-        this.btnNew = true;
-        this.btnUpdate = true;
-        this.btnDelete = false;
-      }; break; 
-      case 4 : {
-        this.btnConfirm = false;
-        this.btnConfirmbochang = false;
-        this.btnConfirmtrahang = false;
         this.btnConfirmchiphi = true;
         this.btnConfirmend = true;
         this.btnNew = true;
-        this.btnUpdate = true;
-        this.btnDelete = false;
+        this.btnDelete = true;
       }; break;
-      case 5 : {
-        this.btnConfirm = false;
-        this.btnConfirmbochang = false;
-        this.btnConfirmtrahang = false;
+      case 2 : {
         this.btnConfirmchiphi = true;
         this.btnConfirmend = false;
         this.btnNew = true;
-        this.btnUpdate = true;
         this.btnDelete = true;
-      } 
+      }; break;
+
     }
     this.cdf.markForCheck();
   }
@@ -240,8 +204,8 @@ export class Spch00201Component extends BaseComponent implements OnInit {
     this.cdf.markForCheck();
   }
 
-  Confirm4() {
-    if(this.ChuyenDto.trangthai == 5) {
+  tinhchiphi() {
+    if(this.ChuyenDto.trangthai == 2) {
       // show chi phi chuyen 
       let req = {
         id: this.ChuyenDto.id
@@ -275,14 +239,13 @@ export class Spch00201Component extends BaseComponent implements OnInit {
             }
             let req1 = {
               id: req.id,
-              trangthai: 4,
               lstchiphi: modalValue.items
             }
             this.cpcService.updateList(req1).pipe().subscribe(res => {
                 if(res == req1.lstchiphi.length) {
                   this.message.info("Cập nhật thành công !");
-                  this.ChuyenDto.trangthai=4;
-                  this.fnshowConfirm(4);
+                  this.ChuyenDto.trangthai=1;
+                  this.fnshowConfirm(1);
                   // export file pdf
                   this.fnExportDataPDF(this.ChuyenDto.id);
                 } else {
@@ -298,14 +261,14 @@ export class Spch00201Component extends BaseComponent implements OnInit {
             }
             let req1 = {
               id: req.id,
-              trangthai: 4,
-              lstchiphi: modalValue.items
+              lstchiphi: modalValue.items,
+              lstdonhang: this.dataList
             }
             this.dataService.updateTrangthai(req1).pipe().subscribe(res => {
               if (res == 1) {
                  this.message.success(" Thực hiện thành công !");
-                 this.ChuyenDto.trangthai=4;
-                 this.fnshowConfirm(4);
+                 this.ChuyenDto.trangthai=1;
+                 this.fnshowConfirm(1);
                  // export file pdf
                  this.fnExportDataPDF(this.ChuyenDto.id);
               } else {
@@ -423,38 +386,17 @@ export class Spch00201Component extends BaseComponent implements OnInit {
     return tongcp;
   }
 
-  // update trang thai chuyen hang
-  Confirm(trangthai: number) {
-     
-     if (this.ChuyenDto.id != '' && this.ChuyenDto.id.length == 24) {
-      let listKhachNo: Product[] = []
-        let req = {
-          id: this.ChuyenDto.id,
-          trangthai: trangthai,
-          listkhachno: listKhachNo
-        }
-        if(this.dataList.length > 0) {
-          listKhachNo = this.fnGetListKhachNo();
-          if(trangthai == 3) {
-            req['listkhachno'] = listKhachNo
-          }
-          this.dataService.updateTrangthai(req).pipe().subscribe(res => {
-            if (res == 1) {
-               this.message.success(" Thực hiện thành công !");
-               this.ChuyenDto.trangthai = trangthai;
-               this.fnshowConfirm(this.ChuyenDto.trangthai);
-              // fnReload(this.router, Const.rootbase + 'chuyen/spch00101');
-            }else if(res == 0){
-               this.modalSrv.info({nzTitle: "Tài xế chưa hoàn thành trả hàng !"})
-            } else {
-               this.message.success(" Không thành công !");
-            }
-         })
-        } else {
-          this.message.success(" Vui lòng thêm mặt hàng !");
-        }
-        
-     }
+  // update hoàn thanh chuyens hàng
+  Confirm() {
+    // update trang thái chuyên hàng = 2. trạng thái hoàn thành chuyến hàng
+    this.dataService.hoanthanhchuyenhang({id: this.ChuyenDto.id})
+    .subscribe(res => {
+      console.log(res);
+      this.message.success("Đã hoàn thành chuyến hàng");
+      this.ChuyenDto.trangthai = 2;
+      this.fnshowConfirm(2);
+    })
+
   }
 
   // fnGet list khach nợ
@@ -481,7 +423,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
   // add product
   addtrongkho() {
     let listsoID = this.getListsoId(); 
-    this.modalListSoIDService.show({nzTitle: "Danh Hàng tồn kho"},{showcomfirm:false,idchuyen: "NULL",status02: "KHONG",listsoId:listsoID}).subscribe(
+    this.modalListSoIDService.show({nzTitle: "Danh Hàng tồn kho"},{showcomfirm:false,idchuyen: "NULL", trangthai: 1,listsoId:listsoID}).subscribe(
       res => {
         if (!res || res.status === ModalBtnStatus.Cancel) {
           return;
@@ -490,7 +432,6 @@ export class Spch00201Component extends BaseComponent implements OnInit {
           "soIDs": res.modalValue,
           "id": this.ChuyenDto.id,
           "biensoxe": this.ChuyenDto.biensoxe,
-          "lotrinh": 0,
           "soODT": this.ChuyenDto.soODT
         }
         this.spin00601Service.xuatnhieudon(req)
@@ -569,7 +510,6 @@ export class Spch00201Component extends BaseComponent implements OnInit {
       }
     });
   }
-
 
   addEditData(param: Product, methodName: 'update' | 'create'): void {
     this.phhService[methodName](param)
@@ -708,7 +648,7 @@ export class Spch00201Component extends BaseComponent implements OnInit {
         {
           title: 'Tên hàng',
           width: 450,
-          field: 'noidungmathang',
+          field: 'tenhang',
           //tdTemplate: this.noidungdonhangTpl
         },
         {

@@ -67,10 +67,10 @@ export class SubwindowctchuyenngoaiComponent implements OnInit {
       this.setFormStatusByType("enable");
       this.addEditForm.patchValue(this.params);
       this.tiencuocMode = this.params.tiencuoc;
-      if(this.params.soid && this.params.soid != "") {
+      if(this.params.soID && this.params.soID != "") {
          this._disable = true;
       }
-      this.tiencuocxengoaiMode = this.params.tiencuocxengoai;
+      this.tiencuocxengoaiMode = this.params.status02;
     }
   }
 
@@ -83,13 +83,12 @@ export class SubwindowctchuyenngoaiComponent implements OnInit {
       khoiluong: [null],
       donvitinh: [null,[Validators.required]],
       diadiembochang: [null, [Validators.required]],
-      htttxengoai: ["1", [Validators.required]],
-      idkhachhang: ["", [Validators.required]],
-      htttkhachhang: ["1",[Validators.required]],
-      tennguoinhan:[null,[Validators.required]],
-      sdtnguoinhan:[null, [Validators.required, this.validatorsService.mobileValidator()]],
-      diachinguoinhan: [null,[Validators.required]],
-      status02: ["1",[Validators.required]],
+      iduser: ["", [Validators.required]],
+      hinhthucthanhtoan: ["1",[Validators.required]],
+      tennguoinhan:[null],
+      sdtnguoinhan:[null],
+      diachinguoinhan: [null],
+      status03: ["0",[Validators.required]],
       ghichu: [null]
     });
   }

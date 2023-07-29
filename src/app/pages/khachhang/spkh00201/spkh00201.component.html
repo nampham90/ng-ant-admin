@@ -79,28 +79,6 @@
                     </nz-form-item>
                 </div>
             </div>
-            <!-- <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
-                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
-                    <nz-form-item>
-                        <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzFor]="" >Số ODC</nz-form-label>
-                        <nz-form-control [nzXXl]="12" [nzXl]="12" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24" [nzErrorTip]="''">
-                            <input nz-input name="status05" id="status05" [(ngModel)]="searchParam.status05" placeholder=""/>
-                        </nz-form-control>
-                    </nz-form-item>
-                </div>
-                <div nz-col [nzXXl]="8" [nzXl]="8" [nzLg]="8" [nzMd]="12" [nzSm]="24" [nzXs]="24">
-                    <nz-form-item>
-                        
-                        <nz-form-label [nzXXl]="9" [nzXl]="9" [nzLg]="9" [nzMd]="12" [nzSm]="24" [nzXs]="24">Phân loại</nz-form-label>
-                        <nz-form-control [nzXXl]="15" [nzXl]="15" [nzLg]="15" [nzMd]="15" [nzSm]="24" [nzXs]="24">
-                            <nz-radio-group id="ghichu" name="ghichu" [(ngModel)]="searchParam.ghichu">
-                                <label nz-radio nzValue="Nợ">Nợ </label>
-                                <label nz-radio nzValue="Đã thanh toán">Đã thanh toán</label>
-                            </nz-radio-group>
-                        </nz-form-control>
-                    </nz-form-item>
-                </div>
-            </div> -->
         </form>
     </nz-card>
     <app-card-table-wrap [tableTitle]="'Kết quả tìm kiếm'" (reload)="reloadTable()" [btnTpl]="tableBtns" [btnConfirm]="tableConfirm">
@@ -112,53 +90,12 @@
           [tableConfig]="tableConfig"
           [tableData]="dataList"
         ></app-ant-table>
-        <ng-template #operationTpl let-id="id" let-idphieunhaphang="idphieunhaphang" let-status01="status01" let-chukyno="chukyno" let-showBtn="showBtn">
-            <!-- <span *appAuth="ActionCode.CtcnThanhtoan" class="operate-text">
-                <button *ngIf="!showBtn['btnthanhtoan']" nz-button nzType="primary" nzGhost (click)="thanhtoan(idphieunhaphang,status01)" [disabled]="true">Thanh toán</button>
-            </span> -->
-            <ng-container *ngIf="chukyno==1 else ShowUpdate">
+        <ng-template #operationTpl let-id="id" let-soID="soID" let-tiencuoc="tiencuoc">
                 <span *appAuth="ActionCode.CtcnCapnhat" class="operate-text">
-                    <button nz-button nzType="primary" nzGhost (click)="capnhat(id,idphieunhaphang,status01)" [disabled]="true">Cập nhật</button>
+                    <button nz-button nzType="primary" nzGhost (click)="capnhat(soID,tiencuoc)">Cập nhật</button>
                 </span>
-            </ng-container>
-            <ng-template #ShowUpdate>
-                <button nz-button nzType="primary" nzGhost (click)="capnhat(id,idphieunhaphang,status01)">Cập nhật</button>
-            </ng-template>
+        </ng-template>
 
-            <span *appAuth="ActionCode.CtcnDuyetThanhtoan" class="operate-text">
-                <!-- <button *ngIf="!showBtn['btnduyet']" nz-button nzType="primary" nzGhost (click)="duyetthanhtoan(id)">Duyệt</button> -->
-            </span>
-        </ng-template>
-        <ng-template #trangthaiTpl let-chukyno="chukyno">
-            <ng-container *ngIf="chukyno == 0 else BlockTemplate">
-                <nz-alert nzType="warning" nzMessage="Chưa Thanh Toán" nzShowIcon></nz-alert>
-            </ng-container>
-            <ng-template #BlockTemplate>
-                <nz-alert nzType="success" nzMessage="Đã thanh toán" nzShowIcon></nz-alert>
-            </ng-template>
-        </ng-template>
-        <ng-template #tenhangTpl let-idphieunhaphang="idphieunhaphang" let-status01="status01">
-            <ng-container *ngIf="status01 == '' else Block">
-                <span>{{idphieunhaphang['tenhang']}}</span>
-            </ng-container>
-            <ng-template #Block>
-                <span>{{idphieunhaphang['tenhang']}}</span>
-            </ng-template>
-        </ng-template>
-        <ng-template #nguonxeTpl let-idphieunhaphang="idphieunhaphang" let-status01="status01">
-            <ng-container *ngIf="status01 == '' else Block">
-                <span>{{idphieunhaphang['biensoxe']}}</span>
-            </ng-container>
-            <ng-template #Block>
-                <span>{{idphieunhaphang['nguonxe']['datanm']}}</span>
-            </ng-template>
-        </ng-template>
-        <ng-template #soluongTpl let-idphieunhaphang="idphieunhaphang">
-               <span>{{idphieunhaphang['soluong']}}</span>
-        </ng-template>
-        <ng-template #donvitinhTpl let-idphieunhaphang="idphieunhaphang">
-            <span>{{idphieunhaphang['donvitinh']}}</span>
-        </ng-template>
         <ng-template #khachhangTpl let-iduser="iduser">
             <nz-alert nzType="success" nzMessage="{{iduser['name']}}"></nz-alert>
         </ng-template>
@@ -167,21 +104,15 @@
         </ng-template>
     </app-card-table-wrap>
     <ng-template #tableBtns>
-        <button *appAuth="ActionCode.CtcnTattoan" (click)="tattoan()" nz-button nzType="primary" class="m-r-8" [disabled]="true">
-          <i nz-icon nzType="money-collect" nzTheme="twotone"></i>
-          Tất toán
-        </button>
-        <button *appAuth="ActionCode.CtcnThantoanmotphan" (click)="thanhtoanmotphan()" nz-button nzType="default" [disabled]="btnthanhtoanmotphan">
-          <i nz-icon nzType="money-collect" nzTheme="twotone"></i>
-          Thanh toán 
+        <button *appAuth="ActionCode.CtcnThantoanmotphan" (click)="thanhtoan()" nz-button nzType="default" [disabled]="btnthanhtoanmotphan">
+          <i nz-icon nzType="money-collect" nzTheme="twotone"></i>Thanh toán 
         </button>
     </ng-template>
     <ng-template #tableConfirm>
         <ng-container *ngIf="showConfirm">
             <span *appAuth="ActionCode.CtcnXuatPDF" class="operate-text">
-                <button (click)="xuatpdf()" nz-button nzType="primary" class="m-r-8" [disabled]="btnxuatpdf">
-                    <i nz-icon nzType="caret-right"></i>
-                     Xuất PDF
+                <button (click)="xuatpdf()" nz-button nzType="primary" class="m-r-8">
+                    <i nz-icon nzType="caret-right"></i>Phát hành hóa đơn
                 </button>
             </span>
         </ng-container>

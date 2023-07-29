@@ -14,4 +14,21 @@ export class Spkh00201Service {
   getlists(params:any): Observable<any>{
     return this.http.post(Const.Spkh00201Ant100GetAll, params, {needSuccessInfo: false});
   }
+
+  xuatpdf(params:any): Observable<any>{
+    return this.http.post(Const.Spkh00201Ant100XuatPdf, params, {needSuccessInfo: false});
+  }
+
+  thanhtoanhoadon(sohdttcnkh: string) : Observable<number> {
+    return this.http.post(Const.Spkh00201Ant100Thanhtoan, {sohdttcnkh: sohdttcnkh}, {needSuccessInfo: false})
+  }
+  huythanhtoan(sohdttcnkh: string) : Observable<number> {
+    return this.http.post(Const.Spkh00201Ant100Huythanhtoan, {sohdttcnkh: sohdttcnkh}, {needSuccessInfo: false})
+  }
+  phathanhlai(sohdttcnkh: string) : Observable<any> {
+    return this.http.post(Const.Spkh00201Ant100Phathanhlai, {sohdttcnkh: sohdttcnkh}, {needSuccessInfo: false})
+  }
+  huyphathanh(sohdttcnkh: string) : Observable<number> {
+    return this.http.post(Const.Spkh00201Ant100Huyphathanh, {sohdttcnkh: sohdttcnkh}, {needSuccessInfo: false})
+  }
 }

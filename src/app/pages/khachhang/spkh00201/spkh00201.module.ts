@@ -6,7 +6,7 @@ import { Spkh00201Component } from './spkh00201.component';
 import { SharedModule } from '@app/shared/shared.module';
 import { SubwindowvideoyoutubeModule } from '@app/widget/modal/subwindowvideoyoutube/subwindowvideoyoutube.module';
 import { Spch00201subupdateTiencuocxenhaModule } from '@app/widget/modal/chuyen/spch00201subupdate-tiencuocxenha/spch00201subupdate-tiencuocxenha.module';
-import { Spch00201subupdateTiencuocxengoaiModule } from '@app/widget/modal/chuyen/spch00201subupdate-tiencuocxengoai/spch00201subupdate-tiencuocxengoai.module';
+import { Spkh00201subthanhtoanModule } from '@app/widget/modal/khachhang/spkh00201subthanhtoan/spkh00201subthanhtoan.module';
 
 
 @NgModule({
@@ -19,7 +19,7 @@ import { Spch00201subupdateTiencuocxengoaiModule } from '@app/widget/modal/chuye
     SharedModule,
     SubwindowvideoyoutubeModule,
     Spch00201subupdateTiencuocxenhaModule,
-    Spch00201subupdateTiencuocxengoaiModule
+    Spkh00201subthanhtoanModule
   ]
 })
 export class Spkh00201Module { }

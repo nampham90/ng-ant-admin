@@ -1,0 +1,25 @@
+<form nz-form [formGroup]="checkoutForm">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="sohdttcnkh">Số hóa đơn</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="combineTpl">
+        <input nz-input formControlName="sohdttcnkh" id="sohdttcnkh" placeholder="Số hóa đơn" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="type">Loại hình</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="combineTpl">
+        <nz-radio-group (ngModelChange)="changeType($event)" formControlName="type">
+          <label nz-radio [nzValue]="'A'">Thanh toán</label>
+          <label nz-radio [nzValue]="'B'">Hủy thanh toán</label>
+          <label nz-radio [nzValue]="'C'">Phát hành lại</label>
+          <label nz-radio [nzValue]="'D'">Hủy phát hành</label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+
+</form>
+
+<ng-template #combineTpl let-control>
+    <ng-container *ngIf="control.hasError('message')">{{ control.errors.message }}</ng-container>
+    <ng-container *ngIf="control.hasError('required')">Phần bắt buộc</ng-container>
+  </ng-template>
