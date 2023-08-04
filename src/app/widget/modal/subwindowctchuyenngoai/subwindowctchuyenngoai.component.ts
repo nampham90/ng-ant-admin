@@ -54,7 +54,7 @@ export class SubwindowctchuyenngoaiComponent implements OnInit {
       return of(false);
     }
     this.addEditForm.value['tiencuoc'] = this.tiencuocMode;
-    this.addEditForm.value['tiencuocxengoai'] = this.tiencuocxengoaiMode;
+    this.addEditForm.value['status02'] = this.tiencuocxengoaiMode;
     return of(this.addEditForm.value);
   }
   
@@ -65,6 +65,7 @@ export class SubwindowctchuyenngoaiComponent implements OnInit {
     if (Object.keys(this.params).length > 0) {
       this.editForm = true;
       this.setFormStatusByType("enable");
+      this.params.status03 = this.params.status03 + "";
       this.addEditForm.patchValue(this.params);
       this.tiencuocMode = this.params.tiencuoc;
       if(this.params.soID && this.params.soID != "") {

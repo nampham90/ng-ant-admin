@@ -29,6 +29,7 @@ import { SubcommonsoidService } from '@app/widget/modal/common/subcommonsoid/sub
 import { Spch00251Service } from '@app/core/services/http/chuyen/spch00251.service';
 import { Phieunhaphang } from '@app/core/model/phieunhaphang.model';
 import { PhieunhaphangService } from '@app/core/services/http/phieunhaphang/phieunhaphang.service';
+import { ChiPhiDVTN } from '@app/core/model/chiphidichvuthuengoai.model';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -222,7 +223,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   //   return false;
   // }
 
-  fnBtnConfirm() {
+  fnBtnConfirm(): void {
     if(this.headerForm.value.id && this.chuyenngoaiDto.id == "" && this.headerForm.value.id.length == 24) {
        this.chuyenngoaiDto.clear();
        this.headerForm.reset();
@@ -266,7 +267,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
           .pipe()
           .subscribe(res => {
               this.tableLoading(true);
-              this.listID = res.reslistdetail
+              this.listID = res.listdetail
               let stt = 1;
               for(let element of this.listID) {
                 element.stt = stt;
@@ -276,7 +277,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
               this.getDataList();
               this.chuyenngoaiDto.initFlg = false;
               this.chuyenngoaiDto.mode = "update";
-              this.chuyenngoaiDto.listID = res.reslistdetail;
+              this.chuyenngoaiDto.listID = res.listdetail;
               if(mode == "create") {
                 this.message.success("Đăng ký thành công !");
                 this.showHuychuyenngoai = true;
@@ -475,26 +476,31 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         soID : pnh.soID,
         tenhang : pnh.tenhang!,
         soluong : pnh.soluong!,
+        soluongthucte: pnh.soluongthucte,
         trongluong : pnh.trongluong!,
         khoiluong : pnh.khoiluong!,
         donvitinh : pnh.donvitinh!,
         diadiembochang : pnh.diadiembochang!,
         tiencuoc : pnh.tiencuoc!,
-        status02 : 0,
+        status02 : pnh.status02 == undefined? 0 : pnh.status02,
+        status03 : pnh.status03 == undefined? 0 : pnh.status03,
         iduser : pnh.iduser!,
         hinhthucthanhtoan : pnh.hinhthucthanhtoan!,
         sdtnguoinhan : pnh.sdtnguoinhan!,
         tennguoinhan : pnh.tennguoinhan!,
         diachinguoinhan : pnh.diachinguoinhan!,
-        ghichu : pnh.ghichu
+        ghichu : pnh.ghichu,
+        cpdvtncd: pnh.cpdvtncd,
+        id: pnh.id,
+        ngaynhapthucte: pnh.ngaynhapthucte
     };
 
     return ctcn;
   }
 
-  tongcptnPNH(pnh:Phieunhaphang): number {
+  tongcptnPNH(cpdvtncd: ChiPhiDVTN): number {
     let tongtiendvtn = 0;
-    tongtiendvtn = tongtiendvtn + pnh.cpdvtncd!['sotienbocxep']! + pnh.cpdvtncd!['sotienbocxep']! + pnh.cpdvtncd!['sotiennhaphang']! + pnh.cpdvtncd!['sotientrahang']! + pnh.cpdvtncd!['sotienxecau']!;
+    tongtiendvtn = tongtiendvtn + cpdvtncd.sotienbocxep!  + cpdvtncd.sotiennhaphang! + cpdvtncd.sotientrahang! + cpdvtncd.sotienxecau!;
     return tongtiendvtn;
   }
 
@@ -529,7 +535,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
        tiencuoc: tiencuoc,
        donvitinh: donvitinh,
        status02: status02,
-       hinhthucthanhtoan: hinhthucthanhtoan,
+       hinhthucthanhtoan: hinhthucthanhtoan + "",
        tennguoinhan: tennguoinhan,
        sdtnguoinhan: sdtnguoinhan,
        diachinguoinhan: diachinguoinhan,
@@ -555,12 +561,14 @@ export class Spch00251Component extends BaseComponent implements OnInit {
 
   // show update phiêu nhâp hàng từ kho
   updatePNHFromKho(pnh: Phieunhaphang): void {
-    pnh.status04 = 1;
+    pnh.status04 = 1;// cờ update từ kho
     this.subwinCtChuyenngoaiService.show({nzTitle: 'Cập nhật'},pnh).subscribe(({ modalValue, status }) => {
       if (status === ModalBtnStatus.Cancel) {
         return;
       }
-      console.log(modalValue);
+      this.updateListID(modalValue['stt'],modalValue['status02'],modalValue['status03']);
+      this.getDataList();
+      this.message.info("Click Confirm để hoàn thành cập nhật ");
     })
   }
 
@@ -609,6 +617,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     }
     this.ctchuyenngoai = ctdetail;
     this.ctchuyenngoai.stt = stt;
+    this.ctchuyenngoai.cpdvtncd = undefined;
     return this.ctchuyenngoai;
   }
 
@@ -628,8 +637,19 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         element.tennguoinhan = ctdetail['tennguoinhan'];
         element.diachinguoinhan = ctdetail['diachinguoinhan'];
         element.tiencuoc = ctdetail['tiencuoc'];
-        element.status02 = ctdetail['tiencuocxengoai'];
+        element.status02 = ctdetail['status02'];
+        element.status03 = ctdetail['status03'];
+        element.cpdvtncd = ctdetail['cpdvtncd'];
         element.soID = ""
+      }
+    }
+  }
+
+  updateListID(stt: number, status02: number, status03:number) : void {
+    for(let element of this.listID) {
+      if(element.stt === stt) {
+        element.status02 = status02;
+        element.status03 = status03;
       }
     }
   }

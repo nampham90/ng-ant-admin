@@ -273,7 +273,7 @@ export class Spin00251subComponent implements OnInit {
     })
   }
 
-  getlistTangbotrahang(req: any) {
+  getlistTangbotrahang(req: any): void {
     this.nguonxeService.postDetail(req).pipe().subscribe(res => {
       this.fnGetListBiensoxe(res.id);
       this.fnGetListTaiXe(res.sodienthoai);
