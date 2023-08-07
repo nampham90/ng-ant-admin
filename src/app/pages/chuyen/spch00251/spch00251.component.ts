@@ -251,7 +251,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         //   return;
         // }
         mode = "create";
-        title = "Bạn chắc chắn dữ liệu bạn tạo đã đúng chưa !";
+        title = "Bạn Có muốn kiểm tra lạ không !";
         content = "Nhấn ok để hoàn thành công việc !";
         req = {
           "spch00251Header": this.headerForm.value,
@@ -273,7 +273,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
                 element.stt = stt;
                 stt++;
               }
-              this.headerForm.patchValue(res.resspch00251Header);
+              this.headerForm.patchValue(res.resHeader);
               this.getDataList();
               this.chuyenngoaiDto.initFlg = false;
               this.chuyenngoaiDto.mode = "update";
@@ -323,7 +323,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
 
   createForm() {
     return this.fb.group({
-      id : [""],
+      soodn : [""],
       nguonxe: [null, [Validators.required]],
       sdtnguonxe: ["", [Validators.required]],
       ngaynhap: [this.getDate(), [Validators.required]],

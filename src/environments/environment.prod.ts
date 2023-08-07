@@ -1,6 +1,4 @@
-
-
-//export const ip = '116.103.64.154';//45.76.180.157
+//export const ip = '117.2.199.249';//45.76.180.157
 
 export const ip = 'localhost';
 
