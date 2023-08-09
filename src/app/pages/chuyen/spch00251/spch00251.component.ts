@@ -30,6 +30,8 @@ import { Spch00251Service } from '@app/core/services/http/chuyen/spch00251.servi
 import { Phieunhaphang } from '@app/core/model/phieunhaphang.model';
 import { PhieunhaphangService } from '@app/core/services/http/phieunhaphang/phieunhaphang.service';
 import { ChiPhiDVTN } from '@app/core/model/chiphidichvuthuengoai.model';
+import { Chuyenngoai } from '@app/core/model/chuyenngoai.model';
+import { ThemeSkinService } from '@app/core/services/common/theme-skin.service';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -39,6 +41,12 @@ interface SearchParam {
   idphu : string;
   trangthai: any;
 
+}
+
+export interface ParamsCU {
+  spch00251Header: Chuyenngoai,
+  spch00251Listdetail: Phieunhaphang[],
+  mode: string
 }
 @Component({
   selector: 'app-spch00251',
@@ -91,6 +99,9 @@ export class Spch00251Component extends BaseComponent implements OnInit {
 
   listbsxe = [];
   listtaixe = [];
+
+  listIDHuy: Phieunhaphang[] = [];
+  listIDUpdate: Phieunhaphang[] = [];
 
   pageHeaderInfo: Partial<PageHeaderType> = {
     title: 'Quản lý chuyến ngoài',
@@ -227,8 +238,14 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     if(this.headerForm.value.id && this.chuyenngoaiDto.id == "" && this.headerForm.value.id.length == 24) {
        this.chuyenngoaiDto.clear();
        this.headerForm.reset();
+       this.dataList = [];
+       this.listID = [];
     } else {
-      let req = {}
+      let req : ParamsCU = {
+        spch00251Header: this.headerForm.value,
+        spch00251Listdetail: this.dataList,
+        mode: "" // them mới và updade củ
+      }
       let title = "";
       let content = "";
       let mode = "";
@@ -236,11 +253,25 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         mode = "update";
         title = "Bạn chắc chắn muốn cập nhật !";
         content = "Dữ liệu sẽ được cập nhật sau khi nhấn OK";
-        req = {
-            "spch00251Header": this.headerForm.value,
-            "spch00251Listdetail": this.dataList,
-            "mode": "update" // them mới và updade củ
+        req.mode = mode;
+        req.spch00251Listdetail = [];
+        req.spch00251Header = this.headerForm.getRawValue();
+
+        if(this.checkChangeHeader() === false && this.checkChangeDatalist().length == 0) {
+           this.modalSrv.info({nzTitle: "Chưa có sự thay đổi nào !"});
+           return;
         }
+
+        if(this.checkChangeHeader() == true) {
+          req.spch00251Header.status05 = 1; // có sư thay dổi trong chuyen ngoai
+        }
+
+        if(this.checkChangeDatalist().length > 0) {
+          req.spch00251Listdetail = this.checkChangeDatalist();
+        }
+
+        console.log(this.checkChangeHeader());
+        console.log(this.checkChangeDatalist());
       } else {
         // check dataList trước khi gửi đi tạo
         // if(this.fnCheckDataList()== true) {
@@ -253,41 +284,108 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         mode = "create";
         title = "Bạn Có muốn kiểm tra lạ không !";
         content = "Nhấn ok để hoàn thành công việc !";
-        req = {
-          "spch00251Header": this.headerForm.value,
-          "spch00251Listdetail": this.dataList,
-          "mode": "create" // them mới hoàn toàn
-        }
+        req.mode = mode;
       }
+      this.tableLoading(true);
       this.modalSrv.confirm({
         nzTitle: title,
         nzContent: content,
         nzOnOk: () => {
-          this.dataService.postCreate(req)
-          .pipe()
-          .subscribe(res => {
-              this.tableLoading(true);
-              this.listID = res.listdetail
-              let stt = 1;
-              for(let element of this.listID) {
-                element.stt = stt;
-                stt++;
-              }
-              this.headerForm.patchValue(res.resHeader);
-              this.getDataList();
-              this.chuyenngoaiDto.initFlg = false;
-              this.chuyenngoaiDto.mode = "update";
-              this.chuyenngoaiDto.listID = res.listdetail;
-              if(mode == "create") {
-                this.message.success("Đăng ký thành công !");
-                this.showHuychuyenngoai = true;
-              } else {
-                this.message.success("Cập nhật thành công !");
-              }
-          })
+          mode == "create"? this.createupdateData(req, "postCreate") : this.createupdateData(req, "postUpdate");
         }
       });
     }
+  }
+  // kiểm tra có sự thay đổi trên table
+  checkChangeDatalist(): Phieunhaphang[] {
+    const list1:Phieunhaphang[] = this.dataList;
+    let listPNH: Phieunhaphang[] = [];
+    listPNH = list1.filter(item1 => !item1.soID).map(item1 => {
+      item1.strrsrv10 = "CREATE";
+      return item1;
+    })
+    // danh sach bị hủy
+    if(this.listIDHuy.length > 0) {
+      listPNH = listPNH.concat(this.listIDHuy);
+    }
+    // dach dach cap  nhat
+    if(this.listIDUpdate.length > 0) {
+      listPNH = listPNH.concat(this.listIDUpdate);
+    }
+    return listPNH;
+
+  }
+
+  // kiểm tra có sự tháy đổi trên form
+  checkChangeHeader(): boolean {
+    let nguonxe = this.headerForm.get('nguonxe')?.value;
+    let ngaynhap = this.headerForm.get('ngaynhap')?.value;
+    let ngayvanchuyen = this.headerForm.get('ngayvanchuyen')?.value;
+    let ngaydukiengiaohang = this.headerForm.get('ngaydukiengiaohang')?.value;
+    let biensoxe = this.headerForm.get('biensoxe')?.value;
+    let tentaixe = this.headerForm.get('tentaixe')?.value;
+    let hinhthucthanhtoan = this.headerForm.get('hinhthucthanhtoan')?.value;
+    let ghichu = this.headerForm.get('ghichu')?.value;
+
+    if( this.chuyenngoaiDto.nguonxe != nguonxe
+      || this.chuyenngoaiDto.ngaynhap != ngaynhap
+      || this.chuyenngoaiDto.ngayvanchuyen != ngayvanchuyen
+      || this.chuyenngoaiDto.ngaydukiengiaohang != ngaydukiengiaohang
+      || this.chuyenngoaiDto.biensoxe != biensoxe
+      || this.chuyenngoaiDto.tentaixe != tentaixe
+      || this.chuyenngoaiDto.hinhthucthanhtoan != hinhthucthanhtoan
+      || this.chuyenngoaiDto.ghichu != ghichu
+    ) {
+        return true;
+    } else {
+        return false;
+    }
+  }
+
+  createupdateData(params: ParamsCU, nameMethod: "postCreate" | "postUpdate") : void {
+      this.dataService[nameMethod](params)
+      .pipe(
+        finalize(() => {
+          this.tableLoading(false);
+        })
+      )
+      .subscribe(res => {
+        this.listID = res.spch00251Listdetail;
+        let stt = 1;
+        for(let element of this.listID) {
+          element.stt = stt;
+          stt++;
+        }
+        this.headerForm.patchValue(res.spch00251Header);
+        this.getDataList();
+        this.updateChuyenDtoService(res);
+      })
+  }
+
+  updateChuyenDtoService(res: ParamsCU): void {
+    this.chuyenngoaiDto.initFlg = false;
+    this.chuyenngoaiDto.mode = "update";
+    this.chuyenngoaiDto.listID = res.spch00251Listdetail;
+    this.chuyenngoaiDto.soodn = res.spch00251Header.soodn;
+    this.chuyenngoaiDto.id = res.spch00251Header.id!;
+    this.chuyenngoaiDto.ghichu = res.spch00251Header.ghichu;
+    this.chuyenngoaiDto.biensoxe = res.spch00251Header.biensoxe;
+    this.chuyenngoaiDto.hinhthucthanhtoan = res.spch00251Header.hinhthucthanhtoan;
+    this.chuyenngoaiDto.ngaynhap = res.spch00251Header.ngaynhap;
+    this.chuyenngoaiDto.ngayvanchuyen = res.spch00251Header.ngayvanchuyen;
+    this.chuyenngoaiDto.ngaydukiengiaohang = res.spch00251Header.ngaydukiengiaohang;
+    this.chuyenngoaiDto.nguonxe = res.spch00251Header.nguonxe;
+    this.chuyenngoaiDto.sdtnguonxe = res.spch00251Header.sdtnguonxe;
+    this.chuyenngoaiDto.tentaixe = res.spch00251Header.tentaixe;
+    this.chuyenngoaiDto.sodienthoai = res.spch00251Header.sodienthoai;
+    this.chuyenngoaiDto.status01 = res.spch00251Header.status01!;
+    this.chuyenngoaiDto.status02 = res.spch00251Header.status02!;
+    this.chuyenngoaiDto.status03 = res.spch00251Header.status03!;
+    this.chuyenngoaiDto.status04 = res.spch00251Header.status04!;
+    this.chuyenngoaiDto.status05 = res.spch00251Header.status05!;
+    let msg = ""
+    res.mode == 'create' ? msg = "Tạo thành công" : msg = "Cập nhật thành công !";
+    this.modalSrv.info({nzTitle: msg})
   }
   
   /// huy chuyến ngoai
@@ -578,6 +676,13 @@ export class Spch00251Component extends BaseComponent implements OnInit {
       nzContent: 'Không thể phục hồi sau khi xóa',
       nzOnOk: () => {
         this.tableLoading(true);
+        for(let element of this.dataList) {
+          if(element.stt === stt && element.soID) {
+            element.strrsrv10 = "HUY";
+            this.listIDHuy.push(element);
+          }
+        }
+        console.log(this.listIDHuy);
         this.listID = this.listID.filter(item => item['stt'] !== stt);
         this.dataList = [...this.listID];
         this.showBtnConfirm();
@@ -594,8 +699,13 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     }
   }
 
+  // xóa tất cả dư liệu trên màn hình
   allDel() {
-
+    this.chuyenngoaiDto.clear();
+    this.headerForm.reset();
+    this.dataList = [];
+    this.listID = [];
+    this.getDataList();
   }
 
   addListDetail() {
@@ -648,6 +758,21 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   updateListID(stt: number, status02: number, status03:number) : void {
     for(let element of this.listID) {
       if(element.stt === stt) {
+        if(element.status02 != status02 || element.status03 != status03) {
+          element.strrsrv10 = "UPDATE";
+          let check = false;
+          for(let e of this.listIDUpdate) {
+            if(e.soID == element.soID) {
+              check = true;
+              e.status02 = status02;
+              e.status03 = status03;
+              break;
+            }
+          }
+          if(check === false) {
+            this.listIDUpdate.push(element);
+          }
+        }
         element.status02 = status02;
         element.status03 = status03;
       }
