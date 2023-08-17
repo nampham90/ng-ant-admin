@@ -231,3 +231,9 @@
         </ng-container>
     </ng-template>
 </div>
+<ng-template #optionHuyTpl>
+    <nz-radio-group [(ngModel)]="huyValue">
+        <label nz-radio nzValue="A">Trả về kho</label>
+        <label nz-radio nzValue="B">Hủy đơn hàng</label>
+      </nz-radio-group>
+</ng-template>

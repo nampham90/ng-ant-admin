@@ -102,13 +102,13 @@
       <ng-template #nguonxeTpl let-nguonxe="nguonxe">
           <span>{{nguonxe['datacd']}}-{{nguonxe['datanm']}}</span>
       </ng-template>
-      <ng-template #operationTpl let-id="id" let-status02="status02">
+      <ng-template #operationTpl let-id="id" let-soodn="soodn" let-status02="status02">
         <span *appAuth="ActionCode.TimkiemchuyenngoaiUpdate" class="operate-text">
             <ng-container *ngIf="status02 == 1 else SUpdate">
-                <button nz-button nzType="primary" nzGhost (click)="transferSpch00251(id, 'update')" [disabled]="true">Cập nhật</button>
+                <button nz-button nzType="primary" nzGhost (click)="transferSpch00251(id, soodn, 'update')" [disabled]="true">Cập nhật</button>
             </ng-container>
             <ng-template #SUpdate>
-                <button nz-button nzType="primary" nzGhost (click)="transferSpch00251(id, 'update')" [disabled]="false">Cập nhật</button>
+                <button nz-button nzType="primary" nzGhost (click)="transferSpch00251(id,soodn,'update')" [disabled]="false">Cập nhật</button>
             </ng-template>
         </span>
         <span *appAuth="ActionCode.TimkiemchuyenngoaiExportPdf" class="operate-text">
@@ -121,7 +121,7 @@
         </ng-container>
         <ng-template #showId>
             <div class="copy-container">
-                <a nz-button (click)="transferSpch00251(id,'link')" nzType="link" nzBlock>{{soodn}}</a>
+                <a nz-button (click)="transferSpch00251(id,soodn,'link')" nzType="link" nzBlock>{{soodn}}</a>
                 <button nz-button [cdkCopyToClipboard]="copy(soodn)" nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
             </div>
         </ng-template>

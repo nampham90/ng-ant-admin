@@ -31,7 +31,6 @@ import { Phieunhaphang } from '@app/core/model/phieunhaphang.model';
 import { PhieunhaphangService } from '@app/core/services/http/phieunhaphang/phieunhaphang.service';
 import { ChiPhiDVTN } from '@app/core/model/chiphidichvuthuengoai.model';
 import { Chuyenngoai } from '@app/core/model/chuyenngoai.model';
-import { ThemeSkinService } from '@app/core/services/common/theme-skin.service';
 
 interface SearchParam {
   ngaybatdau: string | null;
@@ -121,6 +120,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   @ViewChild('tennguoinhanTpl', { static: true }) tennguoinhanTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('diachinguoinhanTpl', { static: true }) diachinguoinhanTpl!: TemplateRef<NzSafeAny>;
   @ViewChild('chiphidvtnTpl', { static: true }) chiphidvtnTpl!: TemplateRef<NzSafeAny>;
+  @ViewChild('optionHuyTpl', { static: true }) optionHuyTpl!: TemplateRef<NzSafeAny>;
   // mode
   idchuyenngoai: any;
 
@@ -156,6 +156,8 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   showreturnBack = false;
 
   showHuychuyenngoai = false;
+
+  huyValue = "A";
   
   override ngOnInit(): void {
     this.initTable();
@@ -173,16 +175,16 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     // trường hợp click vào link. chỉ được xem chi tiết
     if(this.chuyenngoaiDto.mode == "link" && this.chuyenngoaiDto.initFlg === false) {
         this.tableLoading(true);
-        this.dataService.postDetail({id:this.chuyenngoaiDto.id}).pipe()
+        this.dataService.postDetail({soodn:this.chuyenngoaiDto.soodn}).pipe()
         .subscribe(data => {
-            this.listID = [...data.listID];
+            this.listID = [...data.spch00251Listdetail];
             let stt = 1;
             for(let element of this.listID) {
               element.stt = stt;
               stt++;
             }
             this.getDataList();
-            this.headerForm.patchValue(data.resHeader);
+            this.headerForm.patchValue(data.spch00251Header);
             this.showreturnBack = true;
         });
         this.chuyenngoaiDto.mode = "";
@@ -191,16 +193,16 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     // trường hơp click vào cập nhật. cho phép cập nhật chuyến 
     if(this.chuyenngoaiDto.mode == "update" && this.chuyenngoaiDto.initFlg === false) {
        this.tableLoading(true);
-       this.dataService.postDetail({id:this.chuyenngoaiDto.id}).pipe()
+       this.dataService.postDetail({soodn:this.chuyenngoaiDto.soodn}).pipe()
         .subscribe(data => {
-            this.listID = [...data.listID];
+            this.listID = [...data.spch00251Listdetail];
             let stt = 1;
             for(let element of this.listID) {
               element.stt = stt;
               stt++;
             }
             this.getDataList();
-            this.headerForm.patchValue(data.resHeader);
+            this.headerForm.patchValue(data.spch00251Header);
             this.showBtnConfirm();
             this.btnDelete = false;
             this.btnDeleteAll = true;
@@ -671,13 +673,15 @@ export class Spch00251Component extends BaseComponent implements OnInit {
   }
 
   del(stt: number) {
+    this.huyValue = "A";
     this.modalSrv.confirm({
-      nzTitle: 'Bạn có chắc chắn muốn xóa nó không?',
-      nzContent: 'Không thể phục hồi sau khi xóa',
+      nzTitle: 'Vui lòng tùy chọn bên dưới?',
+      nzContent: this.optionHuyTpl,
       nzOnOk: () => {
         this.tableLoading(true);
         for(let element of this.dataList) {
           if(element.stt === stt && element.soID) {
+            element.strrsrv9 = this.huyValue;
             element.strrsrv10 = "HUY";
             this.listIDHuy.push(element);
           }

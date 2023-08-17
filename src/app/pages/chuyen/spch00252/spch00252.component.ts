@@ -188,10 +188,11 @@ export class Spch00252Component extends BaseComponent implements OnInit {
 
   }
 
-  transferSpch00251(id: string, mode: string) {
-    this.ChuyenngoaiDto.mode = mode;
+  transferSpch00251(id: string, soodn: string,mode: string) {
+    this.ChuyenngoaiDto.mode = "update";
     this.ChuyenngoaiDto.id = id;
     this.ChuyenngoaiDto.initFlg = false;
+    this.ChuyenngoaiDto.soodn = soodn;
     this.transfer(Const.rootbase + UrlDisplayId.spch00251);
   }
 
