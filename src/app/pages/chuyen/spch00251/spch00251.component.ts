@@ -203,6 +203,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
             }
             this.getDataList();
             this.headerForm.patchValue(data.spch00251Header);
+            this.updateChuyenngoaiDtoService(data.spch00251Header);
             this.showBtnConfirm();
             this.btnDelete = false;
             this.btnDeleteAll = true;
@@ -215,7 +216,28 @@ export class Spch00251Component extends BaseComponent implements OnInit {
 
   }
 
-  fnGetAllNguonXe() {
+  //  cập nhật Chuyến DTO Service
+  updateChuyenngoaiDtoService(spch00251Header: ChuyenngoaidtoService): void {
+     this.chuyenngoaiDto.listID = this.listID;
+     this.chuyenngoaiDto.id = spch00251Header.id;
+     this.chuyenngoaiDto.ngaynhap = spch00251Header.ngaynhap;
+     this.chuyenngoaiDto.ngayvanchuyen = spch00251Header.ngayvanchuyen;
+     this.chuyenngoaiDto.ngaydukiengiaohang = spch00251Header.ngaydukiengiaohang;
+     this.chuyenngoaiDto.biensoxe = spch00251Header.biensoxe;
+     this.chuyenngoaiDto.sdtnguonxe = spch00251Header.sdtnguonxe;
+     this.chuyenngoaiDto.nguonxe = spch00251Header.nguonxe;
+     this.chuyenngoaiDto.tentaixe = spch00251Header.tentaixe;
+     this.chuyenngoaiDto.sodienthoai = spch00251Header.sodienthoai;
+     this.chuyenngoaiDto.ghichu = spch00251Header.ghichu;
+     this.chuyenngoaiDto.hinhthucthanhtoan = spch00251Header.hinhthucthanhtoan;
+     this.chuyenngoaiDto.status01 = spch00251Header.status01;
+     this.chuyenngoaiDto.status02 = spch00251Header.status02;
+     this.chuyenngoaiDto.status03 = spch00251Header.status03;
+     this.chuyenngoaiDto.status04 = spch00251Header.status04;
+     this.chuyenngoaiDto.status05 = spch00251Header.status05;
+  }
+
+  fnGetAllNguonXe() : void{
     let req = {
       pageSize: 0,
       pageNum: 0
@@ -275,20 +297,11 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         console.log(this.checkChangeHeader());
         console.log(this.checkChangeDatalist());
       } else {
-        // check dataList trước khi gửi đi tạo
-        // if(this.fnCheckDataList()== true) {
-        //   this.modalSrv.info({
-        //     nzTitle: "Vui lòng cập nhật đơn hàng",
-        //     nzContent: "Nôi dung cần cập nhật\n 1. Tiền cước xe ngoài\n 2. Httt xe ngoài"
-        //   });
-        //   return;
-        // }
         mode = "create";
-        title = "Bạn Có muốn kiểm tra lạ không !";
-        content = "Nhấn ok để hoàn thành công việc !";
+        title = "Tạo đơn hàng mới";
+        content = "Nhấn OK để hoàn thành việt tạo mới !";
         req.mode = mode;
       }
-      this.tableLoading(true);
       this.modalSrv.confirm({
         nzTitle: title,
         nzContent: content,
@@ -330,9 +343,9 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     let ghichu = this.headerForm.get('ghichu')?.value;
 
     if( this.chuyenngoaiDto.nguonxe != nguonxe
-      || this.chuyenngoaiDto.ngaynhap != ngaynhap
-      || this.chuyenngoaiDto.ngayvanchuyen != ngayvanchuyen
-      || this.chuyenngoaiDto.ngaydukiengiaohang != ngaydukiengiaohang
+      || this.formatDate(this.chuyenngoaiDto.ngaynhap)  != this.formatDate(ngaynhap)
+      || this.formatDate(this.chuyenngoaiDto.ngayvanchuyen) != this.formatDate(ngayvanchuyen)
+      || this.formatDate(this.chuyenngoaiDto.ngaydukiengiaohang) != this.formatDate(ngaydukiengiaohang)
       || this.chuyenngoaiDto.biensoxe != biensoxe
       || this.chuyenngoaiDto.tentaixe != tentaixe
       || this.chuyenngoaiDto.hinhthucthanhtoan != hinhthucthanhtoan
@@ -344,8 +357,10 @@ export class Spch00251Component extends BaseComponent implements OnInit {
     }
   }
 
+  // tạo mơi hoặc update đơn hàng
   createupdateData(params: ParamsCU, nameMethod: "postCreate" | "postUpdate") : void {
-      this.dataService[nameMethod](params)
+    this.tableLoading(true);
+    this.dataService[nameMethod](params)
       .pipe(
         finalize(() => {
           this.tableLoading(false);
@@ -361,7 +376,7 @@ export class Spch00251Component extends BaseComponent implements OnInit {
         this.headerForm.patchValue(res.spch00251Header);
         this.getDataList();
         this.updateChuyenDtoService(res);
-      })
+    });
   }
 
   updateChuyenDtoService(res: ParamsCU): void {
